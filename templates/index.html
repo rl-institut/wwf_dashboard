@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src = "static/js/d3.min.js"></script>
+    <style>
+
+    #chart div {
+      font: 10px sans-serif;
+      text-align: right;
+      padding: 3px;
+      margin: 1px;
+      color: white;
+    }
+
+    </style>
+    <title>D3 Chart </title>
+  </head>
+
+  <body>
+    <div id="chart"></div>
+    <script>
+      const margin = {top: 30, right: 30, bottom: 70, left: 60};
+      const width = 460 - margin.left - margin.right;
+      const height = 400 - margin.top - margin.bottom;
+
+      var data = [{
+        "year": 1900,
+        "value": 6
+      }, {
+        "year": 1950,
+        "value": 6
+      }, {
+        "year": 2000,
+        "value": 4
+      }];
+
+      var x = d3.scaleBand()
+        .range([ 0, width ])
+        .domain(data.map(function(d) { return d.year; }))
+      var y = d3.scaleLinear()
+        .range([ height, 0 ])
+        .domain([0, 10]);
+      var color = d3.scaleOrdinal()
+        .domain([0, 10])
+        .range(["#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+      var svg = d3.select("#chart")
+        .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+          .attr("transform", "translate(-10,0)rotate(-45)")
+          .style("text-anchor", "end");
+
+      svg.selectAll(null)
+         .data(data)
+         .enter()
+         .append("rect")
+           .attr("x", function(d) { return x(d.year); })
+           .attr("y", function(d) { return y(d.value); })
+           .attr("width", x.bandwidth())
+           .attr("height", function(d) { return height - y(d.value); })
+           .attr("fill",  function(d, i) { return color(i); });
+
+    </script>
+  </body>
+</html>

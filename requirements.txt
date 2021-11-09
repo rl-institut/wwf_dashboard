@@ -1,0 +1,4 @@
+flask
+uvicorn
+requests-html
+cairosvg
