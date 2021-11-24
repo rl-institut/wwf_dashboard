@@ -1,3 +1,4 @@
+
 var x = d3.scaleBand()
   .range([ 0, width ])
   .domain(data.map(function(d) { return d.year; }))
@@ -46,15 +47,11 @@ svg.append("path")
     .y(function(d) { return y(d.value) })
   )
 
-d3.select('#select_year')
-  .on('change', function() {
-    svg.select("#current_year").remove();
-    var year = [parseInt(d3.select(this).property('value'))];
-    changeYear(year);
-});
 
 function changeYear(year) {
-  svg.selectAll(null)
+    svg.select("#current_year").remove();
+    var year = [parseInt(year)];
+    svg.selectAll(null)
     .data(year)
     .enter()
     .append("rect")
