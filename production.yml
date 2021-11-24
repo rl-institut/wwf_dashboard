@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: wwf
+    container_name: wwf
+    env_file:
+      - ./.envs/.production/.flask
+    expose:
+    - 80
+    restart: always
+    networks:
+    - caddy_network
+
+networks:
+  caddy_network:
+    external:
+      name: docker_caddy_network

@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: wwf
+    container_name: wwf
+    env_file:
+      - ./.envs/.local/.flask
+    ports:
+      - "8000:80"
+    expose:
+    - 80
+    restart: always
