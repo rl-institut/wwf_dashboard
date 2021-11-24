@@ -17,7 +17,7 @@
   </head>
 
   <body>
-    <select id="select_year"></select>
+    <select id="select_year" onchange="changeYear(this.value);"></select>
     <div id="chart"></div>
     <script>
       const margin = {top: 30, right: 30, bottom: 70, left: 60};
@@ -25,10 +25,8 @@
       const height = 400 - margin.top - margin.bottom;
 
       var data = {{data|tojson}};
-      var temperatures = {{temperatures|tojson}};
 
       const select = document.getElementById("select_year");
-
       for (var i = data.length - 1; i>=0; i--){
           var opt = document.createElement("option");
           opt.value = data[i].year;
