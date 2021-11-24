@@ -2,15 +2,18 @@
 const linewidth = 2;
 const circlewidth = 6;
 
+const y_max = 200;
+const y2_max = 35;
+
 const x = d3.scaleBand()
   .range([ 0, width ])
   .domain(data.map(function(d) { return d.year; }))
 const y = d3.scaleLinear()
   .range([ height, 0 ])
-  .domain([0, 200]);
+  .domain([0, y_max]);
 const y2 = d3.scaleLinear()
   .range([ height, 0 ])
-  .domain([0, 35]);
+  .domain([0, y2_max]);
 const color = d3.scaleOrdinal()
   .domain([0, 15])
   .range(["#00008B", "#0000FF", "#1E90FF", "#87CEFA", "#F0F8FF", "#F4A460", "#FF8C00", "#FF4500", "#FF0000", "#8B0000", "#800000", "#000000"]);
@@ -116,7 +119,7 @@ function changeYear(to_year) {
     .attr("x1", x(year))
     .attr("x2", x(year))
     .attr("y1", y(year_data.ppm))
-    .attr("y2", y2(35))
+    .attr("y2", y2(y2_max))
     .attr("stroke", "black")
     .attr("stroke-width", linewidth)
     .attr("stroke-dasharray", "4")
