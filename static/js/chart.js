@@ -1,17 +1,21 @@
-var x = d3.scaleBand()
+
+const linewidth = 2;
+const circlewidth = 6;
+
+const x = d3.scaleBand()
   .range([ 0, width ])
   .domain(data.map(function(d) { return d.year; }))
-var y = d3.scaleLinear()
+const y = d3.scaleLinear()
   .range([ height, 0 ])
   .domain([0, 200]);
-var y2 = d3.scaleLinear()
+const y2 = d3.scaleLinear()
   .range([ height, 0 ])
   .domain([0, 35]);
-var color = d3.scaleOrdinal()
+const color = d3.scaleOrdinal()
   .domain([0, 15])
   .range(["#00008B", "#0000FF", "#1E90FF", "#87CEFA", "#F0F8FF", "#F4A460", "#FF8C00", "#FF4500", "#FF0000", "#8B0000", "#800000", "#000000"]);
 
-var svg = d3.select("#chart")
+const svg = d3.select("#chart")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -70,7 +74,7 @@ svg.append("path")
   .datum(data)
   .attr("fill", "none")
   .attr("stroke", "gray")
-  .attr("stroke-width", 4)
+  .attr("stroke-width", linewidth)
   .attr("d", d3.line()
     .x(function(d) { return x(d.year) + x.bandwidth() / 2 })
     .y(function(d) { return y(d.ppm) })
@@ -81,29 +85,45 @@ svg.append("path")
   .datum(data)
   .attr("fill", "none")
   .attr("stroke", "black")
-  .attr("stroke-width", 4)
+  .attr("stroke-width", linewidth)
   .attr("d", d3.line()
-    .x(function(d, i) { return x(1900 + i) + x.bandwidth() / 2 })
+    .x(function(d) { return x(d.year) + x.bandwidth() / 2 })
     .y(function(d) { return y2(d.co2) })
   )
 
 
 function changeYear(to_year) {
   // Remove data from previous selection
-  console.log("here")
   svg.select("#current_year").remove();
+  svg.select("#current_line").remove();
+  svg.select("#current_circle").remove();
 
   const year = parseInt(to_year);
   const year_data = data.find(element => element.year == year);
-  console.log(year_data)
 
   svg.append("rect")
     .attr("id", "current_year")
-    .attr("x", x(year))
+    .attr("x", x(year) - x.bandwidth() * 2)
     .attr("y", y(year_data.ppm))
     .attr("width", x.bandwidth() * 4)
     .attr("height", height - y(year_data.ppm))
     .attr("fill",  color(year_data.temperature))
-    .attr("stroke-width", 2)
+    .attr("stroke-width", linewidth)
     .attr("stroke", "rgb(0,0,0)")
+
+  svg.append("line")
+    .attr("id", "current_line")
+    .attr("x1", x(year))
+    .attr("x2", x(year))
+    .attr("y1", y(year_data.ppm))
+    .attr("y2", y2(35))
+    .attr("stroke", "black")
+    .attr("stroke-width", linewidth)
+    .attr("stroke-dasharray", "4")
+
+  svg.append("circle")
+    .attr("id", "current_circle")
+    .attr("cx", x(year))
+    .attr("cy", y2(year_data.co2))
+    .attr("r", circlewidth)
 }
