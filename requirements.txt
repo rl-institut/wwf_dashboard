@@ -1,4 +1,7 @@
 flask
 uvicorn
+requests
 requests-html
 cairosvg
+beautifulsoup4
+js2xml
