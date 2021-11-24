@@ -4,7 +4,8 @@ RUN apt-get update && \
     apt-get install -y \
         build-essential \
         make \
-        gcc 
+        gcc \
+        libffi6 libffi-dev 
 
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt 
@@ -16,4 +17,4 @@ RUN apt-get remove -y --purge make gcc build-essential \
 COPY ./ /app
 WORKDIR /app
 
-CMD gunicorn --bind 0.0.0.0:80 --timeout 90 wsgi
+CMD gunicorn --bind 0.0.0.0:80 wsgi:app
