@@ -2,17 +2,23 @@
 const linewidth = 2;
 const circlewidth = 6;
 
+const icon_space = 10;
+const icon_width = (width - icon_space * 4) / 3;
+const icon_height = 30;
+
 const y_max = 200;
 const y2_max = 35;
+
+const chart_height = height - 100;
 
 const x = d3.scaleBand()
   .range([ 0, width ])
   .domain(data.map(function(d) { return d.year; }))
 const y = d3.scaleLinear()
-  .range([ height, 0 ])
+  .range([ chart_height, 0 ])
   .domain([0, y_max]);
 const y2 = d3.scaleLinear()
-  .range([ height, 0 ])
+  .range([ chart_height, 0 ])
   .domain([0, y2_max]);
 const color = d3.scaleOrdinal()
   .domain([0, 15])
@@ -28,7 +34,7 @@ const svg = d3.select("#chart")
 // X-Axis
 svg.append("g")
   .attr("id", "xaxis")
-  .attr("transform", "translate(0," + height + ")")
+  .attr("transform", "translate(0," + chart_height + ")")
   .call(
     d3.axisBottom(x).tickValues(
       x.domain().filter(function(d, idx) { return idx%20==0 })
@@ -69,7 +75,7 @@ svg.selectAll(null)
     .attr("x", function(d) { return x(d.year); })
     .attr("y", function(d) { return y(d.ppm); })
     .attr("width", x.bandwidth())
-    .attr("height", function(d) { return height - y(d.ppm); })
+    .attr("height", function(d) { return chart_height - y(d.ppm); })
     .attr("fill",  function(d) { return color(d.temperature); });
 
 // PPM
@@ -94,6 +100,61 @@ svg.append("path")
     .y(function(d) { return y2(d.co2) })
   )
 
+// PPM Icon
+svg.append("rect")
+  .attr("x", icon_space)
+  .attr("y", chart_height + 100)
+  .attr("width", icon_width)
+  .attr("height", icon_height)
+  .attr("ry", 16)
+  .attr("fill", "black")
+
+svg.append("text")
+  .attr("id", "ppm_icon")
+  .attr("x", icon_space + icon_width / 2)
+  .attr("y", chart_height + 100 + icon_height / 2)
+  .attr("fill", "white")
+  .text("328 ppm")
+  .style("dominant-baseline", "middle")
+  .style("text-anchor", "middle")
+
+
+// CO2 Icon
+svg.append("rect")
+  .attr("x", icon_width + 2 * icon_space)
+  .attr("y", chart_height + 100)
+  .attr("width", icon_width)
+  .attr("height", icon_height)
+  .attr("ry", 16)
+  .attr("fill", "gray")
+
+svg.append("text")
+  .attr("id", "co2_icon")
+  .attr("x", 2 * icon_space + icon_width + icon_width / 2)
+  .attr("y", chart_height + 100 + icon_height / 2)
+  .attr("fill", "white")
+  .text("12.547 Mt")
+  .style("dominant-baseline", "middle")
+  .style("text-anchor", "middle")
+
+// Temp Icon
+svg.append("rect")
+  .attr("x", icon_width * 2 + 3 * icon_space)
+  .attr("y", chart_height + 100)
+  .attr("width", icon_width)
+  .attr("height", icon_height)
+  .attr("ry", 16)
+  .attr("fill", "pink")
+
+svg.append("text")
+  .attr("id", "temp_icon")
+  .attr("x", 3 * icon_space + 2 * icon_width + icon_width / 2)
+  .attr("y", chart_height + 100 + icon_height / 2)
+  .attr("fill", "black")
+  .text("+0,47 °C")
+  .style("dominant-baseline", "middle")
+  .style("text-anchor", "middle")
+
 
 function changeYear(to_year) {
   // Remove data from previous selection
@@ -109,7 +170,7 @@ function changeYear(to_year) {
     .attr("x", x(year) - x.bandwidth() * 2)
     .attr("y", y(year_data.ppm))
     .attr("width", x.bandwidth() * 4)
-    .attr("height", height - y(year_data.ppm))
+    .attr("height", chart_height - y(year_data.ppm))
     .attr("fill",  color(year_data.temperature))
     .attr("stroke-width", linewidth)
     .attr("stroke", "rgb(0,0,0)")
