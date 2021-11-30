@@ -2,6 +2,8 @@
 import random
 from flask import Flask, render_template
 
+from settings import DEBUG
+
 app = Flask(__name__)
 
 
@@ -16,7 +18,7 @@ def dashboard():
         }
         for year in range(1900, 2022)
     ]
-    return render_template("index.html", data=data)
+    return render_template("index.html", data=data, debug=DEBUG)
 
 
 if __name__ == "__main__":
