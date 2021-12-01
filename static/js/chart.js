@@ -190,4 +190,8 @@ function changeYear(to_year) {
     .attr("cx", x(year))
     .attr("cy", y2(year_data.co2))
     .attr("r", circlewidth)
+
+  svg.select("#ppm_icon").text(year_data.ppm.toFixed(1) + " ppm")
+  svg.select("#co2_icon").text(year_data.co2.toFixed(3) + " Mt")
+  svg.select("#temp_icon").text(year_data.temperature.toFixed(2) + " °C")
 }
