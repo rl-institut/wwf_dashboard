@@ -17,9 +17,12 @@ $wwf-dark-brown: rgb(108, 59, 36);
 $wwf-brown: rgb(156, 106, 46);
 $wwf-base: rgb(195, 183, 140);
 
+$gray-1: #DBDBDB;
+
 // Layout
 $layout-max-width: 1208px;
 $layout-padding-large: 2.5rem;
 
 // Tiles
 $tile-max-width: calc((#{$layout-max-width} / 2 ) - #{$layout-padding-large});
+$tile-padding: 2rem;

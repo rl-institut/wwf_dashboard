@@ -31,9 +31,17 @@
 
   <body>
     <div class="tile">
-      <label for="yearRange" class="form-label">Select year</label>
-      <input type="range" class="form-range" min="1900" max="2020" id="yearRange" onchange="changeYear(this.value);">
-      <div id="chart"></div>
+      <div class="tile__header">
+        <h3>Immer mehr CO2 verschärft Klimakrise</h3>
+        <p>Mit den weltweit steigenden Emissionen steigen Jahr für Jahr auch die CO2-Konzentration in der Atmosphäre und die Temperatur auf der Erde.</p>
+      </div>
+      <div class="tile__slider">
+        <label for="yearRange" class="form-label">Select year</label>
+        <input type="range" class="form-range" min="1900" max="2020" id="yearRange" onchange="changeYear(this.value);">
+      </div>
+      <div class="tile__chart">
+        <div id="chart"></div>
+      </div>
     </div>
 
     <script src = "static/libs/d3.min.js"></script>
