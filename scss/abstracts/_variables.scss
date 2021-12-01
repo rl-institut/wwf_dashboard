@@ -1,0 +1,6 @@
+// Layout
+$layout-max-width: 1208px;
+$layout-padding-large: 2.5rem;
+
+// Tiles
+$tile-max-width: calc((#{$layout-max-width} / 2 ) - #{$layout-padding-large});

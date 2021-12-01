@@ -1,0 +1,15 @@
+{
+    "version": 3,
+    "mappings": "AMAA,AAAA,KAAK,AAAC,CACJ,SAAS,CLIM,4BAA4D,CKH5E",
+    "sources": [
+        "../../scss/styling.scss",
+        "../../scss/abstracts/_variables.scss",
+        "../../scss/abstracts/_mixins.scss",
+        "../../scss/abstracts/_fonts.scss",
+        "../../scss/base/_animations.scss",
+        "../../scss/base/_typography.scss",
+        "../../scss/layouts/_tiles.scss"
+    ],
+    "names": [],
+    "file": "styling.min.css"
+}
