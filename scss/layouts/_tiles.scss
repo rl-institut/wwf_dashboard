@@ -1,6 +1,16 @@
 .tile {
   max-width: $tile-max-width;
   padding: $tile-padding;
+  border: 1px solid $gray-1;
+
+  @media only screen and (max-width: $screen-width-max-s) {
+    width: 100%;
+    max-width: $tile-max-width;
+  }
+
+  @media only screen and (min-width: $screen-width-min-m) {
+    width: $tile-max-width;
+  }
 
   &__header {
     border: 1px solid $wwf-primary-color-1;

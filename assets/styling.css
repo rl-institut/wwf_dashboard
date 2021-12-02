@@ -114,9 +114,68 @@ h3 {
   letter-spacing: 0.5px;
 }
 
+.frame {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.frame__maxwidth {
+  width: 100%;
+  max-width: 1208px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+@media only screen and (max-width: 1262px) {
+  .frame__maxwidth {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+}
+
+@media only screen and (min-width: calc(1262px + 1px)) {
+  .frame__maxwidth {
+    width: 1208px;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+}
+
 .tile {
-  max-width: calc((1208px / 2 ) - 2.5rem);
+  max-width: calc((1208px - 2.5rem)  / 2);
   padding: 2rem;
+  border: 1px solid #DBDBDB;
+}
+
+@media only screen and (max-width: 830px) {
+  .tile {
+    width: 100%;
+    max-width: calc((1208px - 2.5rem)  / 2);
+  }
+}
+
+@media only screen and (min-width: calc(830px + 1px)) {
+  .tile {
+    width: calc((1208px - 2.5rem)  / 2);
+  }
 }
 
 .tile__header {

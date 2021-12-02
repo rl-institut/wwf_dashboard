@@ -1,0 +1,19 @@
+.frame {
+  @include flex-row-justify-center;
+  width: 100%;
+  
+  &__maxwidth {
+    width: 100%;
+    max-width: $layout-max-width;
+    @include flex-row-justify-center;
+
+    @media only screen and (max-width: $screen-width-max-m) {
+      flex-wrap: wrap;
+    }
+
+    @media only screen and (min-width: $screen-width-min-l) {
+      width: $layout-max-width;
+      justify-content: space-between;
+    }
+  }
+}

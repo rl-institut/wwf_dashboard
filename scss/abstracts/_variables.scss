@@ -19,6 +19,12 @@ $wwf-base: rgb(195, 183, 140);
 
 $gray-1: #DBDBDB;
 
+// Media queries
+$screen-width-max-s: 830px;
+$screen-width-min-m: calc(#{$screen-width-max-s} + 1px);
+$screen-width-max-m: 1262px;
+$screen-width-min-l: calc(#{$screen-width-max-m} + 1px);
+
 // Typography
 $font-size-large: 2rem;
 $font-size-normal: 1rem;
@@ -31,5 +37,5 @@ $layout-max-width: 1208px;
 $layout-padding-large: 2.5rem;
 
 // Tiles
-$tile-max-width: calc((#{$layout-max-width} / 2 ) - #{$layout-padding-large});
+$tile-max-width: calc((#{$layout-max-width} - #{$layout-padding-large})  / 2 );
 $tile-padding: 2rem;
