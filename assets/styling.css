@@ -111,6 +111,7 @@ h1,
 h2,
 h3 {
   font-family: 'WWF', sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .tile {
@@ -121,5 +122,14 @@ h3 {
 .tile__header {
   border: 1px solid #000;
   padding: 1rem;
+}
+
+.tile__header .title {
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+}
+
+.tile__header .text {
+  font-size: 1rem;
 }
 /*# sourceMappingURL=styling.css.map */
