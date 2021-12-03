@@ -38,8 +38,12 @@
             <p class="text">Mit den weltweit steigenden Emissionen steigen Jahr für Jahr auch die CO2-Konzentration in der Atmosphäre und die Temperatur auf der Erde.</p>
           </div>
           <div class="tile__slider">
+            <div class="range-wrap">
+              <input type="range" class="range" min="1900" max="2020" id="yearRange" onchange="changeYear(this.value);">
+              <output class="bubble"></output>
+            </div>
             <label for="yearRange" class="form-label">Select year</label>
-            <input type="range" class="form-range" min="1900" max="2020" id="yearRange" onchange="changeYear(this.value);">
+            
           </div>
           <div class="tile__chart">
             <div id="chart"></div>
@@ -52,7 +56,10 @@
             <p class="text">Unser Energieverbrauch basiert immer noch weitgehend auf Öl, Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der Anteil der Erneuerbaren Energien gering. </p>
           </div>
           <div class="tile__slider">
-            Slider hier
+            <div class="range-wrap" style="width: 75%;">
+              <input type="range" class="range" min="1990" max="2020">
+              <output class="bubble"></output>
+            </div>
           </div>
           <div class="tile__chart">
             Chart hier
@@ -69,6 +76,28 @@
       const height = 500 - margin.top - margin.bottom;
 
       var data = {{data|tojson}};
+
+      // Slider
+      // from https://codepen.io/chriscoyier/pen/eYNQyPe
+      const allRanges = document.querySelectorAll(".range-wrap");
+      allRanges.forEach(wrap => {
+        const range = wrap.querySelector(".range");
+        const bubble = wrap.querySelector(".bubble");
+
+        range.addEventListener("input", () => {
+          setBubble(range, bubble);
+        });
+        setBubble(range, bubble);
+      });
+
+      function setBubble(range, bubble) {
+        const val = range.value;
+        const min = range.min ? range.min : 0;
+        const max = range.max ? range.max : 100;
+        const newVal = Number(((val - min) * 100) / (max - min));
+        bubble.innerHTML = val;
+        bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
+      }
     </script>
     <script src="static/js/chart.js"></script>
   </body>

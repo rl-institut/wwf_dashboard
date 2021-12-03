@@ -114,6 +114,27 @@ h3 {
   letter-spacing: 0.5px;
 }
 
+.range-wrap {
+  position: relative;
+  margin: 0 auto 3rem;
+}
+
+.range {
+  width: 100%;
+}
+
+.bubble {
+  color: #000;
+  font-weight: 700;
+  padding: 4px 12px;
+  position: absolute;
+  border-radius: 4px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  top: -2rem;
+}
+
 .frame {
   display: -webkit-box;
   display: -ms-flexbox;
