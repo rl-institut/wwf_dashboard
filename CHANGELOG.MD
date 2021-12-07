@@ -7,6 +7,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 ## [Unreleased]
 ### Added
 - fonts
+- custom slider
 
 ### Fixed
 
