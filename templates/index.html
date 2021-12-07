@@ -39,11 +39,18 @@
           </div>
           <div class="tile__slider">
             <div class="range-wrap">
-              <input type="range" class="range" min="1900" max="2020" id="yearRange" onchange="changeYear(this.value);">
-              <output class="bubble"></output>
+              <div class="range-value" id="rangeV"></div>
+              <input id="range" type="range" min="1900" max="2020" value="200" step="1" id="yearRange" onchange="changeYear(this.value);">
             </div>
-            <label for="yearRange" class="form-label">Select year</label>
-            
+            <div class="range-values">
+              <span>1900</span>
+              <span>1920</span>
+              <span>1940</span>
+              <span>1960</span>
+              <span>1980</span>
+              <span>2000</span>
+              <span>2020</span>
+            </div>
           </div>
           <div class="tile__chart">
             <div id="chart"></div>
@@ -78,26 +85,19 @@
       var data = {{data|tojson}};
 
       // Slider
-      // from https://codepen.io/chriscoyier/pen/eYNQyPe
-      const allRanges = document.querySelectorAll(".range-wrap");
-      allRanges.forEach(wrap => {
-        const range = wrap.querySelector(".range");
-        const bubble = wrap.querySelector(".bubble");
-
-        range.addEventListener("input", () => {
-          setBubble(range, bubble);
-        });
-        setBubble(range, bubble);
-      });
-
-      function setBubble(range, bubble) {
-        const val = range.value;
-        const min = range.min ? range.min : 0;
-        const max = range.max ? range.max : 100;
-        const newVal = Number(((val - min) * 100) / (max - min));
-        bubble.innerHTML = val;
-        bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
-      }
+      // from https://codepen.io/onyx1812/pen/GRJxmva
+      const
+        range = document.getElementById('range'),
+        rangeV = document.getElementById('rangeV'),
+        setValue = ()=>{
+          const
+            newValue = Number( (range.value - range.min) * 100 / (range.max - range.min) ),
+            newPosition = 10 - (newValue * 0.2);
+          rangeV.innerHTML = `<span>${range.value}</span>`;
+          rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
+        };
+      document.addEventListener("DOMContentLoaded", setValue);
+      range.addEventListener('input', setValue);
     </script>
     <script src="static/js/chart.js"></script>
   </body>

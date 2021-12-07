@@ -115,24 +115,76 @@ h3 {
 }
 
 .range-wrap {
-  position: relative;
-  margin: 0 auto 3rem;
+  width: 98%;
+  margin: 0 auto;
 }
 
-.range {
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 20px 0;
   width: 100%;
 }
 
-.bubble {
-  color: #000;
-  font-weight: 700;
-  padding: 4px 12px;
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: #DBDBDB;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #000;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #DBDBDB;
+}
+
+.range-wrap {
+  position: relative;
+}
+
+.range-value {
   position: absolute;
-  border-radius: 4px;
+  top: -50%;
+}
+
+.range-value span {
+  text-align: center;
+  color: #000;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: block;
+  position: absolute;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  top: -2rem;
+  -webkit-transform: translate(-50%, 50%);
+          transform: translate(-50%, 50%);
+}
+
+.range-values {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 0.75rem;
+  color: #646464;
 }
 
 .frame {
@@ -211,5 +263,10 @@ h3 {
 
 .tile__header .text {
   font-size: 1rem;
+}
+
+.tile__slider {
+  text-align: center;
+  padding-top: 2rem;
 }
 /*# sourceMappingURL=styling.css.map */
