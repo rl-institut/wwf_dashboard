@@ -1,0 +1,11 @@
+<div class="tile__header">
+  <h3>Immer mehr CO2 verschärft Klimakrise</h3>
+  <p>Mit den weltweit steigenden Emissionen steigen Jahr für Jahr auch die CO2-Konzentration in der Atmosphäre und die Temperatur auf der Erde.</p>
+</div>
+<div class="tile__slider">
+  <input type="range" class="form-range" min="1900" max="2020" id="t1_year" onchange="t1_change_year(this.value);">
+</div>
+<div class="tile__chart">
+  <div id="t1"></div>
+</div>
+<button class="btn btn-primary" onclick="share('t1', {year: document.getElementById('t1_year').value})">Share</button>
