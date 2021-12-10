@@ -26,6 +26,7 @@ const color = d3.scaleOrdinal()
 
 const svg = d3.select("#chart")
   .append("svg")
+    .attr("id", "k1")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
