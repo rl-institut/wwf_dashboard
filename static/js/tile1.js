@@ -1,27 +1,42 @@
 
+var tile1 = null;
+$.ajax(
+  {
+    url: "static/data/tile1.json",
+    async: false,
+    success: function(data) {
+      tile1 = data;
+    }
+  }
+)
+
+$("#t1_year").attr("min", tile1[0].year)
+$("#t1_year").attr("max", tile1[tile1.length - 1].year)
 
 const t1_icon_space = 10;
 const t1_icon_width = (width - t1_icon_space * 4) / 3;
 const t1_icon_height = 30;
 
-const y_max = 200;
-const y2_max = 35;
+const t1_ppm_max = tile1.reduce(function(max, current){if (current.ppm > max) {return current.ppm} else {return max}}, 0) + 200;
+const t1_co2_max = tile1.reduce(function(max, current){if (current.co2 > max) {return current.co2} else {return max}}, 0);
 
 const t1_icon_area_height = 70;
 const t1_chart_height = height - t1_icon_area_height;
 
 const t1_x = d3.scaleBand()
   .range([ 0, width ])
-  .domain(data.t1.map(function(d) { return d.year; }))
+  .domain(tile1.map(function(d) { return d.year; }))
 const t1_y = d3.scaleLinear()
   .range([ t1_chart_height, 0 ])
-  .domain([0, y_max]);
+  .domain([0, t1_ppm_max]);
 const t1_y2 = d3.scaleLinear()
   .range([ t1_chart_height, 0 ])
-  .domain([0, y2_max]);
-const t1_color = d3.scaleOrdinal()
-  .domain([0, 15])
-  .range(["#00008B", "#0000FF", "#1E90FF", "#87CEFA", "#F0F8FF", "#F4A460", "#FF8C00", "#FF4500", "#FF0000", "#8B0000", "#800000", "#000000"]);
+  .domain([0, t1_co2_max]);
+const t1_color = d3.scaleQuantize()
+  .domain([-1.6, 1.6])
+  .range(["#08306b", "#08519c", "#2171b5", "#4292c6", "#6baed6", "#9ecae1", "#c6dbef", "#deebf7", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d"]);
+
+const t1_selected_bar_width = t1_x.bandwidth() * 2;
 
 const t1_svg = d3.select("#t1")
   .append("svg")
@@ -68,7 +83,7 @@ d3.select("#t1_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0
 
 // Temperatures
 t1_svg.selectAll(null)
-  .data(data.t1)
+  .data(tile1)
   .enter()
   .append("rect")
     .attr("x", function(d) { return t1_x(d.year); })
@@ -79,7 +94,7 @@ t1_svg.selectAll(null)
 
 // PPM
 t1_svg.append("path")
-  .datum(data.t1)
+  .datum(tile1)
   .attr("fill", "none")
   .attr("stroke", "gray")
   .attr("stroke-width", linewidth)
@@ -90,7 +105,7 @@ t1_svg.append("path")
 
 // CO2
 t1_svg.append("path")
-  .datum(data.t1)
+  .datum(tile1)
   .attr("fill", "none")
   .attr("stroke", "black")
   .attr("stroke-width", linewidth)
@@ -162,13 +177,13 @@ function t1_change_year(to_year) {
   t1_svg.select("#t1_current_circle").remove();
 
   const year = parseInt(to_year);
-  const year_data = data.t1.find(element => element.year == year);
+  const year_data = tile1.find(element => element.year == year);
 
   t1_svg.append("rect")
     .attr("id", "t1_current_year")
-    .attr("x", t1_x(year) - t1_x.bandwidth() * 2)
+    .attr("x", t1_x(year) - t1_selected_bar_width / 2)
     .attr("y", t1_y(year_data.ppm))
-    .attr("width", t1_x.bandwidth() * 4)
+    .attr("width", t1_selected_bar_width)
     .attr("height", t1_chart_height - t1_y(year_data.ppm))
     .attr("fill",  t1_color(year_data.temperature))
     .attr("stroke-width", linewidth)
@@ -179,7 +194,7 @@ function t1_change_year(to_year) {
     .attr("x1", t1_x(year))
     .attr("x2", t1_x(year))
     .attr("y1", t1_y(year_data.ppm))
-    .attr("y2", t1_y2(y2_max))
+    .attr("y2", t1_y2(t1_co2_max))
     .attr("stroke", "black")
     .attr("stroke-width", linewidth)
     .attr("stroke-dasharray", "4")
