@@ -6,9 +6,8 @@ DATA_PATH = "static/data"
 RAW_DATA_PATH = "raw_data"
 
 
-def tile_1():
+def tile1():
     filename = "WWF_Daten_Dashboard_Version 2.2.xlsx"
-
     data = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, filename),
         sheet_name="01 CO2 Konzentration",
@@ -22,4 +21,48 @@ def tile_1():
     data = data.sort_values("year")
     data.to_json(os.path.join(DATA_PATH, "tile1.json"), orient="records")
 
-tile_1()
+
+def tile2():
+    filename = "20211126-WWF_Daten_Dashboard_Version 2.6.xlsx"
+    data = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, filename),
+        sheet_name="02 Primärenergieverbrauch (2)",
+        header=6,
+        usecols=[3, 4, 5, 6, 7, 8, 9, 12, 14],
+        nrows=31,
+    )
+    data.columns = ["year", "coal1", "coal2", "oil", "gas1", "gas2", "renewables", "nuclear", "savings"]
+    data["coal"] = data["coal1"] + data["coal2"]
+    data["gas"] = data["gas1"] + data["gas2"]
+    data = data[["year", "coal", "oil", "gas", "renewables", "nuclear", "savings"]]
+
+    traffic = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, filename),
+        sheet_name="02 Primärenergieverbrauch (2)",
+        header=6,
+        usecols=[16, 17, 18],
+        nrows=31,
+    )
+    data["traffic"] = traffic["Erneuerbar"]
+
+    power = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, filename),
+        sheet_name="02 Primärenergieverbrauch (2)",
+        header=6,
+        usecols=[22, 23, 24],
+        nrows=31,
+    )
+    data["power"] = power["Erneuerbar.1"]
+
+    heat = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, filename),
+        sheet_name="02 Primärenergieverbrauch (2)",
+        header=6,
+        usecols=[28, 29, 30],
+        nrows=31,
+    )
+    data["heat"] = heat["Erneuerbar.2"]
+
+    data.to_json(os.path.join(DATA_PATH, "tile2.json"), orient="records")
+
+tile2()

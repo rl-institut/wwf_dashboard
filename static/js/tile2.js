@@ -1,4 +1,18 @@
 
+var tile2 = null;
+$.ajax(
+  {
+    url: "static/data/tile2.json",
+    async: false,
+    success: function(data) {
+      tile2 = data;
+    }
+  }
+)
+
+$("#t2_year").attr("min", tile2[0].year)
+$("#t2_year").attr("max", tile2[tile2.length - 1].year)
+
 const t2_resources = ["renewables", "oil", "gas", "coal", "nuclear", "savings"];
 const t2_resources_names = {
   "renewables": "Erneuerbare Energien",
@@ -99,7 +113,7 @@ function t2_change_year(year) {
   t2_svg.select("#t2_bars").remove();
   t2_svg.selectAll("t2_pie").remove();
 
-  const year_data = data.t2.find(element => element.year == year);
+  const year_data = tile2.find(element => element.year == year);
   t2_draw_bars(year_data);
   t2_draw_pie(year_data, "power");
   t2_draw_pie(year_data, "heat");
@@ -127,7 +141,7 @@ function t2_draw_bars(year_data) {
 
   t2_bars.append("text")
     .each(function(d) {
-      d3.select(this).text(d[0].data[d.key]);
+      d3.select(this).text(Math.round(d[0].data[d.key]));
       d3.select(this).attr("fill", "white");
       const adjustment = t2_adjust_text(t2_x(d[0][0]), t2_bar_height / 2, t2_x(d[0][1]) - t2_x(d[0][0]));
       for (const key in adjustment) {
@@ -189,4 +203,4 @@ function t2_draw_pie(year_data, type) {
     .style("text-anchor", "middle")
 }
 
-t2_change_year(2021);
+t2_change_year(2020);
