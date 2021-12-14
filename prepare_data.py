@@ -65,4 +65,18 @@ def tile2():
 
     data.to_json(os.path.join(DATA_PATH, "tile2.json"), orient="records")
 
-tile2()
+
+def tile4():
+    filename = "20211126-WWF_Daten_Dashboard_Version 2.6.xlsx"
+    data = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, filename),
+        sheet_name="04 Klimatechnologien",
+        header=6,
+        usecols=[3, 4, 5, 6, 7],
+        nrows=21,
+    )
+    data.columns = ["year", "ecars", "charging", "storages", "heatpumps"]
+    data.to_json(os.path.join(DATA_PATH, "tile4.json"), orient="records")
+
+
+tile4()
