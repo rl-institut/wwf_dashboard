@@ -1,0 +1,11 @@
+<div class="tile__header">
+  <h3>Klimatechnologien sind im Kommen</h3>
+  <p>Strombasierte Technologien finden immer breitere Anwendung, egal ob beim Heizen, in der Mobilität oder als Speicherlösungen.</p>
+</div>
+<div class="tile__slider">
+  <input type="range" class="form-range" min="1990" max="2021" id="t4_year" onchange="t4_change_year(this.value);">
+</div>
+<div class="tile__chart">
+  <div id="t4"></div>
+</div>
+<button class="btn btn-primary" onclick="share(4, {year: document.getElementById('t4_year').value});">Share</button>
