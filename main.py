@@ -12,33 +12,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def dashboard():
-    data = {
-        "t1": [
-            {
-                "year": year,
-                "ppm": random.randint(80, 100) / 100 * (year - 1900),
-                "co2": 20 + random.randint(80, 100) / 100 * (year - 1900) / 10,
-                "temperature": random.randint(0, 15)
-            }
-            for year in range(1900, 2022)
-        ],
-        "t2": [
-            {
-                "year": year,
-                "renewables": random.randint(100, 400),
-                "oil": random.randint(2000, 4000),
-                "gas": random.randint(1000, 2000),
-                "coal": random.randint(1000, 2000),
-                "nuclear": random.randint(800, 1000),
-                "savings": random.randint(100, 400),
-                "power": random.randint(0, 101),
-                "heat": random.randint(0, 101),
-                "traffic": random.randint(0, 101),
-            }
-            for year in range(1990, 2022)
-        ]
-    }
-    return render_template("index.html", data=data, debug=DEBUG)
+    return render_template("index.html", debug=DEBUG)
 
 
 @app.route("/<int:tile>", methods=["GET"])
