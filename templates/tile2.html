@@ -3,9 +3,9 @@
   <p>Unser Energieverbrauch basiert immer noch weitgehend auf Öl, Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der Anteil der Erneuerbaren Energien gering.</p>
 </div>
 <div class="tile__slider">
-  <input type="range" class="form-range" min="1990" max="2021" onchange="t2_change_year(this.value);">
+  <input type="range" class="form-range" min="1990" max="2021" id="t2_year" onchange="t2_change_year(this.value);">
 </div>
 <div class="tile__chart">
   <div id="t2"></div>
 </div>
-<button class="btn btn-primary" onclick="share('t2');">Share</button>
+<button class="btn btn-primary" onclick="share(2, {year: document.getElementById('t2_year').value});">Share</button>

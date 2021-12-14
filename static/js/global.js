@@ -7,10 +7,10 @@ const rectround = 16;
 
 
 function share(tile, options) {
-  const tile_svg = document.getElementById(tile).firstChild;
+  const tile_svg = document.getElementById("t" + tile).firstChild;
   $.post(
     {
-      url: "share/1",
+      url: "share/" + tile,
       data: {
         svg: tile_svg.outerHTML,
         options: JSON.stringify(options),
