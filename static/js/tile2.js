@@ -26,11 +26,11 @@ const t2_bar_color = d3.scaleOrdinal()
 
 const t2_pie_y = 350;
 const t2_pie_space = 10;
-const t2_pie_radius = (width - 4 * t2_pie_space) / 3 / 2;
+const t2_pie_radius = (chart_width - 4 * t2_pie_space) / 3 / 2;
 const t2_pie_positions = {"power": 0, "heat": 1, "traffic": 2}
 
 const t2_pie_legend_width = 300;
-const t2_pie_legend_x = width / 2 - t2_pie_legend_width / 2;
+const t2_pie_legend_x = chart_width / 2 - t2_pie_legend_width / 2;
 const t2_pie_legend_y = 450;
 const t2_pie_legend_rect = 20;
 
@@ -40,8 +40,8 @@ const t2_pie_color = d3.scaleOrdinal()
 
 const t2_svg = d3.select("#t2")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", width)
+    .attr("height", height)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -81,7 +81,7 @@ function t2_get_x_scale(year_data) {
   )
   return d3.scaleLinear()
     .domain([0, max_value])
-    .range([ 0, width]);
+    .range([ 0, chart_width]);
 }
 
 function t2_adjust_text(x, y, bar_width) {
