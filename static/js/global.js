@@ -26,7 +26,7 @@ function share(tile, options) {
 }
 
 var tiles = {};
-for (let i=1; i <= 10; i++) {
+for (let i = 1; i <= 10; i++) {
   $.ajax(
     {
       url: "static/data/tile" + i + ".json",
@@ -37,3 +37,21 @@ for (let i=1; i <= 10; i++) {
     }
   )
 }
+
+const icon_names = ["i_bus"];
+var icons = {};
+for (let i = 0; i < icon_names.length; i++) {
+  let name = icon_names[i];
+  $.ajax(
+    {
+      url: "static/icons/" + name + ".svg",
+      async: false,
+      success: function(data) {
+        icons[name] = data;
+      }
+    }
+  )
+}
+
+// Embed icons via:
+// svg.node().appendChild(icons["i_bus"].documentElement)

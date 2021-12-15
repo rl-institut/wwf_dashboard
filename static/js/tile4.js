@@ -1,15 +1,4 @@
 
-var icon = null;
-$.ajax(
-  {
-    url: "static/icons/i_bus.svg",
-    async: false,
-    success: function(data) {
-      icon = data;
-    }
-  }
-)
-
 $("#t4_year").ionRangeSlider({
   min: tiles[4][0].year,
   max: tiles[4][tiles[4].length - 1].year,
@@ -103,8 +92,3 @@ for (let i=0; i < t4_technologies.length; i++) {
       .y(function(d) {return y(d[technology] / 1000)})
     )
 }
-
-
-
-// Embed svg:
-// t4_svg.node().appendChild(icon.documentElement)
