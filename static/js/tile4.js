@@ -21,7 +21,7 @@ const t4_icons_height = width;
 const t4_chart_height = 230;
 
 const t4_x = d3.scaleBand()
-  .range([ 0, width ])
+  .range([ 0, chart_width ])
   .domain(tiles[4].map(function(d) { return d.year; }))
 const t4_y = d3.scaleLinear()
   .range([ t4_chart_height, 0 ])
@@ -35,8 +35,8 @@ const t4_color = d3.scaleOrdinal()
 
 const t4_svg = d3.select("#t4")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", width)
+    .attr("height", height)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -58,7 +58,7 @@ d3.select("#t4_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0)
 // Y-Axis (E-Cars)
 t4_svg.append("g")
   .attr("id", "t4_yaxis")
-  .attr("transform", "translate(" + width + ", 0)")
+  .attr("transform", "translate(" + chart_width + ", 0)")
   .call(
     d3.axisRight(t4_y)
   )
