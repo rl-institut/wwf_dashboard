@@ -10,8 +10,14 @@ $.ajax(
   }
 )
 
-$("#t1_year").attr("min", tile1[0].year)
-$("#t1_year").attr("max", tile1[tile1.length - 1].year)
+$("#t1_year").ionRangeSlider({
+  min: tile1[0].year,
+  max: tile1[tile1.length - 1].year,
+  from: tile1[tile1.length - 1].year,
+  onChange: function (data) {
+    t1_change_year(data.from)
+  }
+});
 
 const t1_icon_area_height = 70;
 const t1_chart_height = height - t1_icon_area_height;

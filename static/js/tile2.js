@@ -10,8 +10,14 @@ $.ajax(
   }
 )
 
-$("#t2_year").attr("min", tile2[0].year)
-$("#t2_year").attr("max", tile2[tile2.length - 1].year)
+$("#t2_year").ionRangeSlider({
+  min: tile2[0].year,
+  max: tile2[tile2.length - 1].year,
+  from: tile2[tile2.length - 1].year,
+  onChange: function (data) {
+    t2_change_year(data.from)
+  }
+});
 
 const t2_resources = ["renewables", "oil", "gas", "coal", "nuclear", "savings"];
 const t2_resources_names = {

@@ -21,10 +21,16 @@ $.ajax(
   }
 )
 
-const t4_technologies = ["heatpumps", "storages", "ecars", "charging"];
+$("#t4_year").ionRangeSlider({
+  min: tile4[0].year,
+  max: tile4[tile4.length - 1].year,
+  from: tile4[tile4.length - 1].year,
+  onChange: function (data) {
+    t4_change_year(data.from)
+  }
+});
 
-$("#t4_year").attr("min", tile4[0].year)
-$("#t4_year").attr("max", tile4[tile4.length - 1].year)
+const t4_technologies = ["heatpumps", "storages", "ecars", "charging"];
 
 const t4_ecars_max = tile4.reduce(function(max, current){if (current.ecars > max) {return current.ecars} else {return max}}, 0) / 1000;
 const t4_others_max = Math.max(
