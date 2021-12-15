@@ -1,11 +1,14 @@
 
-const margin = {top: 30, right: 50, bottom: 70, left: 50};
-const width = $("#t1").width() - margin.left - margin.right;
+// Width of first tile is representative for all tiles:
+const margin = {top: 30, right: 50, bottom: 30, left: 50};
+const width = $("#t1").width();
+const chart_width = width - margin.left - margin.right;
 const height = Math.min($(window).height(), 766) - margin.top - margin.bottom;
+const tile_breakpoint = 500;
 
-const linewidth = 2;
-const circlewidth = 6;
-const rectround = 16;
+const line_width = 2;
+const circle_width = 6;
+const rect_round = 16;
 
 
 function share(tile, options) {

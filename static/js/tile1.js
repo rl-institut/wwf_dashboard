@@ -8,18 +8,19 @@ $("#t1_year").ionRangeSlider({
   }
 });
 
-const t1_icon_area_height = 70;
-const t1_chart_height = height - t1_icon_area_height;
+const t1_icon_area_height = 80;
+const t1_icon_area_offset = 30;
+const t1_chart_height = height - margin.top - margin.bottom - t1_icon_area_height - t1_icon_area_offset;
 
 const t1_icon_space = 10;
-const t1_icon_width = (width - t1_icon_space * 4) / 3;
+const t1_icon_width = (chart_width - t1_icon_space * 4) / 3;
 const t1_icon_height = 30;
 
 const t1_ppm_max = tiles[1].reduce(function(max, current){if (current.ppm > max) {return current.ppm} else {return max}}, 0) + 200;
 const t1_co2_max = tiles[1].reduce(function(max, current){if (current.co2 > max) {return current.co2} else {return max}}, 0);
 
 const t1_x = d3.scaleBand()
-  .range([ 0, width ])
+  .range([ 0, chart_width ])
   .domain(tiles[1].map(function(d) { return d.year; }))
 const t1_y = d3.scaleLinear()
   .range([ t1_chart_height, 0 ])
@@ -35,8 +36,8 @@ const t1_selected_bar_width = t1_x.bandwidth() * 2;
 
 const t1_svg = d3.select("#t1")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", width)
+    .attr("height", height)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -58,7 +59,7 @@ d3.select("#t1_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0)
 // Y-Axis (PPM)
 t1_svg.append("g")
   .attr("id", "t1_yaxis")
-  .attr("transform", "translate(" + width + ", 0)")
+  .attr("transform", "translate(" + chart_width + ", 0)")
   .call(
     d3.axisRight(t1_y)
   )
@@ -92,7 +93,7 @@ t1_svg.append("path")
   .datum(tiles[1])
   .attr("fill", "none")
   .attr("stroke", "gray")
-  .attr("stroke-width", linewidth)
+  .attr("stroke-width", line_width)
   .attr("d", d3.line()
     .x(function(d) { return t1_x(d.year) + t1_x.bandwidth() / 2 })
     .y(function(d) { return t1_y(d.ppm) })
@@ -103,25 +104,29 @@ t1_svg.append("path")
   .datum(tiles[1])
   .attr("fill", "none")
   .attr("stroke", "black")
-  .attr("stroke-width", linewidth)
+  .attr("stroke-width", line_width)
   .attr("d", d3.line()
     .x(function(d) { return t1_x(d.year) + t1_x.bandwidth() / 2 })
     .y(function(d) { return t1_y2(d.co2) })
   )
 
+// ICONS
+
+const t1_icons = t1_svg.append("g").attr("transform", "translate(0, " + (t1_chart_height + t1_icon_area_offset) + ")");
+
 // PPM Icon
-t1_svg.append("rect")
+t1_icons.append("rect")
   .attr("x", t1_icon_space)
-  .attr("y", t1_chart_height + t1_icon_area_height)
+  .attr("y", t1_icon_area_height / 2 - t1_icon_height / 2)
   .attr("width", t1_icon_width)
   .attr("height", t1_icon_height)
-  .attr("ry", rectround)
+  .attr("ry", rect_round)
   .attr("fill", "black")
 
-t1_svg.append("text")
+t1_icons.append("text")
   .attr("id", "t1_ppm_icon")
   .attr("x", t1_icon_space + t1_icon_width / 2)
-  .attr("y", t1_chart_height + t1_icon_area_height + t1_icon_height / 2)
+  .attr("y", t1_icon_area_height / 2)
   .attr("fill", "white")
   .text("328 ppm")
   .style("dominant-baseline", "middle")
@@ -129,36 +134,36 @@ t1_svg.append("text")
 
 
 // CO2 Icon
-t1_svg.append("rect")
+t1_icons.append("rect")
   .attr("x", t1_icon_width + 2 * t1_icon_space)
-  .attr("y", t1_chart_height + t1_icon_area_height)
+  .attr("y", t1_icon_area_height / 2 - t1_icon_height / 2)
   .attr("width", t1_icon_width)
   .attr("height", t1_icon_height)
-  .attr("ry", rectround)
+  .attr("ry", rect_round)
   .attr("fill", "gray")
 
-t1_svg.append("text")
+t1_icons.append("text")
   .attr("id", "t1_co2_icon")
   .attr("x", 2 * t1_icon_space + t1_icon_width + t1_icon_width / 2)
-  .attr("y", t1_chart_height + t1_icon_area_height + t1_icon_height / 2)
+  .attr("y", t1_icon_area_height / 2)
   .attr("fill", "white")
   .text("12.547 Mt")
   .style("dominant-baseline", "middle")
   .style("text-anchor", "middle")
 
 // Temp Icon
-t1_svg.append("rect")
+t1_icons.append("rect")
   .attr("x", t1_icon_width * 2 + 3 * t1_icon_space)
-  .attr("y", t1_chart_height + t1_icon_area_height)
+  .attr("y", t1_icon_area_height / 2 - t1_icon_height / 2)
   .attr("width", t1_icon_width)
   .attr("height", t1_icon_height)
-  .attr("ry", rectround)
+  .attr("ry", rect_round)
   .attr("fill", "pink")
 
-t1_svg.append("text")
+t1_icons.append("text")
   .attr("id", "t1_temp_icon")
   .attr("x", 3 * t1_icon_space + 2 * t1_icon_width + t1_icon_width / 2)
-  .attr("y", t1_chart_height + t1_icon_area_height + t1_icon_height / 2)
+  .attr("y", t1_icon_area_height / 2)
   .attr("fill", "black")
   .text("+0,47 °C")
   .style("dominant-baseline", "middle")
@@ -181,7 +186,7 @@ function t1_change_year(to_year) {
     .attr("width", t1_selected_bar_width)
     .attr("height", t1_chart_height - t1_y(year_data.ppm))
     .attr("fill",  t1_color(year_data.temperature))
-    .attr("stroke-width", linewidth)
+    .attr("stroke-width", line_width)
     .attr("stroke", "rgb(0,0,0)")
 
   t1_svg.append("line")
@@ -191,14 +196,14 @@ function t1_change_year(to_year) {
     .attr("y1", t1_y(year_data.ppm))
     .attr("y2", t1_y2(t1_co2_max))
     .attr("stroke", "black")
-    .attr("stroke-width", linewidth)
+    .attr("stroke-width", line_width)
     .attr("stroke-dasharray", "4")
 
   t1_svg.append("circle")
     .attr("id", "t1_current_circle")
     .attr("cx", t1_x(year))
     .attr("cy", t1_y2(year_data.co2))
-    .attr("r", circlewidth)
+    .attr("r", circle_width)
 
   t1_svg.select("#t1_ppm_icon").text(year_data.ppm.toFixed(1) + " ppm")
   t1_svg.select("#t1_co2_icon").text(year_data.co2.toFixed(3) + " Mt")

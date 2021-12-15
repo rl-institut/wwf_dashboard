@@ -17,6 +17,7 @@ const t4_others_max = Math.max(
   tiles[4].reduce(function(max, current){if (current.heatpumps > max) {return current.heatpumps} else {return max}}, 0)
 ) / 1000;
 
+const t4_icons_height = width;
 const t4_chart_height = 230;
 
 const t4_x = d3.scaleBand()
@@ -86,7 +87,7 @@ for (let i=0; i < t4_technologies.length; i++) {
     .datum(tiles[4])
     .attr("fill", "none")
     .attr("stroke", t4_color(technology))
-    .attr("stroke-width", linewidth)
+    .attr("stroke-width", line_width)
     .attr("d", d3.line()
       .x(function(d) {return t4_x(d.year)})
       .y(function(d) {return y(d[technology] / 1000)})
