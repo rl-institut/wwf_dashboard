@@ -13,15 +13,15 @@ $.ajax(
 $("#t1_year").attr("min", tile1[0].year)
 $("#t1_year").attr("max", tile1[tile1.length - 1].year)
 
+const t1_icon_area_height = 70;
+const t1_chart_height = height - t1_icon_area_height;
+
 const t1_icon_space = 10;
 const t1_icon_width = (width - t1_icon_space * 4) / 3;
 const t1_icon_height = 30;
 
 const t1_ppm_max = tile1.reduce(function(max, current){if (current.ppm > max) {return current.ppm} else {return max}}, 0) + 200;
 const t1_co2_max = tile1.reduce(function(max, current){if (current.co2 > max) {return current.co2} else {return max}}, 0);
-
-const t1_icon_area_height = 70;
-const t1_chart_height = height - t1_icon_area_height;
 
 const t1_x = d3.scaleBand()
   .range([ 0, width ])

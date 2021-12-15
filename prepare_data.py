@@ -79,4 +79,4 @@ def tile4():
     data.to_json(os.path.join(DATA_PATH, "tile4.json"), orient="records")
 
 
-tile4()
+tile2()

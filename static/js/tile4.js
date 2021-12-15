@@ -10,6 +10,17 @@ $.ajax(
   }
 )
 
+var icon = null;
+$.ajax(
+  {
+    url: "static/icons/i_bus.svg",
+    async: false,
+    success: function(data) {
+      icon = data;
+    }
+  }
+)
+
 const t4_technologies = ["heatpumps", "storages", "ecars", "charging"];
 
 $("#t4_year").attr("min", tile4[0].year)
@@ -97,3 +108,6 @@ for (let i=0; i < t4_technologies.length; i++) {
       .y(function(d) {return y(d[technology] / 1000)})
     )
 }
+
+// Embed svg:
+// t4_svg.node().appendChild(icon.documentElement)
