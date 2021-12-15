@@ -24,3 +24,16 @@ function share(tile, options) {
     }
   );
 }
+
+var tiles = {};
+for (let i=1; i <= 10; i++) {
+  $.ajax(
+    {
+      url: "static/data/tile" + i + ".json",
+      async: false,
+      success: function(data) {
+        tiles[i] = data;
+      }
+    }
+  )
+}

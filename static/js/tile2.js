@@ -1,19 +1,8 @@
 
-var tile2 = null;
-$.ajax(
-  {
-    url: "static/data/tile2.json",
-    async: false,
-    success: function(data) {
-      tile2 = data;
-    }
-  }
-)
-
 $("#t2_year").ionRangeSlider({
-  min: tile2[0].year,
-  max: tile2[tile2.length - 1].year,
-  from: tile2[tile2.length - 1].year,
+  min: tiles[2][0].year,
+  max: tiles[2][tiles[2].length - 1].year,
+  from: tiles[2][tiles[2].length - 1].year,
   onChange: function (data) {
     t2_change_year(data.from)
   }
@@ -119,7 +108,7 @@ function t2_change_year(year) {
   t2_svg.select("#t2_bars").remove();
   t2_svg.selectAll("t2_pie").remove();
 
-  const year_data = tile2.find(element => element.year == year);
+  const year_data = tiles[2].find(element => element.year == year);
   t2_draw_bars(year_data);
   t2_draw_pie(year_data, "power");
   t2_draw_pie(year_data, "heat");

@@ -1,15 +1,4 @@
 
-var tile4 = null;
-$.ajax(
-  {
-    url: "static/data/tile4.json",
-    async: false,
-    success: function(data) {
-      tile4 = data;
-    }
-  }
-)
-
 var icon = null;
 $.ajax(
   {
@@ -22,9 +11,9 @@ $.ajax(
 )
 
 $("#t4_year").ionRangeSlider({
-  min: tile4[0].year,
-  max: tile4[tile4.length - 1].year,
-  from: tile4[tile4.length - 1].year,
+  min: tiles[4][0].year,
+  max: tiles[4][tiles[4].length - 1].year,
+  from: tiles[4][tiles[4].length - 1].year,
   onChange: function (data) {
     t4_change_year(data.from)
   }
@@ -32,18 +21,18 @@ $("#t4_year").ionRangeSlider({
 
 const t4_technologies = ["heatpumps", "storages", "ecars", "charging"];
 
-const t4_ecars_max = tile4.reduce(function(max, current){if (current.ecars > max) {return current.ecars} else {return max}}, 0) / 1000;
+const t4_ecars_max = tiles[4].reduce(function(max, current){if (current.ecars > max) {return current.ecars} else {return max}}, 0) / 1000;
 const t4_others_max = Math.max(
-  tile4.reduce(function(max, current){if (current.charging > max) {return current.charging} else {return max}}, 0),
-  tile4.reduce(function(max, current){if (current.storages > max) {return current.storages} else {return max}}, 0),
-  tile4.reduce(function(max, current){if (current.heatpumps > max) {return current.heatpumps} else {return max}}, 0)
+  tiles[4].reduce(function(max, current){if (current.charging > max) {return current.charging} else {return max}}, 0),
+  tiles[4].reduce(function(max, current){if (current.storages > max) {return current.storages} else {return max}}, 0),
+  tiles[4].reduce(function(max, current){if (current.heatpumps > max) {return current.heatpumps} else {return max}}, 0)
 ) / 1000;
 
 const t4_chart_height = 230;
 
 const t4_x = d3.scaleBand()
   .range([ 0, width ])
-  .domain(tile4.map(function(d) { return d.year; }))
+  .domain(tiles[4].map(function(d) { return d.year; }))
 const t4_y = d3.scaleLinear()
   .range([ t4_chart_height, 0 ])
   .domain([0, t4_ecars_max]);
@@ -105,7 +94,7 @@ for (let i=0; i < t4_technologies.length; i++) {
     y = t4_y;
   }
   t4_svg.append("path")
-    .datum(tile4)
+    .datum(tiles[4])
     .attr("fill", "none")
     .attr("stroke", t4_color(technology))
     .attr("stroke-width", linewidth)
@@ -114,6 +103,8 @@ for (let i=0; i < t4_technologies.length; i++) {
       .y(function(d) {return y(d[technology] / 1000)})
     )
 }
+
+
 
 // Embed svg:
 // t4_svg.node().appendChild(icon.documentElement)

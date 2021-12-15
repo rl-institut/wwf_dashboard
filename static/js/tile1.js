@@ -1,19 +1,8 @@
 
-var tile1 = null;
-$.ajax(
-  {
-    url: "static/data/tile1.json",
-    async: false,
-    success: function(data) {
-      tile1 = data;
-    }
-  }
-)
-
 $("#t1_year").ionRangeSlider({
-  min: tile1[0].year,
-  max: tile1[tile1.length - 1].year,
-  from: tile1[tile1.length - 1].year,
+  min: tiles[1][0].year,
+  max: tiles[1][tiles[1].length - 1].year,
+  from: tiles[1][tiles[1].length - 1].year,
   onChange: function (data) {
     t1_change_year(data.from)
   }
@@ -26,12 +15,12 @@ const t1_icon_space = 10;
 const t1_icon_width = (width - t1_icon_space * 4) / 3;
 const t1_icon_height = 30;
 
-const t1_ppm_max = tile1.reduce(function(max, current){if (current.ppm > max) {return current.ppm} else {return max}}, 0) + 200;
-const t1_co2_max = tile1.reduce(function(max, current){if (current.co2 > max) {return current.co2} else {return max}}, 0);
+const t1_ppm_max = tiles[1].reduce(function(max, current){if (current.ppm > max) {return current.ppm} else {return max}}, 0) + 200;
+const t1_co2_max = tiles[1].reduce(function(max, current){if (current.co2 > max) {return current.co2} else {return max}}, 0);
 
 const t1_x = d3.scaleBand()
   .range([ 0, width ])
-  .domain(tile1.map(function(d) { return d.year; }))
+  .domain(tiles[1].map(function(d) { return d.year; }))
 const t1_y = d3.scaleLinear()
   .range([ t1_chart_height, 0 ])
   .domain([0, t1_ppm_max]);
@@ -89,7 +78,7 @@ d3.select("#t1_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0
 
 // Temperatures
 t1_svg.selectAll(null)
-  .data(tile1)
+  .data(tiles[1])
   .enter()
   .append("rect")
     .attr("x", function(d) { return t1_x(d.year); })
@@ -100,7 +89,7 @@ t1_svg.selectAll(null)
 
 // PPM
 t1_svg.append("path")
-  .datum(tile1)
+  .datum(tiles[1])
   .attr("fill", "none")
   .attr("stroke", "gray")
   .attr("stroke-width", linewidth)
@@ -111,7 +100,7 @@ t1_svg.append("path")
 
 // CO2
 t1_svg.append("path")
-  .datum(tile1)
+  .datum(tiles[1])
   .attr("fill", "none")
   .attr("stroke", "black")
   .attr("stroke-width", linewidth)
@@ -183,7 +172,7 @@ function t1_change_year(to_year) {
   t1_svg.select("#t1_current_circle").remove();
 
   const year = parseInt(to_year);
-  const year_data = tile1.find(element => element.year == year);
+  const year_data = tiles[1].find(element => element.year == year);
 
   t1_svg.append("rect")
     .attr("id", "t1_current_year")
