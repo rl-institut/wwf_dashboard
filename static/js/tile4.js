@@ -8,7 +8,12 @@ $("#t4_year").ionRangeSlider({
   }
 });
 
-const t4_technologies = ["heatpumps", "storages", "ecars", "charging"];
+const t4_technologies = {
+  "heatpumps": "Wärmepumpen",
+  "storages": "Heimspeicher",
+  "ecars": "E-Autos",
+  "charging": "Ladesäulen"
+};
 
 const t4_ecars_max = tiles[4].reduce(function(max, current){if (current.ecars > max) {return current.ecars} else {return max}}, 0) / 1000;
 const t4_others_max = Math.max(
@@ -19,8 +24,10 @@ const t4_others_max = Math.max(
 
 const t4_chart_height = 230;
 const t4_chart_offset = 40;
-const t4_icons_offset = 30;
-const t4_icons_height = height - t4_chart_height - t4_chart_offset - margin.top - margin.bottom;
+
+const t4_icon_area_offset = 30;
+const t4_icon_space = 50;
+const t4_icon_margin = 5;
 
 const t4_x = d3.scaleBand()
   .range([ 0, chart_width ])
@@ -32,7 +39,7 @@ const t4_y2 = d3.scaleLinear()
   .range([ t4_chart_height, 0 ])
   .domain([0, t4_others_max]);
 const t4_color = d3.scaleOrdinal()
-  .domain(t4_technologies)
+  .domain(Object.keys(t4_technologies))
   .range(["#d82d45", "#724284", "#008987", "#006386"]);
 
 const t4_svg = d3.select("#t4")
@@ -43,8 +50,56 @@ const t4_svg = d3.select("#t4")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
+// ICONS
+
+const t4_icons = t4_svg.append("g");
+
+// 4x1 icon row or 2x2 icon grid:
+const t4_icon_wrap = (width > tile_breakpoint) ? 4 : 2;
+const t4_icon_width = (chart_width - (t4_icon_wrap + 1) * t4_icon_space) / t4_icon_wrap;
+const t4_icon_fifth = t4_icon_width / 3 / 2;
+const t4_icon_height = 5 * t4_icon_fifth + 4 * t4_icon_margin;
+const t4_icon_area_height = t4_icon_height * 4 / t4_icon_wrap;
+
+t4_icons.append("rect")
+  .attr("width", chart_width)
+  .attr("height", t4_icon_area_height)
+  .attr("fill", "white")
+  .attr("stroke", "black")
+
+for (let i = 0; i < Object.keys(t4_technologies).length; i++) {
+  const technology = Object.keys(t4_technologies)[i];
+
+  // left-top corner of icon
+  const x = (i % t4_icon_wrap) * t4_icon_width + t4_icon_space * (i % t4_icon_wrap + 1);
+  const y = (parseInt(i / t4_icon_wrap)) * t4_icon_height;
+
+  // Icon text gets 1/5 of height, symbol and rect get 2/5 of height
+  t4_icons.append("text")
+    .text(t4_technologies[technology])
+    .attr("x", x + t4_icon_width / 2)
+    .attr("y", y + t4_icon_margin)
+    .attr("text-anchor", "middle")
+    .attr("dominant-baseline", "hanging");
+
+  $(t4_icons.node().appendChild(icons["i_bus"].documentElement.cloneNode(true)))
+    .attr("x", x + t4_icon_width / 2 - t4_icon_fifth)
+    .attr("y", y + 2 * t4_icon_margin + t4_icon_fifth)
+    .attr("width", 2 * t4_icon_fifth)
+    .attr("height", 2 * t4_icon_fifth)
+    .attr("preserveAspectRatio", "xMidYMid slice");
+
+  t4_icons.append("rect")
+    .attr("x", x)
+    .attr("y", y + 3 * t4_icon_margin + t4_icon_fifth * 3)
+    .attr("width", t4_icon_width)
+    .attr("height", t4_icon_fifth * 2)
+    .attr("fill", t4_color(technology));
+}
+
+
 // CHART
-const t4_chart = t4_svg.append("g").attr("transform", "translate(0, " + (t4_icons_height + t4_icons_offset) + ")");
+const t4_chart = t4_svg.append("g").attr("transform", "translate(0, " + (t4_icon_area_height + t4_icon_area_offset) + ")");
 
 // X-Axis
 t4_chart.append("g")
@@ -83,8 +138,7 @@ t4_chart.append("g")
 d3.select("#t4_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 // Add technology paths
-for (let i=0; i < t4_technologies.length; i++) {
-  const technology = t4_technologies[i];
+for (const technology of Object.keys(t4_technologies)) {
   let y = t4_y2;
   if (technology == "ecars") {
     y = t4_y;
