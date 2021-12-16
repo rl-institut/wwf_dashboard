@@ -17,16 +17,12 @@ def dashboard():
 
 @app.route("/<int:tile>", methods=["GET"])
 def get_tile(tile):
-    data = [
-        {
-            "year": year,
-            "ppm": random.randint(80, 100) / 100 * (year - 1900),
-            "co2": 20 + random.randint(80, 100) / 100 * (year - 1900) / 10,
-            "temperature": random.randint(0, 15)
-        }
-        for year in range(1900, 2022)
-    ]
-    return render_template("index.html", data=data, debug=DEBUG)
+    return render_template(
+        "single_tile.html",
+        tile_html=f"tiles/tile{tile}.html",
+        tile_js=f"static/js/tile{tile}.js",
+        debug=DEBUG
+    )
 
 
 @app.route("/share/<int:tile>", methods=["POST"])

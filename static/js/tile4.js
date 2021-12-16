@@ -17,8 +17,10 @@ const t4_others_max = Math.max(
   tiles[4].reduce(function(max, current){if (current.heatpumps > max) {return current.heatpumps} else {return max}}, 0)
 ) / 1000;
 
-const t4_icons_height = width;
 const t4_chart_height = 230;
+const t4_chart_offset = 40;
+const t4_icons_offset = 30;
+const t4_icons_height = height - t4_chart_height - t4_chart_offset - margin.top - margin.bottom;
 
 const t4_x = d3.scaleBand()
   .range([ 0, chart_width ])
@@ -40,8 +42,12 @@ const t4_svg = d3.select("#t4")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+
+// CHART
+const t4_chart = t4_svg.append("g").attr("transform", "translate(0, " + (t4_icons_height + t4_icons_offset) + ")");
+
 // X-Axis
-t4_svg.append("g")
+t4_chart.append("g")
   .attr("id", "t4_xaxis")
   .attr("transform", "translate(0," + t4_chart_height + ")")
   .call(
@@ -56,7 +62,7 @@ d3.select("#t4_xaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t4_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 // Y-Axis (E-Cars)
-t4_svg.append("g")
+t4_chart.append("g")
   .attr("id", "t4_yaxis")
   .attr("transform", "translate(" + chart_width + ", 0)")
   .call(
@@ -67,7 +73,7 @@ t4_svg.append("g")
 d3.select("#t4_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 // Y2-Axis (Others)
-t4_svg.append("g")
+t4_chart.append("g")
   .attr("id", "t4_yaxis2")
   .call(
     d3.axisLeft(t4_y2)
@@ -83,7 +89,7 @@ for (let i=0; i < t4_technologies.length; i++) {
   if (technology == "ecars") {
     y = t4_y;
   }
-  t4_svg.append("path")
+  t4_chart.append("path")
     .datum(tiles[4])
     .attr("fill", "none")
     .attr("stroke", t4_color(technology))
