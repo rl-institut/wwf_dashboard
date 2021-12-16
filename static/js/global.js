@@ -1,11 +1,5 @@
 
 // Width of one tile is representative for all tiles:
-function find_tile() {
-  for (let i = 1; i <= 10; i++) {
-    let tile = document.getElementById("t2");
-    if (tile) {return tile}
-  }
-}
 const width = find_tile().clientWidth;
 const margin = {top: 30, right: 50, bottom: 30, left: 50};
 const chart_width = width - margin.left - margin.right;
@@ -15,6 +9,14 @@ const tile_breakpoint = 500;
 const line_width = 2;
 const circle_width = 6;
 const rect_round = 16;
+
+
+function find_tile() {
+  for (let i = 1; i <= 10; i++) {
+    let tile = document.getElementById("t" + i);
+    if (tile) {return tile}
+  }
+}
 
 
 function share(tile, options) {
