@@ -5,7 +5,7 @@ RUN apt-get update && \
         build-essential \
         make \
         gcc \
-        libffi6 libffi-dev 
+        libffi6 libffi-dev libcairo2-dev 
 
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt 
