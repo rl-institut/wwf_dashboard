@@ -113,6 +113,47 @@ h3 {
   font-family: 'WWF', sans-serif;
 }
 
+.tile .irs--round .irs-handle {
+  background-color: #000;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  cursor: pointer;
+}
+
+.tile .irs--round .irs-handle:hover, .tile .irs--round .irs-handle.state_hover {
+  background-color: #000;
+}
+
+.tile .irs--round .irs-handle:focus {
+  border: 2px solid #DBDBDB;
+}
+
+.tile .irs--round .irs-line {
+  background-color: #DBDBDB;
+}
+
+.tile .irs--round .irs-bar {
+  background-color: #DBDBDB;
+}
+
+.tile .irs--round .irs-single {
+  padding: 3px 0;
+  line-height: normal;
+  background-color: rgba(255, 255, 255, 0);
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+.tile .irs--round .irs-single:before {
+  display: none;
+}
+
+.tile .irs--round .irs-grid-pol {
+  visibility: hidden;
+}
+
 .tile {
   max-width: calc((1208px / 2 ) - 2.5rem);
   padding: 2rem;
