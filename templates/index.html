@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
 {% block tiles_html %}
-  {% include "tiles/tile1.html" %}
-  {% include "tiles/tile2.html" %}
-  {% include "tiles/tile3.html" %}
-  {% include "tiles/tile4.html" %}
-  {% include "tiles/tile5.html" %}
+  <!-- Keep 2 tiles per row to maintain similar height between row tiles -->
+  <div class="dashboard__row">
+    {% include "tiles/tile1.html" %}
+    {% include "tiles/tile2.html" %}
+  </div>
+  <div class="dashboard__row">
+    {% include "tiles/tile3.html" %}
+    {% include "tiles/tile4.html" %}
+  </div>
+  <div class="dashboard__row">
+    {% include "tiles/tile5.html" %}
+  </div>
 {% endblock tiles_html %}
 
 {% block tiles_js %}
