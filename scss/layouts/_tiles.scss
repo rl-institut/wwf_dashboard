@@ -1,6 +1,9 @@
 .tile {
+  width: 100%;
   max-width: $tile-max-width;
   padding: $tile-padding;
+  margin-bottom: $layout-padding;
+  border: 1px solid $gray-2;
 
   &__header {
     border: 1px solid $wwf-primary-color-1;
