@@ -23,8 +23,6 @@ const t4_others_max = Math.max(
 ) / 1000;
 
 const t4_chart_height = 230;
-const t4_chart_offset = 40;
-
 const t4_icon_area_offset = 30;
 const t4_icon_space = 50;
 const t4_icon_margin = 5;
