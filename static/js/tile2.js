@@ -25,14 +25,14 @@ const t2_bar_color = d3.scaleOrdinal()
   .range(["green", "black", "darkgrey", "grey", "lightgrey", "teal"]);
 
 const t2_pie_y = 350;
-const t2_pie_space = 10;
-const t2_pie_radius = (chart_width - 4 * t2_pie_space) / 3 / 2;
+const t2_pie_radius = 38;
+const t2_pie_space = (chart_width - 6 * t2_pie_radius) / 4;
 const t2_pie_positions = {"power": 0, "heat": 1, "traffic": 2}
 
 const t2_pie_legend_width = 300;
 const t2_pie_legend_x = chart_width / 2 - t2_pie_legend_width / 2;
-const t2_pie_legend_y = 450;
-const t2_pie_legend_rect = 20;
+const t2_pie_legend_y = t2_pie_y + t2_pie_radius + 22;
+const t2_pie_legend_rect = 12;
 
 const t2_pie_color = d3.scaleOrdinal()
     .domain(["ee", "ne", "ne2"])
