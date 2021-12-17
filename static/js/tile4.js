@@ -67,12 +67,9 @@ t4_icons.append("rect")
   .attr("fill", "white")
   .attr("stroke", "black")
 
-for (let i = 0; i < Object.keys(t4_technologies).length; i++) {
-  const technology = Object.keys(t4_technologies)[i];
+for (const technology of Object.keys(t4_technologies)) {
 
-  // left-top corner of icon
-  const x = (i % t4_icon_wrap) * t4_icon_width + t4_icon_space * (i % t4_icon_wrap + 1);
-  const y = (parseInt(i / t4_icon_wrap)) * t4_icon_height;
+  [x, y] = get_xy_for_icon(technology);
 
   // Icon text gets 1/5 of height, symbol and rect get 2/5 of height
   t4_icons.append("text")
@@ -153,3 +150,32 @@ for (const technology of Object.keys(t4_technologies)) {
       .y(function(d) {return y(d[technology] / 1000)})
     )
 }
+
+function t4_change_year(to_year) {
+  const year = parseInt(to_year);
+  const year_data = tiles[4].find(element => element.year == year);
+
+  t4_icons.select("#t4_icon_text").remove();
+  const t4_icon_text = t4_icons.append("g")
+    .attr("id", "t4_icon_text")
+
+  for (const technology of Object.keys(t4_technologies)) {
+    [x, y] = get_xy_for_icon(technology);
+    t4_icon_text.append("text")
+      .text(year_data[technology])
+      .attr("fill", "white")
+      .attr("x", x + t4_icon_width / 2)
+      .attr("y", y + 3 * t4_icon_margin + 4 * t4_icon_fifth)
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "middle")
+  }
+}
+
+function get_xy_for_icon(technology) {
+  const i = Object.keys(t4_technologies).indexOf(technology)
+  const x = (i % t4_icon_wrap) * t4_icon_width + t4_icon_space * (i % t4_icon_wrap + 1);
+  const y = (parseInt(i / t4_icon_wrap)) * t4_icon_height;
+  return [x, y]
+}
+
+t4_change_year(2020);
