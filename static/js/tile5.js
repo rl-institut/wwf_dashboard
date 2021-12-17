@@ -1,5 +1,9 @@
 
 $("#t5_year").ionRangeSlider({
+  grid: true,
+  prettify_enabled: false,
+  skin: "round",
+  hide_min_max: true,
   min: tiles[5][0].year,
   max: tiles[5][tiles[5].length - 1].year,
   from: tiles[5][tiles[5].length - 1].year,
