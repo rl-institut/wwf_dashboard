@@ -91,4 +91,21 @@ def tile4():
     data.to_json(os.path.join(DATA_PATH, "tile4.json"), orient="records")
 
 
-tile3()
+def tile5():
+    data = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, FILENAME),
+        sheet_name="05 Immer mehr EE",
+        header=9,
+        usecols=[1, 2, 3, 12, 14, 16, 17, 18],
+        nrows=31,
+        index_col=0
+    )
+    data = data.applymap(lambda x: None if x == "k.A." else x)
+    data = data.interpolate(limit_direction="both")
+    data = data.divide(data["Bruttostromerzeugung gesamt"], axis="index") * 100
+    data = data.reset_index()
+    data.columns = ["year", "total", "fossil", "wind_onshore", "wind_offshore", "hydro", "biomass", "pv"]
+    data.to_json(os.path.join(DATA_PATH, "tile5.json"), orient="records")
+
+
+tile5()
