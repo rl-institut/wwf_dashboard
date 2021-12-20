@@ -105,6 +105,7 @@ def tile5():
     data = data.divide(data["Bruttostromerzeugung gesamt"], axis="index") * 100
     data = data.reset_index()
     data.columns = ["year", "total", "fossil", "wind_onshore", "wind_offshore", "hydro", "biomass", "pv"]
+    data.iloc[30, 0] = 2020
     data.to_json(os.path.join(DATA_PATH, "tile5.json"), orient="records")
 
 
