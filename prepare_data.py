@@ -109,4 +109,17 @@ def tile5():
     data.to_json(os.path.join(DATA_PATH, "tile5.json"), orient="records")
 
 
-tile5()
+def tile7():
+    data = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, FILENAME),
+        sheet_name="07 Emissionen nach Personen-km",
+        header=8,
+        usecols=[2, 3, 5],
+        nrows=30,
+    )
+    data.columns = ["vehicle", "emission", "type"]
+    data = data.fillna(method='ffill')
+    data.to_json(os.path.join(DATA_PATH, "tile7.json"), orient="records")
+
+
+tile7()
