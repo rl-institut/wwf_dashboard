@@ -1,6 +1,12 @@
 <div class="tile">
   <div class="tile__header">
-    <h3>Klimaschutz in allen Sektoren</h3>
+    <div class="tile__top">
+      <h3>Klimaschutz in allen Sektoren</h3>
+      <div class="tile__options">
+        <button class="share" onclick="share(3, {year: document.getElementById('t3_year').value});" tabindex="0"></button>
+        <button class="info" tabindex="0"></button>
+      </div>
+    </div>
     <p>Bis 2045 soll Deutschland klimaneutral sein. Dafür muss der CO<sub>2</sub>-Ausstoß in allen Sektoren gesenkt werden.</p>
   </div>
   <div class="tile__slider">
@@ -25,5 +31,4 @@
   <div class="tile__chart">
     <div id="t3"></div>
   </div>
-  <button class="btn btn-primary" onclick="share(3, {sector: document.getElementById('t2_year').value});">Share</button>
 </div>
