@@ -8,11 +8,9 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 ### Added
 - fonts
 - tile can be shared
-<<<<<<< HEAD
 - responsive layout
-=======
 - styled sliders
->>>>>>> main
+- icons
 
 ### Fixed
 
