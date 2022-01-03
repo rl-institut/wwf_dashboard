@@ -232,6 +232,14 @@ h3 {
   padding: 1rem;
 }
 
+.tile__header h3 {
+  padding-right: 0.5rem;
+}
+
+.tile__header p {
+  margin-bottom: 0;
+}
+
 .tile__top {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -243,10 +251,6 @@ h3 {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-}
-
-.tile h3 {
-  padding-right: 0.5rem;
 }
 
 .tile__options {
@@ -284,7 +288,7 @@ h3 {
   background-image: url(../icons/i_info.svg);
 }
 
-.tile p {
-  margin-bottom: 0;
+.tile__slider {
+  padding-top: 1rem;
 }
 /*# sourceMappingURL=styling.css.map */

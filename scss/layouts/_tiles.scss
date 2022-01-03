@@ -9,14 +9,18 @@
     position: relative;
     border: 1px solid $wwf-primary-color-1;
     padding: 1rem;
+
+    h3 {
+      padding-right: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
   }
 
   &__top {
     @include flex-row-space-between;
-  }
-
-  h3 {
-    padding-right: 0.5rem;
   }
 
   &__options {
@@ -46,7 +50,7 @@
     }
   }
 
-  p {
-    margin-bottom: 0;
+  &__slider {
+    padding-top: 1rem;
   }
 }
