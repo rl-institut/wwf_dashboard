@@ -26,20 +26,19 @@ const t6_pie_legend_y = 2 * t6_pie_radius + t6_pie_margin;
 const t6_pie_legend_rect = 12;
 
 const t6_chart_height = 230;
-const t6_chart_offset = 30;
+const t6_chart_offset = 40;
 
-const t6_icon_width = 89;
-const t6_icon_height = 26;
-const t6_icon_size = 20;
-const t6_icon_margin = 8;
+const t6_icon_size = 24;
+const t6_icon_margin = 10;
 const t6_icon_wrap = 2;
-const t6_icon_area_height = height - t6_pie_height - t6_pie_offset - t6_chart_height - t6_chart_offset - margin.top - margin.bottom;
-const t6_icon_vertical_space = (t6_icon_area_height - t6_icon_size - t6_icon_margin - t6_icon_height) / 3;
-const t6_icon_horizontal_space = (chart_width - 3 * t6_icon_width) / 4;
+const t6_icon_offset = 25;
+
+const t6_agora_logo_width = 200;
+const t6_agora_logo_height = 100;
 
 let t6_x = d3.scaleLinear()
   .range([ 0, chart_width ])
-  .domain([0, 24])
+  .domain([0, 23])
 let t6_y;
 const t6_color = d3.scaleOrdinal()
   .domain(Object.keys(t6_technologies))
@@ -105,6 +104,43 @@ t6_chart.append("g")
 d3.select("#t6_xaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t6_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
+// ICONS
+
+const t6_icons = t6_svg.append("g")
+  .attr("transform", `translate(0, ${t6_pie_height + t6_pie_offset + t6_chart_height + t6_chart_offset})`);
+
+for (const technology of Object.keys(t6_technologies)) {
+  [x, y] = get_xy_for_icon(technology);
+
+  // Icon text gets 1/5 of height, symbol and rect get 2/5 of height
+  t6_icons.append("text")
+    .text(t6_technologies[technology])
+    .attr("x", x + t6_icon_size + t6_icon_margin)
+    .attr("y", y + t6_icon_size / 2)
+    .attr("text-anchor", "left")
+    .attr("dominant-baseline", "middle");
+
+  t6_icons.append("rect")
+    .attr("x", x)
+    .attr("y", y)
+    .attr("width", t6_icon_size)
+    .attr("height", t6_icon_size)
+    .attr("fill", t6_color(technology));
+
+  $(t6_icons.node().appendChild(icons["i_bus"].documentElement.cloneNode(true)))
+    .attr("x", x)
+    .attr("y", y)
+    .attr("width", t6_icon_size)
+    .attr("height", t6_icon_size)
+    .attr("preserveAspectRatio", "xMidYMid slice");
+}
+
+$(t6_icons.node().appendChild(icons["agora_logo"].documentElement.cloneNode(true)))
+  .attr("x", chart_width / 2 - t6_agora_logo_width / 2)
+  .attr("y", 2 * t6_icon_size + t6_icon_margin + t6_icon_offset)
+  .attr("width", t6_agora_logo_width)
+  .attr("height", t6_agora_logo_height)
+  .attr("preserveAspectRatio", "xMidYMid slice");
 
 function t6_change_date() {
   t6_chart.select("#t6_area").remove();
@@ -184,8 +220,8 @@ function t6_draw_pie(res_share) {
 
 function get_xy_for_icon(technology) {
   const i = Object.keys(t6_technologies).indexOf(technology)
-  const x = (i % t6_icon_wrap) * t6_icon_width + t6_icon_horizontal_space * (i % t6_icon_wrap + 1);
-  const y = (parseInt(i / t6_icon_wrap)) * (t6_icon_height + t6_icon_vertical_space) + t6_icon_vertical_space;
+  const x = (i % t6_icon_wrap) * chart_width / 2;
+  const y = (parseInt(i / t6_icon_wrap)) * (t6_icon_size + t6_icon_margin);
   return [x, y]
 }
 
