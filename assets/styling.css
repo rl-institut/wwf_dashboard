@@ -181,6 +181,10 @@ h3 {
   cursor: pointer;
 }
 
+.tile .irs--round .irs-handle:focus {
+  outline: auto;
+}
+
 .tile .irs--round .irs-handle:hover, .tile .irs--round .irs-handle.state_hover {
   background-color: #000;
 }
@@ -223,7 +227,68 @@ h3 {
 }
 
 .tile__header {
+  position: relative;
   border: 1px solid #000;
   padding: 1rem;
+}
+
+.tile__header h3 {
+  padding-right: 0.5rem;
+}
+
+.tile__header p {
+  margin-bottom: 0;
+}
+
+.tile__top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.tile__options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.tile__options > button {
+  background-size: 1.5rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: 0;
+  height: 2rem;
+  width: 2.5rem;
+}
+
+.tile__options > button:focus {
+  outline: auto;
+}
+
+.tile__options .share {
+  background-image: url(../icons/i_share.svg);
+}
+
+.tile__options .info {
+  background-image: url(../icons/i_info.svg);
+}
+
+.tile__slider {
+  padding-top: 1rem;
 }
 /*# sourceMappingURL=styling.css.map */

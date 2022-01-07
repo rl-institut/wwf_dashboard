@@ -6,7 +6,51 @@
   border: 1px solid $gray-2;
 
   &__header {
+    position: relative;
     border: 1px solid $wwf-primary-color-1;
     padding: 1rem;
+
+    h3 {
+      padding-right: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  &__top {
+    @include flex-row-space-between;
+  }
+
+  &__options {
+    @include flex-row;
+    align-items: flex-start;
+
+    & > button {
+      background-size: 1.5rem;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      border: 0;
+      height: 2rem;
+      width: 2.5rem;
+
+      &:focus {
+        outline: auto;
+      }
+    }
+
+    .share {
+      background-image: url(../icons/i_share.svg);
+    }
+
+    .info {
+      background-image: url(../icons/i_info.svg);
+    }
+  }
+
+  &__slider {
+    padding-top: 1rem;
   }
 }

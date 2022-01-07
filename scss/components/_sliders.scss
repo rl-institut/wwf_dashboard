@@ -4,6 +4,10 @@
     border: none;
     box-shadow: none;
     cursor: pointer;
+
+    &:focus {
+      outline: auto;
+    }
   
     &:hover,
     &.state_hover {
