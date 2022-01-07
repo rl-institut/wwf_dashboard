@@ -81,6 +81,16 @@ t6_pie_legend.append("text")
   .attr("y", t6_pie_legend_rect / 2)
   .attr("dominant-baseline", "middle");
 
+t6_svg.append("text")
+  .text("Anteil Erneuerbarer")
+  .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
+  .attr("y", t6_pie_radius - t6_pie_text_height / 2);
+t6_svg.append("text")
+  .text("an diesem Tag")
+  .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
+  .attr("y", t6_pie_radius + t6_pie_text_height / 2)
+  .style("text-anchor", "left");
+
 // CHART
 const t6_chart = t6_svg.append("g")
   .attr("transform", "translate(0," + (t6_pie_height + t6_pie_offset) + ")");
