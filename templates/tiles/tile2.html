@@ -1,11 +1,18 @@
-<div class="tile__header">
-  <h3>Erneuerbare setzen sich durch</h3>
-  <p>Unser Energieverbrauch basiert immer noch weitgehend auf Öl, Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der Anteil der Erneuerbaren Energien gering.</p>
+<div class="tile">
+  <div class="tile__header">
+    <div class="tile__top">
+      <h3>Erneuerbare setzen sich durch</h3>
+      <div class="tile__options">
+        <button class="share" onclick="share(2, {year: document.getElementById('t2_year').value});" tabindex="0"></button>
+        <button class="info" tabindex="0"></button>
+      </div>
+    </div>
+    <p>Unser Energieverbrauch basiert immer noch weitgehend auf Öl, Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der Anteil der Erneuerbaren Energien gering.</p>
+  </div>
+  <div class="tile__slider">
+    <input type="text" class="js-range-slider" id="t2_year"/>
+  </div>
+  <div class="tile__chart">
+    <div id="t2"></div>
+  </div>
 </div>
-<div class="tile__slider">
-  <input type="text" class="js-range-slider" id="t2_year"/>
-</div>
-<div class="tile__chart">
-  <div id="t2"></div>
-</div>
-<button class="btn btn-primary" onclick="share(2, {year: document.getElementById('t2_year').value});">Share</button>

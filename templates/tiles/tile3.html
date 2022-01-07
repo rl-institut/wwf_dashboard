@@ -1,27 +1,34 @@
-<div class="tile__header">
-  <h3>Klimaschutz in allen Sektoren</h3>
-  <p>Bis 2045 soll Deutschland klimaneutral sein. Dafür muss der CO<sub>2</sub>-Ausstoß in allen Sektoren gesenkt werden.</p>
+<div class="tile">
+  <div class="tile__header">
+    <div class="tile__top">
+      <h3>Klimaschutz in allen Sektoren</h3>
+      <div class="tile__options">
+        <button class="share" onclick="share(3, {year: document.getElementById('t3_year').value});" tabindex="0"></button>
+        <button class="info" tabindex="0"></button>
+      </div>
+    </div>
+    <p>Bis 2045 soll Deutschland klimaneutral sein. Dafür muss der CO<sub>2</sub>-Ausstoß in allen Sektoren gesenkt werden.</p>
+  </div>
+  <div class="tile__slider">
+    <input type="radio" class="btn-check" name="sector" id="agriculture" autocomplete="off" checked>
+    <label class="btn btn-secondary" for="agriculture">Agrar</label>
+  
+    <input type="radio" class="btn-check" name="sector" id="industry" autocomplete="off">
+    <label class="btn btn-secondary" for="industry">Industrie</label>
+  
+    <input type="radio" class="btn-check" name="sector" id="traffic" autocomplete="off">
+    <label class="btn btn-secondary" for="traffic">Verkehr</label>
+  
+    <input type="radio" class="btn-check" name="sector" id="house" autocomplete="off">
+    <label class="btn btn-secondary" for="house">Gebäude</label>
+  
+    <input type="radio" class="btn-check" name="sector" id="energy" autocomplete="off">
+    <label class="btn btn-secondary" for="energy">Energiewirtschaft</label>
+  
+    <input type="radio" class="btn-check" name="sector" id="total" autocomplete="off">
+    <label class="btn btn-secondary" for="total">Gesamt</label>
+  </div>
+  <div class="tile__chart">
+    <div id="t3"></div>
+  </div>
 </div>
-<div class="tile__slider">
-  <input type="radio" class="btn-check" name="sector" id="agriculture" autocomplete="off" checked>
-  <label class="btn btn-secondary" for="agriculture">Agrar</label>
-
-  <input type="radio" class="btn-check" name="sector" id="industry" autocomplete="off">
-  <label class="btn btn-secondary" for="industry">Industrie</label>
-
-  <input type="radio" class="btn-check" name="sector" id="traffic" autocomplete="off">
-  <label class="btn btn-secondary" for="traffic">Verkehr</label>
-
-  <input type="radio" class="btn-check" name="sector" id="house" autocomplete="off">
-  <label class="btn btn-secondary" for="house">Gebäude</label>
-
-  <input type="radio" class="btn-check" name="sector" id="energy" autocomplete="off">
-  <label class="btn btn-secondary" for="energy">Energiewirtschaft</label>
-
-  <input type="radio" class="btn-check" name="sector" id="total" autocomplete="off">
-  <label class="btn btn-secondary" for="total">Gesamt</label>
-</div>
-<div class="tile__chart">
-  <div id="t3"></div>
-</div>
-<button class="btn btn-primary" onclick="share(3, {sector: document.getElementById('t2_year').value});">Share</button>

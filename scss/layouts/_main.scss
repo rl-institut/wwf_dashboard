@@ -1,0 +1,25 @@
+.dashboard {
+  @include flex-row-justify-center;
+  width: 100%;
+  padding: $layout-padding-small;
+
+  @media only screen and (min-width: $screen-width-min-m) {
+    padding: 0;
+  }
+
+    &__maxwidth {
+      width: 100%;
+      max-width: $layout-max-width;
+    }
+
+    &__row {
+      @include flex-column-align-center;
+
+      @media only screen and (min-width: $screen-width-min-l) {
+        @include flex-row-space-between;
+        flex-wrap: wrap;
+        align-items: stretch;
+        width: $layout-max-width;
+      }
+    }
+  }
