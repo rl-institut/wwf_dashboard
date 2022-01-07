@@ -64,5 +64,15 @@ for (let i = 0; i < icon_names.length; i++) {
   )
 }
 
+$.ajax(
+    {
+      url: "static/images/agora_logo.svg",
+      async: false,
+      success: function(data) {
+        icons["agora_logo"] = data;
+      }
+    }
+  )
+
 // Embed icons via:
 // svg.node().appendChild(icons["i_bus"].documentElement)

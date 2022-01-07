@@ -13,12 +13,12 @@ $("#t5_year").ionRangeSlider({
 });
 
 const t5_technologies = {
-  "fossil": "Fossil",
   "wind_onshore": "Windenergie an Land",
   "wind_offshore": "Windenergie auf See",
-  "hydro": "Wasserkraft",
-  "biomass": "Biomasse",
   "pv": "Photovoltaik",
+  "biomass": "Biomasse",
+  "hydro": "Wasserkraft",
+  "fossil": "Fossil",
 };
 
 const t5_chart_height = 230;
@@ -28,7 +28,7 @@ const t5_icon_width = 89;
 const t5_icon_height = 26;
 const t5_icon_size = 20;
 const t5_icon_margin = 8;
-const t5_icon_row_space = 20;
+const t5_icon_wrap = 3;
 
 const t5_x = d3.scaleBand()
   .range([ 0, chart_width ])
@@ -38,7 +38,10 @@ const t5_y = d3.scaleLinear()
   .domain([0, 100]);
 const t5_color = d3.scaleOrdinal()
   .domain(Object.keys(t5_technologies))
-  .range(["#000000", "#70B6D6", "#006386", "#008A88" , "#F07C24", "#F3CC00"]);
+  .range(["#70B6D6", "#006386", "#F3CC00", "#F07C24", "#008A88", "#000000"]);
+const t5_text_color = d3.scaleOrdinal()
+  .domain(Object.keys(t5_technologies))
+  .range(["black", "white", "black", "black" , "white", "white"]);
 
 const t5_svg = d3.select("#t5")
   .append("svg")
@@ -88,76 +91,59 @@ for (const technology of Object.keys(t5_technologies)) {
     )
 }
 
-//// ICONS
-//
-//const t4_icons = t4_svg.append("g");
-//
-//// 4x1 icon row or 2x2 icon grid:
-//const t4_icon_wrap = (width > tile_breakpoint) ? 4 : 2;
-//const t4_icon_width = (chart_width - (t4_icon_wrap + 1) * t4_icon_space) / t4_icon_wrap;
-//const t4_icon_fifth = t4_icon_width / 3 / 2;
-//const t4_icon_height = 5 * t4_icon_fifth + 4 * t4_icon_margin;
-//const t4_icon_area_height = t4_icon_height * 4 / t4_icon_wrap;
-//
-//t4_icons.append("rect")
-//  .attr("width", chart_width)
-//  .attr("height", t4_icon_area_height)
-//  .attr("fill", "white")
-//  .attr("stroke", "black")
-//
-//for (const technology of Object.keys(t4_technologies)) {
-//
-//  [x, y] = get_xy_for_icon(technology);
-//
-//  // Icon text gets 1/5 of height, symbol and rect get 2/5 of height
-//  t4_icons.append("text")
-//    .text(t4_technologies[technology])
-//    .attr("x", x + t4_icon_width / 2)
-//    .attr("y", y + t4_icon_margin)
-//    .attr("text-anchor", "middle")
-//    .attr("dominant-baseline", "hanging");
-//
-//  $(t4_icons.node().appendChild(icons["i_bus"].documentElement.cloneNode(true)))
-//    .attr("x", x + t4_icon_width / 2 - t4_icon_fifth)
-//    .attr("y", y + 2 * t4_icon_margin + t4_icon_fifth)
-//    .attr("width", 2 * t4_icon_fifth)
-//    .attr("height", 2 * t4_icon_fifth)
-//    .attr("preserveAspectRatio", "xMidYMid slice");
-//
-//  t4_icons.append("rect")
-//    .attr("x", x)
-//    .attr("y", y + 3 * t4_icon_margin + t4_icon_fifth * 3)
-//    .attr("width", t4_icon_width)
-//    .attr("height", t4_icon_fifth * 2)
-//    .attr("fill", t4_color(technology));
-//}
-//
-//
-//function t4_change_year(to_year) {
-//  const year = parseInt(to_year);
-//  const year_data = tiles[4].find(element => element.year == year);
-//
-//  t4_icons.select("#t4_icon_text").remove();
-//  const t4_icon_text = t4_icons.append("g")
-//    .attr("id", "t4_icon_text")
-//
-//  for (const technology of Object.keys(t4_technologies)) {
-//    [x, y] = get_xy_for_icon(technology);
-//    t4_icon_text.append("text")
-//      .text(year_data[technology])
-//      .attr("fill", "white")
-//      .attr("x", x + t4_icon_width / 2)
-//      .attr("y", y + 3 * t4_icon_margin + 4 * t4_icon_fifth)
-//      .attr("text-anchor", "middle")
-//      .attr("dominant-baseline", "middle")
-//  }
-//}
-//
-//function get_xy_for_icon(technology) {
-//  const i = Object.keys(t4_technologies).indexOf(technology)
-//  const x = (i % t4_icon_wrap) * t4_icon_width + t4_icon_space * (i % t4_icon_wrap + 1);
-//  const y = (parseInt(i / t4_icon_wrap)) * t4_icon_height;
-//  return [x, y]
-//}
-//
-//t4_change_year(2020);
+// ICONS
+
+const t5_icons = t5_svg.append("g").attr("transform", `translate(0, ${t5_chart_height + t5_chart_offset})`);
+
+// 2x3 grid:
+const t5_icon_area_height = height - t5_chart_height - t5_chart_offset - margin.top - margin.bottom;
+const t5_icon_vertical_space = (t5_icon_area_height - t5_icon_size - t5_icon_margin - t5_icon_height) / 3;
+const t5_icon_horizontal_space = (chart_width - 3 * t5_icon_width) / 4;
+
+for (const technology of Object.keys(t5_technologies)) {
+  [x, y] = get_xy_for_icon(technology);
+
+  $(t5_icons.node().appendChild(icons["i_bus"].documentElement.cloneNode(true)))
+    .attr("x", x + t5_icon_width / 2 - t5_icon_size / 2)
+    .attr("y", y)
+    .attr("width", t5_icon_size)
+    .attr("height", t5_icon_size)
+    .attr("preserveAspectRatio", "xMidYMid slice");
+
+  t5_icons.append("rect")
+    .attr("x", x)
+    .attr("y", y + t5_icon_size + t5_icon_margin)
+    .attr("width", t5_icon_width)
+    .attr("height", t5_icon_height)
+    .attr("fill", t5_color(technology));
+}
+
+function t5_change_year(to_year) {
+  const year = parseInt(to_year);
+  const year_data = tiles[5].find(element => element.year == year);
+
+  t5_icons.select("#t5_icon_text").remove();
+  const t5_icon_text = t5_icons.append("g")
+    .attr("id", "t5_icon_text")
+
+  for (const technology of Object.keys(t5_technologies)) {
+    [x, y] = get_xy_for_icon(technology);
+    t5_icon_text.append("text")
+      .text(year_data[technology].toFixed(1) + " %")
+      .attr("fill", t5_text_color(technology))
+      .attr("x", x + t5_icon_width / 2)
+      .attr("y", y + t5_icon_size + t5_icon_margin + t5_icon_height / 2)
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "middle")
+  }
+}
+
+function get_xy_for_icon(technology) {
+  const i = Object.keys(t5_technologies).indexOf(technology)
+  const x = (i % t5_icon_wrap) * t5_icon_width + t5_icon_horizontal_space * (i % t5_icon_wrap + 1);
+  const y = (parseInt(i / t5_icon_wrap)) * (t5_icon_height + t5_icon_vertical_space) + t5_icon_vertical_space;
+  return [x, y]
+}
+
+
+t5_change_year(2020);

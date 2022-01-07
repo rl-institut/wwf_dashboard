@@ -105,7 +105,21 @@ def tile5():
     data = data.divide(data["Bruttostromerzeugung gesamt"], axis="index") * 100
     data = data.reset_index()
     data.columns = ["year", "total", "fossil", "wind_onshore", "wind_offshore", "hydro", "biomass", "pv"]
+    data.iloc[30, 0] = 2020
     data.to_json(os.path.join(DATA_PATH, "tile5.json"), orient="records")
 
 
-tile5()
+def tile7():
+    data = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, FILENAME),
+        sheet_name="07 Emissionen nach Personen-km",
+        header=8,
+        usecols=[2, 3, 5],
+        nrows=30,
+    )
+    data.columns = ["vehicle", "emission", "type"]
+    data = data.fillna(method='ffill')
+    data.to_json(os.path.join(DATA_PATH, "tile7.json"), orient="records")
+
+
+tile7()
