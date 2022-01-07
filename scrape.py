@@ -10,7 +10,10 @@ AGORA_DATA_URL = "https://www.agora-energiewende.de/service/agorameter/chart/dat
 
 
 def get_agora_data_for_day(date: dt.date):
-    filename = f"{date.isoformat()}.json"
+    if date == dt.date.today():
+        filename = f"{date.isoformat()}_{dt.datetime.now().hour}.json"
+    else:
+        filename = f"{date.isoformat()}.json"
     path = pathlib.Path(RAW_DATA_FOLDER) / filename
     if path.exists():
         with open(path, "r") as jsonfile:
