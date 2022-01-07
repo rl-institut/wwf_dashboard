@@ -11,21 +11,23 @@ AGORA_DATA_URL = "https://www.agora-energiewende.de/service/agorameter/chart/dat
 
 def get_agora_data_for_day(date: dt.date):
     if date == dt.date.today():
-        filename = f"{date.isoformat()}_{dt.datetime.now().hour}.json"
+        suffix = f"{date.isoformat()}_{dt.datetime.now().hour}.json"
     else:
-        filename = f"{date.isoformat()}.json"
-    path = pathlib.Path(RAW_DATA_FOLDER) / filename
-    if path.exists():
-        with open(path, "r") as jsonfile:
-            return json.load(jsonfile)
+        suffix = f"{date.isoformat()}.json"
+    ts_filename = f"ts_{suffix}"
+    share_filename = f"share_{suffix}"
+    if (pathlib.Path(RAW_DATA_FOLDER) / ts_filename).exists():
+        with open(pathlib.Path(RAW_DATA_FOLDER) / ts_filename, "r") as jsonfile:
+            ts = json.load(jsonfile)
+        with open(pathlib.Path(RAW_DATA_FOLDER) / share_filename, "r") as jsonfile:
+            share = json.load(jsonfile)
+        return ts, share["renewable_share"]
 
     print("Loading Agora URL...")
     url = AGORA_DATA_URL.format(
         date=date.strftime("%d.%m.%Y"),
     )
     response = requests.get(url)
-    with open(path, "w") as jsonfile:
-        jsonfile.write(response.content.decode("utf-8"))
     data_raw = json.loads(response.content)
 
     parsed = js2xml.parse(data_raw["js"])
@@ -58,5 +60,8 @@ def get_agora_data_for_day(date: dt.date):
     df.columns = columns if len(df.columns) == 15 else columns[:-1]
     df["renewables"] = df[["wind_offshore", "hydro", "biomass", "pump"]].sum(axis=1)
     df = df[["wind_onshore", "pv", "fossil", "renewables"]].reset_index()
-    df.to_json(path, orient="records")
-    return df.to_dict(orient="records")
+    df.to_json(pathlib.Path(RAW_DATA_FOLDER) / ts_filename, orient="records")
+    share = {"renewable_share": (1 - df["fossil"].sum() / df.sum().sum()) * 100}
+    with open(pathlib.Path(RAW_DATA_FOLDER) / share_filename, "w") as jsonfile:
+        json.dump(share, jsonfile)
+    return df.to_dict(orient="records"), share["renewable_share"]

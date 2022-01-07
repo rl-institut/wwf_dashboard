@@ -30,8 +30,8 @@ def get_tile(tile):
 def get_agora_data():
     date_str = request.args.get('date', default=dt.date.today().strftime("%d.%m.%Y"))
     date = dt.datetime.strptime(date_str, "%d.%m.%Y").date()
-    agora_data = scrape.get_agora_data_for_day(date)
-    return {"data": agora_data}
+    agora_data, res_share = scrape.get_agora_data_for_day(date)
+    return {"data": agora_data, "res_share": res_share}
 
 
 @app.route("/share/<int:tile>", methods=["POST"])
