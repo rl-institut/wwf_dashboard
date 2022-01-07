@@ -28,10 +28,10 @@ def get_tile(tile):
 
 @app.route("/agora", methods=["GET"])
 def get_agora_data():
-    date_str = request.args.get('date', default=dt.date.today().isoformat())
-    date = dt.datetime.strptime(date_str, "%Y-%m-%d").date()
+    date_str = request.args.get('date', default=dt.date.today().strftime("%d.%m.%Y"))
+    date = dt.datetime.strptime(date_str, "%d.%m.%Y").date()
     agora_data = scrape.get_agora_data_for_day(date)
-    return {"data": agora_data.to_dict(orient="records")}
+    return {"data": agora_data}
 
 
 @app.route("/share/<int:tile>", methods=["POST"])

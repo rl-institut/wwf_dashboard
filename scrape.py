@@ -5,26 +5,25 @@ import js2xml
 import requests
 import pandas
 
-RAW_DATA_FOLDER = "raw_data"
-AGORA_DATA_FILENAME = "agora_data.json"
-AGORA_DATA_URL = "https://www.agora-energiewende.de/service/agorameter/chart/data/power_generation/{from_date}/{to_date}/today/chart.json"
+RAW_DATA_FOLDER = "agora_data"
+AGORA_DATA_URL = "https://www.agora-energiewende.de/service/agorameter/chart/data/power_generation/{date}/{date}/today/chart.json"
 
 
 def get_agora_data_for_day(date: dt.date):
-    path = pathlib.Path(RAW_DATA_FOLDER) / AGORA_DATA_FILENAME
+    filename = f"{date.isoformat()}.json"
+    path = pathlib.Path(RAW_DATA_FOLDER) / filename
     if path.exists():
         with open(path, "r") as jsonfile:
-            data_raw = json.load(jsonfile)
-    else:
-        print("Loading Agora URL...")
-        url = AGORA_DATA_URL.format(
-            from_date=date.strftime("%d.%m.%Y"),
-            to_date=(date + dt.timedelta(days=1)).strftime("%d.%m.%Y"),
-        )
-        response = requests.get(url)
-        with open(path, "w") as jsonfile:
-            jsonfile.write(response.content.decode("utf-8"))
-        data_raw = json.loads(response.content)
+            return json.load(jsonfile)
+
+    print("Loading Agora URL...")
+    url = AGORA_DATA_URL.format(
+        date=date.strftime("%d.%m.%Y"),
+    )
+    response = requests.get(url)
+    with open(path, "w") as jsonfile:
+        jsonfile.write(response.content.decode("utf-8"))
+    data_raw = json.loads(response.content)
 
     parsed = js2xml.parse(data_raw["js"])
     data = [
@@ -35,7 +34,7 @@ def get_agora_data_for_day(date: dt.date):
         [[float(value) for i, value in enumerate(d[1]) if i % 2] for d in data[:-1]]
     )
     df = df.transpose()
-    df.columns = [
+    columns = [
         "pv",
         "wind_onshore",
         "wind_offshore",
@@ -52,4 +51,9 @@ def get_agora_data_for_day(date: dt.date):
         "co2_t",
         "co2_gkWh",
     ]
-    return df
+    # Agora data sometimes does not include c02_gkWh
+    df.columns = columns if len(df.columns) == 15 else columns[:-1]
+    df["renewables"] = df[["wind_offshore", "hydro", "biomass", "pump"]].sum(axis=1)
+    df = df[["wind_onshore", "pv", "fossil", "renewables"]].reset_index()
+    df.to_json(path, orient="records")
+    return df.to_dict(orient="records")
