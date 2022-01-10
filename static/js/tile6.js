@@ -84,17 +84,21 @@ t6_pie_legend.append("text")
   .attr("dominant-baseline", "middle")
   .attr("font-weight", 300)
   .attr("letter-spacing", "0.3px")
-  .style("font-size", "14px")
+  .style("font-size", "14px");
 
 t6_svg.append("text")
   .text("Anteil Erneuerbarer")
   .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
-  .attr("y", t6_pie_radius - t6_pie_text_height / 2);
+  .attr("y", t6_pie_radius - t6_pie_text_height / 2)
+  .attr("letter-spacing", "0.3px")
+  .style("font-size", "14px");
 t6_svg.append("text")
   .text("an diesem Tag")
   .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
   .attr("y", t6_pie_radius + t6_pie_text_height / 2)
-  .style("text-anchor", "left");
+  .style("text-anchor", "left")
+  .attr("letter-spacing", "0.3px")
+  .style("font-size", "14px");
 
 // CHART
 const t6_chart = t6_svg.append("g")
