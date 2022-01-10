@@ -26,7 +26,7 @@ const t2_bar_text_offset = 10;
 
 const t2_bar_color = d3.scaleOrdinal()
   .domain(t2_resources)
-  .range(["green", "black", "darkgrey", "grey", "lightgrey", "teal"]);
+  .range(["#7ab638", "co#000", "#3A3A3A", "#5A5A5A", "#808080", "#008A88"]);
 
 const t2_pie_y = 350;
 const t2_pie_radius = 38;
@@ -40,7 +40,7 @@ const t2_pie_legend_rect = 12;
 
 const t2_pie_color = d3.scaleOrdinal()
     .domain(["ee", "ne", "ne2"])
-    .range(["green", "black", "black"])
+    .range(["#7ab638", "#000", "#000"])
 
 const t2_svg = d3.select("#t2")
   .append("svg")
@@ -54,23 +54,28 @@ const t2_pie_legend = t2_svg.append("g")
 t2_pie_legend.append("rect")
   .attr("width", t2_pie_legend_rect)
   .attr("height", t2_pie_legend_rect)
-  .attr("fill", "green");
+  .attr("fill", "#7ab638");
 t2_pie_legend.append("text")
   .text("Erneuerbar")
-  .attr("x", t2_pie_legend_rect + 5)
-  .attr("y", t2_pie_legend_rect / 2)
-  .attr("dominant-baseline", "middle");
+  .attr("font-weight", 300)
+  .attr("x", t2_pie_legend_rect + 7)
+  .attr("y", t2_pie_legend_rect / 2 + 2)
+  .attr("dominant-baseline", "middle")
+  .attr("letter-spacing", "0.3px")
+  .style("font-size", "14px");
 t2_pie_legend.append("rect")
   .attr("x", t2_pie_legend_width / 2)
   .attr("width", t2_pie_legend_rect)
   .attr("height", t2_pie_legend_rect)
-  .attr("fill", "black");
+  .attr("fill", "#000");
 t2_pie_legend.append("text")
   .text("Konventionell")
-  .attr("x", t2_pie_legend_width / 2 + t2_pie_legend_rect + 5)
-  .attr("y", t2_pie_legend_rect / 2)
-  .attr("dominant-baseline", "middle");
-
+  .attr("font-weight", 300)
+  .attr("x", t2_pie_legend_width / 2 + t2_pie_legend_rect + 7)
+  .attr("y", t2_pie_legend_rect / 2 + 2)
+  .attr("dominant-baseline", "middle")
+  .attr("letter-spacing", "0.3px")
+  .style("font-size", "14px");
 
 function t2_get_x_scale(year_data) {
   const max_value = Object.entries(year_data).reduce(
@@ -94,17 +99,23 @@ function t2_adjust_text(x, y, bar_width) {
       "x": x,
       "y": y, "transform": "rotate(-90 " + x + " " + y + ")",
       "text-anchor": "middle",
-      "dominant-baseline": "hanging"
+      "dominant-baseline": "hanging",
+      "font-weight": 600,
+      "font-size": "12px",
+      "letter-spacing": "0.3px"
     }
   } else if (bar_width < 40) {
     return {
       "x": x,
       "y": y, "transform": "rotate(-90 " + x + " " + y + ")",
       "text-anchor": "middle",
-      "dominant-baseline": "hanging"
+      "dominant-baseline": "hanging",
+      "font-weight": 600,
+      "font-size": "12px",
+      "letter-spacing": "0.3px"
     }
   } else {
-    return {"x": x + bar_width / 2, "y": y, "text-anchor": "middle", "dominant-baseline": "middle"}
+    return {"x": x + bar_width / 2, "y": y, "text-anchor": "middle", "dominant-baseline": "middle", "font-weight": 600, "font-size": "12px", "letter-spacing": "0.3px"}
   }
 }
 
@@ -141,7 +152,7 @@ function t2_draw_bars(year_data) {
   t2_bars.append("text")
     .each(function(d) {
       d3.select(this).text(Math.round(d[0].data[d.key]));
-      d3.select(this).attr("fill", "white");
+      d3.select(this).attr("fill", "#FFF");
       const adjustment = t2_adjust_text(t2_x(d[0][0]), t2_bar_height / 2, t2_x(d[0][1]) - t2_x(d[0][0]));
       for (const key in adjustment) {
         d3.select(this).attr(key, adjustment[key]);
@@ -155,13 +166,15 @@ function t2_draw_bars(year_data) {
     .attr("y", function(d) { return (t2_x(d[0][1]) - t2_x(d[0][0])) / 2})
     .attr("fill", function(d) {
       if (d.key == "renewables") {
-        return "green"
+        return "#137534"
       } else {
-        return "black"
+        return "#000"
       }
     })
     .attr("text-anchor", "end")
     .attr("dominant-baseline", "middle")
+    .attr("font-size", "14px")
+    .attr("letter-spacing", "0.3px")
 }
 
 function t2_draw_pie(year_data, type) {
@@ -178,7 +191,7 @@ function t2_draw_pie(year_data, type) {
     .enter()
     .append('path')
     .attr("transform", "translate(" + x + ", " + t2_pie_y + ")")
-    .attr("stroke", "black")
+    .attr("stroke", "#000")
     .attr('d', arc)
     .attr('fill', function(d){return t2_pie_color(d.data[0])})
 
@@ -189,17 +202,18 @@ function t2_draw_pie(year_data, type) {
   pie_text.append("text")
     .text(year_data[type])
     .attr("x", x)
-    .attr("y", t2_pie_y + t2_pie_radius / 2)
-    .style("fill", "white")
+    .attr("y", t2_pie_y + t2_pie_radius / 2 + 5)
+    .style("fill", "#FFF")
     .style("text-anchor", "middle")
-    .style("font-size", 17)
+    .style("font-size", "14px")
 
   pie_text.append("text")
     .text(100 - year_data[type])
     .attr("x", x)
-    .attr("y", t2_pie_y - t2_pie_radius / 2)
-    .style("fill", "white")
+    .attr("y", t2_pie_y - t2_pie_radius / 2 + 8)
+    .style("fill", "#FFF")
     .style("text-anchor", "middle")
+    .style("font-size", "14px")
 }
 
 t2_change_year(2020);

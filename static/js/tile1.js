@@ -16,9 +16,9 @@ const t1_icon_area_height = 80;
 const t1_icon_area_offset = 30;
 const t1_chart_height = height - margin.top - margin.bottom - t1_icon_area_height - t1_icon_area_offset;
 
-const t1_icon_space = 10;
+const t1_icon_space = 32;
 const t1_icon_width = (chart_width - t1_icon_space * 4) / 3;
-const t1_icon_height = 30;
+const t1_icon_height = 26;
 
 const t1_ppm_max = tiles[1].reduce(function(max, current){if (current.ppm > max) {return current.ppm} else {return max}}, 0) + 200;
 const t1_co2_max = tiles[1].reduce(function(max, current){if (current.co2 > max) {return current.co2} else {return max}}, 0);
@@ -124,18 +124,18 @@ t1_icons.append("rect")
   .attr("y", t1_icon_area_height / 2 - t1_icon_height / 2)
   .attr("width", t1_icon_width)
   .attr("height", t1_icon_height)
-  .attr("ry", rect_round)
   .attr("fill", "black")
 
 t1_icons.append("text")
   .attr("id", "t1_ppm_icon")
   .attr("x", t1_icon_space + t1_icon_width / 2)
   .attr("y", t1_icon_area_height / 2)
-  .attr("fill", "white")
+  .attr("fill", "#FFF")
+  .attr("font-weight", 600)
   .text("328 ppm")
   .style("dominant-baseline", "middle")
   .style("text-anchor", "middle")
-
+  .style("font-size", "16px")
 
 // CO2 Icon
 t1_icons.append("rect")
@@ -143,17 +143,18 @@ t1_icons.append("rect")
   .attr("y", t1_icon_area_height / 2 - t1_icon_height / 2)
   .attr("width", t1_icon_width)
   .attr("height", t1_icon_height)
-  .attr("ry", rect_round)
-  .attr("fill", "gray")
+  .attr("fill", "#606060")
 
 t1_icons.append("text")
   .attr("id", "t1_co2_icon")
   .attr("x", 2 * t1_icon_space + t1_icon_width + t1_icon_width / 2)
   .attr("y", t1_icon_area_height / 2)
-  .attr("fill", "white")
+  .attr("fill", "#FFF")
+  .attr("font-weight", 600)
   .text("12.547 Mt")
   .style("dominant-baseline", "middle")
   .style("text-anchor", "middle")
+  .style("font-size", "16px")
 
 // Temp Icon
 t1_icons.append("rect")
@@ -161,18 +162,18 @@ t1_icons.append("rect")
   .attr("y", t1_icon_area_height / 2 - t1_icon_height / 2)
   .attr("width", t1_icon_width)
   .attr("height", t1_icon_height)
-  .attr("ry", rect_round)
-  .attr("fill", "pink")
+  .attr("fill", "#FEE1D3")
 
 t1_icons.append("text")
   .attr("id", "t1_temp_icon")
   .attr("x", 3 * t1_icon_space + 2 * t1_icon_width + t1_icon_width / 2)
   .attr("y", t1_icon_area_height / 2)
   .attr("fill", "black")
+  .attr("font-weight", 600)
   .text("+0,47 °C")
   .style("dominant-baseline", "middle")
   .style("text-anchor", "middle")
-
+  .style("font-size", "16px")
 
 function t1_change_year(to_year) {
   // Remove data from previous selection

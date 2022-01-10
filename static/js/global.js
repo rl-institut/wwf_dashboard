@@ -1,4 +1,6 @@
 
+const cgreen = "rgb(122 182 56)";
+
 // Width of one tile is representative for all tiles:
 const width = find_tile().clientWidth;
 const margin = {top: 30, right: 50, bottom: 30, left: 50};
@@ -6,7 +8,7 @@ const chart_width = width - margin.left - margin.right;
 const height = 766 - margin.top - margin.bottom;
 const tile_breakpoint = 500;
 
-const line_width = 2;
+const line_width = 3;
 const circle_width = 6;
 const rect_round = 16;
 
