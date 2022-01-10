@@ -46,7 +46,7 @@ const t6_color = d3.scaleOrdinal()
 
 const t6_pie_color = d3.scaleOrdinal()
   .domain(["ee", "ne", "ne2"])
-  .range(["green", "black", "black"])
+  .range(["#7ab638", "#000", "#000"])
 
 const t6_svg = d3.select("#t6")
   .append("svg")
@@ -63,22 +63,28 @@ const t6_pie_legend = t6_svg.append("g")
 t6_pie_legend.append("rect")
   .attr("width", t6_pie_legend_rect)
   .attr("height", t6_pie_legend_rect)
-  .attr("fill", "green");
+  .attr("fill", "#7ab638");
 t6_pie_legend.append("text")
   .text("Erneuerbar")
   .attr("x", t6_pie_legend_rect + 5)
   .attr("y", t6_pie_legend_rect / 2)
-  .attr("dominant-baseline", "middle");
+  .attr("dominant-baseline", "middle")
+  .attr("font-weight", 300)
+  .attr("letter-spacing", "0.3px")
+  .style("font-size", "14px")
 t6_pie_legend.append("rect")
   .attr("x", t6_pie_legend_width / 2)
   .attr("width", t6_pie_legend_rect)
   .attr("height", t6_pie_legend_rect)
-  .attr("fill", "black");
+  .attr("fill", "#000");
 t6_pie_legend.append("text")
   .text("Konventionell")
   .attr("x", t6_pie_legend_width / 2 + t6_pie_legend_rect + 5)
   .attr("y", t6_pie_legend_rect / 2)
-  .attr("dominant-baseline", "middle");
+  .attr("dominant-baseline", "middle")
+  .attr("font-weight", 300)
+  .attr("letter-spacing", "0.3px")
+  .style("font-size", "14px")
 
 t6_svg.append("text")
   .text("Anteil Erneuerbarer")
@@ -116,9 +122,12 @@ for (const technology of Object.keys(t6_technologies)) {
   t6_icons.append("text")
     .text(t6_technologies[technology])
     .attr("x", x + t6_icon_size + t6_icon_margin)
-    .attr("y", y + t6_icon_size / 2)
+    .attr("y", y + t6_icon_size / 2 + 2)
     .attr("text-anchor", "left")
-    .attr("dominant-baseline", "middle");
+    .attr("dominant-baseline", "middle")
+    .attr("font-weight", 300)
+    .attr("letter-spacing", "0.3px")
+    .style("font-size", "14px")
 
   t6_icons.append("rect")
     .attr("x", x)
@@ -203,7 +212,7 @@ function t6_draw_pie(res_share) {
     .enter()
     .append('path')
     .attr("transform", `translate(${chart_width / 2 - t6_pie_area_width / 2}, ${t6_pie_radius})`)
-    .attr("stroke", "black")
+    .attr("stroke", "#000")
     .attr('d', arc)
     .attr('fill', function(d){return t6_pie_color(d.data[0])})
 
@@ -211,11 +220,14 @@ function t6_draw_pie(res_share) {
     .attr("id", "t6_pie_text")
     .text(res_share.toFixed(0) + "%")
     .attr("x", chart_width / 2 - t6_pie_area_width / 2)
-    .attr("y", t6_pie_radius * 3 / 2)
-    .style("fill", "white")
+    .attr("y", t6_pie_radius * 3 / 2 + 5)
+    .style("fill", "#FFF")
     .style("dominant-baseline", "middle")
     .style("text-anchor", "middle")
-    .style("font-size", 17)
+    .attr("font-weight", 600)
+    .attr("letter-spacing", "0.3px")
+    .style("font-size", "14px")
+
 }
 
 function get_xy_for_icon(technology) {
