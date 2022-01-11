@@ -5,6 +5,18 @@
   margin-bottom: $layout-padding;
   border: 1px solid $gray-2;
 
+  @media only screen and (max-width: $screen-width-max-xs) {
+    padding: 1rem;
+  }
+
+  @media only screen and (max-width: $tile-width) {
+    background-color: $wwf-primary-color-2;
+    border: none;
+    margin-top: 3rem;
+    margin-bottom: 0;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+  }
+
   &__header {
     position: relative;
     border: 1px solid $wwf-primary-color-1;
