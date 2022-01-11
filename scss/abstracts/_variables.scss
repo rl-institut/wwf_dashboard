@@ -19,6 +19,7 @@ $wwf-base: rgb(195, 183, 140);
 
 $gray-1: #DBDBDB;
 $gray-2: #B1B1B1;
+$gray-3: #F6F6F6;
 
 // Typography
 $font-size-large: 2rem;
@@ -38,6 +39,8 @@ $layout-padding: 2.5rem;
 $layout-padding-small: 1.5rem;
 
 // Media queries
+$tile-width: 584px;
+$screen-width-max-xs: 450px;
 $screen-width-max-s: 830px;
 $screen-width-min-m: calc(#{$screen-width-max-s} + 1px);
 $screen-width-max-m: 1262px;
