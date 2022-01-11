@@ -191,7 +191,7 @@ function t2_draw_pie(year_data, type) {
     .enter()
     .append('path')
     .attr("transform", "translate(" + x + ", " + t2_pie_y + ")")
-    .attr("stroke", "#000")
+    .attr("stroke", function(d){return t2_pie_color(d.data[0])})
     .attr('d', arc)
     .attr('fill', function(d){return t2_pie_color(d.data[0])})
 

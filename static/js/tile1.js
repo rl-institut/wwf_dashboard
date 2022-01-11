@@ -14,7 +14,7 @@ $("#t1_year").ionRangeSlider({
 
 const t1_icon_area_height = 80;
 const t1_icon_area_offset = 30;
-const t1_chart_height = height - margin.top - margin.bottom - t1_icon_area_height - t1_icon_area_offset;
+const t1_chart_height = 242;
 
 const t1_icon_space = 32;
 const t1_icon_width = (chart_width - t1_icon_space * 4) / 3;
