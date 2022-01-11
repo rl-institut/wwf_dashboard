@@ -225,6 +225,10 @@ h3 {
   visibility: hidden;
 }
 
+#t6_date {
+  width: 7rem;
+}
+
 .tile {
   width: 100%;
   max-width: calc((1208px - 2.5rem) / 2);
@@ -314,5 +318,19 @@ h3 {
 
 .tile__slider {
   padding-top: 1rem;
+}
+
+.tile__slider--date-picker {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-top: 2rem;
 }
 /*# sourceMappingURL=styling.css.map */

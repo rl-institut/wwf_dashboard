@@ -64,5 +64,10 @@
 
   &__slider {
     padding-top: 1rem;
+
+    &--date-picker {
+      @include flex-row-justify-center;
+      padding-top: 2rem;
+    }
   }
 }
