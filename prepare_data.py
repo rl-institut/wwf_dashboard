@@ -3,7 +3,7 @@ import os
 import json
 import pandas
 import pathlib
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 FILENAME = "20211126-WWF_Daten_Dashboard_Version 2.6.xlsx"
 
@@ -139,15 +139,17 @@ def tile7():
 
 def tile10():
     drought_folder = pathlib.Path(DROUGHT_DATA)
+    font = ImageFont.truetype("static/fonts/WWF.woff", 30)
     years = {
         2014: ((56, 7, 633, 757), -6),
         2015: ((56, 7, 633, 757), -6),
-        2016: ((56, 7, 633, 757), -6),
+        2016: ((56, 7, 633, 757), -9),
         2017: ((59, 10, 636, 760), -9),
         2018: ((59, 10, 636, 760), -9),
         2019: ((59, 10, 636, 760), -9),
         2020: ((59, 10, 636, 760), -9),
     }
+    months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
     for year, (crop, m) in years.items():
         year_folder = pathlib.Path(RAW_DATA_PATH) / "drought" / str(year)
 
@@ -158,6 +160,7 @@ def tile10():
             im = im.crop(crop)
             draw = ImageDraw.Draw(im)
             draw.rectangle((10, 40, 130, 80), fill="#97b6e1")
+            draw.text((10, 10), text=months[int(month) - 1], fill="black", font=font)
             images[int(month)] = im
 
         drought_file = drought_folder / f"{year}.gif"
