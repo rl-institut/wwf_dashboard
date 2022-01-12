@@ -147,6 +147,11 @@ h3 {
   padding-bottom: 0.75rem;
 }
 
+.modal__sources .text {
+  display: block;
+  padding-bottom: 1rem;
+}
+
 .modal__sources .name {
   font-weight: 300;
 }

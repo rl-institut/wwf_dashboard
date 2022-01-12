@@ -1,10 +1,50 @@
+<div class="modal fade" id="modalTile6" tabindex="-1" aria-labelledby="modalLabelTile6" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalLabelTile6">Der Strommix ändert sich von Tag zu Tag</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Stromschwankungen werden sichtbar</h4>
+        <p>Die Grafik zeigt die realen Schwankungen der Stromerzeugung in Deutschland. Dargestellt wird der Zeitverlauf von 0 bis 24 Uhr zu einem beliebigen Datum von 2012 bis heute. Unterschieden wird nach der konventionellen Stromerzeugung, etwas aus der Kohle, sowie jener aus unterschiedlichen erneuerbaren Energiequellen. </p>
+        <h4>Die Stromerzeugung schwankt je nach Uhrzeit</h4>
+        <p>Je nach Tag und Uhrzeit variieren die produzierten Strommengen aus den jeweiligen Kraftwerken. Und über einen ganzen Tag betrachtet, verbrauchen wir in Deutschland immer unterschiedlich viel Strom. Wenn nachts die meisten von uns schlafen und die Fabriken stillstehen, ist der Verbrauch niedrig. Von morgens bis mittags steigt der Verbrauch rasant an. Und bevor abends wieder die Lichter ausgehen, wird noch gekocht und Wäsche gewaschen. Die hier dargestellte Stromerzeugung folgt dieser schwankenden Nachfrage.</p>
+        <h4>Wichtige Erkenntnisse</h4>
+        <p>Vergleicht man Kurven an den jeweiligen Tagen, dann fällt Vieles auf:</p>
+        <ul>
+          <li>So ist z.B. mittags der Anteil des Solarstroms immer am höchsten, vor allem im Sommer.</li>
+          <li>Je nach Wetterlage schwankt der Beitrag des Windstroms.</li>
+          <li>An Wochenenden brauchen wir weniger Strom.</li>
+          <li>Wenn viel Wind weht und viel Sonne scheint, wird weniger Strom aus fossilen und atomaren Kraftwerken benötigt.</li>
+          <li>In den letzten Jahren wurden die Beiträge des Solar- und Windstroms immer bedeutender.</li>
+          <li>U.v.m.</li>
+        </ul>
+        <h4>Quellen und weiterführende Informationen</h4>
+        <ul class="modal__sources">
+          <li>
+            <span class="text">Die hier dargestellten Daten basieren auf den aktuellen und historischen Erhebungen des sogenannten „Agorameter“ von Agora Energiewende.</span>
+            <span class="name">Agora Energiewende</span>
+            <span class="link">
+              <a href="Agora Energiewende https://www.agora-energiewende.de/service/agorameter/chart/power_generation/05.01.2022/08.01.2022/today/" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Agorameter
+              </a>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="tile">
   <div class="tile__header">
     <div class="tile__top">
       <h3>Der Strommix verändert sich von Tag zu Tag</h3>
       <div class="tile__options">
         <button class="share" onclick="share(6, {date: $('#t6_date').val()});" tabindex="0"></button>
-        <button class="info" tabindex="0"></button>
+        <button class="info" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile6"></button>
       </div>
     </div>
     <p>Die Stromerzeugung schwankt je nach Wind, Sonnenschein und Stromverbrauch. Immer zur Mittagszeit gibt es am meisten PV. An Wochenenden brauchen wir weniger Strom.</p>
