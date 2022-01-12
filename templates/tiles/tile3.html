@@ -1,10 +1,48 @@
+<div class="modal fade" id="modalTile3" tabindex="-1" aria-labelledby="modalLabelTile3" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalLabelTile1">Klimaschutz in allen Sektoren</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Klimaneutral bis 2045</h4>
+        <p>Deutschland hat sich 2021 mit dem Klimaschutzgesetz verpflichtet, bis zum Jahr 2045 klimaneutral zu sein. Unterm Strich sollen dann keine Treibhausgase mehr ausgestoßen werden. Seit 1990 sind die Emissionen auch schon um etwa ein Drittel gesunken. Dieser Trend muss in den kommenden zwei Jahrzehnten drastisch beschleunigt werden.</p>
+        <h4>Alle Sektoren tragen dazu bei</h4>
+        <p>In allen Bereichen unserer Gesellschaft und Wirtschaft verbrauchen wir noch immer fossile Energie. Daher müssen auch alle Sektoren einen Beitrag zur Erreichung der Klimaziele leisten. Aus diesem Grund wurde gesetzlich definiert, welche Etappenziele in den kommenden Jahren in der Energiewirtschaft, im Verkehr, bei Gebäuden, in der Industrie oder in der Landwirtschaft zu erreichen sind.</p>
+        <h4>Quellen und weiterführende Informationen</h4>
+        <ul class="modal__sources">
+          <li>
+            <span class="name">Bundesumweltministerium (BMU) </span>
+            <span class="link">
+              <a href="https://www.bmu.de/fileadmin/Daten_BMU/Download_PDF/Klimaschutz/ksg_aendg_2021_bf.pdf" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Lesefassung des Bundes-Klimaschutzgesetzes 2021
+              </a>
+            </span>
+          </li>
+          <li>
+            <span class="name">Agora Energiewende: Klimaneutrales Deutschland 2045</span>
+            <span class="link">
+              <a href="https://static.agora-energiewende.de/fileadmin/Projekte/2021/2021_04_KNDE45/A-EW_231_KNDE2045_Langfassung_DE_WEB_2.pdf" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Klimaneutrales Deutschland 2045
+              </a>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="tile">
   <div class="tile__header">
     <div class="tile__top">
       <h3>Klimaschutz in allen Sektoren</h3>
       <div class="tile__options">
         <button class="share" onclick="share(3, {year: document.getElementById('t3_year').value});" tabindex="0"></button>
-        <button class="info" tabindex="0"></button>
+        <button class="info" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile3"></button>
       </div>
     </div>
     <p>Bis 2045 soll Deutschland klimaneutral sein. Dafür muss der CO<sub>2</sub>-Ausstoß in allen Sektoren gesenkt werden.</p>
