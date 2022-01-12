@@ -1,0 +1,34 @@
+.modal {
+
+  .modal-header {
+    padding: 1rem 2rem;
+  }
+
+  .modal-body {
+    padding: 2rem;
+  }
+
+  &__sources {
+    list-style: none;
+    padding-left: 0;
+    padding-top: 0.5rem;
+
+    li {
+      padding-bottom: 0.75rem;
+    }
+
+    .name {
+      font-weight: 300;
+    }
+
+    .link {
+      display: block;
+    }
+
+    img {
+      height: 1rem;
+      padding-right: 0.5rem;
+      vertical-align: middle;
+    }
+  }
+}
