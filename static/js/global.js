@@ -1,5 +1,25 @@
+const wwfColor = {
+  white: "rgb(255, 255, 255)",
+  black: "rgb(0, 0, 0)",
+  gray1: "rgb(96, 96, 96)",
+  mediumGreen: "rgb(122, 182, 56)",
+  aqua: "rgb(0, 138, 136)"
+};
 
-const cgreen = "rgb(122 182 56)";
+const fontWeight = {
+  thin: 300,
+  normal: 400,
+  semibold: 500,
+  bold: 600
+}
+
+const fontSize = {
+  xsmall: "12px",
+  small: "14px",
+  normal: "16px"
+}
+
+const letterSpacing = "0.3px";
 
 // Width of one tile is representative for all tiles:
 const width = find_tile().clientWidth;
