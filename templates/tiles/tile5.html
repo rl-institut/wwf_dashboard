@@ -1,10 +1,39 @@
+<div class="modal fade" id="modalTile5" tabindex="-1" aria-labelledby="modalLabelTile5" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalLabelTile1">Immer mehr Erneuerbare Energien</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Stromerzeugung im Umbruch</h4>
+        <p>Seit 1990 hat sich die Art und Weise, wie wir in Deutschland Strom produzieren, stark gewandelt. Erneuerbare Energien spielten bis zur Jahrtausendwende so gut wie keine Rolle, wenn man von der Wasserkraft absieht. Strom wurde früher vor allem in großen Atom- und Kohlekraftwerken erzeugt und über die Stromnetze an die Konsumenten geliefert. </p>
+        <h4>Wind- und Solarkraftwerke</h4>
+        <p>Das Blatt wendet sich in den letzten Jahren. Vor allem die Bioenergie, Windräder an Land und auf See sowie Solaranlagen übernehmen immer größere Anteile der Stromerzeugung. Konventionelle Energieträger werden verdrängt. Schon jede zehnte Kilowattstunde wird in Deutschland heute mit der Kraft der Sonne erzeugt. Und fast ein Viertel des Stroms verdanken wir der Windenergie.</p>
+        <h4>Quellen und weiterführende Informationen</h4>
+        <ul class="modal__sources">
+          <li>
+            <span class="name">AG Energiebilanzen</span>
+            <span class="link">
+              <a href="https://ag-energiebilanzen.de/28-0-Zusatzinformationen.html" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                AG Energiebilanzen
+              </a>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="tile">
   <div class="tile__header">
     <div class="tile__top">
       <h3>Immer mehr Erneuerbare Energien</h3>
       <div class="tile__options">
         <button class="share" onclick="share(5, {year: document.getElementById('t5_year').value});" tabindex="0"></button>
-        <button class="info" tabindex="0"></button>
+        <button class="info" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile5"></button>
       </div>
     </div>
     <p>Kohle, Gas, Öl und Atomenergie sind seit den 90er Jahren auf dem Rückzug. Wind- und Solarkraftwerke gewinnen hingegen bei der Stromerzeugung an Bedeutung.</p>
