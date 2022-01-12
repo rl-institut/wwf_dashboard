@@ -1,10 +1,57 @@
+<div class="modal fade" id="modalTile2" tabindex="-1" aria-labelledby="modalLabelTile2" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalLabelTile1">Energieversorgung wird effizienter und erneuerbar</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Immer mehr Erneuerbare Energien – vor allem beim Strom</h4>
+        <p>Die Energiewende steht für ein wichtiges Ziel: Erneuerbare Energien ausbauen. Und tatsächlich ist in den letzten 30 Jahren schon viel passiert. Überall im Land lässt sich beobachten, wie immer mehr Wind- und Solarkraftwerke entstehen. Schon knapp die Hälfte des Stroms stammt aus erneuerbaren Quellen. Konventioneller Atom- und Kohlestrom wird dafür entsprechend zurückgefahren.</p>
+        <h4>Öl und Gas zum Heizen und Autofahren</h4>
+        <p>Allerdings sieht das Bild anders aus, wenn man die gesamte Energie betrachtet, die wir hierzulande einsetzen. Meistens wird dieser Wert als Primärenergieverbrauch bezeichnet und in Petajoule pro Jahr gemessen. Was man hier erkennt: Der Anteil Erneuerbarer Energien wächst zwar seit 1990. Und auch Einspareffekte werden über die Jahre erkennbar. Zugleich wird aber deutlich: Öl und Gas haben immer noch eine große Bedeutung. Der Verkehrs- und auch der Wärmesektor ist weiterhin überwiegend fossil. Die Erneuerbaren stehen hier erst am Anfang.</p>
+        <h4>Quellen und weiterführende Informationen</h4>
+        <ul class="modal__sources">
+          <li>
+            <span class="name">AG Energiebilanzen</span>
+            <span class="link">
+              <a href="https://ag-energiebilanzen.de/10-0-Auswertungstabellen.html" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Auswertungstabellen
+              </a>
+            </span>
+          </li>
+          <li>
+            <span class="name">Umweltbundesamt (UBA)</span>
+            <span class="link">
+              <a href="https://www.umweltbundesamt.de/bild/anteil-erneuerbarer-energien-in-den-sektoren-strom" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Anteil erneuerbarer Energien in den Sektoren Strom, Wärme und Verkehr
+              </a>
+            </span>
+          </li>
+          <li>
+            <span class="name">Informationsportal Erneuerbare Energien</span>
+            <span class="link">
+              <a href="https://www.erneuerbare-energien.de/EE/Navigation/DE/Service/Erneuerbare_Energien_in_Zahlen/Zeitreihen/zeitreihen.html " target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Zeitreihen zur Entwicklung der erneuerbaren Energien in Deutschland
+              </a>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="tile">
   <div class="tile__header">
     <div class="tile__top">
       <h3>Erneuerbare setzen sich durch</h3>
       <div class="tile__options">
         <button class="share" onclick="share(2, {year: document.getElementById('t2_year').value});" tabindex="0"></button>
-        <button class="info" tabindex="0"></button>
+        <button class="info" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile2"></button>
       </div>
     </div>
     <p>Unser Energieverbrauch basiert immer noch weitgehend auf Öl, Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der Anteil der Erneuerbaren Energien gering.</p>

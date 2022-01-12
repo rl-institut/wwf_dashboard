@@ -122,6 +122,11 @@ h2,
 h3,
 h4 {
   font-family: 'WWF', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+h3 {
+  line-height: 1.75rem;
 }
 
 .modal .modal-header {
