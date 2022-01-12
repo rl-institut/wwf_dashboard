@@ -42,7 +42,7 @@ const t4_y2 = d3.scaleLinear()
   .domain([0, t4_others_max]);
 const t4_color = d3.scaleOrdinal()
   .domain(Object.keys(t4_technologies))
-  .range(["#d82d45", "#724284", "#008987", "#006386"]);
+  .range([wwfColor.red, wwfColor.berry, wwfColor.aqua, wwfColor.darkBlue]);
 
 const t4_svg = d3.select("#t4")
   .append("svg")
@@ -66,8 +66,7 @@ const t4_icon_area_height = t4_icon_height * 4 / t4_icon_wrap;
 t4_icons.append("rect")
   .attr("width", chart_width)
   .attr("height", t4_icon_area_height)
-  .attr("fill", "white")
-  .attr("stroke", "black")
+  .attr("fill", wwfColor.white)
 
 for (const technology of Object.keys(t4_technologies)) {
 
@@ -79,7 +78,10 @@ for (const technology of Object.keys(t4_technologies)) {
     .attr("x", x + t4_icon_width / 2)
     .attr("y", y + t4_icon_margin)
     .attr("text-anchor", "middle")
-    .attr("dominant-baseline", "hanging");
+    .attr("dominant-baseline", "hanging")
+    .attr("font-weight", fontWeight.normal)
+    .attr("letter-spacing", letterSpacing)
+    .style("font-size", fontSize.xsmall);
 
   $(t4_icons.node().appendChild(icons["i_bus"].documentElement.cloneNode(true)))
     .attr("x", x + t4_icon_width / 2 - t4_icon_fifth)
@@ -165,11 +167,14 @@ function t4_change_year(to_year) {
     [x, y] = get_xy_for_icon(technology);
     t4_icon_text.append("text")
       .text(year_data[technology])
-      .attr("fill", "white")
+      .attr("fill", wwfColor.white)
       .attr("x", x + t4_icon_width / 2)
       .attr("y", y + 3 * t4_icon_margin + 4 * t4_icon_fifth)
       .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "middle")
+      .attr("dominant-baseline", "central")
+      .attr("font-weight", fontWeight.bold)
+      .attr("letter-spacing", letterSpacing)
+      .attr("font-size", fontSize.normal);
   }
 }
 

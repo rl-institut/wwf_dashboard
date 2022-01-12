@@ -2,8 +2,20 @@ const wwfColor = {
   white: "rgb(255, 255, 255)",
   black: "rgb(0, 0, 0)",
   gray1: "rgb(96, 96, 96)",
+  yellow: "rgb(243, 204, 0)",
+  orange: "rgb(240, 124, 36)",
+  red: "rgb(216, 45, 69)",
+  redViolet: "rgb(166, 48, 102)",
+  berry: "rgb(114, 66, 132)",
+  darkBlue: "rgb(0, 99, 134)",
+  mediumBlue: "rgb(112, 182, 214)",
+  aqua: "rgb(0, 138, 136)",
+  darkGreen: "rgb(19, 117, 52)",
   mediumGreen: "rgb(122, 182, 56)",
-  aqua: "rgb(0, 138, 136)"
+  olive: "rbg(128, 130, 33)",
+  darkBrown: "rgb(108, 59, 36)",
+  brown: "rgb(156, 106, 46)",
+  base: "rgb(195, 183, 140)"
 };
 
 const fontWeight = {
@@ -31,6 +43,7 @@ const chart_width = width - margin.left - margin.right;
 const height = 766 - margin.top - margin.bottom;
 
 const line_width = 3;
+const chart_axis_stroke_width = 2;
 const circle_width = 6;
 const rect_round = 16;
 

@@ -41,7 +41,7 @@ const t5_color = d3.scaleOrdinal()
   .range(["#70B6D6", "#006386", "#F3CC00", "#F07C24", "#008A88", "#000000"]);
 const t5_text_color = d3.scaleOrdinal()
   .domain(Object.keys(t5_technologies))
-  .range(["black", "white", "black", "black" , "white", "white"]);
+  .range([wwfColor.black, wwfColor.white, wwfColor.black, wwfColor.black , wwfColor.white, wwfColor.white]);
 
 const t5_svg = d3.select("#t5")
   .append("svg")
@@ -134,7 +134,10 @@ function t5_change_year(to_year) {
       .attr("x", x + t5_icon_width / 2)
       .attr("y", y + t5_icon_size + t5_icon_margin + t5_icon_height / 2)
       .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "middle")
+      .attr("dominant-baseline", "central")
+      .attr("font-weight", fontWeight.bold)
+      .attr("letter-spacing", letterSpacing)
+      .attr("font-size",fontSize.normal);
   }
 }
 

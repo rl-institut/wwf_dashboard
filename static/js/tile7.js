@@ -60,7 +60,7 @@ const t7_route_offset = 30;
 
 const t7_chart_height = 230;
 const t7_bar_gap = 10;
-const t7_bar_text_space = 4;
+const t7_bar_text_space = 8;
 const t7_icon_size = 21;
 const t7_icon_space = 10;
 
@@ -91,7 +91,7 @@ t7_svg.append("text")
   .attr("y", t7_route_space + t7_route_height / 2)
   .attr("font-weight", "bold")
   .style("text-anchor", "middle")
-  .style("dominant-baseline", "middle");
+  .style("dominant-baseline", "central");
 
 // CHART
 
@@ -106,10 +106,16 @@ t7_svg.append("text")
   .text("CO2-Emissionen pro Person in")
   .attr("x", 0)
   .attr("y", t7_route_space + t7_route_height + t7_route_offset)
+  .attr("font-weight", fontWeight.normal)
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size",fontSize.small);
 t7_svg.append("text")
   .text("kg nach Verkehrsmittel")
   .attr("x", 0)
   .attr("y", t7_route_space + t7_route_height + t7_route_offset + 20)
+  .attr("font-weight", fontWeight.normal)
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size",fontSize.small);
 
 t7_chart.append("g")
   .attr("id", "t7_xaxis")
@@ -123,7 +129,10 @@ t7_chart.append("g")
   )
   .selectAll("text")
     .attr("transform", "translate(-10,30)rotate(-45)")
-    .style("text-anchor", "end");
+    .style("text-anchor", "end")
+    .attr("font-weight", fontWeight.normal)
+    .attr("letter-spacing", letterSpacing)
+    .attr("font-size", fontSize.xsmall);
   d3.select("#t7_xaxis").select('.domain').attr('stroke-width', 0);
   d3.select("#t7_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -141,8 +150,8 @@ t7_chart.append("line")
   .attr("x2", chart_width)
   .attr("y1", t7_chart_height)
   .attr("y2", t7_chart_height)
-  .attr("stroke", "black")
-  .attr("stroke-width", line_width)
+  .attr("stroke", wwfColor.black)
+  .attr("stroke-width", chart_axis_stroke_width)
 
 
 function t7_change_distance(distance) {
@@ -158,16 +167,16 @@ function t7_change_route(distance) {
     .text(t7_routes[distance][0])
     .attr("x", chart_width / 2 - t7_route_text_space)
     .attr("y", t7_route_space + t7_route_height / 2)
-    .attr("font-weight", "bold")
+    .attr("font-weight", fontWeight.bold)
     .style("text-anchor", "end")
-    .style("dominant-baseline", "middle");
+    .style("dominant-baseline", "central");
   t7_route.append("text")
     .text(t7_routes[distance][1])
     .attr("x", chart_width / 2 + t7_route_text_space)
     .attr("y", t7_route_space + t7_route_height / 2)
-    .attr("font-weight", "bold")
+    .attr("font-weight", fontWeight.bold)
     .style("text-anchor", "starts")
-    .style("dominant-baseline", "middle");
+    .style("dominant-baseline", "central");
 }
 
 function t7_change_bars(distance_index) {
@@ -205,6 +214,9 @@ function t7_change_bars(distance_index) {
         .attr("x", x + t7_x.bandwidth() / 2)
         .attr("y", height - t7_bar_text_space)
         .attr("text-anchor", "middle")
+        .attr("font-weight", fontWeight.bold)
+        .attr("letter-spacing", letterSpacing)
+        .attr("font-size",fontSize.small);
     }
   }
 }
