@@ -21,6 +21,7 @@ def get_tile(tile):
     return render_template(
         "single_tile.html",
         tile_html=f"tiles/tile{tile}.html",
+        tile_config_js=f"static/js/tile{tile}_config.js",
         tile_js=f"static/js/tile{tile}.js",
         debug=DEBUG
     )

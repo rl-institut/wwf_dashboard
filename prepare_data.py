@@ -1,5 +1,6 @@
 
 import os
+import json
 import pandas
 
 FILENAME = "20211126-WWF_Daten_Dashboard_Version 2.6.xlsx"
@@ -67,16 +68,27 @@ def tile2():
 
 
 def tile3():
-    data = pandas.read_excel(
+    emissions = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, FILENAME),
+        sheet_name="03 Sektorziele CO2-Neutralität",
+        header=11,
+        usecols=range(4, 7),
+        nrows=7,
+    )
+    emissions.columns = ["year", "reduction_percent", "emissions"]
+    emissions = emissions.fillna(0)
+    sectors = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
         sheet_name="03 Sektorziele CO2-Neutralität",
         header=11,
         usecols=range(8, 16),
         nrows=11,
     )
-    data.columns = ["year", "energy", "industry", "house", "agriculture", "traffic", "waste", "total"]
-    data = data.interpolate()
-    data.to_json(os.path.join(DATA_PATH, "tile3.json"), orient="records")
+    sectors.columns = ["year", "energy", "industry", "house", "agriculture", "traffic", "waste", "total"]
+    sectors = sectors.interpolate()
+    data = {"emissions": emissions.to_dict(orient="records"), "sectors": sectors.to_dict(orient="records")}
+    with open(os.path.join(DATA_PATH, "tile3.json"), "w") as json_file:
+        json.dump(data, json_file)
 
 
 def tile4():
@@ -122,4 +134,4 @@ def tile7():
     data.to_json(os.path.join(DATA_PATH, "tile7.json"), orient="records")
 
 
-tile7()
+tile3()

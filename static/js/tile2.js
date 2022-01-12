@@ -202,17 +202,19 @@ function t2_draw_pie(year_data, type) {
   pie_text.append("text")
     .text(year_data[type])
     .attr("x", x)
-    .attr("y", t2_pie_y + t2_pie_radius / 2 + 5)
+    .attr("y", t2_pie_y + t2_pie_radius / 2)
     .style("fill", "#FFF")
     .style("text-anchor", "middle")
+    .style("dominant-baseline", "middle")
     .style("font-size", "14px")
 
   pie_text.append("text")
     .text(100 - year_data[type])
     .attr("x", x)
-    .attr("y", t2_pie_y - t2_pie_radius / 2 + 8)
+    .attr("y", t2_pie_y - t2_pie_radius / 2)
     .style("fill", "#FFF")
     .style("text-anchor", "middle")
+    .style("dominant-baseline", "middle")
     .style("font-size", "14px")
 }
 
