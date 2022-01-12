@@ -47,7 +47,7 @@ const t3_svg = d3.select("#t3")
 
 // BAR
 
-const t3_bar = t3_svg.append("g");
+const t3_bar = t3_svg.append("g").attr("transform", `translate(0, ${t3_puffer})`);
 t3_bar.append("text")
   .text("Globale Treibhausgasemissionen")
   .attr("x", width / 2)
@@ -91,7 +91,7 @@ t3_bar.append("text")
 
 // ICONS
 
-const t3_icons = t3_svg.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer})`);
+const t3_icons = t3_svg.append("g").attr("transform", `translate(0, ${t3_bar_total_height + 2 * t3_puffer})`);
 const t3_icon_left = (width - 6 * t3_circle_size - 5 * t3_icon_hspace) / 2;
 for (const [i, sector] of Object.keys(t3_sectors).entries()) {
   const icon = t3_sectors[sector].icon;
@@ -115,7 +115,7 @@ for (const [i, sector] of Object.keys(t3_sectors).entries()) {
 
 
 // CHART
-const t3_chart = t3_svg.append("g").attr("transform", `translate(${t3_chart_axes_width}, ${t3_bar_total_height + t3_puffer + t3_chart_offset})`);
+const t3_chart = t3_svg.append("g").attr("transform", `translate(${t3_chart_axes_width}, ${t3_bar_total_height + 2 * t3_puffer + t3_chart_offset})`);
 
 // X-Axis
 t3_chart.append("g")
@@ -160,8 +160,8 @@ function t3_change_year(year_index) {
   const year = t3_emission_years[year_index];
   const year_data = tiles[3].emissions.find(element => element.year == year);
 
-  t3_svg.select("#t3_emissions").remove();
-  const t3_emissions = t3_svg.append("g")
+  t3_bar.select("#t3_emissions").remove();
+  const t3_emissions = t3_bar.append("g")
     .attr("id", "t3_emissions")
     .attr("transform", `translate(0, ${t3_bar_title_height + 2 * t3_bar_vspace})`);
 
