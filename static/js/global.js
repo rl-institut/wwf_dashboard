@@ -86,7 +86,6 @@ for (let i = 1; i <= 10; i++) {
   )
 }
 
-const icon_names = ["i_bus", "i_fussgaenger", "i_e_auto_normal", "i_bahn", "i_fernbus", "i_verkehr", "i_flugzeug", "i_landwirtschaft", "i_industrie", "i_verkehr", "i_gebaeude", "i_strom", "i_summe"];
 var icons = {};
 for (let i = 0; i < icon_names.length; i++) {
   let name = icon_names[i];
