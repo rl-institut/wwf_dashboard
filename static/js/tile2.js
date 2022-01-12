@@ -26,7 +26,7 @@ const t2_bar_text_offset = 10;
 
 const t2_bar_color = d3.scaleOrdinal()
   .domain(t2_resources)
-  .range(["#7ab638", "co#000", "#3A3A3A", "#5A5A5A", "#808080", "#008A88"]);
+  .range([wwfColor.mediumGreen, "co#000", "#3A3A3A", "#5A5A5A", "#808080", wwfColor.aqua]);
 
 const t2_pie_y = 350;
 const t2_pie_radius = 38;
@@ -37,10 +37,11 @@ const t2_pie_legend_width = 300;
 const t2_pie_legend_x = chart_width / 2 - t2_pie_legend_width / 2;
 const t2_pie_legend_y = t2_pie_y + t2_pie_radius + 22;
 const t2_pie_legend_rect = 12;
+const t2_pie_legend_rect_spacing = t2_pie_legend_rect + 5;
 
 const t2_pie_color = d3.scaleOrdinal()
     .domain(["ee", "ne", "ne2"])
-    .range(["#7ab638", "#000", "#000"])
+    .range([wwfColor.mediumGreen, wwfColor.black, wwfColor.black])
 
 const t2_svg = d3.select("#t2")
   .append("svg")
@@ -54,28 +55,28 @@ const t2_pie_legend = t2_svg.append("g")
 t2_pie_legend.append("rect")
   .attr("width", t2_pie_legend_rect)
   .attr("height", t2_pie_legend_rect)
-  .attr("fill", "#7ab638");
+  .attr("fill", wwfColor.mediumGreen);
 t2_pie_legend.append("text")
   .text("Erneuerbar")
-  .attr("font-weight", 300)
-  .attr("x", t2_pie_legend_rect + 7)
-  .attr("y", t2_pie_legend_rect / 2 + 2)
-  .attr("dominant-baseline", "middle")
-  .attr("letter-spacing", "0.3px")
-  .style("font-size", "14px");
+  .attr("font-weight", fontWeight.thin)
+  .attr("x", t2_pie_legend_rect_spacing)
+  .attr("y", t2_pie_legend_rect / 2)
+  .attr("dominant-baseline", "central")
+  .attr("letter-spacing", letterSpacing)
+  .style("font-size", fontSize.small);
 t2_pie_legend.append("rect")
   .attr("x", t2_pie_legend_width / 2)
   .attr("width", t2_pie_legend_rect)
   .attr("height", t2_pie_legend_rect)
-  .attr("fill", "#000");
+  .attr("fill", wwfColor.black);
 t2_pie_legend.append("text")
   .text("Konventionell")
-  .attr("font-weight", 300)
-  .attr("x", t2_pie_legend_width / 2 + t2_pie_legend_rect + 7)
-  .attr("y", t2_pie_legend_rect / 2 + 2)
-  .attr("dominant-baseline", "middle")
-  .attr("letter-spacing", "0.3px")
-  .style("font-size", "14px");
+  .attr("font-weight", fontWeight.thin)
+  .attr("x", t2_pie_legend_width / 2 + t2_pie_legend_rect_spacing)
+  .attr("y", t2_pie_legend_rect / 2)
+  .attr("dominant-baseline", "central")
+  .attr("letter-spacing", letterSpacing)
+  .style("font-size",fontSize.small);
 
 function t2_get_x_scale(year_data) {
   const max_value = Object.entries(year_data).reduce(
@@ -99,23 +100,23 @@ function t2_adjust_text(x, y, bar_width) {
       "x": x,
       "y": y, "transform": "rotate(-90 " + x + " " + y + ")",
       "text-anchor": "middle",
-      "dominant-baseline": "hanging",
-      "font-weight": 600,
-      "font-size": "12px",
-      "letter-spacing": "0.3px"
+      "dominant-baseline": "text-before-edge",
+      "font-weight": fontWeight.bold,
+      "font-size": fontSize.xsmall,
+      "letter-spacing": letterSpacing
     }
   } else if (bar_width < 40) {
     return {
       "x": x,
       "y": y, "transform": "rotate(-90 " + x + " " + y + ")",
       "text-anchor": "middle",
-      "dominant-baseline": "hanging",
-      "font-weight": 600,
-      "font-size": "12px",
-      "letter-spacing": "0.3px"
+      "dominant-baseline": "text-before-edge",
+      "font-weight": fontWeight.bold,
+      "font-size": fontSize.xsmall,
+      "letter-spacing": letterSpacing
     }
   } else {
-    return {"x": x + bar_width / 2, "y": y, "text-anchor": "middle", "dominant-baseline": "middle", "font-weight": 600, "font-size": "12px", "letter-spacing": "0.3px"}
+    return {"x": x + bar_width / 2, "y": y, "text-anchor": "middle", "dominant-baseline": "central", "font-weight": fontWeight.bold, "font-size": fontSize.xsmall, "letter-spacing": letterSpacing}
   }
 }
 
@@ -152,7 +153,7 @@ function t2_draw_bars(year_data) {
   t2_bars.append("text")
     .each(function(d) {
       d3.select(this).text(Math.round(d[0].data[d.key]));
-      d3.select(this).attr("fill", "#FFF");
+      d3.select(this).attr("fill", wwfColor.white);
       const adjustment = t2_adjust_text(t2_x(d[0][0]), t2_bar_height / 2, t2_x(d[0][1]) - t2_x(d[0][0]));
       for (const key in adjustment) {
         d3.select(this).attr(key, adjustment[key]);
@@ -168,13 +169,13 @@ function t2_draw_bars(year_data) {
       if (d.key == "renewables") {
         return "#137534"
       } else {
-        return "#000"
+        return wwfColor.black
       }
     })
     .attr("text-anchor", "end")
     .attr("dominant-baseline", "middle")
-    .attr("font-size", "14px")
-    .attr("letter-spacing", "0.3px")
+    .attr("font-size", fontSize.small)
+    .attr("letter-spacing", letterSpacing)
 }
 
 function t2_draw_pie(year_data, type) {
@@ -191,7 +192,7 @@ function t2_draw_pie(year_data, type) {
     .enter()
     .append('path')
     .attr("transform", "translate(" + x + ", " + t2_pie_y + ")")
-    .attr("stroke", "#000")
+    .attr("stroke", function(d){return t2_pie_color(d.data[0])})
     .attr('d', arc)
     .attr('fill', function(d){return t2_pie_color(d.data[0])})
 
@@ -203,19 +204,21 @@ function t2_draw_pie(year_data, type) {
     .text(year_data[type])
     .attr("x", x)
     .attr("y", t2_pie_y + t2_pie_radius / 2)
-    .style("fill", "#FFF")
+    .style("fill", wwfColor.white)
     .style("text-anchor", "middle")
-    .style("dominant-baseline", "middle")
-    .style("font-size", "14px")
+    .style("alignment-baseline", "middle")
+    .style("font-size", fontSize.small)
+    .attr("font-weight", fontWeight.bold)
 
   pie_text.append("text")
     .text(100 - year_data[type])
     .attr("x", x)
     .attr("y", t2_pie_y - t2_pie_radius / 2)
-    .style("fill", "#FFF")
+    .style("fill", wwfColor.white)
     .style("text-anchor", "middle")
-    .style("dominant-baseline", "middle")
-    .style("font-size", "14px")
+    .style("alignment-baseline", "middle")
+    .style("font-size", fontSize.small)
+    .attr("font-weight", fontWeight.bold)
 }
 
 t2_change_year(2020);

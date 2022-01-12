@@ -1,5 +1,37 @@
+const wwfColor = {
+  white: "rgb(255, 255, 255)",
+  black: "rgb(0, 0, 0)",
+  gray1: "rgb(96, 96, 96)",
+  yellow: "rgb(243, 204, 0)",
+  orange: "rgb(240, 124, 36)",
+  red: "rgb(216, 45, 69)",
+  redViolet: "rgb(166, 48, 102)",
+  berry: "rgb(114, 66, 132)",
+  darkBlue: "rgb(0, 99, 134)",
+  mediumBlue: "rgb(112, 182, 214)",
+  aqua: "rgb(0, 138, 136)",
+  darkGreen: "rgb(19, 117, 52)",
+  mediumGreen: "rgb(122, 182, 56)",
+  olive: "rbg(128, 130, 33)",
+  darkBrown: "rgb(108, 59, 36)",
+  brown: "rgb(156, 106, 46)",
+  base: "rgb(195, 183, 140)"
+};
 
-const cgreen = "rgb(122 182 56)";
+const fontWeight = {
+  thin: 300,
+  normal: 400,
+  semibold: 500,
+  bold: 600
+}
+
+const fontSize = {
+  xsmall: "12px",
+  small: "14px",
+  normal: "16px"
+}
+
+const letterSpacing = "0.3px";
 
 // Width of one tile is representative for all tiles:
 const width = find_tile().clientWidth;
@@ -11,6 +43,7 @@ const chart_width = width - margin.left - margin.right;
 const height = 766 - margin.top - margin.bottom;
 
 const line_width = 3;
+const chart_axis_stroke_width = 2;
 const circle_width = 6;
 const rect_round = 16;
 
@@ -53,7 +86,6 @@ for (let i = 1; i <= 10; i++) {
   )
 }
 
-const icon_names = ["i_bus", "i_fussgaenger", "i_e_auto_normal", "i_bahn", "i_fernbus", "i_verkehr", "i_flugzeug", "i_landwirtschaft", "i_industrie", "i_verkehr", "i_gebaeude", "i_strom", "i_summe"];
 var icons = {};
 for (let i = 0; i < icon_names.length; i++) {
   let name = icon_names[i];

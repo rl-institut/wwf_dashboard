@@ -46,7 +46,7 @@ const t6_color = d3.scaleOrdinal()
 
 const t6_pie_color = d3.scaleOrdinal()
   .domain(["ee", "ne", "ne2"])
-  .range(["#7ab638", "#000", "#000"])
+  .range([wwfColor.mediumGreen, wwfColor.black, wwfColor.black])
 
 const t6_svg = d3.select("#t6")
   .append("svg")
@@ -69,36 +69,36 @@ t6_pie_legend.append("text")
   .attr("x", t6_pie_legend_rect + 5)
   .attr("y", t6_pie_legend_rect / 2)
   .attr("dominant-baseline", "middle")
-  .attr("font-weight", 300)
+  .attr("font-weight", fontWeight.thin)
   .attr("letter-spacing", "0.3px")
-  .style("font-size", "14px")
+  .style("font-size", fontSize.small)
 t6_pie_legend.append("rect")
   .attr("x", t6_pie_legend_width / 2)
   .attr("width", t6_pie_legend_rect)
   .attr("height", t6_pie_legend_rect)
-  .attr("fill", "#000");
+  .attr("fill", wwfColor.black);
 t6_pie_legend.append("text")
   .text("Konventionell")
   .attr("x", t6_pie_legend_width / 2 + t6_pie_legend_rect + 5)
   .attr("y", t6_pie_legend_rect / 2)
   .attr("dominant-baseline", "middle")
-  .attr("font-weight", 300)
+  .attr("font-weight", fontWeight.thin)
   .attr("letter-spacing", "0.3px")
-  .style("font-size", "14px");
+  .style("font-size", fontSize.small);
 
 t6_svg.append("text")
   .text("Anteil Erneuerbarer")
   .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
   .attr("y", t6_pie_radius - t6_pie_text_height / 2)
   .attr("letter-spacing", "0.3px")
-  .style("font-size", "14px");
+  .style("font-size", fontSize.small);
 t6_svg.append("text")
   .text("an diesem Tag")
   .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
   .attr("y", t6_pie_radius + t6_pie_text_height / 2)
   .style("text-anchor", "left")
   .attr("letter-spacing", "0.3px")
-  .style("font-size", "14px");
+  .style("font-size", fontSize.small);
 
 // CHART
 const t6_chart = t6_svg.append("g")
@@ -129,9 +129,9 @@ for (const technology of Object.keys(t6_technologies)) {
     .attr("y", y + t6_icon_size / 2 + 2)
     .attr("text-anchor", "left")
     .attr("dominant-baseline", "middle")
-    .attr("font-weight", 300)
+    .attr("font-weight", fontWeight.thin)
     .attr("letter-spacing", "0.3px")
-    .style("font-size", "14px")
+    .style("font-size", fontSize.small)
 
   t6_icons.append("rect")
     .attr("x", x)
@@ -216,7 +216,7 @@ function t6_draw_pie(res_share) {
     .enter()
     .append('path')
     .attr("transform", `translate(${chart_width / 2 - t6_pie_area_width / 2}, ${t6_pie_radius})`)
-    .attr("stroke", "#000")
+    .attr("stroke", function(d){return t2_pie_color(d.data[0])})
     .attr('d', arc)
     .attr('fill', function(d){return t6_pie_color(d.data[0])})
 
@@ -225,12 +225,12 @@ function t6_draw_pie(res_share) {
     .text(res_share.toFixed(0) + "%")
     .attr("x", chart_width / 2 - t6_pie_area_width / 2)
     .attr("y", t6_pie_radius * 3 / 2 + 5)
-    .style("fill", "#FFF")
+    .style("fill", wwfColor.white)
     .style("dominant-baseline", "middle")
     .style("text-anchor", "middle")
-    .attr("font-weight", 600)
+    .attr("font-weight", fontWeight.bold)
     .attr("letter-spacing", "0.3px")
-    .style("font-size", "14px")
+    .style("font-size", fontSize.small)
 
 }
 

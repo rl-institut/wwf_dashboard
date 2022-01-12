@@ -2,11 +2,14 @@
 import os
 import json
 import pandas
+import pathlib
+from PIL import Image, ImageDraw, ImageFont
 
 FILENAME = "20211126-WWF_Daten_Dashboard_Version 2.6.xlsx"
 
 DATA_PATH = "static/data"
 RAW_DATA_PATH = "raw_data"
+DROUGHT_DATA = "static/images/drought"
 
 
 def tile1():
@@ -134,4 +137,39 @@ def tile7():
     data.to_json(os.path.join(DATA_PATH, "tile7.json"), orient="records")
 
 
-tile3()
+def tile10():
+    drought_folder = pathlib.Path(DROUGHT_DATA)
+    font = ImageFont.truetype("static/fonts/WWF.woff", 30)
+    years = {
+        2014: ((56, 7, 633, 757), -6),
+        2015: ((56, 7, 633, 757), -6),
+        2016: ((56, 7, 633, 757), -9),
+        2017: ((59, 10, 636, 760), -9),
+        2018: ((59, 10, 636, 760), -9),
+        2019: ((59, 10, 636, 760), -9),
+        2020: ((59, 10, 636, 760), -9),
+    }
+    months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
+    for year, (crop, m) in years.items():
+        year_folder = pathlib.Path(RAW_DATA_PATH) / "drought" / str(year)
+
+        images = {}
+        for drought_raw in year_folder.iterdir():
+            month = drought_raw.name[m:m + 2]
+            im = Image.open(drought_raw)
+            im = im.crop(crop)
+            draw = ImageDraw.Draw(im)
+            draw.rectangle((10, 40, 130, 80), fill="#97b6e1")
+            draw.text((10, 10), text=months[int(month) - 1], fill="black", font=font)
+            images[int(month)] = im
+
+        drought_file = drought_folder / f"{year}.gif"
+        sorted_images = [images[k] for k in sorted(images.keys())]
+        sorted_images[0].save(drought_file, save_all=True, append_images=sorted_images[1:], duration=1000, loop=0)
+
+    data = [{"year": year} for year in years]
+    with open(os.path.join(DATA_PATH, "tile10.json"), "w") as json_file:
+        json.dump(data, json_file)
+
+
+tile10()

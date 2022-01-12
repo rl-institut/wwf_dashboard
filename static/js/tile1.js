@@ -14,7 +14,7 @@ $("#t1_year").ionRangeSlider({
 
 const t1_icon_area_height = 80;
 const t1_icon_area_offset = 30;
-const t1_chart_height = height - margin.top - margin.bottom - t1_icon_area_height - t1_icon_area_offset;
+const t1_chart_height = 242;
 
 const t1_icon_space = 32;
 const t1_icon_width = (chart_width - t1_icon_space * 4) / 3;
@@ -107,7 +107,7 @@ t1_svg.append("path")
 t1_svg.append("path")
   .datum(tiles[1])
   .attr("fill", "none")
-  .attr("stroke", "black")
+  .attr("stroke", wwfColor.black)
   .attr("stroke-width", line_width)
   .attr("d", d3.line()
     .x(function(d) { return t1_x(d.year) + t1_x.bandwidth() / 2 })
@@ -124,19 +124,19 @@ t1_icons.append("rect")
   .attr("y", t1_icon_area_height / 2 - t1_icon_height / 2)
   .attr("width", t1_icon_width)
   .attr("height", t1_icon_height)
-  .attr("fill", "black")
+  .attr("fill", wwfColor.black)
 
 t1_icons.append("text")
   .attr("id", "t1_ppm_icon")
   .attr("x", t1_icon_space + t1_icon_width / 2)
   .attr("y", t1_icon_area_height / 2)
-  .attr("fill", "#FFF")
-  .attr("font-weight", 600)
-  .attr("letter-spacing", "0.3px")
+  .attr("fill", wwfColor.white)
+  .attr("font-weight", fontWeight.bold)
+  .attr("letter-spacing", letterSpacing)
   .text("328 ppm")
-  .style("dominant-baseline", "middle")
+  .style("dominant-baseline", "central")
   .style("text-anchor", "middle")
-  .style("font-size", "16px")
+  .style("font-size", fontSize.normal)
 
 // CO2 Icon
 t1_icons.append("rect")
@@ -144,19 +144,19 @@ t1_icons.append("rect")
   .attr("y", t1_icon_area_height / 2 - t1_icon_height / 2)
   .attr("width", t1_icon_width)
   .attr("height", t1_icon_height)
-  .attr("fill", "#606060")
+  .attr("fill", wwfColor.gray1)
 
 t1_icons.append("text")
   .attr("id", "t1_co2_icon")
   .attr("x", 2 * t1_icon_space + t1_icon_width + t1_icon_width / 2)
   .attr("y", t1_icon_area_height / 2)
-  .attr("fill", "#FFF")
-  .attr("font-weight", 600)
-  .attr("letter-spacing", "0.3px")
+  .attr("fill", wwfColor.white)
+  .attr("font-weight", fontWeight.bold)
+  .attr("letter-spacing", letterSpacing)
   .text("12.547 Mt")
-  .style("dominant-baseline", "middle")
+  .style("dominant-baseline", "central")
   .style("text-anchor", "middle")
-  .style("font-size", "16px")
+  .style("font-size", fontSize.normal)
 
 // Temp Icon
 t1_icons.append("rect")
@@ -170,13 +170,13 @@ t1_icons.append("text")
   .attr("id", "t1_temp_icon")
   .attr("x", 3 * t1_icon_space + 2 * t1_icon_width + t1_icon_width / 2)
   .attr("y", t1_icon_area_height / 2)
-  .attr("fill", "black")
-  .attr("font-weight", 600)
-  .attr("letter-spacing", "0.3px")
+  .attr("fill", wwfColor.black)
+  .attr("font-weight", fontWeight.bold)
+  .attr("letter-spacing", letterSpacing)
   .text("+0,47 °C")
-  .style("dominant-baseline", "middle")
+  .style("dominant-baseline", "central")
   .style("text-anchor", "middle")
-  .style("font-size", "16px")
+  .style("font-size", fontSize.normal)
 
 function t1_change_year(to_year) {
   // Remove data from previous selection
@@ -203,7 +203,7 @@ function t1_change_year(to_year) {
     .attr("x2", t1_x(year))
     .attr("y1", t1_y(year_data.ppm))
     .attr("y2", t1_y2(t1_co2_max))
-    .attr("stroke", "black")
+    .attr("stroke", wwfColor.black)
     .attr("stroke-width", line_width)
     .attr("stroke-dasharray", "4")
 

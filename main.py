@@ -4,7 +4,7 @@ import json
 from cairosvg import svg2png
 from flask import Flask, render_template, request
 
-from settings import DEBUG
+from settings import DEBUG, ICONS
 import tiles
 import scrape
 
@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def dashboard():
-    return render_template("index.html", debug=DEBUG)
+    return render_template("index.html", icons=ICONS, debug=DEBUG)
 
 
 @app.route("/<int:tile>", methods=["GET"])
@@ -23,6 +23,7 @@ def get_tile(tile):
         tile_html=f"tiles/tile{tile}.html",
         tile_config_js=f"static/js/tile{tile}_config.js",
         tile_js=f"static/js/tile{tile}.js",
+        icons=ICONS,
         debug=DEBUG
     )
 
