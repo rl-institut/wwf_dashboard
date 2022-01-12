@@ -139,7 +139,7 @@ def tile7():
 
 def tile10():
     drought_folder = pathlib.Path(DROUGHT_DATA)
-    crops = {
+    years = {
         2014: ((56, 7, 633, 757), -6),
         2015: ((56, 7, 633, 757), -6),
         2016: ((56, 7, 633, 757), -6),
@@ -148,7 +148,7 @@ def tile10():
         2019: ((59, 10, 636, 760), -9),
         2020: ((59, 10, 636, 760), -9),
     }
-    for year, (crop, m) in crops.items():
+    for year, (crop, m) in years.items():
         year_folder = pathlib.Path(RAW_DATA_PATH) / "drought" / str(year)
 
         images = {}
@@ -163,6 +163,10 @@ def tile10():
         drought_file = drought_folder / f"{year}.gif"
         sorted_images = [images[k] for k in sorted(images.keys())]
         sorted_images[0].save(drought_file, save_all=True, append_images=sorted_images[1:], duration=1000, loop=0)
+
+    data = [{"year": year} for year in years]
+    with open(os.path.join(DATA_PATH, "tile10.json"), "w") as json_file:
+        json.dump(data, json_file)
 
 
 tile10()
