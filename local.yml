@@ -4,13 +4,15 @@ services:
   flask:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.local
     image: wwf
     container_name: wwf
+    restart: always
+    volumes:
+      - .:/app
     env_file:
       - ./.envs/.local/.flask
     ports:
       - "8000:80"
     expose:
     - 80
-    restart: always
