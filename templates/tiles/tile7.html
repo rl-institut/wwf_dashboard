@@ -1,10 +1,39 @@
+<div class="modal fade" id="modalTile7" tabindex="-1" aria-labelledby="modalLabelTile7" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalLabelTile7">Klimafreundliche Mobilität</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Wir entscheiden mit</h4>
+        <p>Mit der Wahl unseres Verkehrsmittels entscheiden wir jeden Tag mit, welchen Beitrag wir zum Klimaschutz leisten wollen und können. Denn der CO<sub>2</sub>-Ausstoß pro Kilometer kann sich ganz wesentlich unterscheiden, je nachdem, „auf welches Pferd wir setzen“. Egal ob es um den Einkauf um die Ecke, den Ausflug ins Umland oder die Fernreise geht – oft haben wir mehrere Optionen zur Auswahl.</p>
+        <h4>Mobilitätswende gestalten</h4>
+        <p>Laufen und Radfahren sind klimaneutral. Aber auch mit öffentlichen Verkehrsmitteln und der Bahn kann Mobilität klimafreundlich sein. Fliegen und Autofahren mit fossilen Verbrennungsmotoren hingegen schadet dem Klima überproportional.</p>
+        <h4>Quellen und weiterführende Informationen</h4>
+        <ul class="modal__sources">
+          <li>
+            <span class="name">Umweltbundesamt (UBA)</span>
+            <span class="link">
+              <a href="https://www.umweltbundesamt.de/themen/co2-fussabdruecke-im-alltagsverkehr" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                CO<sub>2</sub>-Fußabdrücke im Alltagsverkehr
+              </a>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="tile">
   <div class="tile__header">
     <div class="tile__top">
       <h3>Klimafreundliche Mobilität</h3>
       <div class="tile__options">
         <button class="share" onclick="share(7, {distance: document.getElementById('t7_distance').value});" tabindex="0"></button>
-        <button class="info" tabindex="0"></button>
+        <button class="info" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile7"></button>
       </div>
     </div>
     <p>Eine kluge Verkehrswende ist auch Mobilitätswende: Auf die bewusste Auswahl klimafreundlicher Verkehrsmittel kommt es an.</p>

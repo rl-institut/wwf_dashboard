@@ -11,6 +11,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 - responsive layout
 - styled sliders
 - icons
+- info popups
 
 ### Fixed
 
