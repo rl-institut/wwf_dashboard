@@ -5,7 +5,7 @@ import pandas
 import pathlib
 from PIL import Image, ImageDraw, ImageFont
 
-FILENAME = "20211126-WWF_Daten_Dashboard_Version 2.6.xlsx"
+FILENAME = "WWF_Daten_Dashboard_Version 3.5.xlsx"
 
 DATA_PATH = "static/data"
 RAW_DATA_PATH = "raw_data"
@@ -137,6 +137,20 @@ def tile7():
     data.to_json(os.path.join(DATA_PATH, "tile7.json"), orient="records")
 
 
+def tile8():
+    data = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, FILENAME),
+        sheet_name="08 Steigender Strombedarf",
+        header=9,
+        usecols=range(2, 8),
+        nrows=11,
+    )
+    data.columns = ["year", "primary", "power", "pv", "wind_onshore", "wind_offshore"]
+    data = data.interpolate()
+    data["wind"] = data["wind_onshore"] + data["wind_offshore"]
+    data[["year", "primary", "power", "pv", "wind"]].to_json(os.path.join(DATA_PATH, "tile8.json"), orient="records")
+
+
 def tile10():
     drought_folder = pathlib.Path(DROUGHT_DATA)
     font = ImageFont.truetype("static/fonts/WWF.woff", 30)
@@ -172,4 +186,4 @@ def tile10():
         json.dump(data, json_file)
 
 
-tile10()
+tile8()
