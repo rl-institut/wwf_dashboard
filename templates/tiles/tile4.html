@@ -1,10 +1,57 @@
+<div class="modal fade" id="modalTile4" tabindex="-1" aria-labelledby="modalLabelTile4" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalLabelTile4">Klimatechnologien sind im Kommen</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Technologischer Wandel</h4>
+        <p>Wir sind Zeitzeugen eines schnellen, technologischen Wandels. Das erleben wir beispielsweise in der Mobilität. Elektroautos sind auf dem Vormarsch und überall im Land entstehend öffentliche Ladesäulen. Batteriespeicher werden zunehmen eingesetzt. Und auch die Anzahl der neu installierten Wärmepumpen hat sich in den letzten 20 Jahren vervierfacht.</p>
+        <h4>Elektrifizierung für den Klimaschutz</h4>
+        <p>Was dabei auffällt: Vor allem strombasierte Anwendungen haben Konjunktur. Anstatt Diesel und Benzin zu tanken oder Erdgas zu verbrennen, nutzen wir vermehrt Elektrizität zum Heizen der Gebäude oder um von A nach B zu kommen. Denn auf Basis von Solar- oder Windstrom ist Klimaschutz besonders effizient.</p>
+        <h4>Quellen und weiterführende Informationen</h4>
+        <ul class="modal__sources">
+          <li>
+            <span class="name">Agentur für Erneuerbare Energien (AEE)</span>
+            <span class="link">
+              <a href="https://www.foederal-erneuerbar.de/uebersicht/bundeslaender/BW%7CBY%7CB%7CBB%7CHB%7CHH%7CHE%7CMV%7CNI%7CNRW%7CRLP%7CSL%7CSN%7CST%7CSH%7CTH%7CD/kategorie/mobilit%E7%A3%B4t/auswahl/701-ladepunkte/#goto_701" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Bundesländer-Übersicht zu Erneuerbaren Energien
+              </a>
+            </span>
+          </li>
+          <li>
+            <span class="name">Bundesverband Solarwirtschaft (BSW)</span>
+            <span class="link">
+              <a href="https://www.solarwirtschaft.de/wp-content/uploads/2021/08/bsw_infogr_solarbatterie.pdf" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Solarbatterie-Boom im Heimsegment
+              </a>
+            </span>
+          </li>
+          <li>
+            <span class="name">Bundesverband Wärmepumpe (BWP)</span>
+            <span class="link">
+              <a href="https://www.waermepumpe.de/fileadmin/user_upload/BWP_Branchenstudie_2021_WEB.pdf" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Branchenstudie 2021: Marktanalyse – Szenarien – Handlungsempfehlungen
+              </a>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="tile">
   <div class="tile__header">
     <div class="tile__top">
       <h3>Klimatechnologien sind im Kommen</h3>
       <div class="tile__options">
         <button class="share" onclick="share(4, {year: document.getElementById('t4_year').value});" tabindex="0"></button>
-        <button class="info" tabindex="0"></button>
+        <button class="info" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile4"></button>
       </div>
     </div>
     <p>Strombasierte Technologien finden immer breitere Anwendung, egal ob beim Heizen, in der Mobilität oder als Speicherlösungen.</p>
