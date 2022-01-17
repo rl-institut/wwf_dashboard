@@ -373,6 +373,7 @@ h3 {
 
 .tile__header h3 {
   padding-right: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .tile__header p {
