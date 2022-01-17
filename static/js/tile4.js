@@ -16,10 +16,10 @@ const t4_height = (typeof t3_min_height !== 'undefined') ? Math.max(t3_min_heigh
 const t4_puffer = is_mobile ? 0 : t4_height - t4_min_height;
 
 const t4_technologies = {
-  "heatpumps": "Wärmepumpen",
-  "storages": "Heimspeicher",
-  "ecars": "E-Autos",
-  "charging": "Ladesäulen"
+  "heatpumps": {"title": "Wärmepumpen", "icon": "i_waermepumpe_large"},
+  "storages": {"title": "Heimspeicher", "icon": "i_heimspeicher_large"},
+  "ecars": {"title": "E-Autos", "icon": "i_e-auto_large"},
+  "charging": {"title": "Ladesäulen", "icon": "i_ladesaeule_large"}
 };
 
 const t4_ecars_max = tiles[4].reduce(function(max, current){if (current.ecars > max) {return current.ecars} else {return max}}, 0) / 1000;
@@ -67,7 +67,7 @@ const t4_icons_body = t4_icons.append("g")
 for (const [i, technology] of Object.keys(t4_technologies).entries()) {
   const y_offset = parseInt(i / 2) * (t4_icon_size + 2 * t4_icon_vspace + t4_icon_height + t4_icon_title_height + t4_icon_wrap_height)
   t4_icons_body.append("text")
-    .text(t4_technologies[technology])
+    .text(t4_technologies[technology].title)
     .attr("x", (i % 2) * (t4_icon_hspace + t4_icon_width) + t4_icon_width / 2)
     .attr("y", y_offset + t4_icon_size + 2 * t4_icon_vspace + t4_icon_height)
     .attr("text-anchor", "middle")
@@ -76,7 +76,7 @@ for (const [i, technology] of Object.keys(t4_technologies).entries()) {
     .attr("letter-spacing", letterSpacing)
     .style("font-size", fontSize.xsmall);
 
-  $(t4_icons_body.node().appendChild(icons["i_bus"].documentElement.cloneNode(true)))
+  $(t4_icons_body.node().appendChild(icons[t4_technologies[technology].icon].documentElement.cloneNode(true)))
     .attr("x", (i % 2) * (t4_icon_hspace + t4_icon_width) + t4_icon_width / 2 - t4_icon_size / 2)
     .attr("y", y_offset)
     .attr("width", t4_icon_size)
