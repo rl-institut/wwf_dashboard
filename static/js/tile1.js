@@ -18,6 +18,9 @@ const t1_ppm_max = tiles[1].global.reduce(function(max, current){if (current.ppm
 const t1_co2_global_max = tiles[1].global.reduce(function(max, current){if (current.co2 > max) {return current.co2} else {return max}}, 0);
 const t1_co2_brd_max = tiles[1].brd.reduce(function(max, current){if (current.co2 > max) {return current.co2} else {return max}}, 0);
 
+const t1_temp_global = 0.75;
+const t1_temp_brd = 2.6;
+
 const t1_x = d3.scaleBand()
   .range([ 0, chart_width ])
   .domain(tiles[1].global.map(function(d) { return d.year; }))
@@ -28,11 +31,11 @@ let t1_y2 = d3.scaleLinear()
   .range([ t1_chart_height, 0 ])
   .domain([0, t1_co2_global_max]);
 const t1_color_global = d3.scaleQuantize()
-  .domain([-0.75, 0.75])
-  .range(["#08306b", "#08519c", "#2171b5", "#4292c6", "#6baed6", "#9ecae1", "#c6dbef", "#deebf7", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d"]);
-  const t1_color_brd = d3.scaleQuantize()
-    .domain([-2.6, 2.6])
-    .range(["#08306b", "#08519c", "#2171b5", "#4292c6", "#6baed6", "#9ecae1", "#c6dbef", "#deebf7", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d"]);
+  .domain([-t1_temp_global, t1_temp_global])
+  .range(t1_temperature_colors);
+const t1_color_brd = d3.scaleQuantize()
+  .domain([-t1_temp_brd, t1_temp_brd])
+  .range(t1_temperature_colors);
 
 const t1_selected_bar_width = t1_x.bandwidth() * 2;
 
@@ -208,6 +211,53 @@ t1_icons.append("text")
   .attr("text-anchor", "middle")
   .style("font-size", fontSize.small)
 
+// Temperature scale
+t1_temperature = t1_svg.append("g").attr("transform", `translate(0, ${t1_chart_total_height + t1_icon_total_height + t1_temperature_offset})`);
+
+t1_temperature.append("text")
+  .text("Temperaturänderungen")
+  .attr("x", width / 2)
+  .attr("y", 0)
+  .attr("dominant-baseline", "hanging")
+  .attr("text-anchor", "middle")
+  .style("font-size", fontSize.small)
+
+for (const [i, color] of t1_temperature_colors.entries()) {
+  t1_temperature.append("rect")
+    .attr("x", t1_temperature_lrspace + i * t1_temperature_size)
+    .attr("y", t1_temperature_text_height + t1_temperature_vspace)
+    .attr("width", t1_temperature_size)
+    .attr("height", t1_temperature_size)
+    .attr("fill", color)
+    .attr("stroke-width", 0)
+}
+
+t1_temperature.append("text")
+  .attr("id", "t1_temperature_left")
+  .text(-t1_temp_global)
+  .attr("x", t1_temperature_lrspace)
+  .attr("y", t1_temperature_text_height + 2 * t1_temperature_vspace + t1_temperature_size)
+  .attr("dominant-baseline", "hanging")
+  .attr("text-anchor", "middle")
+  .style("font-size", fontSize.small)
+
+t1_temperature.append("text")
+  .text("0")
+  .attr("x", width / 2)
+  .attr("y", t1_temperature_text_height + 2 * t1_temperature_vspace + t1_temperature_size)
+  .attr("dominant-baseline", "hanging")
+  .attr("text-anchor", "middle")
+  .style("font-size", fontSize.small)
+
+t1_temperature.append("text")
+  .attr("id", "t1_temperature_right")
+  .text(t1_temp_global)
+  .attr("x", width - t1_temperature_lrspace)
+  .attr("y", t1_temperature_text_height + 2 * t1_temperature_vspace + t1_temperature_size)
+  .attr("dominant-baseline", "hanging")
+  .attr("text-anchor", "middle")
+  .style("font-size", fontSize.small)
+
 function t1_change_year(to_year) {
   const t1_chart = t1_svg.select("#t1_chart");
 
@@ -303,6 +353,16 @@ function t1_update_chart() {
 
 function t1_change_mode(mode) {
   t1_mode = mode;
+  const temp = (mode == "global") ? t1_temp_global : t1_temp_brd;
+  if (mode == "global") {
+    $("#t1_global").addClass("active");
+    $("#t1_brd").removeClass("active");
+  } else {
+    $("#t1_brd").addClass("active");
+    $("#t1_global").removeClass("active");
+  }
+  t1_svg.select("#t1_temperature_left").text(-temp);
+  t1_svg.select("#t1_temperature_right").text(temp);
   t1_svg.select("#t1_chart").remove();
   t1_svg.append("g")
     .attr("id", "t1_chart")
@@ -311,4 +371,4 @@ function t1_change_mode(mode) {
   t1_change_year(document.getElementById('t1_year').value);
 }
 
-t1_change_mode("brd");
+t1_change_mode("global");
