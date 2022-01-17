@@ -141,7 +141,7 @@ t9_icons.append("text")
 
 
 // CHART
-const t9_chart = t9_svg.append("g").attr("transform", `translate(${t9_chart_axes_width}, ${t9_bar_total_height + 2 * t9_puffer + t9_chart_offset})`);
+const t9_chart = t9_svg.append("g").attr("transform", `translate(${t9_chart_yaxis_width}, ${t9_bar_total_height + 2 * t9_puffer + t9_chart_offset})`);
 
 // X-Axis
 t9_chart.append("g")
@@ -155,8 +155,11 @@ t9_chart.append("g")
     )
   )
   .selectAll("text")
-    .attr("text-anchor", "end");
-d3.select("#t9_xaxis").select('.domain').attr('stroke-width', 0);
+    .attr("text-anchor", "end")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
+d3.select("#t9_xaxis").select('.domain').attr('stroke-width', 2);
 d3.select("#t9_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 // Y-Axis
@@ -166,8 +169,10 @@ t9_chart.append("g")
     d3.axisLeft(t9_y)
   )
   .selectAll("text")
-    .attr("text-anchor", "end");
-    // 
+    .attr("text-anchor", "end")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
 d3.select("#t9_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t9_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -176,12 +181,14 @@ t9_chart.append("text")
   .attr("x", 0)
   .attr("y", - t9_chart_unit_height)
   .attr("text-anchor", "start")
+  .attr("fill", wwfColor.gray2)
   .style("font-size", fontSize.xsmall)
 t9_chart.append("text")
   .text("(in 1.000 Stück)")
   .attr("x", 0)
-  .attr("y", - t9_chart_unit_height / 2)
+  .attr("y", - t9_chart_unit_height / 3)
   .attr("text-anchor", "start")
+  .attr("fill", wwfColor.gray2)
   .style("font-size", fontSize.xsmall)
 
 // Grayed sector paths
