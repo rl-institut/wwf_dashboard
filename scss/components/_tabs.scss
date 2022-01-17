@@ -14,11 +14,14 @@
       background-color: $wwf-primary-color-2;
       color: $wwf-primary-color-1;
       border: 1px solid $wwf-primary-color-1;
+      cursor: pointer;
+      user-select: none;
     }
 
     & > .active {
       background-color: $wwf-primary-color-1;
       color: $wwf-primary-color-2;
+      cursor: default;
     }
 
     &__left {

@@ -11,6 +11,19 @@
     padding: 2rem;
   }
 
+  img.logo {
+    margin-bottom: 1rem;
+
+    &--agora {
+      height: 5rem;
+    }
+
+    &--rli {
+      height: 3rem;
+      margin-left: 2rem;
+    }
+  }
+
   &__sources {
     list-style: none;
     padding-left: 0;
