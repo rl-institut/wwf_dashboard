@@ -86,10 +86,10 @@ for (const technology of Object.keys(t9_technologies)) {
     .attr("width", t9_emissions_x(tiles[9].emissions[technology]))
     .attr("height", t9_emissions_y.bandwidth() - t9_bar_gap);
 
-  if (t9_emissions_x(tiles[9].emissions[technology]) - t9_bar_vspace > 0) {
+  if (t9_emissions_x(tiles[9].emissions[technology]) - t9_bar_offset > 0) {
     t9_bar.append("text")
       .text(tiles[9].emissions[technology])
-      .attr("x", t9_emissions_x(tiles[9].emissions[technology]) - t9_bar_vspace)
+      .attr("x", t9_emissions_x(tiles[9].emissions[technology]) - t9_bar_offset)
       .attr("y", t9_emissions_y(technology) + t9_emissions_y.bandwidth() / 2)
       .attr("text-anchor", "end")
       .attr("fill", wwfColor.white)
@@ -99,7 +99,7 @@ for (const technology of Object.keys(t9_technologies)) {
   } else {
     t9_bar.append("text")
       .text(tiles[9].emissions[technology])
-      .attr("x", t9_bar_vspace)
+      .attr("x", t9_bar_offset)
       .attr("y", t9_emissions_y(technology) + t9_emissions_y.bandwidth() / 2)
       .attr("text-anchor", "start")
       .attr("fill", wwfColor.black)
@@ -165,8 +165,10 @@ t9_chart.append("g")
   .call(
     d3.axisLeft(t9_y)
   )
-  .select('.domain')
-    .attr('stroke-width', 0);
+  .selectAll("text")
+    .attr("text-anchor", "end");
+    // 
+d3.select("#t9_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t9_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 t9_chart.append("text")
