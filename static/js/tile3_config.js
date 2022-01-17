@@ -17,7 +17,7 @@ const t3_chart_unit_height = 22;
 const t3_chart_axes_width = 60;
 const t3_chart_xaxis_height = 20;
 const t3_chart_width = width - 2 * t3_chart_axes_width;
-const t3_chart_height = 180;
+const t3_chart_height = 260;
 const t3_chart_offset = t3_circle_size + 2 * t3_chart_vspace + t3_chart_title_height + t3_chart_unit_height;
 const t3_chart_total_height = t3_chart_offset + t3_chart_height + t3_chart_xaxis_height;
 

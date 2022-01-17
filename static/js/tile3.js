@@ -139,8 +139,11 @@ t3_chart.append("g")
     )
   )
   .selectAll("text")
-    .attr("text-anchor", "end");
-d3.select("#t3_xaxis").select('.domain').attr('stroke-width', 0);
+    .attr("text-anchor", "end")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
+d3.select("#t3_xaxis").select('.domain').attr('stroke-width', 2);
 d3.select("#t3_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 // Y-Axis
@@ -149,8 +152,12 @@ t3_chart.append("g")
   .call(
     d3.axisLeft(t3_y)
   )
-  .select('.domain')
-    .attr('stroke-width', 0);
+  .selectAll("text")
+    .attr("text-anchor", "end")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
+d3.select("#t3_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t3_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 // Grayed sector paths

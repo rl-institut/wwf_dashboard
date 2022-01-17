@@ -70,7 +70,10 @@ t8_chart.append("g")
     )
   )
   .selectAll("text")
-    .attr("text-anchor", "end");
+    .attr("text-anchor", "end")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
 d3.select("#t8_xaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t8_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 

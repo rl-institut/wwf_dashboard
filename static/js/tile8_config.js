@@ -9,7 +9,7 @@ const t8_icon_hspace = 6;
 
 const t8_chart_unit_height = 22;
 const t8_chart_primary_power_offset = 5;
-const t8_chart_axes_width = 60;
+const t8_chart_axes_width = 35;
 const t8_chart_xaxis_height = 20;
 const t8_chart_width = width - 2 * t8_chart_axes_width;
 const t8_chart_height = 180;
