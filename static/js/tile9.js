@@ -60,7 +60,7 @@ t9_svg.append("text")
   .attr("dominant-baseline", "hanging");
 
 const t9_bar = t9_svg.append("g")
-  .attr("transform", `translate(${t9_bar_ticks_width}, ${t9_bar_title_height + 2 * t9_bar_vspace})`);
+  .attr("transform", `translate(${t9_bar_ticks_width}, ${t9_bar_title_height + 1.5 * t9_bar_vspace})`);
 
 t9_bar.append("g")
   .attr("id", "t9_emissions_y")
@@ -92,16 +92,20 @@ for (const technology of Object.keys(t9_technologies)) {
       .attr("x", t9_emissions_x(tiles[9].emissions[technology]) - t9_bar_vspace)
       .attr("y", t9_emissions_y(technology) + t9_emissions_y.bandwidth() / 2)
       .attr("text-anchor", "end")
-      .attr("dominant-baseline", "middle")
-      .attr("fill", "white")
+      .attr("fill", wwfColor.white)
+      .attr("dominant-baseline", "central")
+      .attr("font-size", fontSize.xsmall)
+      .attr("font-weight", fontWeight.bold);
   } else {
     t9_bar.append("text")
       .text(tiles[9].emissions[technology])
       .attr("x", t9_bar_vspace)
       .attr("y", t9_emissions_y(technology) + t9_emissions_y.bandwidth() / 2)
       .attr("text-anchor", "start")
-      .attr("dominant-baseline", "middle")
-      .attr("fill", "black")
+      .attr("fill", wwfColor.black)
+      .attr("dominant-baseline", "central")
+      .attr("font-size", fontSize.xsmall)
+      .attr("font-weight", fontWeight.bold);
   }
 }
 
@@ -195,11 +199,11 @@ function t9_activate_technology(technology) {
   t9_icons.selectAll("circle")
     .attr("fill", t9_circe_color_gray)
   t9_icons.selectAll("path")
-    .style("fill", "black")
+    .style("fill", wwfColor.black)
   t9_icons.select("#t9_circle_" + technology)
     .attr("fill", t9_color(technology))
   t9_icons.select("#t9_icon_" + technology).select("path")
-    .style("fill", "white")
+    .style("fill", wwfColor.white)
   t9_icons.select("#t9_technology_title")
     .text(t9_technologies[technology].title)
 }

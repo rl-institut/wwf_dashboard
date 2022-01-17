@@ -1,5 +1,5 @@
 
-const t8_bar_height = 40;
+const t8_bar_height = 52;
 const t8_bar_title_height = 20;
 const t8_bar_vspace = 15;
 const t8_bar_total_height = t8_bar_title_height + 4 * t8_bar_vspace + t8_bar_height;

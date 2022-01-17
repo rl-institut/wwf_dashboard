@@ -28,11 +28,12 @@ const fontWeight = {
 const fontSize = {
   xsmall: "12px",
   small: "14px",
-  normal: "16px"
+  normal: "16px",
+  large: "18px"
 }
 
 const letterSpacing = "0.3px";
-const legendLeftPadding = 6;
+const legendLeftPadding = 8;
 
 // Width of one tile is representative for all tiles:
 const width = find_tile().clientWidth;

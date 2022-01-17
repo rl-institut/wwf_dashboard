@@ -53,14 +53,20 @@ t3_bar.append("text")
   .attr("x", width / 2)
   .attr("y", t3_bar_vspace)
   .attr("text-anchor", "middle")
-  .attr("dominant-baseline", "hanging");
+  .attr("dominant-baseline", "hanging")
+  .attr("font-weight", fontWeight.normal)
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size",fontSize.normal);
 
 t3_bar.append("text")
   .text("Mio. t CO2-Äquivalente")
   .attr("x", width / 2)
   .attr("y", t3_bar_vspace + t3_bar_title_height / 2)
   .attr("text-anchor", "middle")
-  .attr("dominant-baseline", "hanging");
+  .attr("dominant-baseline", "hanging")
+  .attr("font-weight", fontWeight.thin)
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size",fontSize.xsmall);
 
 t3_bar.append("rect")
   .attr("x", 0)
@@ -77,7 +83,7 @@ t3_bar.append("rect")
 
 t3_bar.append("text")
   .text("Emissionen")
-  .attr("x", 2 * t3_bar_legend_size)
+  .attr("x", t3_bar_legend_size + legendLeftPadding)
   .attr("y", 3 * t3_bar_vspace + t3_bar_title_height + t3_bar_height + t3_bar_legend_size / 2)
   .attr("text-anchor", "left")
   .attr("dominant-baseline", "central")
@@ -86,7 +92,7 @@ t3_bar.append("text")
 
 t3_bar.append("text")
   .text("Emissionsreduktion")
-  .attr("x", width / 2 + 2 * t3_bar_legend_size)
+  .attr("x", width / 2 + t3_bar_legend_size + legendLeftPadding)
   .attr("y", 3 * t3_bar_vspace + t3_bar_title_height + t3_bar_height + t3_bar_legend_size / 2)
   .attr("text-anchor", "left")
   .attr("dominant-baseline", "central")
@@ -187,8 +193,11 @@ function t3_change_year(year_index) {
       .attr("x", middle / 2)
       .attr("y", t3_bar_height / 2)
       .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "middle")
-      .attr("fill", "white");
+      .attr("dominant-baseline", "central")
+      .attr("fill", wwfColor.white)
+      .attr("font-weight", fontWeight.bold)
+      .attr("letter-spacing", letterSpacing)
+      .attr("font-size",fontSize.xsmall);
   }
   if (width - middle > 0) {
     const reduction = t3_emissions_1990 - year_data.emissions;
@@ -197,8 +206,11 @@ function t3_change_year(year_index) {
       .attr("x", middle + (width - middle) / 2)
       .attr("y", t3_bar_height / 2)
       .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "middle")
-      .attr("fill", "white");
+      .attr("dominant-baseline", "central")
+      .attr("fill", wwfColor.white)
+      .attr("font-weight", fontWeight.bold)
+      .attr("letter-spacing", letterSpacing)
+      .attr("font-size",fontSize.xsmall);
   }
 }
 
@@ -206,11 +218,11 @@ function t3_activate_sector(sector) {
   t3_icons.selectAll("circle")
     .attr("fill", t3_circe_color_gray)
   t3_icons.selectAll("path")
-    .style("fill", "black")
+    .style("fill", wwfColor.black)
   t3_icons.select("#t3_circle_" + sector)
     .attr("fill", t3_color(sector))
   t3_icons.select("#t3_icon_" + sector).select("path")
-    .style("fill", "white")
+    .style("fill", wwfColor.white)
 }
 
 function t3_draw_current_sector(sector) {

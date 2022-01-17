@@ -89,6 +89,8 @@ t8_chart.append("text")
   .attr("x", 0)
   .attr("y", - t8_chart_unit_height)
   .attr("text-anchor", "end")
+  .attr("font-size", fontSize.xsmall)
+  .attr("font-weight", fontWeight.thin);
 
 
 // Y2-Axis
@@ -107,6 +109,8 @@ t8_chart.append("text")
   .attr("x", t8_chart_width)
   .attr("y", - t8_chart_unit_height)
   .attr("text-anchor", "start")
+  .attr("font-size", fontSize.xsmall)
+  .attr("font-weight", fontWeight.thin);
 
 // Wind and PV areas
 const t8_stacked_data = d3.stack().keys(["pv", "wind"])(tiles[8]);
@@ -153,6 +157,8 @@ t8_chart.append("text")
   .attr("y", t8_y(tiles[8][0].primary) - t8_chart_primary_power_offset)
   .attr("text-anchor", "start")
   .attr("fill", t8_color("primary"))
+  .attr("font-size", fontSize.xsmall)
+  .attr("font-weight", fontWeight.bold);
 
 t8_chart.append("text")
   .text("Strombedarf")
@@ -160,6 +166,8 @@ t8_chart.append("text")
   .attr("y", t8_y(tiles[8][tiles[8].length - 1].power) - t8_chart_primary_power_offset)
   .attr("text-anchor", "end")
   .attr("fill", t8_color("power"))
+  .attr("font-size", fontSize.xsmall)
+  .attr("font-weight", fontWeight.bold);
 
 
 function t8_change_year(year_index) {
@@ -204,8 +212,10 @@ function t8_change_year(year_index) {
       .attr("x", middle / 2 + t8_icon_hspace / 2)
       .attr("y", t8_bar_height / 2)
       .attr("text-anchor", "left")
-      .attr("dominant-baseline", "middle")
-      .attr("fill", "black");
+      .attr("dominant-baseline", "central")
+      .attr("fill", wwfColor.black)
+      .attr("font-size", fontSize.large)
+      .attr("font-weight", fontWeight.bold);
   }
   if (width - middle > 0) {
     $(t8_expansion.node().appendChild(icons["i_pv"].documentElement.cloneNode(true)))
@@ -219,8 +229,10 @@ function t8_change_year(year_index) {
       .attr("x", middle + (width - middle) / 2 + t8_icon_hspace / 2)
       .attr("y", t8_bar_height / 2)
       .attr("text-anchor", "left")
-      .attr("dominant-baseline", "middle")
-      .attr("fill", "black");
+      .attr("dominant-baseline", "central")
+      .attr("fill", wwfColor.black)
+      .attr("font-size", fontSize.large)
+      .attr("font-weight", fontWeight.bold);
   }
 }
 

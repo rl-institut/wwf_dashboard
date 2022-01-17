@@ -2,9 +2,9 @@
 const t9_emissions_color = "black";
 const t9_bar_ticks_width = width / 4;
 const t9_bar_width = width - t9_bar_ticks_width;
-const t9_bar_height = 260;
+const t9_bar_height = 180;
 const t9_bar_title_height = 20;
-const t9_bar_vspace = 15;
+const t9_bar_vspace = 38;
 const t9_bar_gap = 12;
 const t9_bar_total_height = t9_bar_title_height + 3 * t9_bar_vspace + t9_bar_height;
 

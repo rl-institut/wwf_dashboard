@@ -1,7 +1,7 @@
 
 const t3_bar_color_reduction = "#008A88";
 const t3_bar_height = 40;
-const t3_bar_title_height = 40;
+const t3_bar_title_height = 48;
 const t3_bar_vspace = 15;
 const t3_bar_legend_size = 16;
 const t3_bar_total_height = t3_bar_title_height + 4 * t3_bar_vspace + t3_bar_height + t3_bar_legend_size;
