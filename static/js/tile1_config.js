@@ -4,11 +4,13 @@ const t1_temperature_colors = ["#08306b", "#08519c", "#2171b5", "#4292c6", "#6ba
 const t1_mode_width = 280;
 const t1_mode_height = 24;
 
-const t1_unit_height = 30;
+const t1_chart_offset = 20;
+const t1_chart_unit_height = 40;
+const t1_chart_unit_offset = 10;
 const t1_chart_height = 242;
 const t1_chart_xaxis_height = 50;
 const t1_chart_axes_width = 60;
-const t1_chart_total_height = t1_unit_height + t1_chart_height + t1_chart_xaxis_height;
+const t1_chart_total_height = t1_chart_offset + t1_chart_unit_height + t1_chart_unit_offset + t1_chart_height + t1_chart_xaxis_height;
 
 const t1_icon_size = 24;
 const t1_icon_vspace = 10;

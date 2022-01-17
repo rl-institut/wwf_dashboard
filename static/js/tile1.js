@@ -47,7 +47,7 @@ const t1_svg = d3.select("#t1")
 // X-Axis
 t1_svg.append("g")
   .attr("id", "t1_xaxis")
-  .attr("transform", `translate(${t1_chart_axes_width}, ${t1_chart_height})`)
+  .attr("transform", `translate(${t1_chart_axes_width}, ${t1_chart_offset + t1_chart_height + t1_chart_unit_height + t1_chart_unit_offset})`)
   .call(
     d3.axisBottom(t1_x).tickValues(
       t1_x.domain().filter(function(d, idx) { return idx%20==0 })
@@ -62,7 +62,7 @@ d3.select("#t1_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0)
 // Y-Axis (PPM)
 t1_svg.append("g")
   .attr("id", "t1_yaxis")
-  .attr("transform", `translate(${chart_width + t1_chart_axes_width}, 0)`)
+  .attr("transform", `translate(${chart_width + t1_chart_axes_width}, ${t1_chart_offset + t1_chart_unit_height + t1_chart_unit_offset})`)
   .call(
     d3.axisRight(t1_y)
   )
@@ -70,16 +70,41 @@ t1_svg.append("g")
     .attr('stroke-width', 0);
 d3.select("#t1_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
-// Y2-Axis (CO2)
-t1_svg.append("g")
-  .attr("id", "t1_yaxis2")
-  .attr("transform", `translate(${t1_chart_axes_width}, 0)`)
-  .call(
-    d3.axisLeft(t1_y2)
-  )
-  .select('.domain')
-    .attr('stroke-width', 0);
-d3.select("#t1_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
+t1_svg.append("text")
+  .text("CO2-engeriebedingte")
+  .attr("y", t1_chart_offset + t1_chart_unit_height / 3)
+  .attr("text-anchor", "start")
+  .attr("dominant-baseline", "hanging")
+  .style("font-size", fontSize.small)
+t1_svg.append("text")
+  .text("Emissionen in Gt")
+  .attr("y", t1_chart_offset + t1_chart_unit_height / 3 * 2)
+  .attr("text-anchor", "start")
+  .attr("dominant-baseline", "hanging")
+  .style("font-size", fontSize.small)
+
+// Y2-Axis Title
+t1_svg.append("text")
+  .text("CO2-Konzentration")
+  .attr("x", width)
+  .attr("y", t1_chart_offset)
+  .attr("text-anchor", "end")
+  .attr("dominant-baseline", "hanging")
+  .style("font-size", fontSize.small)
+t1_svg.append("text")
+  .text("in der Atmosphäre")
+  .attr("x", width)
+  .attr("y", t1_chart_offset + t1_chart_unit_height / 3)
+  .attr("text-anchor", "end")
+  .attr("dominant-baseline", "hanging")
+  .style("font-size", fontSize.small)
+t1_svg.append("text")
+  .text("in ppm")
+  .attr("x", width)
+  .attr("y", t1_chart_offset + t1_chart_unit_height / 3 * 2)
+  .attr("text-anchor", "end")
+  .attr("dominant-baseline", "hanging")
+  .style("font-size", fontSize.small)
 
 // ICONS
 
@@ -300,8 +325,8 @@ function t1_change_year(to_year) {
       .attr("r", circle_width)
   }
 
-  t1_svg.select("#t1_ppm_icon").text(year_data.ppm.toFixed(1) + " ppm");
-  const current_co2 = (year_data.co2 == null) ? "- Mt" : year_data.co2.toFixed(3) + " Mt";
+  t1_svg.select("#t1_ppm_icon").text(year_data.ppm.toFixed(0) + " ppm");
+  const current_co2 = (year_data.co2 == null) ? "- Mt" : year_data.co2.toFixed(0) + " Mt";
   t1_svg.select("#t1_co2_icon").text(current_co2);
   t1_svg.select("#t1_temp_icon").text(year_data.temperature.toFixed(2) + " °C");
 }
@@ -315,6 +340,16 @@ function t1_update_chart() {
   t1_y2 = d3.scaleLinear()
     .range([ t1_chart_height, 0 ])
     .domain([0, co2_max]);
+
+  // Y2-Axis (CO2)
+  t1_chart.append("g")
+    .attr("id", "t1_yaxis2")
+    .call(
+      d3.axisLeft(t1_y2)
+    )
+    .select('.domain')
+      .attr('stroke-width', 0);
+  d3.select("#t1_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
 
   // Temperatures
   t1_chart.selectAll(null)
@@ -366,7 +401,7 @@ function t1_change_mode(mode) {
   t1_svg.select("#t1_chart").remove();
   t1_svg.append("g")
     .attr("id", "t1_chart")
-    .attr("transform", `translate(${t1_chart_axes_width}, 0)`);
+    .attr("transform", `translate(${t1_chart_axes_width}, ${t1_chart_offset + t1_chart_unit_height + t1_chart_unit_offset})`);
   t1_update_chart();
   t1_change_year(document.getElementById('t1_year').value);
 }
