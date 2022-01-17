@@ -12,29 +12,23 @@ $("#t5_year").ionRangeSlider({
   }
 });
 
+const t5_height = (typeof t6_min_height !== 'undefined') ? Math.max(t5_min_height, t6_min_height) : t5_min_height;
+const t5_puffer = is_mobile ? 0 : t5_height - t5_min_height;
+
 const t5_technologies = {
-  "wind_onshore": "Windenergie an Land",
-  "wind_offshore": "Windenergie auf See",
-  "pv": "Photovoltaik",
-  "biomass": "Biomasse",
-  "hydro": "Wasserkraft",
-  "fossil": "Fossil",
+  "wind_onshore": {"title": ["Windenergie", "an Land"], "icon": "i_wind_onshore"},
+  "wind_offshore": {"title": ["Windenergie", "auf See"], "icon": "i_wind_offshore"},
+  "pv": {"title": ["Photovoltaik"], "icon": "i_pv"},
+  "biomass": {"title": ["Biomasse"], "icon": "i_biomass"},
+  "hydro": {"title": ["Wasserkraft"], "icon": "i_water"},
+  "fossil": {"title": ["Fossil"], "icon": "i_pollution"},
 };
 
-const t5_chart_height = 230;
-const t5_chart_offset = 30;
-
-const t5_icon_width = 89;
-const t5_icon_height = 26;
-const t5_icon_size = 20;
-const t5_icon_margin = 8;
-const t5_icon_wrap = 3;
-
-const t5_x = d3.scaleBand()
-  .range([ 0, chart_width ])
-  .domain(tiles[5].map(function(d) { return d.year; }))
+const t5_x = d3.scaleLinear()
+  .range([0, t5_chart_width])
+  .domain([tiles[5][0].year, tiles[5][tiles[5].length - 1].year]);
 const t5_y = d3.scaleLinear()
-  .range([ t5_chart_height, 0 ])
+  .range([t5_chart_height, 0])
   .domain([0, 100]);
 const t5_color = d3.scaleOrdinal()
   .domain(Object.keys(t5_technologies))
@@ -46,10 +40,7 @@ const t5_text_color = d3.scaleOrdinal()
 const t5_svg = d3.select("#t5")
   .append("svg")
     .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+    .attr("height", t5_height)
 
 // CHART
 const t5_chart = t5_svg.append("g");
@@ -57,10 +48,12 @@ const t5_chart = t5_svg.append("g");
 // X-Axis
 t5_chart.append("g")
   .attr("id", "t5_xaxis")
-  .attr("transform", "translate(0," + t5_chart_height + ")")
+  .attr("transform", `translate(0, ${t5_chart_height})`)
   .call(
-    d3.axisBottom(t5_x).tickValues(
-      t5_x.domain().filter(function(d, idx) { return idx % 4 == 0 })
+    d3.axisBottom(t5_x).ticks(5).tickFormat(
+      function(year) {
+        return year
+      }
     )
   )
   .selectAll("text")
@@ -93,60 +86,57 @@ for (const technology of Object.keys(t5_technologies)) {
 
 // ICONS
 
-const t5_icons = t5_svg.append("g").attr("transform", `translate(0, ${t5_chart_height + t5_chart_offset})`);
+const t5_icons = t5_svg.append("g").attr("transform", `translate(${t5_icon_hspace}, ${t5_chart_total_height + t5_icon_offset})`);
 
-// 2x3 grid:
-const t5_icon_area_height = height - t5_chart_height - t5_chart_offset - margin.top - margin.bottom;
-const t5_icon_vertical_space = (t5_icon_area_height - t5_icon_size - t5_icon_margin - t5_icon_height) / 3;
-const t5_icon_horizontal_space = (chart_width - 3 * t5_icon_width) / 4;
-
-for (const technology of Object.keys(t5_technologies)) {
-  [x, y] = get_xy_for_icon(technology);
-
-  $(t5_icons.node().appendChild(icons["i_bus"].documentElement.cloneNode(true)))
-    .attr("x", x + t5_icon_width / 2 - t5_icon_size / 2)
-    .attr("y", y)
+for (const [i, technology] of Object.keys(t5_technologies).entries()) {
+  const y_offset = parseInt(i / 3) * (t5_icon_size + 2 * t5_icon_vspace + t5_icon_height + t5_icon_text_height + t5_icon_wrap_height)
+  $(t5_icons.node().appendChild(icons[t5_technologies[technology].icon].documentElement.cloneNode(true)))
+    .attr("x", (i % 3) * (t5_icon_hspace + t5_icon_width) + t5_icon_width / 2 - t5_icon_size / 2)
+    .attr("y", y_offset)
     .attr("width", t5_icon_size)
     .attr("height", t5_icon_size)
     .attr("preserveAspectRatio", "xMidYMid slice");
 
   t5_icons.append("rect")
-    .attr("x", x)
-    .attr("y", y + t5_icon_size + t5_icon_margin)
+    .attr("x", (i % 3) * (t5_icon_hspace + t5_icon_width))
+    .attr("y", y_offset + t5_icon_size + t5_icon_vspace)
     .attr("width", t5_icon_width)
     .attr("height", t5_icon_height)
     .attr("fill", t5_color(technology));
+
+  t5_icons.append("text")
+    .attr("id", "t5_text_" + technology)
+    .text("")
+    .attr("x", (i % 3) * (t5_icon_hspace + t5_icon_width) + t5_icon_width / 2)
+    .attr("y", y_offset + t5_icon_size + t5_icon_vspace + t5_icon_height / 2)
+    .attr("fill", t5_text_color(technology))
+    .attr("text-anchor", "middle")
+    .attr("dominant-baseline", "middle")
+    .attr("font-weight", fontWeight.bold)
+    .attr("letter-spacing", letterSpacing)
+    .attr("font-size",fontSize.normal);
+
+  for (const [t, text] of t5_technologies[technology].title.entries()) {
+    t5_icons.append("text")
+      .text(text)
+      .attr("x", (i % 3) * (t5_icon_hspace + t5_icon_width) + t5_icon_width / 2)
+      .attr("y", y_offset + t5_icon_size + 2 * t5_icon_vspace + t5_icon_height + t * t5_icon_text_height / 2)
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "hanging")
+      .attr("font-weight", fontWeight.normal)
+      .attr("letter-spacing", letterSpacing)
+      .attr("font-size",fontSize.small);
+  }
 }
 
 function t5_change_year(to_year) {
   const year = parseInt(to_year);
   const year_data = tiles[5].find(element => element.year == year);
 
-  t5_icons.select("#t5_icon_text").remove();
-  const t5_icon_text = t5_icons.append("g")
-    .attr("id", "t5_icon_text")
-
   for (const technology of Object.keys(t5_technologies)) {
-    [x, y] = get_xy_for_icon(technology);
-    t5_icon_text.append("text")
+    t5_icons.select("#t5_text_" + technology)
       .text(year_data[technology].toFixed(1) + " %")
-      .attr("fill", t5_text_color(technology))
-      .attr("x", x + t5_icon_width / 2)
-      .attr("y", y + t5_icon_size + t5_icon_margin + t5_icon_height / 2)
-      .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "central")
-      .attr("font-weight", fontWeight.bold)
-      .attr("letter-spacing", letterSpacing)
-      .attr("font-size",fontSize.normal);
   }
 }
-
-function get_xy_for_icon(technology) {
-  const i = Object.keys(t5_technologies).indexOf(technology)
-  const x = (i % t5_icon_wrap) * t5_icon_width + t5_icon_horizontal_space * (i % t5_icon_wrap + 1);
-  const y = (parseInt(i / t5_icon_wrap)) * (t5_icon_height + t5_icon_vertical_space) + t5_icon_vertical_space;
-  return [x, y]
-}
-
 
 t5_change_year(2020);
