@@ -1,0 +1,34 @@
+.tile__tabs {
+  @include flex-row-justify-center;
+  padding-top: 1rem;
+
+  .tile1-tabs {
+    @include flex-row;
+
+    & > div {
+      width: 9rem;
+      font-weight: 700;
+      font-size: $font-size-small;
+      text-align: center;
+      padding: 0.3rem;
+      background-color: $wwf-primary-color-2;
+      color: $wwf-primary-color-1;
+      border: 1px solid $wwf-primary-color-1;
+    }
+
+    & > .active {
+      background-color: $wwf-primary-color-1;
+      color: $wwf-primary-color-2;
+    }
+
+    &__left {
+      border-bottom-left-radius: $button-radius;
+      border-top-left-radius: $button-radius;
+    }
+
+    &__right {
+      border-bottom-right-radius: $button-radius;
+      border-top-right-radius: $button-radius;
+    }
+  }
+}

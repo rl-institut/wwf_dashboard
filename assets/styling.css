@@ -223,6 +223,56 @@ h3 {
   width: 7rem;
 }
 
+.tile__tabs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-top: 1rem;
+}
+
+.tile__tabs .tile1-tabs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.tile__tabs .tile1-tabs > div {
+  width: 9rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 0.3rem;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+}
+
+.tile__tabs .tile1-tabs > .active {
+  background-color: #000;
+  color: #fff;
+}
+
+.tile__tabs .tile1-tabs__left {
+  border-bottom-left-radius: 100px;
+  border-top-left-radius: 100px;
+}
+
+.tile__tabs .tile1-tabs__right {
+  border-bottom-right-radius: 100px;
+  border-top-right-radius: 100px;
+}
+
 .dashboard {
   display: -webkit-box;
   display: -ms-flexbox;

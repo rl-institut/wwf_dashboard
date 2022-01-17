@@ -49,3 +49,6 @@ $screen-width-min-l: calc(#{$screen-width-max-m} + 1px);
 // Tiles
 $tile-max-width: calc((#{$layout-max-width} - #{$layout-padding}) / 2);
 $tile-padding: 2rem;
+
+// Buttons
+$button-radius: 100px;

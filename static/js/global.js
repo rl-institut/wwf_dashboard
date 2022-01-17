@@ -32,6 +32,7 @@ const fontSize = {
 }
 
 const letterSpacing = "0.3px";
+const legendLeftPadding = 6;
 
 // Width of one tile is representative for all tiles:
 const width = find_tile().clientWidth;
