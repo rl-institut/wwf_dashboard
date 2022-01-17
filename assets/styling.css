@@ -140,6 +140,19 @@ h3 {
   padding: 2rem;
 }
 
+.modal img.logo {
+  margin-bottom: 1rem;
+}
+
+.modal img.logo--agora {
+  height: 5rem;
+}
+
+.modal img.logo--rli {
+  height: 3rem;
+  margin-left: 2rem;
+}
+
 .modal__sources {
   list-style: none;
   padding-left: 0;
@@ -291,11 +304,17 @@ h3 {
   background-color: #fff;
   color: #000;
   border: 1px solid #000;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .tile__tabs .tile1-tabs > .active {
   background-color: #000;
   color: #fff;
+  cursor: default;
 }
 
 .tile__tabs .tile1-tabs__left {

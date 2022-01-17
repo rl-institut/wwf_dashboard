@@ -148,13 +148,6 @@ for (const technology of Object.keys(t6_technologies)) {
     .attr("preserveAspectRatio", "xMidYMid slice");
 }
 
-$(t6_icons.node().appendChild(icons["agora_logo"].documentElement.cloneNode(true)))
-  .attr("x", chart_width / 2 - t6_agora_logo_width / 2)
-  .attr("y", 2 * t6_icon_size + t6_icon_margin + t6_icon_offset)
-  .attr("width", t6_agora_logo_width)
-  .attr("height", t6_agora_logo_height)
-  .attr("preserveAspectRatio", "xMidYMid slice");
-
 function t6_change_date() {
   t6_chart.select("#t6_area").remove();
   const date = $("#t6_date").val();
