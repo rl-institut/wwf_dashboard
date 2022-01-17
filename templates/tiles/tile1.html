@@ -1,3 +1,43 @@
+<div class="modal fade modal--share" id="modalShareTile1" tabindex="-1" aria-labelledby="modalShareLabelTile1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalShareLabelTile1">Diagramm teilen</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="logos">
+          <div class="logo">
+            <a href="">
+              <img src="../../static/icons/social_media/i_fb.png" alt="Facebook Logo">
+            </a>
+          </div>
+          <div class="logo">
+            <a href="">
+              <img src="../../static/icons/social_media/i_ig.png" alt="Instagram Logo">
+            </a>
+          </div>
+          <div class="logo">
+            <a href="">
+              <img src="../../static/icons/social_media/i_li.png" alt="LinkedIn Logo">
+            </a>
+          </div>
+          <div class="logo">
+            <a href="">
+              <img src="../../static/icons/social_media/i_telegram.png" alt="Telegram Logo">
+            </a>
+          </div>
+          <div class="logo">
+            <a href="">
+              <img src="../../static/icons/social_media/i_wa.svg" alt="Whatsapp Logo">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="modalTile1" tabindex="-1" aria-labelledby="modalLabelTile1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-fullscreen-md-down">
     <div class="modal-content">
@@ -13,6 +53,24 @@
         <p>Zwar ist es hierzulande seit 1990 gelungen, den CO<sub>2</sub>-Ausstoß um gut ein Drittel zu senken. Aber Deutschland trägt eine besondere Verantwortung. Weltweit haben nur fünf Länder historisch betrachtet noch mehr emittiert als wir. Außerdem sind die Absenkungen zu langsam. Denn statt der heute ca. 600 Millionen Tonnen CO<sub>2</sub> pro Jahr sollen es bis 2045 gar keine mehr sein. Das Ziel lautet dann „Klimaneutralität“.</p>
         <h4>Quellen und weiterführende Informationen</h4>
         <ul class="modal__sources">
+          <li>
+            <span class="name">Umweltbundesamt (UBA)</span>
+            <span class="link">
+              <a href="https://www.umweltbundesamt.de/daten/klima/trends-der-lufttemperatur#2020-bisher-zweitwarmstes-jahr-in-deutschland" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Trends der Lufttemperatur
+              </a>
+            </span>
+          </li>
+          <li>
+            <span class="name">Klimastreifen von Ed Hawkins</span>
+            <span class="link">
+              <a href="https://showyourstripes.info/s/globe" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                #ShowYourStripes
+              </a>
+            </span>
+          </li>
           <li>
             <span class="name">Prof. Volker Quaschning, HTW Berlin</span>
             <span class="link">
@@ -31,42 +89,6 @@
               </a>
             </span>
           </li>
-          <li>
-            <span class="name">Umweltbundesamt (UBA)</span>
-            <span class="link">
-              <a href="https://www.umweltbundesamt.de/publikationen/uebersicht-zur-entwicklung-der-energiebedingten" target="_blank" rel="noopener noreferrer">
-                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
-                Übersicht zur Entwicklung der energiebedingten Emissionen und Brennstoffeinsätze in Deutschland 1990 – 2019
-              </a>
-            </span>
-          </li>
-          <li>
-            <span class="name">Umweltbundesamt (UBA)</span>
-            <span class="link">
-              <a href="https://www.umweltbundesamt.de/daten/klima/trends-der-lufttemperatur#2020-bisher-zweitwarmstes-jahr-in-deutschland" target="_blank" rel="noopener noreferrer">
-                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
-                Trends der Lufttemperatur
-              </a>
-            </span>
-          </li>
-          <li>
-            <span class="name">Internationale Energieagentur</span>
-            <span class="link">
-              <a href="https://www.iea.org/data-and-statistics/charts/global-energy-related-co2-emissions-1990-2021" target="_blank" rel="noopener noreferrer">
-                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
-                Global energy-related CO2 emissions, 1990-2021
-              </a>
-            </span>
-          </li>
-          <li>
-            <span class="name">World Meteorological Organization (WMO)</span>
-            <span class="link">
-              <a href="https://public.wmo.int/en/media/press-release/greenhouse-gas-bulletin-another-year-another-record" target="_blank" rel="noopener noreferrer">
-                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
-                Greenhouse Gas Bulletin: Another Year Another Record
-              </a>
-            </span>
-          </li>
         </ul>
       </div>
     </div>
@@ -78,7 +100,7 @@
     <div class="tile__top">
       <h3>CO<sub>2</sub>-Ausstoß verschärft Klimakrise</h3>
       <div class="tile__options">
-        <button class="share" onclick="share(1, {year: document.getElementById('t1_year').value});" tabindex="0"></button>
+        <button class="share" onclick="share(1, {year: document.getElementById('t1_year').value});" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalShareTile1"></button>
         <button class="info" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile1"></button>
       </div>
     </div>

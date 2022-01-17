@@ -14,11 +14,11 @@ $("#t9_year").ionRangeSlider({
 });
 
 const t9_technologies = {
-  "solar": {"title": "Solarthermie", "icon": "i_waerme"},
-  "heatpump": {"title": "Wärmepumpe", "icon": "i_waerme"},
-  "gas": {"title": "Gasheizung", "icon": "i_waerme"},
-  "biomass": {"title": "Biomasse", "icon": "i_waerme"},
-  "oil": {"title": "Ölheizung", "icon": "i_waerme"},
+  "solar": {"title": "Solarthermie", "icon": "i_pv"},
+  "heatpump": {"title": "Wärmepumpe", "icon": "i_waermepumpe_small"},
+  "gas": {"title": "Gasheizung", "icon": "i_gas"},
+  "biomass": {"title": "Biomasse", "icon": "i_biomass"},
+  "oil": {"title": "Ölheizung", "icon": "i_oel"},
 };
 
 const t9_technologies_max = Math.max(...Object.values(tiles[9].installations[tiles[9].installations.length - 1])) / 1000;
