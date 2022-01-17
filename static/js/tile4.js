@@ -12,6 +12,9 @@ $("#t4_year").ionRangeSlider({
   }
 });
 
+const t4_height = (typeof t3_min_height !== 'undefined') ? Math.max(t3_min_height, t4_min_height) : t4_min_height;
+const t4_puffer = is_mobile ? 0 : t4_height - t4_min_height;
+
 const t4_technologies = {
   "heatpumps": "Wärmepumpen",
   "storages": "Heimspeicher",
@@ -26,16 +29,11 @@ const t4_others_max = Math.max(
   tiles[4].reduce(function(max, current){if (current.heatpumps > max) {return current.heatpumps} else {return max}}, 0)
 ) / 1000;
 
-const t4_chart_height = 230;
-const t4_icon_area_offset = 30;
-const t4_icon_space = 50;
-const t4_icon_margin = 5;
-
-const t4_x = d3.scaleBand()
-  .range([ 0, chart_width ])
-  .domain(tiles[4].map(function(d) { return d.year; }))
+const t4_x = d3.scaleLinear()
+  .range([0, t4_chart_width])
+  .domain([tiles[4][0].year, tiles[4][tiles[4].length - 1].year]);
 const t4_y = d3.scaleLinear()
-  .range([ t4_chart_height, 0 ])
+  .range([t4_chart_height, 0])
   .domain([0, t4_ecars_max]);
 const t4_y2 = d3.scaleLinear()
   .range([ t4_chart_height, 0 ])
@@ -47,68 +45,79 @@ const t4_color = d3.scaleOrdinal()
 const t4_svg = d3.select("#t4")
   .append("svg")
     .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+    .attr("height", t4_height)
 
 // ICONS
 
 const t4_icons = t4_svg.append("g");
 
-// 4x1 icon row or 2x2 icon grid:
-const t4_icon_wrap = (width > tile_breakpoint) ? 4 : 2;
-const t4_icon_width = (chart_width - (t4_icon_wrap + 1) * t4_icon_space) / t4_icon_wrap;
-const t4_icon_fifth = t4_icon_width / 3 / 2;
-const t4_icon_height = 5 * t4_icon_fifth + 4 * t4_icon_margin;
-const t4_icon_area_height = t4_icon_height * 4 / t4_icon_wrap;
+t4_icons.append("text")
+  .text("Anzahl der Klimatechnologien im Einsatz")
+  .attr("x", width / 2)
+  .attr("y", t4_icon_offset)
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "hanging")
+  .attr("font-weight", fontWeight.normal)
+  .attr("letter-spacing", letterSpacing)
+  .style("font-size", fontSize.normal);
 
-t4_icons.append("rect")
-  .attr("width", chart_width)
-  .attr("height", t4_icon_area_height)
-  .attr("fill", wwfColor.white)
+const t4_icons_body = t4_icons.append("g")
+  .attr("transform", `translate(${t4_icon_hspace}, ${t4_icon_offset + t4_icon_title_height + t4_icon_vspace})`);
 
-for (const technology of Object.keys(t4_technologies)) {
-
-  [x, y] = get_xy_for_icon(technology);
-
-  // Icon text gets 1/5 of height, symbol and rect get 2/5 of height
-  t4_icons.append("text")
+for (const [i, technology] of Object.keys(t4_technologies).entries()) {
+  const y_offset = parseInt(i / 2) * (t4_icon_size + 2 * t4_icon_vspace + t4_icon_height + t4_icon_title_height + t4_icon_wrap_height)
+  t4_icons_body.append("text")
     .text(t4_technologies[technology])
-    .attr("x", x + t4_icon_width / 2)
-    .attr("y", y + t4_icon_margin)
+    .attr("x", (i % 2) * (t4_icon_hspace + t4_icon_width) + t4_icon_width / 2)
+    .attr("y", y_offset + t4_icon_size + 2 * t4_icon_vspace + t4_icon_height)
     .attr("text-anchor", "middle")
     .attr("dominant-baseline", "hanging")
     .attr("font-weight", fontWeight.normal)
     .attr("letter-spacing", letterSpacing)
     .style("font-size", fontSize.xsmall);
 
-  $(t4_icons.node().appendChild(icons["i_bus"].documentElement.cloneNode(true)))
-    .attr("x", x + t4_icon_width / 2 - t4_icon_fifth)
-    .attr("y", y + 2 * t4_icon_margin + t4_icon_fifth)
-    .attr("width", 2 * t4_icon_fifth)
-    .attr("height", 2 * t4_icon_fifth)
+  $(t4_icons_body.node().appendChild(icons["i_bus"].documentElement.cloneNode(true)))
+    .attr("x", (i % 2) * (t4_icon_hspace + t4_icon_width) + t4_icon_width / 2 - t4_icon_size / 2)
+    .attr("y", y_offset)
+    .attr("width", t4_icon_size)
+    .attr("height", t4_icon_size)
     .attr("preserveAspectRatio", "xMidYMid slice");
 
-  t4_icons.append("rect")
-    .attr("x", x)
-    .attr("y", y + 3 * t4_icon_margin + t4_icon_fifth * 3)
+  t4_icons_body.append("rect")
+    .attr("x", (i % 2) * (t4_icon_hspace + t4_icon_width))
+    .attr("y", y_offset + t4_icon_size + t4_icon_vspace)
     .attr("width", t4_icon_width)
-    .attr("height", t4_icon_fifth * 2)
+    .attr("height", t4_icon_height)
     .attr("fill", t4_color(technology));
+
+  t4_icons_body.append("text")
+    .attr("id", "t4_text_" + technology)
+    .text("")
+    .attr("x", (i % 2) * (t4_icon_hspace + t4_icon_width) + t4_icon_width / 2)
+    .attr("y", y_offset + t4_icon_size + t4_icon_vspace + t4_icon_height / 2)
+    .attr("fill", "white")
+    .attr("text-anchor", "middle")
+    .attr("dominant-baseline", "middle")
+    .attr("font-weight", fontWeight.normal)
+    .attr("letter-spacing", letterSpacing)
+    .style("font-size", fontSize.normal);
 }
 
 
 // CHART
-const t4_chart = t4_svg.append("g").attr("transform", "translate(0, " + (t4_icon_area_height + t4_icon_area_offset) + ")");
+const t4_chart_body = t4_svg.append("g")
+  .attr("transform", `translate(0, ${t4_icon_total_height + t4_chart_offset})`);
+const t4_chart = t4_chart_body.append("g").attr("transform", `translate(${t4_chart_yaxis_width}, ${t4_chart_unit_height + t4_chart_unit_vspace})`);
 
 // X-Axis
 t4_chart.append("g")
   .attr("id", "t4_xaxis")
   .attr("transform", "translate(0," + t4_chart_height + ")")
   .call(
-    d3.axisBottom(t4_x).tickValues(
-      t4_x.domain().filter(function(d, idx) { return idx%4==0 })
+    d3.axisBottom(t4_x).ticks(3).tickFormat(
+      function(year) {
+        return year
+      }
     )
   )
   .selectAll("text")
@@ -120,13 +129,21 @@ d3.select("#t4_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0)
 // Y-Axis (E-Cars)
 t4_chart.append("g")
   .attr("id", "t4_yaxis")
-  .attr("transform", "translate(" + chart_width + ", 0)")
+  .attr("transform", "translate(" + t4_chart_width + ", 0)")
   .call(
     d3.axisRight(t4_y)
   )
   .select('.domain')
     .attr('stroke-width', 0);
 d3.select("#t4_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
+
+t4_chart_body.append("text")
+  .text("Heimspeicher, Wärmepumpen,")
+  .attr("dominant-baseline", "hanging")
+t4_chart_body.append("text")
+  .text("Ladesäulen (Tsd.)")
+  .attr("y", t4_chart_unit_height / 2)
+  .attr("dominant-baseline", "hanging")
 
 // Y2-Axis (Others)
 t4_chart.append("g")
@@ -137,6 +154,13 @@ t4_chart.append("g")
   .select('.domain')
     .attr('stroke-width', 0);
 d3.select("#t4_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
+
+t4_chart_body.append("text")
+  .text("E-Autos (Tsd.)")
+  .attr("x", width)
+  .attr("y", t4_chart_unit_height / 2)
+  .attr("text-anchor", "end")
+  .attr("dominant-baseline", "hanging")
 
 // Add technology paths
 for (const technology of Object.keys(t4_technologies)) {
@@ -159,30 +183,10 @@ function t4_change_year(to_year) {
   const year = parseInt(to_year);
   const year_data = tiles[4].find(element => element.year == year);
 
-  t4_icons.select("#t4_icon_text").remove();
-  const t4_icon_text = t4_icons.append("g")
-    .attr("id", "t4_icon_text")
-
   for (const technology of Object.keys(t4_technologies)) {
-    [x, y] = get_xy_for_icon(technology);
-    t4_icon_text.append("text")
+    t4_icons.select("#t4_text_" + technology)
       .text(year_data[technology])
-      .attr("fill", wwfColor.white)
-      .attr("x", x + t4_icon_width / 2)
-      .attr("y", y + 3 * t4_icon_margin + 4 * t4_icon_fifth)
-      .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "central")
-      .attr("font-weight", fontWeight.bold)
-      .attr("letter-spacing", letterSpacing)
-      .attr("font-size", fontSize.normal);
   }
-}
-
-function get_xy_for_icon(technology) {
-  const i = Object.keys(t4_technologies).indexOf(technology)
-  const x = (i % t4_icon_wrap) * t4_icon_width + t4_icon_space * (i % t4_icon_wrap + 1);
-  const y = (parseInt(i / t4_icon_wrap)) * t4_icon_height;
-  return [x, y]
 }
 
 t4_change_year(2020);
