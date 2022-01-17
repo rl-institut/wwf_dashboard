@@ -3,6 +3,7 @@ import os
 import json
 import pandas
 import pathlib
+import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 FILENAME = "WWF_Daten_Dashboard_Version 3.5.xlsx"
@@ -13,18 +14,36 @@ DROUGHT_DATA = "static/images/drought"
 
 
 def tile1():
-    data = pandas.read_excel(
+    global_data = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
         sheet_name="01 CO2 Konzentration",
         header=5,
-        usecols=[2, 3, 4, 5, 7],
+        usecols=[2, 3, 4, 5],
         nrows=51,
     )
-    data = data.applymap(lambda x: x.replace("\xa0", "") if isinstance(x, str) else x)
-    data.columns = ["year", "co2", "ppm", "temperature", "de_temperature"]
-    data = data.astype({"year": int, "co2": float, "ppm": float, "temperature": float, "de_temperature": float})
-    data = data.sort_values("year")
-    data.to_json(os.path.join(DATA_PATH, "tile1.json"), orient="records")
+    global_data = global_data.applymap(lambda x: x.replace("\xa0", "") if isinstance(x, str) else x)
+    global_data.columns = ["year", "co2", "ppm", "temperature"]
+    global_data = global_data.astype({"year": int, "co2": float, "ppm": float, "temperature": float})
+    global_data = global_data.sort_values("year")
+
+    brd_data = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, FILENAME),
+        sheet_name="01 CO2 Konzentration",
+        header=5,
+        usecols=[2, 4, 6, 7],
+        nrows=51,
+    )
+    brd_data = brd_data.applymap(lambda x: x.replace("\xa0", "") if isinstance(x, str) else x)
+    brd_data.columns = ["year", "ppm", "co2", "temperature"]
+    brd_data["co2"].iloc[31:] = None
+    brd_data = brd_data.astype(
+        {"year": int, "ppm": float, "co2": float, "temperature": float})
+    brd_data = brd_data.replace({np.nan: None})
+    brd_data = brd_data.sort_values("year")
+
+    data = {"global": global_data.to_dict(orient="records"), "brd": brd_data.to_dict(orient="records")}
+    with open(os.path.join(DATA_PATH, "tile1.json"), "w") as json_file:
+        json.dump(data, json_file)
 
 
 def tile2():
@@ -211,4 +230,4 @@ def tile10():
         json.dump(data, json_file)
 
 
-tile9()
+tile1()
