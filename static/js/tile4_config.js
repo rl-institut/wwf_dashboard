@@ -1,2 +1,2 @@
 
-const t4_min_height = 800;
+const t4_min_height = 0;
