@@ -17,10 +17,11 @@ const t9_icon_hspace = 6;
 const t9_chart_vspace = 20;
 const t9_chart_title_height = 22;
 const t9_chart_unit_height = 22;
-const t9_chart_axes_width = 30;
+const t9_chart_axes_width = 20;
+const t9_chart_yaxis_width = 30;
 const t9_chart_xaxis_height = 20;
 const t9_chart_width = width - 2 * t9_chart_axes_width;
-const t9_chart_height = 180;
+const t9_chart_height = 260;
 const t9_chart_offset = t9_circle_size + 2 * t9_chart_vspace + t9_chart_title_height + t9_chart_unit_height;
 const t9_chart_total_height = t9_chart_offset + t9_chart_height + t9_chart_xaxis_height;
 

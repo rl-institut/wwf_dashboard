@@ -2,6 +2,7 @@ const wwfColor = {
   white: "rgb(255, 255, 255)",
   black: "rgb(0, 0, 0)",
   gray1: "rgb(96, 96, 96)",
+  gray2: "rgb(90, 90, 90)",
   yellow: "rgb(243, 204, 0)",
   orange: "rgb(240, 124, 36)",
   red: "rgb(216, 45, 69)",
