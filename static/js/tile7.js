@@ -27,15 +27,15 @@ const t7_routes = [
 
 const t7_vehicle_labels = [
   "Fahrrad/Fußgänger",
-  "E-PKW",
   "Bahn",
-  "Fernlinienbus",
+  "E-PKW",
+  "Bus",
   "PKW",
   "Flugzeug"
 ]
 
 const t7_vehicle_icons = [
-  "i_fussgaenger", "i_e_auto_normal", "i_bahn", "i_fernbus", "i_verkehr", "i_flugzeug"
+  "i_fussgaenger", "i_bahn", "i_e_auto_normal", "i_fernbus", "i_verkehr", "i_flugzeug"
 ]
 
 const t7_vehicle_names = {
@@ -43,17 +43,18 @@ const t7_vehicle_names = {
   "e_pkw": "PKW (Elektro mit Ökostrom)",
   "train_short": "Bahn (Nahverkehr)",
   "train_long": "Bahn (Fernverkehr)",
-  "bus": "Fernlinienbus (konventionell)",
+  "bus_short": "ÖPNV (Bus, konventionell)",
+  "bus_long": "Fernlinienbus (konventionell)",
   "pkw": "PKW (konventionell)",
   "airplane_short": "Flugzeug (Inland)",
   "airplane_long": "Flugzeug (Fern)"
 }
 
 const t7_vehicles_at_distance = {
-  5: ["bicycle", "e_pkw", "train_short", "bus", "pkw"],
-  35: ["bicycle", "e_pkw", "train_short", "bus", "pkw"],
-  550: ["e_pkw", "train_long", "bus", "pkw", "airplane_short"],
-  1900: ["e_pkw", "train_long", "bus", "pkw", "airplane_long"],
+  5: ["bicycle","train_short", "e_pkw", "bus_short", "pkw"],
+  35: ["bicycle", "train_short", "e_pkw", "bus_short", "pkw"],
+  550: ["train_long", "e_pkw", "bus_long", "pkw", "airplane_short"],
+  1900: ["train_long", "e_pkw", "bus_long", "pkw", "airplane_long"],
 }
 
 const t7_svg = d3.select("#t7")
@@ -145,7 +146,7 @@ t7_chart.append("line")
   .attr("y1", t7_chart_height)
   .attr("y2", t7_chart_height)
   .attr("stroke", wwfColor.black)
-  .attr("stroke-width", chart_axis_stroke_width)
+  .attr("stroke-width", chart_axis_stroke_width);
 
 
 function t7_change_distance(distance) {

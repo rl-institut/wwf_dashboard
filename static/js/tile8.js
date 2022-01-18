@@ -79,6 +79,14 @@ t8_chart.append("g")
 d3.select("#t8_xaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t8_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
+t8_chart.append("line")
+  .attr("x1", 0)
+  .attr("x2", t8_chart_width)
+  .attr("y1", t8_chart_height)
+  .attr("y2", t8_chart_height)
+  .attr("stroke", wwfColor.black)
+  .attr("stroke-width", chart_axis_stroke_width);
+
 // Y-Axis
 t8_chart.append("g")
   .attr("id", "t8_yaxis")

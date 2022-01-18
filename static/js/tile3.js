@@ -147,8 +147,16 @@ t3_chart.append("g")
     .attr("fill", wwfColor.gray2)
     .attr("font-size", fontSize.xsmall)
     .attr("font-weight", fontWeight.thin);
-d3.select("#t3_xaxis").select('.domain').attr('stroke-width', 2);
+d3.select("#t3_xaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t3_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
+
+t3_chart.append("line")
+  .attr("x1", 0)
+  .attr("x2", t3_chart_width)
+  .attr("y1", t3_chart_height)
+  .attr("y2", t3_chart_height)
+  .attr("stroke", wwfColor.black)
+  .attr("stroke-width", chart_axis_stroke_width);
 
 // Y-Axis
 t3_chart.append("g")
