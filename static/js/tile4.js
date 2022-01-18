@@ -74,7 +74,7 @@ for (const [i, technology] of Object.keys(t4_technologies).entries()) {
     .attr("dominant-baseline", "hanging")
     .attr("font-weight", fontWeight.normal)
     .attr("letter-spacing", letterSpacing)
-    .style("font-size", fontSize.xsmall);
+    .style("font-size", fontSize.small);
 
   $(t4_icons_body.node().appendChild(icons[t4_technologies[technology].icon].documentElement.cloneNode(true)))
     .attr("x", (i % 2) * (t4_icon_hspace + t4_icon_width) + t4_icon_width / 2 - t4_icon_size / 2)
@@ -124,6 +124,7 @@ t4_chart.append("g")
     .style("text-anchor", "middle")
     .attr("fill", wwfColor.gray2)
     .attr("font-size", fontSize.xsmall)
+    .attr("letter-spacing", letterSpacing)
     .attr("font-weight", fontWeight.thin);
 d3.select("#t4_xaxis").select('.domain').attr('stroke-width', 2);
 d3.select("#t4_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
@@ -139,6 +140,7 @@ t4_chart.append("g")
     .style("text-anchor", "start")
     .attr("fill", wwfColor.gray2)
     .attr("font-size", fontSize.xsmall)
+    .attr("letter-spacing", letterSpacing)
     .attr("font-weight", fontWeight.thin);
 d3.select("#t4_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t4_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
@@ -148,12 +150,14 @@ t4_chart_body.append("text")
   .attr("dominant-baseline", "hanging")
   .attr("fill", wwfColor.gray1)
   .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing);
 t4_chart_body.append("text")
   .text("Ladesäulen (Tsd.)")
   .attr("y", t4_chart_unit_height / 2)
   .attr("dominant-baseline", "hanging")
   .attr("fill", wwfColor.gray1)
   .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing);
 
 // Y2-Axis (Others)
 t4_chart.append("g")
@@ -165,6 +169,7 @@ t4_chart.append("g")
     .style("text-anchor", "end")
     .attr("fill", wwfColor.gray2)
     .attr("font-size", fontSize.xsmall)
+    .attr("letter-spacing", letterSpacing)
     .attr("font-weight", fontWeight.thin);
 d3.select("#t4_yaxis2").select('.domain').attr('stroke-width', 0);
 d3.select("#t4_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
@@ -177,6 +182,7 @@ t4_chart_body.append("text")
   .attr("dominant-baseline", "hanging")
   .attr("fill", wwfColor.gray1)
   .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing);
 
 // Add technology paths
 for (const technology of Object.keys(t4_technologies)) {

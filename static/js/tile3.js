@@ -47,7 +47,7 @@ const t3_svg = d3.select("#t3")
 
 // BAR
 
-const t3_bar = t3_svg.append("g").attr("transform", `translate(0, ${t3_puffer})`);
+const t3_bar = t3_svg.append("g").attr("transform", `translate(0, 0)`);
 t3_bar.append("text")
   .text("Globale Treibhausgasemissionen")
   .attr("x", width / 2)
@@ -87,8 +87,9 @@ t3_bar.append("text")
   .attr("y", 3 * t3_bar_vspace + t3_bar_title_height + t3_bar_height + t3_bar_legend_size / 2)
   .attr("text-anchor", "left")
   .attr("dominant-baseline", "central")
-  .attr("font-size", fontSize.small)
-  .attr("font-weight", fontWeight.thin);
+  .attr("font-size", fontSize.xsmall)
+  .attr("font-weight", fontWeight.normal)
+  .attr("letter-spacing", letterSpacing);
 
 t3_bar.append("text")
   .text("Emissionsreduktion")
@@ -96,8 +97,9 @@ t3_bar.append("text")
   .attr("y", 3 * t3_bar_vspace + t3_bar_title_height + t3_bar_height + t3_bar_legend_size / 2)
   .attr("text-anchor", "left")
   .attr("dominant-baseline", "central")
-  .attr("font-size", fontSize.small)
-  .attr("font-weight", fontWeight.thin);
+  .attr("font-size", fontSize.xsmall)
+  .attr("font-weight", fontWeight.normal)
+  .attr("letter-spacing", letterSpacing);
 
 // ICONS
 

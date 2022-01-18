@@ -48,10 +48,10 @@ t6_pie_legend.append("text")
   .text("Erneuerbar")
   .attr("x", t6_pie_legend_rect + legendLeftPadding)
   .attr("y", t6_pie_legend_rect / 2)
-  .attr("dominant-baseline", "middle")
-  .attr("font-weight", fontWeight.thin)
-  .attr("letter-spacing", "0.3px")
-  .style("font-size", fontSize.small)
+  .attr("dominant-baseline", "central")
+  .attr("font-weight", fontWeight.normal)
+  .attr("letter-spacing", letterSpacing)
+  .style("font-size", fontSize.xsmall)
 t6_pie_legend.append("rect")
   .attr("x", t6_pie_legend_width / 2)
   .attr("width", t6_pie_legend_rect)
@@ -61,23 +61,23 @@ t6_pie_legend.append("text")
   .text("Konventionell")
   .attr("x", t6_pie_legend_width / 2 + t6_pie_legend_rect + legendLeftPadding)
   .attr("y", t6_pie_legend_rect / 2)
-  .attr("dominant-baseline", "middle")
-  .attr("font-weight", fontWeight.thin)
-  .attr("letter-spacing", "0.3px")
-  .style("font-size", fontSize.small);
+  .attr("dominant-baseline", "central")
+  .attr("font-weight", fontWeight.normal)
+  .attr("letter-spacing", letterSpacing)
+  .style("font-size", fontSize.xsmall);
 
 t6_svg.append("text")
   .text("Anteil Erneuerbarer")
   .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
   .attr("y", t6_pie_radius - t6_pie_text_height / 2)
-  .attr("letter-spacing", "0.3px")
+  .attr("letter-spacing", letterSpacing)
   .style("font-size", fontSize.small);
 t6_svg.append("text")
   .text("an diesem Tag")
   .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
   .attr("y", t6_pie_radius + t6_pie_text_height / 2)
   .style("text-anchor", "left")
-  .attr("letter-spacing", "0.3px")
+  .attr("letter-spacing", letterSpacing)
   .style("font-size", fontSize.small);
 
 // CHART
@@ -95,7 +95,7 @@ t6_chart.append("g")
     .attr("font-weight", fontWeight.thin)
     .attr("letter-spacing", letterSpacing)
     .attr("font-size", fontSize.xsmall)
-d3.select("#t6_xaxis").select('.domain').attr('stroke-width', 0);
+d3.select("#t6_xaxis").select('.domain').attr('stroke-width', 2);
 d3.select("#t6_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 // ICONS
@@ -114,10 +114,10 @@ for (const technology of Object.keys(t6_technologies)) {
     .attr("x", x + t6_icon_size + t6_icon_margin)
     .attr("y", y + t6_icon_size / 2 + 2)
     .attr("text-anchor", "left")
-    .attr("dominant-baseline", "middle")
-    .attr("font-weight", fontWeight.thin)
-    .attr("letter-spacing", "0.3px")
-    .style("font-size", fontSize.small)
+    .attr("dominant-baseline", "central")
+    .attr("font-weight", fontWeight.normal)
+    .attr("letter-spacing", letterSpacing)
+    .style("font-size", fontSize.xsmall)
 
   t6_icons.append("rect")
     .attr("x", x)
@@ -213,7 +213,7 @@ function t6_draw_pie(res_share) {
     .style("dominant-baseline", "middle")
     .style("text-anchor", "middle")
     .attr("font-weight", fontWeight.bold)
-    .attr("letter-spacing", "0.3px")
+    .attr("letter-spacing", letterSpacing)
     .style("font-size", fontSize.small)
 
 }

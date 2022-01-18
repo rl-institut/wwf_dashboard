@@ -53,6 +53,7 @@ t8_bar.append("text")
   .attr("x", width / 2)
   .attr("y", t8_bar_vspace)
   .attr("text-anchor", "middle")
+  .attr("letter-spacing", letterSpacing)
   .attr("dominant-baseline", "hanging");
 
 // CHART
@@ -73,6 +74,7 @@ t8_chart.append("g")
     .attr("text-anchor", "end")
     .attr("fill", wwfColor.gray2)
     .attr("font-size", fontSize.xsmall)
+    .attr("letter-spacing", letterSpacing)
     .attr("font-weight", fontWeight.thin);
 d3.select("#t8_xaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t8_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
@@ -87,6 +89,7 @@ t8_chart.append("g")
     .style("text-anchor", "end")
     .attr("fill", wwfColor.gray2)
     .attr("font-size", fontSize.xsmall)
+    .attr("letter-spacing", letterSpacing)
     .attr("font-weight", fontWeight.thin);
 d3.select("#t8_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t8_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
@@ -97,6 +100,7 @@ t8_chart.append("text")
   .attr("y", - t8_chart_unit_height)
   .attr("text-anchor", "end")
   .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing)
   .attr("font-weight", fontWeight.thin);
 
 
@@ -111,6 +115,7 @@ t8_chart.append("g")
     .style("text-anchor", "start")
     .attr("fill", wwfColor.gray2)
     .attr("font-size", fontSize.xsmall)
+    .attr("letter-spacing", letterSpacing)
     .attr("font-weight", fontWeight.thin);
 d3.select("#t8_y2axis").select('.domain').attr('stroke-width', 0);
 d3.select("#t8_y2axis").selectAll(".tick").select("line").attr("stroke-width", 0);
@@ -121,6 +126,7 @@ t8_chart.append("text")
   .attr("y", - t8_chart_unit_height)
   .attr("text-anchor", "start")
   .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing)
   .attr("font-weight", fontWeight.thin);
 
 // Wind and PV areas
@@ -169,6 +175,7 @@ t8_chart.append("text")
   .attr("text-anchor", "start")
   .attr("fill", t8_color("primary"))
   .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing)
   .attr("font-weight", fontWeight.bold);
 
 t8_chart.append("text")
@@ -178,6 +185,7 @@ t8_chart.append("text")
   .attr("text-anchor", "end")
   .attr("fill", t8_color("power"))
   .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing)
   .attr("font-weight", fontWeight.bold);
 
 
@@ -226,6 +234,7 @@ function t8_change_year(year_index) {
       .attr("dominant-baseline", "central")
       .attr("fill", wwfColor.black)
       .attr("font-size", fontSize.large)
+      .attr("letter-spacing", letterSpacing)
       .attr("font-weight", fontWeight.bold);
   }
   if (width - middle > 0) {
@@ -243,6 +252,7 @@ function t8_change_year(year_index) {
       .attr("dominant-baseline", "central")
       .attr("fill", wwfColor.black)
       .attr("font-size", fontSize.large)
+      .attr("letter-spacing", letterSpacing)
       .attr("font-weight", fontWeight.bold);
   }
 }

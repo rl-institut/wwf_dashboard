@@ -283,6 +283,7 @@ h3 {
       -ms-flex-pack: center;
           justify-content: center;
   padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .tile__tabs .tile1-tabs {
