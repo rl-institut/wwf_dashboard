@@ -83,8 +83,12 @@ t8_chart.append("g")
   .call(
     d3.axisLeft(t8_y)
   )
-  .select('.domain')
-    .attr('stroke-width', 0);
+  .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
+d3.select("#t8_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t8_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 t8_chart.append("text")
@@ -103,8 +107,12 @@ t8_chart.append("g")
   .call(
     d3.axisRight(t8_y2)
   )
-  .select('.domain')
-    .attr('stroke-width', 0);
+  .selectAll("text")
+    .style("text-anchor", "start")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
+d3.select("#t8_y2axis").select('.domain').attr('stroke-width', 0);
 d3.select("#t8_y2axis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 t8_chart.append("text")

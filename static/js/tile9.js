@@ -76,7 +76,7 @@ t9_bar.append("g")
     .attr("font-weight", fontWeight.normal)
     .attr("letter-spacing", letterSpacing)
     .attr("font-size", fontSize.xsmall)
-// d3.select("#t9_emissions_y").select('.domain').attr('stroke-width', 0);
+d3.select("#t9_emissions_y").select('.domain').attr('stroke-width', 2);
 d3.select("#t9_emissions_y").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 for (const technology of Object.keys(t9_technologies)) {
