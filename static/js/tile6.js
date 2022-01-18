@@ -213,7 +213,7 @@ function t6_draw_pie(res_share) {
     .enter()
     .append('path')
     .attr("transform", `translate(${chart_width / 2 - t6_pie_area_width / 2}, ${t6_pie_radius})`)
-    .attr("stroke", function(d){return t2_pie_color(d.data[0])})
+    .attr("stroke", function(d){return t6_pie_color(d.data[0])})
     .attr('d', arc)
     .attr('fill', function(d){return t6_pie_color(d.data[0])})
 
