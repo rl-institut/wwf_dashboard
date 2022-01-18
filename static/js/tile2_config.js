@@ -3,7 +3,7 @@ const t2_bar_offset = 20;
 const t2_bar_title_height = 20;
 const t2_bar_height = 40;
 const t2_bar_vspace = 10;
-const t2_bar_ticks_height = 60;
+const t2_bar_ticks_height = 100;
 const t2_bar_total_height = t2_bar_offset + t2_bar_title_height + 2 * t2_bar_vspace + t2_bar_ticks_height;
 
 const t2_arrow_offset = 10;

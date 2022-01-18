@@ -44,6 +44,13 @@ const t2_svg = d3.select("#t2")
     .attr("width", width)
     .attr("height", t2_height)
 
+t2_svg.append("text")
+  .text("Energieverbrauch in Deutschland (GWh)")
+  .attr("x", width / 2)
+  .attr("y", t2_bar_offset)
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "middle")
+
 // ARROW
 
 const t2_arrow = t2_svg.append("g")
@@ -179,6 +186,7 @@ function t2_draw_bars(year_data) {
 
   const t2_bars = t2_svg
     .append("g")
+    .attr("transform", `translate(0, ${t2_bar_offset + t2_bar_title_height})`)
     .attr("id", "t2_bars")
       .selectAll(null)
       .data(t2_stacked_data)
