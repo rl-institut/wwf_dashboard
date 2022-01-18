@@ -12,6 +12,9 @@ $("#t2_year").ionRangeSlider({
   }
 });
 
+const t2_height = (typeof t1_min_height !== 'undefined') ? Math.max(t1_min_height, t2_min_height) : t2_min_height;
+const t2_puffer = is_mobile ? 0 : (t2_height - t2_min_height);
+
 const t2_resources = ["renewables", "oil", "gas", "coal", "nuclear", "savings"];
 const t2_resources_names = {
   "renewables": "Erneuerbare Energien",
@@ -21,23 +24,16 @@ const t2_resources_names = {
   "nuclear": "Atom",
   "savings": "Einsparungen"
 };
-const t2_bar_height = 40;
-const t2_bar_text_offset = 10;
+const t2_pie_positions = {"power": 0, "heat": 1, "traffic": 2};
+const t2_pie_sectors = [
+  {"title": "Strom", "icon": "i_strom"},
+  {"title": "Wärme", "icon": "i_waerme"},
+  {"title": "Verkehr", "icon": "i_verkehr"}
+];
 
 const t2_bar_color = d3.scaleOrdinal()
   .domain(t2_resources)
   .range([wwfColor.mediumGreen, "co#000", "#3A3A3A", "#5A5A5A", "#808080", wwfColor.aqua]);
-
-const t2_pie_y = 350;
-const t2_pie_radius = 38;
-const t2_pie_space = (chart_width - 6 * t2_pie_radius) / 4;
-const t2_pie_positions = {"power": 0, "heat": 1, "traffic": 2}
-
-const t2_pie_legend_width = 300;
-const t2_pie_legend_x = chart_width / 2 - t2_pie_legend_width / 2;
-const t2_pie_legend_y = t2_pie_y + t2_pie_radius + 22;
-const t2_pie_legend_rect = 12;
-const t2_pie_legend_rect_spacing = t2_pie_legend_rect + 5;
 
 const t2_pie_color = d3.scaleOrdinal()
     .domain(["ee", "ne", "ne2"])
@@ -46,34 +42,80 @@ const t2_pie_color = d3.scaleOrdinal()
 const t2_svg = d3.select("#t2")
   .append("svg")
     .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("height", t2_height)
 
-const t2_pie_legend = t2_svg.append("g")
-  .attr("transform", `translate(${t2_pie_legend_x}, ${t2_pie_legend_y})`);
+// ARROW
+
+const t2_arrow = t2_svg.append("g")
+  .attr("transform", `translate(0, ${t2_bar_total_height})`)
+
+$(t2_arrow.node().appendChild(icons["arrow"].documentElement.cloneNode(true)))
+  .attr("x", width / 2 - t2_arrow_width / 2)
+  .attr("y", 0)
+  .attr("width", t2_arrow_width)
+  .attr("height", t2_arrow_height)
+  .attr("preserveAspectRatio", "xMidYMid slice");
+
+t2_arrow.append("text")
+  .text("Diese Energieträger verwenden wir in")
+  .attr("x", width / 2)
+  .attr("y", t2_arrow_height / 2 - t2_arrow_text_height / 2)
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "middle")
+
+t2_arrow.append("text")
+ .text("Deutschland in folgenden Sektoren (%)")
+ .attr("x", width / 2)
+ .attr("y", t2_arrow_height / 2 + t2_arrow_text_height / 2)
+ .attr("text-anchor", "middle")
+ .attr("dominant-baseline", "middle")
+
+// PIE
+
+const t2_pie = t2_svg.append("g")
+  .attr("transform", `translate(${t2_pie_hspace}, ${t2_bar_total_height + t2_arrow_total_height + t2_pie_offset})`);
+
+for (const [i, sector] of t2_pie_sectors.entries()) {
+  const x = i * (t2_pie_hspace + 2 * t2_pie_radius);
+  $(t2_pie.node().appendChild(icons[sector.icon].documentElement.cloneNode(true)))
+    .attr("x", x)
+    .attr("y", 0)
+    .attr("width", t2_pie_icon_size)
+    .attr("height", t2_pie_icon_size)
+    .attr("preserveAspectRatio", "xMidYMid slice");
+
+  t2_pie.append("text")
+    .text(sector.title)
+    .attr("x", x + t2_pie_icon_size + t2_pie_legend_hspace)
+    .attr("y", t2_pie_icon_size / 2)
+    .attr("text-anchor", "start")
+    .attr("dominant-baseline", "middle")
+}
+
+const t2_pie_legend = t2_pie.append("g")
+  .attr("transform", `translate(${t2_pie_radius}, ${t2_pie_icon_size + 2 * t2_pie_vspace + 2 * t2_pie_radius})`);
 t2_pie_legend.append("rect")
-  .attr("width", t2_pie_legend_rect)
-  .attr("height", t2_pie_legend_rect)
+  .attr("width", t2_pie_legend_size)
+  .attr("height", t2_pie_legend_size)
   .attr("fill", wwfColor.mediumGreen);
 t2_pie_legend.append("text")
   .text("Erneuerbar")
   .attr("font-weight", fontWeight.thin)
-  .attr("x", t2_pie_legend_rect_spacing)
-  .attr("y", t2_pie_legend_rect / 2)
+  .attr("x", t2_pie_legend_size + t2_pie_legend_hspace)
+  .attr("y", t2_pie_legend_size / 2)
   .attr("dominant-baseline", "central")
   .attr("letter-spacing", letterSpacing)
   .style("font-size", fontSize.small);
 t2_pie_legend.append("rect")
   .attr("x", t2_pie_legend_width / 2)
-  .attr("width", t2_pie_legend_rect)
-  .attr("height", t2_pie_legend_rect)
+  .attr("width", t2_pie_legend_size)
+  .attr("height", t2_pie_legend_size)
   .attr("fill", wwfColor.black);
 t2_pie_legend.append("text")
   .text("Konventionell")
   .attr("font-weight", fontWeight.thin)
-  .attr("x", t2_pie_legend_width / 2 + t2_pie_legend_rect_spacing)
-  .attr("y", t2_pie_legend_rect / 2)
+  .attr("x", t2_pie_legend_width / 2 + t2_pie_legend_size + t2_pie_legend_hspace)
+  .attr("y", t2_pie_legend_size / 2)
   .attr("dominant-baseline", "central")
   .attr("letter-spacing", letterSpacing)
   .style("font-size",fontSize.small);
@@ -91,7 +133,7 @@ function t2_get_x_scale(year_data) {
   )
   return d3.scaleLinear()
     .domain([0, max_value])
-    .range([ 0, chart_width]);
+    .range([ 0, width]);
 }
 
 function t2_adjust_text(x, y, bar_width) {
@@ -163,7 +205,7 @@ function t2_draw_bars(year_data) {
   t2_bars.append("text")
     .attr("transform", function(d) { return "rotate(-90 " + t2_x(d[0][0]) + ", " + 0 + ")"; })
     .text(function(d) {return t2_resources_names[d.key];})
-    .attr("x", function(d) { return t2_x(d[0][0]) - t2_bar_height - t2_bar_text_offset; })
+    .attr("x", function(d) { return t2_x(d[0][0]) - t2_bar_height - t2_bar_vspace; })
     .attr("y", function(d) { return (t2_x(d[0][1]) - t2_x(d[0][0])) / 2})
     .attr("fill", function(d) {
       if (d.key == "renewables") {
@@ -179,44 +221,42 @@ function t2_draw_bars(year_data) {
 }
 
 function t2_draw_pie(year_data, type) {
-  const t2_pie_data_raw = {"ne": (100 - year_data[type]) / 2, "ee": year_data[type], "ne2": (100 - year_data[type]) / 2}
-  const t2_pie = d3.pie().value(function(d) {return d[1]}).sort(null)
-  const t2_pie_data = t2_pie(Object.entries(t2_pie_data_raw))
+  const pie_data_raw = {"ne": (100 - year_data[type]) / 2, "ee": year_data[type], "ne2": (100 - year_data[type]) / 2}
+  const pie = d3.pie().value(function(d) {return d[1]}).sort(null)
+  const pie_data = pie(Object.entries(pie_data_raw))
 
   const position = t2_pie_positions[type];
-  const x = t2_pie_radius + t2_pie_space * (position + 1) + t2_pie_radius * 2 * position;
+  const x = t2_pie_radius + t2_pie_hspace * position + t2_pie_radius * 2 * position;
   const arc = d3.arc().innerRadius(0).outerRadius(t2_pie_radius)
-  t2_svg
-    .selectAll("t2_pie")
-    .data(t2_pie_data)
+  t2_pie.selectAll("t2_pie")
+    .data(pie_data)
     .enter()
     .append('path')
-    .attr("transform", "translate(" + x + ", " + t2_pie_y + ")")
+    .attr("transform", `translate(${x}, ${t2_pie_icon_size + t2_pie_vspace + t2_pie_radius})`)
     .attr("stroke", function(d){return t2_pie_color(d.data[0])})
     .attr('d', arc)
     .attr('fill', function(d){return t2_pie_color(d.data[0])})
 
-  const pie_text = t2_svg
-    .append("g")
+  const pie_text = t2_pie.append("g")
     .attr("id", "t2_" + type + "_text")
 
   pie_text.append("text")
     .text(year_data[type])
     .attr("x", x)
-    .attr("y", t2_pie_y + t2_pie_radius / 2)
+    .attr("y", t2_pie_icon_size + t2_pie_vspace + t2_pie_radius + t2_pie_radius / 2)
     .style("fill", wwfColor.white)
     .style("text-anchor", "middle")
-    .style("alignment-baseline", "middle")
+    .style("dominant-baseline", "middle")
     .style("font-size", fontSize.small)
     .attr("font-weight", fontWeight.bold)
 
   pie_text.append("text")
     .text(100 - year_data[type])
     .attr("x", x)
-    .attr("y", t2_pie_y - t2_pie_radius / 2)
+    .attr("y", t2_pie_icon_size + t2_pie_vspace + t2_pie_radius - t2_pie_radius / 2)
     .style("fill", wwfColor.white)
     .style("text-anchor", "middle")
-    .style("alignment-baseline", "middle")
+    .style("dominant-baseline", "middle")
     .style("font-size", fontSize.small)
     .attr("font-weight", fontWeight.bold)
 }
