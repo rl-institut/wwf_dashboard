@@ -1,6 +1,7 @@
 .tile__tabs {
   @include flex-row-justify-center;
   padding-top: 1rem;
+  padding-bottom: 1rem;
 
   .tile1-tabs {
     @include flex-row;

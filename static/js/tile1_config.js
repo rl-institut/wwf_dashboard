@@ -17,12 +17,12 @@ const t1_icon_vspace = 10;
 const t1_icon_hspace = 30;
 const t1_icon_width = (width - 2 * t1_icon_hspace) / 3;
 const t1_icon_height = 26;
-const t1_icon_text_height = t1_icon_height;
+const t1_icon_text_height = 16;
 const t1_icon_total_height = t1_icon_size + 2 * t1_icon_vspace + t1_icon_height + t1_icon_text_height;
 
-const t1_temperature_offset = 30;
+const t1_temperature_offset = 40;
 const t1_temperature_lrspace = 25;
-const t1_temperature_text_height = 20;
+const t1_temperature_text_height = 12;
 const t1_temperature_vspace = 10;
 const t1_temperature_xaxis_height = 20;
 const t1_temperature_size = (width - 2 * t1_temperature_lrspace) / t1_temperature_colors.length;
