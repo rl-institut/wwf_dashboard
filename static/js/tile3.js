@@ -47,7 +47,7 @@ const t3_svg = d3.select("#t3")
 
 // BAR
 
-const t3_bar = t3_svg.append("g").attr("transform", `translate(0, ${t3_puffer})`);
+const t3_bar = t3_svg.append("g").attr("transform", `translate(0, 0)`);
 t3_bar.append("text")
   .text("Globale Treibhausgasemissionen")
   .attr("x", width / 2)

@@ -115,7 +115,7 @@ t6_chart.append("g")
     .attr("font-weight", fontWeight.thin)
     .attr("letter-spacing", letterSpacing)
     .attr("font-size", fontSize.xsmall)
-d3.select("#t6_xaxis").select('.domain').attr('stroke-width', 0);
+d3.select("#t6_xaxis").select('.domain').attr('stroke-width', 2);
 d3.select("#t6_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 // ICONS
