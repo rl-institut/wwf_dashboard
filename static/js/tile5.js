@@ -111,7 +111,7 @@ for (const [i, technology] of Object.keys(t5_technologies).entries()) {
     .attr("y", y_offset + t5_icon_size + t5_icon_vspace + t5_icon_height / 2)
     .attr("fill", t5_text_color(technology))
     .attr("text-anchor", "middle")
-    .attr("dominant-baseline", "middle")
+    .attr("dominant-baseline", "central")
     .attr("font-weight", fontWeight.bold)
     .attr("letter-spacing", letterSpacing)
     .attr("font-size",fontSize.normal);
