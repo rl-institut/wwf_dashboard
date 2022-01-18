@@ -54,7 +54,7 @@ t2_svg.append("text")
 // ARROW
 
 const t2_arrow = t2_svg.append("g")
-  .attr("transform", `translate(0, ${t2_bar_total_height})`)
+  .attr("transform", `translate(0, ${t2_bar_total_height + t2_puffer / 2})`)
 
 $(t2_arrow.node().appendChild(icons["arrow"].documentElement.cloneNode(true)))
   .attr("x", width / 2 - t2_arrow_width / 2)
@@ -80,7 +80,7 @@ t2_arrow.append("text")
 // PIE
 
 const t2_pie = t2_svg.append("g")
-  .attr("transform", `translate(${t2_pie_hspace}, ${t2_bar_total_height + t2_arrow_total_height + t2_pie_offset})`);
+  .attr("transform", `translate(${t2_pie_hspace}, ${t2_bar_total_height + t2_arrow_total_height + t2_pie_offset + t2_puffer / 2})`);
 
 for (const [i, sector] of t2_pie_sectors.entries()) {
   const x = i * (t2_pie_hspace + 2 * t2_pie_radius);

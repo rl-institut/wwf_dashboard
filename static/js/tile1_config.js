@@ -26,6 +26,6 @@ const t1_temperature_text_height = 20;
 const t1_temperature_vspace = 10;
 const t1_temperature_xaxis_height = 20;
 const t1_temperature_size = (width - 2 * t1_temperature_lrspace) / t1_temperature_colors.length;
-const t1_temperature_total_height = 2 * t1_temperature_text_height + 2 *  + t1_temperature_size;
+const t1_temperature_total_height = 2 * t1_temperature_text_height + 2 *  + t1_temperature_size + 2 * t1_temperature_vspace;
 
 const t1_min_height = t1_chart_total_height + t1_icon_total_height + t1_temperature_total_height;

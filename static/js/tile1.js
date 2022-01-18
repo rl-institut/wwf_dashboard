@@ -42,7 +42,7 @@ const t1_selected_bar_width = t1_x.bandwidth() * 2;
 const t1_svg = d3.select("#t1")
   .append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", t1_min_height);
 
 // X-Axis
 t1_svg.append("g")
