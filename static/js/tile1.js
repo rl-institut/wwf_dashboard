@@ -54,8 +54,11 @@ t1_svg.append("g")
     )
   )
   .selectAll("text")
-    .attr("transform", "translate(-10,0)rotate(-45)")
-    .style("text-anchor", "end");
+    .style("text-anchor", "end")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-weight", fontWeight.normal)
+    .attr("letter-spacing", letterSpacing)
+    .attr("font-size", fontSize.xsmall)
 d3.select("#t1_xaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t1_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -66,8 +69,13 @@ t1_svg.append("g")
   .call(
     d3.axisRight(t1_y)
   )
-  .select('.domain')
-    .attr('stroke-width', 0);
+  .selectAll("text")
+    .style("text-anchor", "start")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-weight", fontWeight.normal)
+    .attr("letter-spacing", letterSpacing)
+    .attr("font-size", fontSize.xsmall)
+d3.select("#t1_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t1_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 t1_svg.append("text")
@@ -75,13 +83,15 @@ t1_svg.append("text")
   .attr("y", t1_chart_offset + t1_chart_unit_height / 3)
   .attr("text-anchor", "start")
   .attr("dominant-baseline", "hanging")
-  .style("font-size", fontSize.small)
+  .attr("fill", wwfColor.gray2)
+  .style("font-size", fontSize.xsmall)
 t1_svg.append("text")
   .text("Emissionen in Gt")
   .attr("y", t1_chart_offset + t1_chart_unit_height / 3 * 2)
   .attr("text-anchor", "start")
   .attr("dominant-baseline", "hanging")
-  .style("font-size", fontSize.small)
+  .attr("fill", wwfColor.gray2)
+  .style("font-size", fontSize.xsmall)
 
 // Y2-Axis Title
 t1_svg.append("text")
@@ -90,21 +100,24 @@ t1_svg.append("text")
   .attr("y", t1_chart_offset)
   .attr("text-anchor", "end")
   .attr("dominant-baseline", "hanging")
-  .style("font-size", fontSize.small)
+  .attr("fill", wwfColor.gray2)
+  .style("font-size", fontSize.xsmall)
 t1_svg.append("text")
   .text("in der Atmosphäre")
   .attr("x", width)
   .attr("y", t1_chart_offset + t1_chart_unit_height / 3)
   .attr("text-anchor", "end")
   .attr("dominant-baseline", "hanging")
-  .style("font-size", fontSize.small)
+  .attr("fill", wwfColor.gray2)
+  .style("font-size", fontSize.xsmall)
 t1_svg.append("text")
   .text("in ppm")
   .attr("x", width)
   .attr("y", t1_chart_offset + t1_chart_unit_height / 3 * 2)
   .attr("text-anchor", "end")
   .attr("dominant-baseline", "hanging")
-  .style("font-size", fontSize.small)
+  .attr("fill", wwfColor.gray2)
+  .style("font-size", fontSize.xsmall)
 
 // ICONS
 
@@ -347,9 +360,14 @@ function t1_update_chart() {
     .call(
       d3.axisLeft(t1_y2)
     )
-    .select('.domain')
-      .attr('stroke-width', 0);
-  d3.select("#t1_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
+    .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-weight", fontWeight.normal)
+    .attr("letter-spacing", letterSpacing)
+    .attr("font-size", fontSize.xsmall)
+d3.select("#t1_yaxis2").select('.domain').attr('stroke-width', 0);
+d3.select("#t1_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
 
   // Temperatures
   t1_chart.selectAll(null)

@@ -5,7 +5,7 @@ const t1_mode_width = 280;
 const t1_mode_height = 24;
 
 const t1_chart_offset = 20;
-const t1_chart_unit_height = 40;
+const t1_chart_unit_height = 44;
 const t1_chart_unit_offset = 10;
 const t1_chart_height = 242;
 const t1_chart_xaxis_height = 50;
