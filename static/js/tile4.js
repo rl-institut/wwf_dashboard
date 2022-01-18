@@ -97,10 +97,10 @@ for (const [i, technology] of Object.keys(t4_technologies).entries()) {
     .attr("y", y_offset + t4_icon_size + t4_icon_vspace + t4_icon_height / 2)
     .attr("fill", "white")
     .attr("text-anchor", "middle")
-    .attr("dominant-baseline", "middle")
-    .attr("font-weight", fontWeight.normal)
+    .attr("dominant-baseline", "central")
+    .attr("font-weight", fontWeight.bold)
     .attr("letter-spacing", letterSpacing)
-    .style("font-size", fontSize.normal);
+    .style("font-size", fontSize.small);
 }
 
 
@@ -121,9 +121,11 @@ t4_chart.append("g")
     )
   )
   .selectAll("text")
-    .attr("transform", "translate(-10,0)rotate(-45)")
-    .style("text-anchor", "end");
-d3.select("#t4_xaxis").select('.domain').attr('stroke-width', 0);
+    .style("text-anchor", "middle")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
+d3.select("#t4_xaxis").select('.domain').attr('stroke-width', 2);
 d3.select("#t4_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 // Y-Axis (E-Cars)
@@ -133,17 +135,25 @@ t4_chart.append("g")
   .call(
     d3.axisRight(t4_y)
   )
-  .select('.domain')
-    .attr('stroke-width', 0);
+  .selectAll("text")
+    .style("text-anchor", "start")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
+d3.select("#t4_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t4_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 t4_chart_body.append("text")
   .text("Heimspeicher, Wärmepumpen,")
   .attr("dominant-baseline", "hanging")
+  .attr("fill", wwfColor.gray1)
+  .attr("font-size", fontSize.xsmall)
 t4_chart_body.append("text")
   .text("Ladesäulen (Tsd.)")
   .attr("y", t4_chart_unit_height / 2)
   .attr("dominant-baseline", "hanging")
+  .attr("fill", wwfColor.gray1)
+  .attr("font-size", fontSize.xsmall)
 
 // Y2-Axis (Others)
 t4_chart.append("g")
@@ -151,8 +161,12 @@ t4_chart.append("g")
   .call(
     d3.axisLeft(t4_y2)
   )
-  .select('.domain')
-    .attr('stroke-width', 0);
+  .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
+d3.select("#t4_yaxis2").select('.domain').attr('stroke-width', 0);
 d3.select("#t4_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 t4_chart_body.append("text")
@@ -161,6 +175,8 @@ t4_chart_body.append("text")
   .attr("y", t4_chart_unit_height / 2)
   .attr("text-anchor", "end")
   .attr("dominant-baseline", "hanging")
+  .attr("fill", wwfColor.gray1)
+  .attr("font-size", fontSize.xsmall)
 
 // Add technology paths
 for (const technology of Object.keys(t4_technologies)) {
