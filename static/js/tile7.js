@@ -15,6 +15,9 @@ $("#t7_distance").ionRangeSlider({
   }
 });
 
+const t7_height = (typeof t8_min_height !== 'undefined') ? Math.max(t7_min_height, t8_min_height) : t7_min_height;
+const t7_puffer = is_mobile ? 0 : (t7_height - t7_min_height);
+
 const t7_routes = [
   ["Berlin-Mitte", "Berlin-Neukölln"],
   ["Berlin-Mitte", "Potsdam"],
@@ -24,10 +27,10 @@ const t7_routes = [
 
 const t7_vehicle_labels = [
   "Fahrrad/Fußgänger",
-  "Mittelklasse-Elektro-PKW (Ökostrom)",
+  "E-PKW",
   "Bahn",
-  "Fernlinienbus (Ökostrom)",
-  "Mittelklasse-PKW",
+  "Fernlinienbus",
+  "PKW",
   "Flugzeug"
 ]
 
@@ -40,34 +43,23 @@ const t7_vehicle_names = {
   "e_pkw": "PKW (Elektro mit Ökostrom)",
   "train_short": "Bahn (Nahverkehr)",
   "train_long": "Bahn (Fernverkehr)",
-  "e_bus": "Fernlinienbus (Elektro mit Ökostrom)",
+  "bus": "Fernlinienbus (konventionell)",
   "pkw": "PKW (konventionell)",
   "airplane_short": "Flugzeug (Inland)",
   "airplane_long": "Flugzeug (Fern)"
 }
 
 const t7_vehicles_at_distance = {
-  5: ["bicycle", "e_pkw", "train_short", "e_bus", "pkw"],
-  35: ["bicycle", "e_pkw", "train_short", "e_bus", "pkw"],
-  550: ["e_pkw", "train_long", "e_bus", "pkw", "airplane_short"],
-  1900: ["e_pkw", "train_long", "e_bus", "pkw", "airplane_long"],
+  5: ["bicycle", "e_pkw", "train_short", "bus", "pkw"],
+  35: ["bicycle", "e_pkw", "train_short", "bus", "pkw"],
+  550: ["e_pkw", "train_long", "bus", "pkw", "airplane_short"],
+  1900: ["e_pkw", "train_long", "bus", "pkw", "airplane_long"],
 }
-
-const t7_route_space = 7;
-const t7_route_height = 40;
-const t7_route_text_space = 15;
-const t7_route_offset = 30;
-
-const t7_chart_height = 230;
-const t7_bar_gap = 10;
-const t7_bar_text_space = 8;
-const t7_icon_size = 21;
-const t7_icon_space = 10;
 
 const t7_svg = d3.select("#t7")
   .append("svg")
     .attr("width", width)
-    .attr("height", height)
+    .attr("height", t7_height)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -102,17 +94,17 @@ const t7_x = d3.scaleBand()
 const t7_chart = t7_svg.append("g")
   .attr("transform", "translate(0," + (t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2) + ")")
 
-t7_svg.append("text")
+t7_chart.append("text")
   .text("CO2-Emissionen pro Person in")
   .attr("x", 0)
-  .attr("y", t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2)
+  .attr("y", 0)
   .attr("font-weight", fontWeight.normal)
   .attr("letter-spacing", letterSpacing)
   .attr("font-size",fontSize.small);
-t7_svg.append("text")
+t7_chart.append("text")
   .text("kg nach Verkehrsmittel")
   .attr("x", 0)
-  .attr("y", t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2 + 20)
+  .attr("y", 20)
   .attr("font-weight", fontWeight.normal)
   .attr("letter-spacing", letterSpacing)
   .attr("font-size",fontSize.small);
