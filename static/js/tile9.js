@@ -57,6 +57,7 @@ t9_svg.append("text")
   .attr("x", width / 2)
   .attr("y", t9_bar_vspace)
   .attr("text-anchor", "middle")
+  .attr("letter-spacing", letterSpacing)
   .attr("dominant-baseline", "hanging");
 
 const t9_bar = t9_svg.append("g")
@@ -94,6 +95,7 @@ for (const technology of Object.keys(t9_technologies)) {
       .attr("text-anchor", "end")
       .attr("fill", wwfColor.white)
       .attr("dominant-baseline", "central")
+      .attr("letter-spacing", letterSpacing)
       .attr("font-size", fontSize.xsmall)
       .attr("font-weight", fontWeight.bold);
   } else {
@@ -104,6 +106,7 @@ for (const technology of Object.keys(t9_technologies)) {
       .attr("text-anchor", "start")
       .attr("fill", wwfColor.black)
       .attr("dominant-baseline", "central")
+      .attr("letter-spacing", letterSpacing)
       .attr("font-size", fontSize.xsmall)
       .attr("font-weight", fontWeight.bold);
   }
@@ -140,7 +143,7 @@ t9_icons.append("text")
   .attr("x", width / 2)
   .attr("y", t9_circle_size + 2 * t9_chart_vspace)
   .attr("text-anchor", "middle")
-
+  .attr("letter-spacing", letterSpacing);
 
 // CHART
 const t9_chart = t9_svg.append("g").attr("transform", `translate(${t9_chart_yaxis_width}, ${t9_bar_total_height + 2 * t9_puffer + t9_chart_offset})`);
@@ -160,6 +163,7 @@ t9_chart.append("g")
     .attr("text-anchor", "end")
     .attr("fill", wwfColor.gray2)
     .attr("font-size", fontSize.xsmall)
+    .attr("letter-spacing", letterSpacing)
     .attr("font-weight", fontWeight.thin);
 d3.select("#t9_xaxis").select('.domain').attr('stroke-width', 2);
 d3.select("#t9_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
@@ -174,6 +178,7 @@ t9_chart.append("g")
     .attr("text-anchor", "end")
     .attr("fill", wwfColor.gray2)
     .attr("font-size", fontSize.xsmall)
+    .attr("letter-spacing", letterSpacing)
     .attr("font-weight", fontWeight.thin);
 d3.select("#t9_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t9_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
@@ -184,14 +189,16 @@ t9_chart.append("text")
   .attr("y", - t9_chart_unit_height)
   .attr("text-anchor", "start")
   .attr("fill", wwfColor.gray2)
-  .style("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing)
+  .style("font-size", fontSize.xsmall);
 t9_chart.append("text")
   .text("(in 1.000 Stück)")
   .attr("x", - t9_chart_yaxis_width)
   .attr("y", - t9_chart_unit_height / 3)
   .attr("text-anchor", "start")
   .attr("fill", wwfColor.gray2)
-  .style("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing)
+  .style("font-size", fontSize.xsmall);
 
 // Grayed sector paths
 for (const technology of Object.keys(t9_technologies)) {

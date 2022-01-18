@@ -76,7 +76,8 @@ t7_svg.append("text")
   .text("Entspricht der folgenden Strecke:")
   .attr("x", chart_width / 2)
   .attr("y", 0)
-  .style("text-anchor", "middle");
+  .style("text-anchor", "middle")
+  .attr("letter-spacing", letterSpacing);
 
 t7_svg.append("rect")
   .attr("x", 0)
@@ -91,7 +92,8 @@ t7_svg.append("text")
   .attr("y", t7_route_space + t7_route_height / 2 + t7_route_upper_padding)
   .attr("font-weight", "bold")
   .style("text-anchor", "middle")
-  .style("dominant-baseline", "central");
+  .style("dominant-baseline", "central")
+  .attr("letter-spacing", letterSpacing);
 
 // CHART
 

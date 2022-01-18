@@ -37,12 +37,12 @@ const t2_bar_color = d3.scaleOrdinal()
 
 const t2_pie_color = d3.scaleOrdinal()
     .domain(["ee", "ne", "ne2"])
-    .range([wwfColor.mediumGreen, wwfColor.black, wwfColor.black])
+    .range([wwfColor.mediumGreen, wwfColor.black, wwfColor.black]);
 
 const t2_svg = d3.select("#t2")
   .append("svg")
     .attr("width", width)
-    .attr("height", t2_height)
+    .attr("height", t2_height);
 
 t2_svg.append("text")
   .text("Energieverbrauch in Deutschland (GWh)")
@@ -50,6 +50,7 @@ t2_svg.append("text")
   .attr("y", t2_bar_offset)
   .attr("text-anchor", "middle")
   .attr("dominant-baseline", "middle")
+  .attr("letter-spacing", letterSpacing);
 
 // ARROW
 
@@ -71,7 +72,7 @@ t2_arrow.append("text")
   .attr("dominant-baseline", "middle")
   .attr("font-weight", fontWeight.normal)
   .attr("letter-spacing", letterSpacing)
-  .attr("font-size", fontSize.small)
+  .attr("font-size", fontSize.small);
 
 t2_arrow.append("text")
   .text("Deutschland in folgenden Sektoren (%)")
@@ -81,7 +82,7 @@ t2_arrow.append("text")
   .attr("dominant-baseline", "middle")
   .attr("font-weight", fontWeight.normal)
   .attr("letter-spacing", letterSpacing)
-  .attr("font-size", fontSize.small)
+  .attr("font-size", fontSize.small);
 
 // PIE
 
@@ -105,7 +106,7 @@ for (const [i, sector] of t2_pie_sectors.entries()) {
     .attr("dominant-baseline", "central")
     .attr("font-weight", fontWeight.normal)
     .attr("letter-spacing", letterSpacing)
-    .attr("font-size", fontSize.small)
+    .attr("font-size", fontSize.small);
 }
 
 const t2_pie_legend = t2_pie.append("g")
@@ -234,7 +235,7 @@ function t2_draw_bars(year_data) {
     .attr("text-anchor", "end")
     .attr("dominant-baseline", "middle")
     .attr("font-size", fontSize.small)
-    .attr("letter-spacing", letterSpacing)
+    .attr("letter-spacing", letterSpacing);
 }
 
 function t2_draw_pie(year_data, type) {
@@ -252,7 +253,7 @@ function t2_draw_pie(year_data, type) {
     .attr("transform", `translate(${x}, ${t2_pie_icon_size + t2_pie_vspace + t2_pie_radius})`)
     .attr("stroke", function(d){return t2_pie_color(d.data[0])})
     .attr('d', arc)
-    .attr('fill', function(d){return t2_pie_color(d.data[0])})
+    .attr('fill', function(d){return t2_pie_color(d.data[0])});
 
   const pie_text = t2_pie.append("g")
     .attr("id", "t2_" + type + "_text")
@@ -266,6 +267,7 @@ function t2_draw_pie(year_data, type) {
     .style("dominant-baseline", "middle")
     .style("font-size", fontSize.small)
     .attr("font-weight", fontWeight.bold)
+    .attr("letter-spacing", letterSpacing);
 
   pie_text.append("text")
     .text(100 - year_data[type])
@@ -276,6 +278,7 @@ function t2_draw_pie(year_data, type) {
     .style("dominant-baseline", "middle")
     .style("font-size", fontSize.small)
     .attr("font-weight", fontWeight.bold)
+    .attr("letter-spacing", letterSpacing);
 }
 
 t2_change_year(2020);
