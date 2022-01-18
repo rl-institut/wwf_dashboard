@@ -110,7 +110,11 @@ t6_chart.append("g")
   .attr("transform", "translate(0," + t6_chart_height + ")")
   .call(d3.axisBottom(t6_x))
   .selectAll("text")
-    .style("text-anchor", "end");
+    .style("text-anchor", "end")
+    .attr("fill", wwfColor.gray1)
+    .attr("font-weight", fontWeight.thin)
+    .attr("letter-spacing", letterSpacing)
+    .attr("font-size", fontSize.xsmall)
 d3.select("#t6_xaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t6_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -246,9 +250,14 @@ function t6_update_y_axis(y_max) {
     .call(
       d3.axisLeft(t6_y)
     )
-    .select('.domain')
-      .attr('stroke-width', 0);
-  d3.select("#t6_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
+    .selectAll("text")
+    .style("text-anchor", "end")
+    .attr("fill", wwfColor.gray1)
+    .attr("font-weight", fontWeight.thin)
+    .attr("letter-spacing", letterSpacing)
+    .attr("font-size", fontSize.xsmall)
+d3.select("#t6_yaxis").select('.domain').attr('stroke-width', 0);
+d3.select("#t6_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 }
 
 $("#t6_date").datepicker("setDate", "now");
