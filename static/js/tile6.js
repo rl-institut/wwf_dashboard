@@ -6,35 +6,15 @@ $("#t6_date").datepicker(
 );
 $("#t6_date").on("changeDate", t6_change_date);
 
+const t6_height = (typeof t5_min_height !== 'undefined') ? Math.max(t5_min_height, t6_min_height) : t6_min_height;
+const t6_puffer = is_mobile ? 0 : (t6_height - t6_min_height);
+
 const t6_technologies = {
-  "renewables": "Sonstige Erneuerbare",
-  "wind_onshore": "Windenergie an Land",
-  "pv": "Photovoltaik",
-  "fossil": "Konventionelle Kraftwerke",
+  "renewables": {"title": "Sonstige Erneuerbare", "icon": "i_sonstige_ee", "icon_color": "white"},
+  "wind_onshore": {"title": "Windenergie an Land", "icon": "i_wind_onshore", "icon_color": "black"},
+  "pv": {"title": "Photovoltaik", "icon": "i_pv", "icon_color": "black"},
+  "fossil": {"title": "Konventionelle Kraftwerke", "icon": "i_pollution", "icon_color": "white"},
 };
-
-const t6_pie_radius = 38;
-const t6_pie_text_width = 195;
-const t6_pie_text_height = 20;
-const t6_pie_margin = 15;
-const t6_pie_area_width = 2 * t6_pie_radius + t6_pie_margin + t6_pie_text_width;
-const t6_pie_offset = 30;
-const t6_pie_height = 2 * t6_pie_radius + t6_pie_margin + t6_pie_text_height;
-const t6_pie_legend_width = 300;
-const t6_pie_legend_x = chart_width / 2 - t6_pie_legend_width / 2;
-const t6_pie_legend_y = 2 * t6_pie_radius + t6_pie_margin;
-const t6_pie_legend_rect = 12;
-
-const t6_chart_height = 230;
-const t6_chart_offset = 40;
-
-const t6_icon_size = 24;
-const t6_icon_margin = 10;
-const t6_icon_wrap = 2;
-const t6_icon_offset = 25;
-
-const t6_agora_logo_width = 200;
-const t6_agora_logo_height = 100;
 
 let t6_x = d3.scaleLinear()
   .range([ 0, chart_width ])
@@ -51,9 +31,9 @@ const t6_pie_color = d3.scaleOrdinal()
 const t6_svg = d3.select("#t6")
   .append("svg")
     .attr("width", width)
-    .attr("height", height)
+    .attr("height", t6_height)
   .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", `translate(${t6_chart_yaxis_width}, 0)`);
 
 
 // PIE
@@ -102,7 +82,7 @@ t6_svg.append("text")
 
 // CHART
 const t6_chart = t6_svg.append("g")
-  .attr("transform", "translate(0," + (t6_pie_height + t6_pie_offset) + ")");
+  .attr("transform", "translate(0," + (t6_pie_total_height) + ")");
 
 // X-Axis
 t6_chart.append("g")
@@ -121,14 +101,16 @@ d3.select("#t6_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0)
 // ICONS
 
 const t6_icons = t6_svg.append("g")
-  .attr("transform", `translate(0, ${t6_pie_height + t6_pie_offset + t6_chart_height + t6_chart_offset})`);
+  .attr("transform", `translate(0, ${t6_pie_total_height + t6_chart_height + t6_chart_offset})`);
 
 for (const technology of Object.keys(t6_technologies)) {
-  [x, y] = get_xy_for_icon(technology);
+  const i = Object.keys(t6_technologies).indexOf(technology)
+  const x = (i % t6_icon_wrap) * chart_width / 2;
+  const y = (parseInt(i / t6_icon_wrap)) * (t6_icon_size + t6_icon_row_height);
 
   // Icon text gets 1/5 of height, symbol and rect get 2/5 of height
   t6_icons.append("text")
-    .text(t6_technologies[technology])
+    .text(t6_technologies[technology].title)
     .attr("x", x + t6_icon_size + t6_icon_margin)
     .attr("y", y + t6_icon_size / 2 + 2)
     .attr("text-anchor", "left")
@@ -144,12 +126,17 @@ for (const technology of Object.keys(t6_technologies)) {
     .attr("height", t6_icon_size)
     .attr("fill", t6_color(technology));
 
-  $(t6_icons.node().appendChild(icons["i_bus"].documentElement.cloneNode(true)))
-    .attr("x", x)
-    .attr("y", y)
-    .attr("width", t6_icon_size)
-    .attr("height", t6_icon_size)
-    .attr("preserveAspectRatio", "xMidYMid slice");
+  $(t6_icons.node().appendChild(icons[t6_technologies[technology].icon].documentElement.cloneNode(true)))
+    .attr("id", "t6_icon_" + technology)
+    .attr("x", x + t6_icon_margin)
+    .attr("y", y + t6_icon_margin)
+    .attr("width", t6_icon_size - 2 * t6_icon_margin)
+    .attr("height", t6_icon_size - 2 * t6_icon_margin)
+    .attr("preserveAspectRatio", "xMidYMid slice")
+
+  t6_icons.select("#t6_icon_" + technology)
+    .selectAll("path")
+      .style("fill", t6_technologies[technology].icon_color);
 }
 
 function t6_change_date() {
@@ -229,13 +216,6 @@ function t6_draw_pie(res_share) {
     .attr("letter-spacing", "0.3px")
     .style("font-size", fontSize.small)
 
-}
-
-function get_xy_for_icon(technology) {
-  const i = Object.keys(t6_technologies).indexOf(technology)
-  const x = (i % t6_icon_wrap) * chart_width / 2;
-  const y = (parseInt(i / t6_icon_wrap)) * (t6_icon_size + t6_icon_margin);
-  return [x, y]
 }
 
 function t6_update_y_axis(y_max) {
