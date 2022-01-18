@@ -1,5 +1,5 @@
 
-const distances = [5, 35, 550, 2780];
+const distances = [5, 35, 550, 1900];
 const distance_switch = 2;  // At which distance aiplanes are shown instead of bicycles
 
 $("#t7_distance").ionRangeSlider({
@@ -19,7 +19,7 @@ const t7_routes = [
   ["Berlin-Mitte", "Berlin-Neukölln"],
   ["Berlin-Mitte", "Potsdam"],
   ["Berlin-Mitte", "Frankfurt/Main"],
-  ["Berlin-Mitte", "Lissabon"]
+  ["Berlin-Mitte", "Barcelona"]
 ]
 
 const t7_vehicle_labels = [
@@ -50,7 +50,7 @@ const t7_vehicles_at_distance = {
   5: ["bicycle", "e_pkw", "train_short", "e_bus", "pkw"],
   35: ["bicycle", "e_pkw", "train_short", "e_bus", "pkw"],
   550: ["e_pkw", "train_long", "e_bus", "pkw", "airplane_short"],
-  2780: ["e_pkw", "train_long", "e_bus", "pkw", "airplane_long"],
+  1900: ["e_pkw", "train_long", "e_bus", "pkw", "airplane_long"],
 }
 
 const t7_route_space = 7;
