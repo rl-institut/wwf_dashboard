@@ -6,7 +6,7 @@ const t3_bar_vspace = 15;
 const t3_bar_legend_size = 16;
 const t3_bar_total_height = t3_bar_title_height + 4 * t3_bar_vspace + t3_bar_height + t3_bar_legend_size;
 
-const t3_icon_offset = 20;
+const t3_icon_offset = 40;
 const t3_circle_size = 40;
 const t3_circe_color_gray = "#ECECEC";
 const t3_icon_size = 20;

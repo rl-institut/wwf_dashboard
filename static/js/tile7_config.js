@@ -8,7 +8,7 @@ const t7_route_offset = 30;
 const t7_route_total_height = t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2;
 
 const t7_chart_height = 230;
-const t7_bar_gap = 10;
+const t7_bar_gap = 30;
 const t7_bar_text_space = 8;
 const t7_icon_size = 21;
 const t7_icon_space = 10;

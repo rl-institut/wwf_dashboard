@@ -25,7 +25,7 @@ const t9_technologies_max = Math.max(...Object.values(tiles[9].installations[til
 const t9_emissions_max = Math.max(...Object.values(tiles[9].emissions));
 
 const t9_height = (typeof t10_min_height !== 'undefined') ? Math.max(t9_min_height, t10_min_height) : t9_min_height;
-const t9_puffer = is_mobile ? 0 : (t9_height - t9_bar_total_height - t9_chart_total_height) / 2;
+const t9_puffer = is_mobile ? 0 : (t9_height - t9_min_height);
 
 const t9_emissions_x = d3.scaleLinear()
   .range([0, t9_bar_width])
@@ -55,13 +55,46 @@ const t9_svg = d3.select("#t9")
 t9_svg.append("text")
   .text("CO2-Emissionen nach Heizungsart (g/kWh)")
   .attr("x", width / 2)
-  .attr("y", t9_bar_vspace)
+  .attr("y", t9_bar_offset)
   .attr("text-anchor", "middle")
   .attr("letter-spacing", letterSpacing)
   .attr("dominant-baseline", "hanging");
 
 const t9_bar = t9_svg.append("g")
-  .attr("transform", `translate(${t9_bar_ticks_width}, ${t9_bar_title_height + 1.5 * t9_bar_vspace})`);
+  .attr("transform", `translate(${t9_bar_ticks_width}, ${t9_bar_offset + t9_bar_title_height})`);
+
+for (const technology of Object.keys(t9_technologies)) {
+  t9_bar.append("rect")
+    .attr("x", 0)
+    .attr("y", t9_emissions_y(technology) + t9_bar_gap / 2)
+    .attr("width", t9_emissions_x(tiles[9].emissions[technology]))
+    .attr("height", t9_emissions_y.bandwidth() - t9_bar_gap)
+    .attr("fill", t9_color(technology));
+
+  if (t9_emissions_x(tiles[9].emissions[technology]) - t9_bar_hspace > 0) {
+    t9_bar.append("text")
+      .text(tiles[9].emissions[technology])
+      .attr("x", t9_emissions_x(tiles[9].emissions[technology]) - t9_bar_hspace)
+      .attr("y", t9_emissions_y(technology) + t9_emissions_y.bandwidth() / 2)
+      .attr("text-anchor", "end")
+      .attr("fill", wwfColor.white)
+      .attr("dominant-baseline", "central")
+      .attr("letter-spacing", letterSpacing)
+      .attr("font-size", fontSize.xsmall)
+      .attr("font-weight", fontWeight.bold);
+  } else {
+    t9_bar.append("text")
+      .text(tiles[9].emissions[technology])
+      .attr("x", t9_bar_hspace)
+      .attr("y", t9_emissions_y(technology) + t9_emissions_y.bandwidth() / 2)
+      .attr("text-anchor", "start")
+      .attr("fill", wwfColor.black)
+      .attr("dominant-baseline", "central")
+      .attr("letter-spacing", letterSpacing)
+      .attr("font-size", fontSize.xsmall)
+      .attr("font-weight", fontWeight.bold);
+  }
+}
 
 t9_bar.append("g")
   .attr("id", "t9_emissions_y")
@@ -77,44 +110,29 @@ t9_bar.append("g")
     .attr("font-weight", fontWeight.normal)
     .attr("letter-spacing", letterSpacing)
     .attr("font-size", fontSize.xsmall)
-d3.select("#t9_emissions_y").select('.domain').attr('stroke-width', 2);
+d3.select("#t9_emissions_y").select('.domain').attr('stroke-width', 0);
 d3.select("#t9_emissions_y").selectAll(".tick").select("line").attr("stroke-width", 0);
 
-for (const technology of Object.keys(t9_technologies)) {
-  t9_bar.append("rect")
-    .attr("x", 0)
-    .attr("y", t9_emissions_y(technology) + t9_bar_gap / 2)
-    .attr("width", t9_emissions_x(tiles[9].emissions[technology]))
-    .attr("height", t9_emissions_y.bandwidth() - t9_bar_gap);
+t9_bar.append("line")
+  .attr("x1", 0)
+  .attr("x2", 0)
+  .attr("y1", 0)
+  .attr("y2", t9_bar_height)
+  .attr("stroke", wwfColor.black)
+  .attr("stroke-width", chart_axis_stroke_width);
 
-  if (t9_emissions_x(tiles[9].emissions[technology]) - t9_bar_offset > 0) {
-    t9_bar.append("text")
-      .text(tiles[9].emissions[technology])
-      .attr("x", t9_emissions_x(tiles[9].emissions[technology]) - t9_bar_offset)
-      .attr("y", t9_emissions_y(technology) + t9_emissions_y.bandwidth() / 2)
-      .attr("text-anchor", "end")
-      .attr("fill", wwfColor.white)
-      .attr("dominant-baseline", "central")
-      .attr("letter-spacing", letterSpacing)
-      .attr("font-size", fontSize.xsmall)
-      .attr("font-weight", fontWeight.bold);
-  } else {
-    t9_bar.append("text")
-      .text(tiles[9].emissions[technology])
-      .attr("x", t9_bar_offset)
-      .attr("y", t9_emissions_y(technology) + t9_emissions_y.bandwidth() / 2)
-      .attr("text-anchor", "start")
-      .attr("fill", wwfColor.black)
-      .attr("dominant-baseline", "central")
-      .attr("letter-spacing", letterSpacing)
-      .attr("font-size", fontSize.xsmall)
-      .attr("font-weight", fontWeight.bold);
-  }
-}
+// DIVIDING-line
+t9_svg.append("line")
+  .attr("x1", 0)
+  .attr("x2", width)
+  .attr("y1", t9_bar_total_height + t9_puffer / 2 + t9_icon_offset / 2)
+  .attr("y2", t9_bar_total_height + t9_puffer / 2 + t9_icon_offset / 2)
+  .attr("stroke", wwfColor.gray1)
+  .attr("stroke-width", 1);
 
 // ICONS
 
-const t9_icons = t9_svg.append("g").attr("transform", `translate(0, ${t9_bar_total_height + 2 * t9_puffer})`);
+const t9_icons = t9_svg.append("g").attr("transform", `translate(0, ${t9_bar_total_height + t9_puffer + t9_icon_offset})`);
 const t9_icon_left = (width - 5 * t9_circle_size - 4 * t9_icon_hspace) / 2;
 for (const [i, technology] of Object.keys(t9_technologies).entries()) {
   const icon = t9_technologies[technology].icon;
@@ -141,12 +159,12 @@ for (const [i, technology] of Object.keys(t9_technologies).entries()) {
 t9_icons.append("text")
   .attr("id", "t9_technology_title")
   .attr("x", width / 2)
-  .attr("y", t9_circle_size + 2 * t9_chart_vspace)
+  .attr("y", t9_circle_size + 2 * t9_icon_vspace)
   .attr("text-anchor", "middle")
   .attr("letter-spacing", letterSpacing);
 
 // CHART
-const t9_chart = t9_svg.append("g").attr("transform", `translate(${t9_chart_yaxis_width}, ${t9_bar_total_height + 2 * t9_puffer + t9_chart_offset})`);
+const t9_chart = t9_svg.append("g").attr("transform", `translate(${t9_chart_yaxis_width}, ${t9_bar_total_height + t9_puffer + t9_icon_total_height})`);
 
 // X-Axis
 t9_chart.append("g")

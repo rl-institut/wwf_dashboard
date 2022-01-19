@@ -68,21 +68,30 @@ t6_pie_legend.append("text")
 
 t6_svg.append("text")
   .text("Anteil Erneuerbarer")
-  .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
-  .attr("y", t6_pie_radius - t6_pie_text_height / 2)
+  .attr("x", chart_width / 2 + t6_pie_hspace)
+  .attr("y", t6_pie_offset + t6_pie_radius - t6_pie_text_height / 2)
   .attr("letter-spacing", letterSpacing)
   .style("font-size", fontSize.small);
 t6_svg.append("text")
   .text("an diesem Tag")
-  .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
-  .attr("y", t6_pie_radius + t6_pie_text_height / 2)
+  .attr("x", chart_width / 2 + t6_pie_hspace)
+  .attr("y", t6_pie_offset + t6_pie_radius + t6_pie_text_height / 2)
   .style("text-anchor", "left")
   .attr("letter-spacing", letterSpacing)
   .style("font-size", fontSize.small);
 
+// DIVIDING-line
+t6_svg.append("line")
+  .attr("x1", 0)
+  .attr("x2", width)
+  .attr("y1", t6_pie_total_height + t6_puffer / 2 + t6_chart_offset / 2)
+  .attr("y2", t6_pie_total_height + t6_puffer / 2 + t6_chart_offset / 2)
+  .attr("stroke", wwfColor.gray1)
+  .attr("stroke-width", 1);
+
 // CHART
 const t6_chart = t6_svg.append("g")
-  .attr("transform", "translate(0," + (t6_pie_total_height) + ")");
+  .attr("transform", `translate(0, ${t6_pie_total_height + t6_puffer + t6_chart_offset})`);
 
 // X-Axis
 t6_chart.append("g")
@@ -109,7 +118,7 @@ t6_chart.append("line")
 // ICONS
 
 const t6_icons = t6_svg.append("g")
-  .attr("transform", `translate(0, ${t6_pie_total_height + t6_chart_height + t6_chart_offset})`);
+  .attr("transform", `translate(0, ${t6_pie_total_height + t6_chart_total_height + t6_icon_offset})`);
 
 for (const technology of Object.keys(t6_technologies)) {
   const i = Object.keys(t6_technologies).indexOf(technology)
@@ -207,7 +216,7 @@ function t6_draw_pie(res_share) {
     .data(t6_pie_data)
     .enter()
     .append('path')
-    .attr("transform", `translate(${chart_width / 2 - t6_pie_area_width / 2}, ${t6_pie_radius})`)
+    .attr("transform", `translate(${chart_width / 2 - t6_pie_radius - t6_pie_hspace}, ${t6_pie_offset + t6_pie_radius})`)
     .attr("stroke", function(d){return t6_pie_color(d.data[0])})
     .attr('d', arc)
     .attr('fill', function(d){return t6_pie_color(d.data[0])})
@@ -215,8 +224,8 @@ function t6_draw_pie(res_share) {
   t6_svg.append("text")
     .attr("id", "t6_pie_text")
     .text(res_share.toFixed(0) + "%")
-    .attr("x", chart_width / 2 - t6_pie_area_width / 2)
-    .attr("y", t6_pie_radius * 3 / 2 + 5)
+    .attr("x", chart_width / 2 - t6_pie_radius - t6_pie_hspace)
+    .attr("y", t6_pie_offset + t6_pie_radius * 3 / 2 + 5)
     .style("fill", wwfColor.white)
     .style("dominant-baseline", "middle")
     .style("text-anchor", "middle")
