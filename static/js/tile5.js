@@ -21,7 +21,7 @@ const t5_technologies = {
   "pv": {"title": ["Photovoltaik"], "icon": "i_pv"},
   "biomass": {"title": ["Biomasse"], "icon": "i_biomass"},
   "hydro": {"title": ["Wasserkraft"], "icon": "i_water"},
-  "fossil": {"title": ["Fossil"], "icon": "i_pollution"},
+  "fossil": {"title": ["Fossil / Nuklear"], "icon": "i_pollution"},
 };
 
 const t5_renewables = Object.keys(t5_technologies).filter(key => key != "fossil");
