@@ -7,7 +7,7 @@ const t8_bar_total_height = t8_bar_title_height + 4 * t8_bar_vspace + t8_bar_hei
 const t8_icon_size = 22;
 const t8_icon_hspace = 6;
 
-const t8_chart_unit_height = 22;
+const t8_chart_unit_height = 30;
 const t8_chart_primary_power_offset = 5;
 const t8_chart_axes_width = 60;
 const t8_chart_xaxis_height = 20;

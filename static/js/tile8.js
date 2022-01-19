@@ -115,9 +115,18 @@ t8_y_grid.selectAll(".tick").select("line")
 t8_y_grid.select('.domain').attr('stroke-width', 0);
 
 t8_chart.append("text")
+  .text("Primärenergiebedarf, Strombedarf")
+  .attr("x", - t8_chart_axes_width)
+  .attr("y", - t8_chart_unit_height)
+  .attr("text-anchor", "start")
+  .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-weight", fontWeight.thin);
+
+t8_chart.append("text")
   .text("(TWh)")
   .attr("x", 0)
-  .attr("y", - t8_chart_unit_height)
+  .attr("y", - t8_chart_unit_height / 2)
   .attr("text-anchor", "end")
   .attr("font-size", fontSize.xsmall)
   .attr("letter-spacing", letterSpacing)
@@ -189,7 +198,7 @@ for (const sector of ["primary", "power"]) {
 }
 
 t8_chart.append("text")
-  .text("Primärenergieverbrauch")
+  .text("Primärenergiebedarf")
   .attr("x", t8_x(tiles[8][0].year))
   .attr("y", t8_y(tiles[8][0].primary) - t8_chart_primary_power_offset)
   .attr("text-anchor", "start")

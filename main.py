@@ -1,12 +1,15 @@
 
+import asyncio
+import nest_asyncio
 import datetime as dt
 import json
-from cairosvg import svg2png
 from flask import Flask, render_template, request
 
 from settings import DEBUG, ICONS
-import tiles
 import scrape
+import share
+
+nest_asyncio.apply()
 
 app = Flask(__name__)
 
@@ -37,15 +40,13 @@ def get_agora_data():
 
 
 @app.route("/share/<int:tile>", methods=["POST"])
-async def share(tile):
-    svg = request.form["svg"]
+async def share_tile(tile):
     options = json.loads(request.form["options"])
-    filename = tiles.get_tile_filename(tile, options)
-    svg2png(bytestring=svg, write_to=f"static/share/{filename}")
+    filename = asyncio.new_event_loop().run_until_complete(share.share_svg(tile, options))
     return {"share_link": filename}
 
 
 if __name__ == "__main__":
     app.run(
-        debug=True, threaded=True, use_debugger=False, use_reloader=True, passthrough_errors=True
+        debug=True, threaded=True, use_debugger=False, passthrough_errors=True
     )
