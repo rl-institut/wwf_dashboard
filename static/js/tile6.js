@@ -16,10 +16,14 @@ const t6_technologies = {
   "fossil": {"title": "Konventionelle Kraftwerke", "icon": "i_pollution", "icon_color": "white"},
 };
 
-let t6_x = d3.scaleLinear()
+const y_max = 120000;
+
+const t6_x = d3.scaleLinear()
   .range([ 0, chart_width ])
   .domain([0, 23])
-let t6_y;
+const t6_y = d3.scaleLinear()
+  .range([ t6_chart_height, 0 ])
+  .domain([0, y_max]);
 const t6_color = d3.scaleOrdinal()
   .domain(Object.keys(t6_technologies))
   .range(["#008a88", "#70B6D6", "#F3CC00", "#000000"]);
@@ -68,21 +72,30 @@ t6_pie_legend.append("text")
 
 t6_svg.append("text")
   .text("Anteil Erneuerbarer")
-  .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
-  .attr("y", t6_pie_radius - t6_pie_text_height / 2)
+  .attr("x", chart_width / 2 + t6_pie_hspace)
+  .attr("y", t6_pie_offset + t6_pie_radius - t6_pie_text_height / 2)
   .attr("letter-spacing", letterSpacing)
   .style("font-size", fontSize.small);
 t6_svg.append("text")
   .text("an diesem Tag")
-  .attr("x", chart_width / 2 - t6_pie_area_width / 2 + t6_pie_radius * 2 + t6_pie_margin)
-  .attr("y", t6_pie_radius + t6_pie_text_height / 2)
+  .attr("x", chart_width / 2 + t6_pie_hspace)
+  .attr("y", t6_pie_offset + t6_pie_radius + t6_pie_text_height / 2)
   .style("text-anchor", "left")
   .attr("letter-spacing", letterSpacing)
   .style("font-size", fontSize.small);
 
+// DIVIDING-line
+t6_svg.append("line")
+  .attr("x1", 0)
+  .attr("x2", width)
+  .attr("y1", t6_pie_total_height + t6_puffer / 2 + t6_chart_offset / 2)
+  .attr("y2", t6_pie_total_height + t6_puffer / 2 + t6_chart_offset / 2)
+  .attr("stroke", wwfColor.gray1)
+  .attr("stroke-width", 1);
+
 // CHART
 const t6_chart = t6_svg.append("g")
-  .attr("transform", "translate(0," + (t6_pie_total_height) + ")");
+  .attr("transform", `translate(0, ${t6_pie_total_height + t6_puffer + t6_chart_offset})`);
 
 // X-Axis
 t6_chart.append("g")
@@ -106,10 +119,25 @@ t6_chart.append("line")
   .attr("stroke", wwfColor.black)
   .attr("stroke-width", chart_axis_stroke_width);
 
+// Y-Axis
+t6_chart.append("g")
+  .attr("id", "t6_yaxis")
+  .call(
+    d3.axisLeft(t6_y)
+  )
+  .selectAll("text")
+  .style("text-anchor", "end")
+  .attr("fill", wwfColor.gray1)
+  .attr("font-weight", fontWeight.thin)
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size", fontSize.xsmall)
+d3.select("#t6_yaxis").select('.domain').attr('stroke-width', 0);
+d3.select("#t6_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
+
 // ICONS
 
 const t6_icons = t6_svg.append("g")
-  .attr("transform", `translate(0, ${t6_pie_total_height + t6_chart_height + t6_chart_offset})`);
+  .attr("transform", `translate(0, ${t6_pie_total_height + t6_puffer + t6_chart_total_height + t6_icon_offset})`);
 
 for (const technology of Object.keys(t6_technologies)) {
   const i = Object.keys(t6_technologies).indexOf(technology)
@@ -166,9 +194,6 @@ function t6_change_date() {
 
 function t6_draw_chart(agora_data) {
   const stacked_data = d3.stack().keys(Object.keys(t6_technologies))(agora_data);
-  const y_max = d3.max(stacked_data[stacked_data.length - 1], d => d[1]);
-
-  t6_update_y_axis(y_max);
 
   const area = d3
     .area()
@@ -207,7 +232,7 @@ function t6_draw_pie(res_share) {
     .data(t6_pie_data)
     .enter()
     .append('path')
-    .attr("transform", `translate(${chart_width / 2 - t6_pie_area_width / 2}, ${t6_pie_radius})`)
+    .attr("transform", `translate(${chart_width / 2 - t6_pie_radius - t6_pie_hspace}, ${t6_pie_offset + t6_pie_radius})`)
     .attr("stroke", function(d){return t6_pie_color(d.data[0])})
     .attr('d', arc)
     .attr('fill', function(d){return t6_pie_color(d.data[0])})
@@ -215,37 +240,14 @@ function t6_draw_pie(res_share) {
   t6_svg.append("text")
     .attr("id", "t6_pie_text")
     .text(res_share.toFixed(0) + "%")
-    .attr("x", chart_width / 2 - t6_pie_area_width / 2)
-    .attr("y", t6_pie_radius * 3 / 2 + 5)
+    .attr("x", chart_width / 2 - t6_pie_radius - t6_pie_hspace)
+    .attr("y", t6_pie_offset + t6_pie_radius * 3 / 2 + 5)
     .style("fill", wwfColor.white)
     .style("dominant-baseline", "middle")
     .style("text-anchor", "middle")
     .attr("font-weight", fontWeight.bold)
     .attr("letter-spacing", letterSpacing)
     .style("font-size", fontSize.small)
-
-}
-
-function t6_update_y_axis(y_max) {
-  t6_chart.select("#t6_yaxis").remove();
-  t6_y = d3.scaleLinear()
-    .range([ t6_chart_height, 0 ])
-    .domain([0, y_max]);
-
-  // Y-Axis
-  t6_chart.append("g")
-    .attr("id", "t6_yaxis")
-    .call(
-      d3.axisLeft(t6_y)
-    )
-    .selectAll("text")
-    .style("text-anchor", "end")
-    .attr("fill", wwfColor.gray1)
-    .attr("font-weight", fontWeight.thin)
-    .attr("letter-spacing", letterSpacing)
-    .attr("font-size", fontSize.xsmall)
-d3.select("#t6_yaxis").select('.domain').attr('stroke-width', 0);
-d3.select("#t6_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 }
 
 $("#t6_date").datepicker("setDate", "now");

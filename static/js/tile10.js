@@ -17,7 +17,7 @@ const t10_height = (typeof t9_min_height !== 'undefined') ? Math.max(t9_min_heig
 
 const drought = document.getElementById("drought");
 drought.width = width;
-drought.height = t10_height;
+drought.height = t10_drought_height;
 
 
 function t10_change_year(to_year) {

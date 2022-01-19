@@ -26,12 +26,12 @@ const t7_routes = [
 ]
 
 const t7_vehicle_labels = [
-  "Fahrrad/Fußgänger",
-  "Bahn",
-  "E-PKW",
-  "Bus",
-  "PKW",
-  "Flugzeug"
+  ["Fahrrad /", "Fußgänger"],
+  ["Bahn"],
+  ["E-PKW"],
+  ["Bus"],
+  ["PKW"],
+  ["Flugzeug"],
 ]
 
 const t7_vehicle_icons = [
@@ -94,17 +94,17 @@ const t7_x = d3.scaleBand()
   .range([ 0, chart_width ])
   .domain([0, 1, 2, 3, 4, 5]);
 
-const t7_chart = t7_svg.append("g")
-  .attr("transform", "translate(0," + (t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2) + ")")
+const t7_chart_area = t7_svg.append("g")
+  .attr("transform", `translate(0, ${t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2})`);
 
-t7_chart.append("text")
+t7_chart_area.append("text")
   .text("CO2-Emissionen pro Person in")
   .attr("x", 0)
   .attr("y", 0)
   .attr("font-weight", fontWeight.normal)
   .attr("letter-spacing", letterSpacing)
   .attr("font-size",fontSize.small);
-t7_chart.append("text")
+t7_chart_area.append("text")
   .text("kg nach Verkehrsmittel")
   .attr("x", 0)
   .attr("y", 20)
@@ -112,27 +112,27 @@ t7_chart.append("text")
   .attr("letter-spacing", letterSpacing)
   .attr("font-size",fontSize.small);
 
-t7_chart.append("g")
-  .attr("id", "t7_xaxis")
-  .attr("transform", "translate(0," + t7_chart_height + ")")
-  .call(
-    d3.axisBottom(t7_x).ticks().tickFormat(
-      function(d) {
-        return t7_vehicle_labels[d];
-      }
-    )
-  )
-  .selectAll("text")
-    .attr("transform", "translate(-10,30)rotate(-45)")
-    .style("text-anchor", "end")
-    .attr("font-weight", fontWeight.normal)
-    .attr("letter-spacing", letterSpacing)
-    .attr("font-size", fontSize.xsmall);
-  d3.select("#t7_xaxis").select('.domain').attr('stroke-width', 0);
-  d3.select("#t7_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
+const t7_chart = t7_chart_area.append("g")
+  .attr("transform", `translate(0, ${t7_unit_height})`);
+
+for (const [i, labels] of t7_vehicle_labels.entries()) {
+  const x = t7_x(i) + t7_x.bandwidth() / 2;
+  let y = t7_chart_height + t7_icon_size + 2 * t7_icon_space;
+  for (const [l, label] of labels.entries()) {
+    t7_chart.append("text")
+      .attr("id", "t7_text_" + i + l)
+      .text(label)
+      .attr("transform", `rotate(-45, ${x}, ${y})`)
+      .attr("x", x)
+      .attr("y", y + l * 20)
+      .attr("text-anchor", "end")
+      .attr("dominant-baseline", "hanging")
+    }
+}
 
 for (const [i, icon] of t7_vehicle_icons.entries()) {
   $(t7_chart.node().appendChild(icons[icon].documentElement.cloneNode(true)))
+    .attr("id", "t7_icon_" + i)
     .attr("x", t7_x(i) + t7_x.bandwidth() / 2 - t7_icon_size / 2)
     .attr("y", t7_chart_height + t7_icon_space)
     .attr("width", t7_icon_size)
@@ -213,6 +213,21 @@ function t7_change_bars(distance_index) {
         .attr("letter-spacing", letterSpacing)
         .attr("font-size",fontSize.small);
     }
+  }
+
+  // Gray-out
+  if (distance_index < distance_switch) {
+    t7_chart.select("#t7_text_00").attr("fill", "black");
+    t7_chart.select("#t7_text_01").attr("fill", "black");
+    t7_chart.select("#t7_text_50").attr("fill", wwfColor.gray1);
+    t7_chart.select("#t7_icon_0").selectAll("path").style("fill", "black")
+    t7_chart.select("#t7_icon_5").selectAll("path").style("fill", wwfColor.gray1)
+  } else {
+    t7_chart.select("#t7_text_50").attr("fill", "black");
+    t7_chart.select("#t7_text_00").attr("fill", wwfColor.gray1);
+    t7_chart.select("#t7_text_01").attr("fill", wwfColor.gray1);
+    t7_chart.select("#t7_icon_0").selectAll("path").style("fill", wwfColor.gray1)
+    t7_chart.select("#t7_icon_5").selectAll("path").style("fill", "black")
   }
 }
 

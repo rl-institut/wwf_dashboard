@@ -109,6 +109,16 @@ t3_bar.append("text")
   .attr("font-weight", fontWeight.normal)
   .attr("letter-spacing", letterSpacing);
 
+
+// DIVIDING-line
+t3_svg.append("line")
+  .attr("x1", 0)
+  .attr("x2", width)
+  .attr("y1", t3_bar_total_height + t3_puffer / 2 + t3_icon_offset / 2)
+  .attr("y2", t3_bar_total_height + t3_puffer / 2 + t3_icon_offset / 2)
+  .attr("stroke", wwfColor.gray1)
+  .attr("stroke-width", 1);
+
 // ICONS
 
 const t3_icons = t3_svg.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer + t3_icon_offset})`);
