@@ -137,7 +137,7 @@ d3.select("#t6_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0)
 // ICONS
 
 const t6_icons = t6_svg.append("g")
-  .attr("transform", `translate(0, ${t6_pie_total_height + t6_chart_total_height + t6_icon_offset})`);
+  .attr("transform", `translate(0, ${t6_pie_total_height + t6_puffer + t6_chart_total_height + t6_icon_offset})`);
 
 for (const technology of Object.keys(t6_technologies)) {
   const i = Object.keys(t6_technologies).indexOf(technology)
