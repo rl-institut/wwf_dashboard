@@ -1,9 +1,11 @@
 
+const t5_chart_offset = 20;
+const t5_chart_title_height = 40;
 const t5_chart_yaxis_width = 30;
 const t5_chart_xaxis_height = 30;
-const t5_chart_width = width - t5_chart_yaxis_width;
+const t5_chart_width = width - 2 * t5_chart_yaxis_width;
 const t5_chart_height = 230;
-const t5_chart_total_height = t5_chart_height + t5_chart_xaxis_height;
+const t5_chart_total_height = t5_chart_offset + t5_chart_title_height + t5_chart_height + t5_chart_xaxis_height;
 
 
 const t5_icon_offset = 30;

@@ -102,6 +102,18 @@ t8_chart.append("g")
 d3.select("#t8_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t8_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
+const t8_y_grid = t8_chart.append("g")
+  .call(
+    d3.axisLeft(t8_y)
+      .tickSize(-t8_chart_width)
+      .tickFormat('')
+      .ticks(5)
+    )
+t8_y_grid.selectAll(".tick").select("line")
+  .attr("stroke-width", 0.5)
+  .attr("stroke", wwfColor.gray1)
+t8_y_grid.select('.domain').attr('stroke-width', 0);
+
 t8_chart.append("text")
   .text("(TWh)")
   .attr("x", 0)

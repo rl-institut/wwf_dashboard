@@ -191,6 +191,18 @@ t9_chart.append("g")
 d3.select("#t9_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t9_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
+const t9_y_grid = t9_chart.append("g")
+  .call(
+    d3.axisLeft(t9_y)
+      .tickSize(-t9_chart_width)
+      .tickFormat('')
+      .ticks(5)
+    )
+t9_y_grid.selectAll(".tick").select("line")
+  .attr("stroke-width", 0.5)
+  .attr("stroke", wwfColor.gray1)
+t9_y_grid.select('.domain').attr('stroke-width', 0);
+
 t9_chart.append("text")
   .text("Absatzzahlen Wärmeerzeuger")
   .attr("x", - t9_chart_yaxis_width)
