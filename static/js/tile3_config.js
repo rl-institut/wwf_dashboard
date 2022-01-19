@@ -20,6 +20,7 @@ const t3_chart_axes_width = 40;
 const t3_chart_xaxis_height = 20;
 const t3_chart_width = width - 2 * t3_chart_axes_width;
 const t3_chart_height = 260;
+const t3_chart_sector_space = 10;
 const t3_chart_total_height = t3_chart_unit_height + t3_chart_height + t3_chart_xaxis_height;
 
 const t3_min_height = t3_bar_total_height + t3_icon_total_height + t3_chart_total_height;

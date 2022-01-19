@@ -310,6 +310,17 @@ function t3_draw_current_sector(sector) {
         .x(function(d) {return t3_x(d.year)})
         .y(function(d) {return t3_y(d[sector])})
       )
+  t3_chart.select("#sector_number").remove();
+  const value = tiles[3].sectors[tiles[3].sectors.length - 1][sector];
+  t3_chart.append("text")
+    .text(value.toFixed(0))
+    .attr("id", "sector_number")
+    .attr("x", t3_chart_width + t3_chart_sector_space)
+    .attr("y", t3_y(value))
+    .attr("dominant-baseline", "middle")
+    .attr("fill", t3_color(sector))
+    .attr("font-size", fontSize.xsmall)
+    .attr("font-weight", fontWeight.thin);
 }
 
 function t3_change_sector(sector) {
