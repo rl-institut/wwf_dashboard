@@ -49,7 +49,7 @@ const chart_width = width - margin.left - margin.right;
 const height = 766 - margin.top - margin.bottom;
 
 const line_width = 3;
-const chart_axis_stroke_width = 2;
+const chart_axis_stroke_width = 1;
 const circle_width = 6;
 const rect_round = 16;
 
