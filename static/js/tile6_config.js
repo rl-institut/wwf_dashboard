@@ -13,7 +13,7 @@ const t6_pie_total_height = t6_pie_offset + 2 * t6_pie_radius + t6_pie_vspace + 
 
 const t6_chart_offset = 40;
 const t6_chart_height = 230;
-const t6_chart_yaxis_width = 55;
+const t6_chart_yaxis_width = 60;
 const t6_chart_total_height = t6_chart_offset + t6_chart_height;
 
 const t6_icon_offset = 40;

@@ -16,10 +16,14 @@ const t6_technologies = {
   "fossil": {"title": "Konventionelle Kraftwerke", "icon": "i_pollution", "icon_color": "white"},
 };
 
-let t6_x = d3.scaleLinear()
+const y_max = 120000;
+
+const t6_x = d3.scaleLinear()
   .range([ 0, chart_width ])
   .domain([0, 23])
-let t6_y;
+const t6_y = d3.scaleLinear()
+  .range([ t6_chart_height, 0 ])
+  .domain([0, y_max]);
 const t6_color = d3.scaleOrdinal()
   .domain(Object.keys(t6_technologies))
   .range(["#008a88", "#70B6D6", "#F3CC00", "#000000"]);
@@ -115,6 +119,21 @@ t6_chart.append("line")
   .attr("stroke", wwfColor.black)
   .attr("stroke-width", chart_axis_stroke_width);
 
+// Y-Axis
+t6_chart.append("g")
+  .attr("id", "t6_yaxis")
+  .call(
+    d3.axisLeft(t6_y)
+  )
+  .selectAll("text")
+  .style("text-anchor", "end")
+  .attr("fill", wwfColor.gray1)
+  .attr("font-weight", fontWeight.thin)
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size", fontSize.xsmall)
+d3.select("#t6_yaxis").select('.domain').attr('stroke-width', 0);
+d3.select("#t6_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
+
 // ICONS
 
 const t6_icons = t6_svg.append("g")
@@ -175,9 +194,6 @@ function t6_change_date() {
 
 function t6_draw_chart(agora_data) {
   const stacked_data = d3.stack().keys(Object.keys(t6_technologies))(agora_data);
-  const y_max = d3.max(stacked_data[stacked_data.length - 1], d => d[1]);
-
-  t6_update_y_axis(y_max);
 
   const area = d3
     .area()
@@ -232,29 +248,6 @@ function t6_draw_pie(res_share) {
     .attr("font-weight", fontWeight.bold)
     .attr("letter-spacing", letterSpacing)
     .style("font-size", fontSize.small)
-
-}
-
-function t6_update_y_axis(y_max) {
-  t6_chart.select("#t6_yaxis").remove();
-  t6_y = d3.scaleLinear()
-    .range([ t6_chart_height, 0 ])
-    .domain([0, y_max]);
-
-  // Y-Axis
-  t6_chart.append("g")
-    .attr("id", "t6_yaxis")
-    .call(
-      d3.axisLeft(t6_y)
-    )
-    .selectAll("text")
-    .style("text-anchor", "end")
-    .attr("fill", wwfColor.gray1)
-    .attr("font-weight", fontWeight.thin)
-    .attr("letter-spacing", letterSpacing)
-    .attr("font-size", fontSize.xsmall)
-d3.select("#t6_yaxis").select('.domain').attr('stroke-width', 0);
-d3.select("#t6_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 }
 
 $("#t6_date").datepicker("setDate", "now");
