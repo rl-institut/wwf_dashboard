@@ -18,6 +18,7 @@ const t6_chart_total_height = t6_chart_height + t6_chart_offset;
 
 const t6_icon_size = 24;
 const t6_icon_margin = 4;
+const t6_icon_padding = 8;
 const t6_icon_row_height = 10;
 const t6_icon_wrap = 2;
 const t6_icon_total_height = 2 * t6_icon_size + t6_icon_row_height;
