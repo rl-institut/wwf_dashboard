@@ -217,8 +217,8 @@ const t9_y_grid = t9_chart.append("g")
       .ticks(5)
     )
 t9_y_grid.selectAll(".tick").select("line")
-  .attr("stroke-width", 0.5)
-  .attr("stroke", wwfColor.gray1)
+  .attr("stroke-width", tickStrokeWidth)
+  .attr("stroke", tickColor)
 t9_y_grid.select('.domain').attr('stroke-width', 0);
 
 t9_chart.append("text")

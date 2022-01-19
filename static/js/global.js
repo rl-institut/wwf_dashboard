@@ -19,6 +19,9 @@ const wwfColor = {
   base: "rgb(195, 183, 140)"
 };
 
+tickColor = "#E3E3E3";
+tickStrokeWidth = 1;
+
 const fontWeight = {
   thin: 300,
   normal: 400,

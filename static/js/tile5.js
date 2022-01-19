@@ -107,8 +107,8 @@ const t5_y_grid = t5_chart.append("g")
       .ticks(5)
     )
 t5_y_grid.selectAll(".tick").select("line")
-  .attr("stroke-width", 0.5)
-  .attr("stroke", wwfColor.gray1)
+  .attr("stroke-width", tickStrokeWidth)
+  .attr("stroke", tickColor)
 t5_y_grid.select('.domain').attr('stroke-width', 0);
 
 // Add technology paths
