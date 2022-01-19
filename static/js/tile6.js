@@ -147,8 +147,8 @@ for (const technology of Object.keys(t6_technologies)) {
   // Icon text gets 1/5 of height, symbol and rect get 2/5 of height
   t6_icons.append("text")
     .text(t6_technologies[technology].title)
-    .attr("x", x + t6_icon_size + t6_icon_margin)
-    .attr("y", y + t6_icon_size / 2 + 2)
+    .attr("x", x + t6_icon_size + t6_icon_padding)
+    .attr("y", y + t6_icon_size / 2)
     .attr("text-anchor", "left")
     .attr("dominant-baseline", "central")
     .attr("font-weight", fontWeight.normal)
