@@ -110,8 +110,8 @@ const t8_y_grid = t8_chart.append("g")
       .ticks(5)
     )
 t8_y_grid.selectAll(".tick").select("line")
-  .attr("stroke-width", 0.5)
-  .attr("stroke", wwfColor.gray1)
+  .attr("stroke-width", tickStrokeWidth)
+  .attr("stroke", tickColor)
 t8_y_grid.select('.domain').attr('stroke-width', 0);
 
 t8_chart.append("text")

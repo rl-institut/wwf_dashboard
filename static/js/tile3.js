@@ -207,8 +207,8 @@ const t3_y_grid = t3_chart.append("g")
       .ticks(5)
     )
 t3_y_grid.selectAll(".tick").select("line")
-  .attr("stroke-width", 0.5)
-  .attr("stroke", wwfColor.gray2)
+  .attr("stroke-width", tickStrokeWidth)
+  .attr("stroke", tickColor)
 t3_y_grid.select('.domain').attr('stroke-width', 0);
 
 // Grayed sector paths
