@@ -35,7 +35,7 @@ const t7_vehicle_labels = [
 ]
 
 const t7_vehicle_icons = [
-  "i_fussgaenger", "i_bahn", "i_e_auto_normal", "i_fernbus", "i_verkehr", "i_flugzeug"
+  "i_fussgaenger_fahrrad", "i_bahn", "i_e_auto_normal", "i_fernbus", "i_verkehr", "i_flugzeug"
 ]
 
 const t7_vehicle_names = {
