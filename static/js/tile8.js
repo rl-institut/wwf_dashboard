@@ -221,6 +221,17 @@ function t8_change_year(year_index) {
     pv -= last_year_data.pv;
   }
 
+  t8_chart.select("#t8_year_line").remove();
+  t8_chart.append("line")
+    .attr("id", "t8_year_line")
+    .attr("x1", t8_x(year))
+    .attr("x2", t8_x(year))
+    .attr("y1", 0)
+    .attr("y2", t8_chart_height)
+    .attr("stroke", wwfColor.black)
+    .attr("stroke-width", line_width)
+    .attr("stroke-dasharray", "4");
+
   t8_bar.select("#t8_expansion").remove();
   const t8_expansion = t8_bar.append("g")
     .attr("id", "t8_expansion")
@@ -277,4 +288,4 @@ function t8_change_year(year_index) {
   }
 }
 
-t8_change_year(5);
+t8_change_year(tiles[8].length - 1);

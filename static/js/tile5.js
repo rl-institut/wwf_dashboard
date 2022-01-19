@@ -173,6 +173,17 @@ function t5_change_year(to_year) {
   const year = parseInt(to_year);
   const year_data = tiles[5].find(element => element.year == year);
 
+  t5_chart.select("#t5_year_line").remove();
+  t5_chart.append("line")
+    .attr("id", "t5_year_line")
+    .attr("x1", t5_x(year))
+    .attr("x2", t5_x(year))
+    .attr("y1", 0)
+    .attr("y2", t5_chart_height)
+    .attr("stroke", wwfColor.black)
+    .attr("stroke-width", line_width)
+    .attr("stroke-dasharray", "4");
+
   for (const technology of Object.keys(t5_technologies)) {
     t5_icons.select("#t5_text_" + technology)
       .text(year_data[technology].toFixed(1) + " %")

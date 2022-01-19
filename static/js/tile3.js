@@ -55,8 +55,11 @@ const t3_svg = d3.select("#t3")
 
 // BAR
 
-const t3_bar = t3_svg.append("g").attr("transform", `translate(0, 0)`);
-t3_bar.append("text")
+const t3_bar_area = t3_svg.append("g").attr("transform", `translate(0, 0)`);
+const t3_bar = t3_bar_area.append("g")
+  .attr("transform", `translate(0, ${t3_bar_title_height + 2 * t3_bar_vspace})`);
+
+t3_bar_area.append("text")
   .text("Globale Treibhausgasemissionen")
   .attr("x", width / 2)
   .attr("y", t3_bar_vspace)
@@ -66,7 +69,7 @@ t3_bar.append("text")
   .attr("letter-spacing", letterSpacing)
   .attr("font-size",fontSize.normal);
 
-t3_bar.append("text")
+t3_bar_area.append("text")
   .text("Mio. t CO2-Äquivalente")
   .attr("x", width / 2)
   .attr("y", t3_bar_vspace + t3_bar_title_height / 2)
@@ -76,20 +79,20 @@ t3_bar.append("text")
   .attr("letter-spacing", letterSpacing)
   .attr("font-size",fontSize.xsmall);
 
-t3_bar.append("rect")
+t3_bar_area.append("rect")
   .attr("x", 0)
   .attr("y", 3 * t3_bar_vspace + t3_bar_title_height + t3_bar_height)
   .attr("width", t3_bar_legend_size)
   .attr("height", t3_bar_legend_size);
 
-t3_bar.append("rect")
+t3_bar_area.append("rect")
   .attr("x", width / 2)
   .attr("y", 3 * t3_bar_vspace + t3_bar_title_height + t3_bar_height)
   .attr("width", t3_bar_legend_size)
   .attr("height", t3_bar_legend_size)
   .attr("fill", t3_bar_color_reduction);
 
-t3_bar.append("text")
+t3_bar_area.append("text")
   .text("Emissionen")
   .attr("x", t3_bar_legend_size + legendLeftPadding)
   .attr("y", 3 * t3_bar_vspace + t3_bar_title_height + t3_bar_height + t3_bar_legend_size / 2)
@@ -99,7 +102,7 @@ t3_bar.append("text")
   .attr("font-weight", fontWeight.normal)
   .attr("letter-spacing", letterSpacing);
 
-t3_bar.append("text")
+t3_bar_area.append("text")
   .text("Emissionsreduktion")
   .attr("x", width / 2 + t3_bar_legend_size + legendLeftPadding)
   .attr("y", 3 * t3_bar_vspace + t3_bar_title_height + t3_bar_height + t3_bar_legend_size / 2)
@@ -240,8 +243,7 @@ function t3_change_year(year_index) {
 
   t3_bar.select("#t3_emissions").remove();
   const t3_emissions = t3_bar.append("g")
-    .attr("id", "t3_emissions")
-    .attr("transform", `translate(0, ${t3_bar_title_height + 2 * t3_bar_vspace})`);
+    .attr("id", "t3_emissions");
 
   const middle = width * (year_data.emissions / t3_emissions_1990);
   t3_emissions.append("rect")

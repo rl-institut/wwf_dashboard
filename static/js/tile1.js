@@ -384,8 +384,8 @@ function t1_update_chart() {
     .attr("font-weight", fontWeight.normal)
     .attr("letter-spacing", letterSpacing)
     .attr("font-size", fontSize.xsmall)
-d3.select("#t1_yaxis2").select('.domain').attr('stroke-width', 0);
-d3.select("#t1_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
+  d3.select("#t1_yaxis2").select('.domain').attr('stroke-width', 0);
+  d3.select("#t1_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
 
   // Temperatures
   t1_chart.selectAll(null)

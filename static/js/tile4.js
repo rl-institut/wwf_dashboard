@@ -12,7 +12,7 @@ $("#t4_year").ionRangeSlider({
   }
 });
 
-const t4_height = (typeof t3_min_height !== 'undefined') ? Math.max(t3_min_height, t4_min_height) : t4_min_height;
+const t4_height = (typeof t4_min_height !== 'undefined') ? Math.max(t4_min_height, t4_min_height) : t4_min_height;
 const t4_puffer = is_mobile ? 0 : t4_height - t4_min_height;
 
 const t4_technologies = {
@@ -224,6 +224,17 @@ for (const technology of Object.keys(t4_technologies)) {
 function t4_change_year(to_year) {
   const year = parseInt(to_year);
   const year_data = tiles[4].find(element => element.year == year);
+
+  t4_chart.select("#t4_year_line").remove();
+  t4_chart.append("line")
+    .attr("id", "t4_year_line")
+    .attr("x1", t4_x(year))
+    .attr("x2", t4_x(year))
+    .attr("y1", 0)
+    .attr("y2", t4_chart_height)
+    .attr("stroke", wwfColor.black)
+    .attr("stroke-width", line_width)
+    .attr("stroke-dasharray", "4");
 
   for (const technology of Object.keys(t4_technologies)) {
     t4_icons.select("#t4_text_" + technology)
