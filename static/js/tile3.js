@@ -19,13 +19,21 @@ const t3_sectors = {
   "traffic": {"title": "Verkehr", "icon": "i_verkehr"},
   "house": {"title": "Gebäude", "icon": "i_gebaeude"},
   "energy": {"title": "Energiewirtschaft", "icon": "i_strom"},
-  "total": {"title": "Gesamt", "icon": "i_summe"}
 };
 
-const t3_sectors_max = tiles[3].sectors.reduce(function(max, current){if (current.total > max) {return current.total} else {return max}}, 0);
+const t3_sectors_max = Object.keys(t3_sectors).reduce(
+  (max, key) => {
+    if (tiles[3].sectors[0][key] > max) {
+      return tiles[3].sectors[0][key]
+    } else {
+      return max
+    }
+  },
+  0
+);
 
-const t3_height = (typeof t4_min_height !== 'undefined') ? Math.max(t3_min_height, t4_min_height) : t3_min_height;
-const t3_puffer = is_mobile ? 0 : (t3_height - t3_bar_total_height - t3_chart_total_height) / 2;
+const t3_height = (typeof t3_min_height !== 'undefined') ? Math.max(t3_min_height, t3_min_height) : t3_min_height;
+const t3_puffer = is_mobile ? 0 : (t3_height - t3_min_height);
 
 const t3_emissions_1990 = tiles[3].emissions[0].emissions;
 
@@ -103,8 +111,8 @@ t3_bar.append("text")
 
 // ICONS
 
-const t3_icons = t3_svg.append("g").attr("transform", `translate(0, ${t3_bar_total_height + 2 * t3_puffer})`);
-const t3_icon_left = (width - 6 * t3_circle_size - 5 * t3_icon_hspace) / 2;
+const t3_icons = t3_svg.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer + t3_icon_offset})`);
+const t3_icon_left = (width - 5 * t3_circle_size - 4 * t3_icon_hspace) / 2;
 for (const [i, sector] of Object.keys(t3_sectors).entries()) {
   const icon = t3_sectors[sector].icon;
   const x = t3_icon_left + i * (t3_circle_size + t3_icon_hspace) + t3_circle_size / 2;
@@ -127,9 +135,28 @@ for (const [i, sector] of Object.keys(t3_sectors).entries()) {
     .attr("preserveAspectRatio", "xMidYMid slice");
 }
 
+// Selected sector title
+t3_icons.append("text")
+  .attr("id", "t3_sector_title")
+  .text("")
+  .attr("x", width / 2)
+  .attr("y", t3_circle_size + t3_icon_vspace)
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "hanging")
 
 // CHART
-const t3_chart = t3_svg.append("g").attr("transform", `translate(${t3_chart_axes_width}, ${t3_bar_total_height + 2 * t3_puffer + t3_chart_offset})`);
+const t3_chart_area = t3_svg.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer + t3_icon_total_height})`);
+const t3_chart = t3_chart_area.append("g").attr("transform", `translate(${t3_chart_axes_width}, ${t3_chart_unit_height})`);
+
+// Unit
+t3_chart_area.append("text")
+  .text("Mio. t CO2-Äquivalente")
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("dominant-baseline", "hanging")
+  .attr("fill", wwfColor.gray2)
+  .style("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing)
 
 // X-Axis
 t3_chart.append("g")
@@ -171,6 +198,18 @@ t3_chart.append("g")
     .attr("font-weight", fontWeight.thin);
 d3.select("#t3_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t3_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
+
+const t3_y_grid = t3_chart.append("g")
+  .call(
+    d3.axisLeft(t3_y)
+      .tickSize(-t3_chart_width)
+      .tickFormat('')
+      .ticks(5)
+    )
+t3_y_grid.selectAll(".tick").select("line")
+  .attr("stroke-width", 0.5)
+  .attr("stroke", wwfColor.gray2)
+t3_y_grid.select('.domain').attr('stroke-width', 0);
 
 // Grayed sector paths
 for (const sector of Object.keys(t3_sectors)) {
@@ -234,6 +273,8 @@ function t3_change_year(year_index) {
 }
 
 function t3_activate_sector(sector) {
+  t3_icons.select("#t3_sector_title")
+    .text(t3_sectors[sector].title)
   t3_icons.selectAll("circle")
     .attr("fill", t3_circe_color_gray)
   t3_icons.selectAll("path")
@@ -264,5 +305,5 @@ function t3_change_sector(sector) {
   t3_draw_current_sector(sector);
 }
 
-t3_change_sector("total");
+t3_change_sector("agriculture");
 t3_change_year(5);

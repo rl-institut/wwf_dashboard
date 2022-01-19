@@ -153,6 +153,18 @@ t4_chart.append("g")
 d3.select("#t4_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t4_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
+const t4_y_grid = t4_chart.append("g")
+  .call(
+    d3.axisLeft(t4_y)
+      .tickSize(-t4_chart_width)
+      .tickFormat('')
+      .ticks(5)
+    )
+t4_y_grid.selectAll(".tick").select("line")
+  .attr("stroke-width", 0.5)
+  .attr("stroke", wwfColor.gray1)
+t4_y_grid.select('.domain').attr('stroke-width', 0);
+
 t4_chart_body.append("text")
   .text("Heimspeicher, Wärmepumpen,")
   .attr("dominant-baseline", "hanging")

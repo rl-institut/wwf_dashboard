@@ -24,12 +24,24 @@ const t5_technologies = {
   "fossil": {"title": ["Fossil"], "icon": "i_pollution"},
 };
 
+const t5_renewables = Object.keys(t5_technologies).filter(key => key != "fossil");
+const t5_y_max = t5_renewables.reduce(
+  (max, key) => {
+    if (tiles[5][tiles[5].length - 1][key] > max) {
+      return tiles[5][tiles[5].length - 1][key]
+    } else {
+      return max
+    }
+  },
+  0
+);
+
 const t5_x = d3.scaleLinear()
   .range([0, t5_chart_width])
   .domain([tiles[5][0].year, tiles[5][tiles[5].length - 1].year]);
 const t5_y = d3.scaleLinear()
   .range([t5_chart_height, 0])
-  .domain([0, 100]);
+  .domain([0, t5_y_max]);
 const t5_color = d3.scaleOrdinal()
   .domain(Object.keys(t5_technologies))
   .range(["#70B6D6", "#006386", "#F3CC00", "#F07C24", "#008A88", "#000000"]);
@@ -42,8 +54,16 @@ const t5_svg = d3.select("#t5")
     .attr("width", width)
     .attr("height", t5_height)
 
+t5_svg.append("text")
+  .text("Anteil der Erzeugungstechnologien am Strommix (%)")
+  .attr("x", width / 2)
+  .attr("y", t5_chart_offset)
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "hanging")
+
 // CHART
-const t5_chart = t5_svg.append("g");
+const t5_chart = t5_svg.append("g")
+  .attr("transform", `translate(${t5_chart_yaxis_width}, ${t5_chart_offset + t5_chart_title_height})`);
 
 // X-Axis
 t5_chart.append("g")
@@ -78,6 +98,18 @@ t5_chart.append("g")
   .select('.domain')
     .attr('stroke-width', 0);
 d3.select("#t5_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
+
+const t5_y_grid = t5_chart.append("g")
+  .call(
+    d3.axisLeft(t5_y)
+      .tickSize(-t5_chart_width)
+      .tickFormat('')
+      .ticks(5)
+    )
+t5_y_grid.selectAll(".tick").select("line")
+  .attr("stroke-width", 0.5)
+  .attr("stroke", wwfColor.gray1)
+t5_y_grid.select('.domain').attr('stroke-width', 0);
 
 // Add technology paths
 for (const technology of Object.keys(t5_technologies)) {
