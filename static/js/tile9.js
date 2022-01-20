@@ -42,7 +42,7 @@ const t9_y = d3.scaleLinear()
   .domain([0, t9_technologies_max]);
 const t9_color = d3.scaleOrdinal()
   .domain(Object.keys(t9_technologies))
-  .range(["#F3CC00", "#D82D45", "#724284", "#F07C24", "#C3B78C"]);
+  .range([wwfColor.mediumGreen, wwfColor.mediumGreen, wwfColor.yellow, wwfColor.red, wwfColor.red]);
 
 const t9_svg = d3.select("#t9")
   .append("svg")
@@ -77,7 +77,7 @@ for (const technology of Object.keys(t9_technologies)) {
       .attr("x", t9_emissions_x(tiles[9].emissions[technology]) - t9_bar_hspace)
       .attr("y", t9_emissions_y(technology) + t9_emissions_y.bandwidth() / 2)
       .attr("text-anchor", "end")
-      .attr("fill", wwfColor.white)
+      .attr("fill", wwfColor.black)
       .attr("dominant-baseline", "central")
       .attr("letter-spacing", letterSpacing)
       .attr("font-size", fontSize.xsmall)
