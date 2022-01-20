@@ -126,7 +126,7 @@ t9_svg.append("line")
   .attr("x1", 0)
   .attr("x2", width)
   .attr("y1", t9_bar_total_height + t9_puffer / 2 + t9_icon_offset / 2)
-  .attr("y2", t9_bar_total_height + t9_puffer / 2 + t9_icon_offset / 2 + 1)
+  .attr("y2", t9_bar_total_height + t9_puffer / 2 + t9_icon_offset / 2)
   .attr("stroke", tickColor)
   .attr("stroke-width", 1);
 
