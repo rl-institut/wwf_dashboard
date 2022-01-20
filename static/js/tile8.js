@@ -238,8 +238,8 @@ function t8_change_year(year_index) {
     .attr("y1", 0)
     .attr("y2", t8_chart_height)
     .attr("stroke", wwfColor.black)
-    .attr("stroke-width", line_width)
-    .attr("stroke-dasharray", "4");
+    .attr("stroke-width", dash_width)
+    .attr("stroke-dasharray", dash_spacing);
 
   t8_bar.select("#t8_expansion").remove();
   const t8_expansion = t8_bar.append("g")
