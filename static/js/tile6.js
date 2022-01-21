@@ -2,6 +2,8 @@
 $("#t6_date").datepicker(
   {
     format: "dd.mm.yyyy",
+    startDate: "01.01.2021",
+    endDate: "0d",
   }
 );
 $("#t6_date").on("changeDate", t6_change_date);
@@ -248,6 +250,20 @@ function t6_draw_pie(res_share) {
     .attr("font-weight", fontWeight.bold)
     .attr("letter-spacing", letterSpacing)
     .style("font-size", fontSize.small)
+}
+
+function t6_decrease_date() {
+  let date = $("#t6_date").datepicker("getDate");
+  date.setDate(date.getDate() - 1);
+  date.setHours(23);
+  if (date >= $("#t6_date").datepicker("getStartDate")) {$("#t6_date").datepicker("setDate", date);}
+}
+
+function t6_increase_date() {
+  let date = $("#t6_date").datepicker("getDate");
+  date.setDate(date.getDate() + 1);
+  date.setHours(0);
+  if (date <= $("#t6_date").datepicker("getEndDate")) {$("#t6_date").datepicker("setDate", date);}
 }
 
 $("#t6_date").datepicker("setDate", "now");
