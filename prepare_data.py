@@ -199,7 +199,7 @@ def tile10():
     original_size = (577, 750)
     drought_folder = pathlib.Path(DROUGHT_DATA)
     font_month = ImageFont.truetype("static/fonts/WWF.woff", 30)
-    font_legend = ImageFont.truetype("static/fonts/WWF.woff", 20)
+    font_legend = ImageFont.truetype("static/fonts/OpenSans-Regular.woff", 20)
     legend = [
         ("#EFD655", "Ungewöhnlich trocken"),
         ("#EEC095", "Moderate Dürre"),
