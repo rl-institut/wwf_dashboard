@@ -6,7 +6,7 @@ import pathlib
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-FILENAME = "WWF_Daten_Dashboard_Version 3.5.xlsx"
+FILENAME = "WWF_Daten_Dashboard_Version 4.1._18.1.2022.xlsx"
 
 DATA_PATH = "static/data"
 RAW_DATA_PATH = "raw_data"
@@ -230,4 +230,4 @@ def tile10():
         json.dump(data, json_file)
 
 
-tile1()
+tile10()
