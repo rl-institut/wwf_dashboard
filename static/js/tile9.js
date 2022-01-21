@@ -15,9 +15,9 @@ $("#t9_year").ionRangeSlider({
 
 const t9_technologies = {
   "solar": {"title": "Solarthermie", "icon": "i_pv"},
-  "heatpump": {"title": "Wärmepumpe", "icon": "i_waermepumpe_small"},
+  "heatpump": {"title": "Erdwärmepumpe", "icon": "i_waermepumpe_small"},
   "gas": {"title": "Gasheizung", "icon": "i_gas"},
-  "biomass": {"title": "Holzheizung", "icon": "i_biomass"},
+  "biomass": {"title": "Pelletheizung", "icon": "i_biomass"},
   "oil": {"title": "Ölheizung", "icon": "i_oel"},
 };
 
@@ -112,6 +112,15 @@ t9_bar.append("g")
     .attr("font-size", fontSize.xsmall)
 d3.select("#t9_emissions_y").select('.domain').attr('stroke-width', 0);
 d3.select("#t9_emissions_y").selectAll(".tick").select("line").attr("stroke-width", 0);
+
+t9_bar.append("text")
+  .text("(als ergänzendes Heizsystem)")
+  .attr("x", t9_solar_text_offset)
+  .attr("y", t9_emissions_y("solar") + t9_emissions_y.bandwidth())
+  .attr("text-anchor", "end")
+  .attr("font-weight", fontWeight.thin)
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size", fontSize.xsmall)
 
 t9_bar.append("line")
   .attr("x1", 0)

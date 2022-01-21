@@ -1,12 +1,13 @@
 
 const t9_emissions_color = "black";
-const t9_bar_ticks_width = width / 4;
+const t9_bar_ticks_width = width / 2.5;
 const t9_bar_width = width - t9_bar_ticks_width;
 const t9_bar_height = 180;
 const t9_bar_title_height = 30;
 const t9_bar_offset = 50;
 const t9_bar_hspace = 5;
 const t9_bar_gap = 12;
+const t9_solar_text_offset = -9;
 const t9_bar_total_height = t9_bar_offset + t9_bar_title_height + t9_bar_height;
 
 const t9_icon_offset = 40;
