@@ -1,9 +1,13 @@
 
+import pathlib
 import datetime as dt
 from requests_html import AsyncHTMLSession
 from bs4 import BeautifulSoup
 from cairosvg import svg2png
 import pyppeteer
+
+
+SHARE_FOLDER = "static/share"
 
 
 class AsyncHTMLSessionFixed(AsyncHTMLSession):
@@ -29,20 +33,22 @@ class AsyncHTMLSessionFixed(AsyncHTMLSession):
         return self._browser
 
 
-async def share_svg(tile, options):
+async def share_svg(tile, options, request):
     filename = get_tile_filename(tile, options)
-    share_path = f"static/share/{filename}"
+    share_path = pathlib.Path(SHARE_FOLDER) / filename
+    if share_path.exists():
+        return str(share_path)
     session = AsyncHTMLSessionFixed()
     if tile == 6:
         options_path = f"date={dt.datetime.strptime(options['date'], '%d.%m.%Y').date().isoformat()}"
     else:
         options_path = "&".join(f"{k}={v}" for k, v in options.items())
-    r = await session.get(f'http://localhost:5000/{tile}?{options_path}')
+    r = await session.get(f'{request.host_url}/{tile}?{options_path}')
     await r.html.arender()
     soup = BeautifulSoup(r.html.html, features="lxml")
     svg = soup.find("svg")
-    svg2png(bytestring=svg.prettify(), write_to=share_path)
-    return share_path
+    svg2png(bytestring=svg.prettify(), write_to=str(share_path))
+    return str(share_path)
 
 
 def get_tile_filename(tile, options):

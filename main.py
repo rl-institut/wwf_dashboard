@@ -48,7 +48,7 @@ async def share_tile(tile):
     options = json.loads(request.form["options"])
     if tile == 10:
         return {"share_link": f"static/images/drought/{options['year']}.gif"}
-    filename = asyncio.new_event_loop().run_until_complete(share.share_svg(tile, options))
+    filename = asyncio.new_event_loop().run_until_complete(share.share_svg(tile, options, request))
     return {"share_link": filename}
 
 
