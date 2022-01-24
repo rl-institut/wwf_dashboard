@@ -201,6 +201,7 @@ h3 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 3rem 2rem;
 }
 
 .modal--share .modal-body .logos {
@@ -217,9 +218,57 @@ h3 {
   width: 100%;
 }
 
-.modal--share .modal-body .logo a,
+.modal--share .modal-body .logos:first-of-type {
+  padding-bottom: 1.5rem;
+}
+
+.modal--share .modal-body .logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.modal--share .modal-body .logo a {
+  text-align: center;
+  text-decoration: none;
+}
+
 .modal--share .modal-body .logo img {
   height: 3rem;
+}
+
+.modal--share .modal-body .logo--fb img,
+.modal--share .modal-body .logo--tg img {
+  height: 3.25rem;
+}
+
+.modal--share .modal-body .logo--wa img {
+  height: 4rem;
+}
+
+.modal--share .modal-body span {
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.modal--share .modal-body .logo--wa span {
+  -webkit-transform: translateY(-4px);
+          transform: translateY(-4px);
 }
 
 .tile .irs--round .irs-handle {

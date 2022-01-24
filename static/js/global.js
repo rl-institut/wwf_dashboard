@@ -3,6 +3,7 @@ const wwfColor = {
   black: "rgb(0, 0, 0)",
   gray1: "rgb(96, 96, 96)",
   gray2: "rgb(90, 90, 90)",
+  gray3: "rgb(221, 221, 221)",
   yellow: "rgb(243, 204, 0)",
   orange: "rgb(240, 124, 36)",
   red: "rgb(216, 45, 69)",
@@ -49,7 +50,9 @@ const chart_width = width - margin.left - margin.right;
 const height = 766 - margin.top - margin.bottom;
 
 const line_width = 3;
-const chart_axis_stroke_width = 2;
+const dash_width = 1;
+const dash_spacing = 2;
+const chart_axis_stroke_width = 1;
 const circle_width = 6;
 const rect_round = 16;
 

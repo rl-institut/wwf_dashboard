@@ -47,7 +47,7 @@ const t8_svg = d3.select("#t8")
 
 // BAR
 
-const t8_bar = t8_svg.append("g").attr("transform", `translate(0, ${t8_puffer})`);
+const t8_bar = t8_svg.append("g").attr("transform", `translate(0, 0)`);
 t8_bar.append("text")
   .text("Notwendiger Ausbau pro Jahr")
   .attr("x", width / 2)
@@ -57,7 +57,7 @@ t8_bar.append("text")
   .attr("dominant-baseline", "hanging");
 
 // CHART
-const t8_chart = t8_svg.append("g").attr("transform", `translate(${t8_chart_axes_width}, ${t8_bar_total_height + 2 * t8_puffer + t8_chart_offset})`);
+const t8_chart = t8_svg.append("g").attr("transform", `translate(${t8_chart_axes_width}, ${t8_bar_total_height + t8_puffer + t8_chart_offset})`);
 
 // X-Axis
 t8_chart.append("g")
@@ -238,8 +238,8 @@ function t8_change_year(year_index) {
     .attr("y1", 0)
     .attr("y2", t8_chart_height)
     .attr("stroke", wwfColor.black)
-    .attr("stroke-width", line_width)
-    .attr("stroke-dasharray", "4");
+    .attr("stroke-width", dash_width)
+    .attr("stroke-dasharray", dash_spacing);
 
   t8_bar.select("#t8_expansion").remove();
   const t8_expansion = t8_bar.append("g")
