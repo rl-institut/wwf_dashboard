@@ -263,6 +263,10 @@ t1_icons.append("text")
   .style("font-size", fontSize.small)
   .attr("letter-spacing", letterSpacing)
 
+if (is_mobile) {
+  t1_icons.selectAll("text").style("font-size", fontSize.xsmall);
+}
+
 // Temperature scale
 t1_temperature = t1_svg.append("g").attr("transform", `translate(0, ${t1_chart_total_height + t1_icon_total_height + t1_temperature_offset})`);
 
