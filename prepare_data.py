@@ -199,7 +199,7 @@ def tile10():
     original_size = (577, 750)
     drought_folder = pathlib.Path(DROUGHT_DATA)
     font_month = ImageFont.truetype("static/fonts/WWF.woff", 30)
-    font_legend = ImageFont.truetype("static/fonts/OpenSans-Regular.woff", 20)
+    font_legend = ImageFont.truetype("static/fonts/OpenSans-Regular.woff", 16)
     legend = [
         ("#EFD655", "Ungewöhnlich trocken"),
         ("#EEC095", "Moderate Dürre"),
@@ -208,7 +208,7 @@ def tile10():
         ("#740F0F", "Außergewöhnliche Dürre")
     ]
     legend_size = 16
-    legend_vspace = 6
+    legend_vspace = 10
     legend_hspace = 8
     legend_margin = 24
     height = original_size[1] + 2 * legend_margin + 3 * legend_size + 2 * legend_vspace
@@ -241,7 +241,7 @@ def tile10():
             draw.text((10, 10), text=months[int(month) - 1], fill="black", font=font_month)
 
             # Add legend
-            draw.rectangle((0, 749, original_size[0] - 1, height - 1), outline="black")
+            # draw.rectangle((0, 749, original_size[0] - 1, height - 1), outline="black")
             for i, (color, label) in enumerate(legend):
                 x = legend_margin + int(i / 3) * original_size[0] / 2
                 y = original_size[1] + legend_margin + (i % 3) * (legend_size + legend_vspace)
