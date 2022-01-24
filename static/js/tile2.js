@@ -9,6 +9,9 @@ $("#t2_year").ionRangeSlider({
   from: tiles[2][tiles[2].length - 1].year,
   onChange: function (data) {
     t2_change_year(data.from)
+  },
+  onUpdate: function (data) {
+    t2_change_year(data.from)
   }
 });
 
@@ -33,7 +36,7 @@ const t2_pie_sectors = [
 
 const t2_bar_color = d3.scaleOrdinal()
   .domain(t2_resources)
-  .range([wwfColor.mediumGreen, "co#000", "#3A3A3A", "#5A5A5A", "#808080", wwfColor.aqua]);
+  .range([wwfColor.mediumGreen, "black", "#3A3A3A", "#5A5A5A", "#808080", wwfColor.aqua]);
 
 const t2_pie_color = d3.scaleOrdinal()
     .domain(["ee", "ne", "ne2"])
@@ -281,4 +284,9 @@ function t2_draw_pie(year_data, type) {
     .attr("letter-spacing", letterSpacing);
 }
 
-t2_change_year(2020);
+if ("year" in initials) {
+  const year_data = $("#t2_year").data("ionRangeSlider");
+  year_data.update({from: initials.year})
+} else {
+  t2_change_year(tiles[2][tiles[2].length - 1].year);
+}

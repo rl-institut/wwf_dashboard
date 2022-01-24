@@ -10,6 +10,9 @@ $("#t8_year").ionRangeSlider({
   from: tiles[8][tiles[8].length - 1].year,
   onChange: function (data) {
     t8_change_year(data.from)
+  },
+  onUpdate: function (data) {
+    t8_change_year(data.from)
   }
 });
 
@@ -297,4 +300,9 @@ function t8_change_year(year_index) {
   }
 }
 
-t8_change_year(tiles[8].length - 1);
+if ("year" in initials) {
+  const init_data = $("#t8_year").data("ionRangeSlider");
+  init_data.update({from: t8_years.indexOf(parseInt(initials.year))})
+} else {
+  t8_change_year(t8_years.length - 1);
+}

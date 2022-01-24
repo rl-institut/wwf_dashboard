@@ -203,6 +203,15 @@ function t6_change_date() {
       success: function(result){
         t6_draw_chart(result.data);
         t6_draw_pie(result.res_share);
+      },
+      error: function() {
+        const area_chart = t6_chart.append("g")
+          .attr("id", "t6_area")
+        area_chart.append("text")
+          .text("Leider keine Daten vorhanden")
+          .attr("x", chart_width / 2)
+          .attr("y", t6_chart_height / 2)
+          .attr("text-anchor", "middle")
       }
     }
   );
@@ -280,4 +289,4 @@ function t6_increase_date() {
   if (date <= $("#t6_date").datepicker("getEndDate")) {$("#t6_date").datepicker("setDate", date);}
 }
 
-$("#t6_date").datepicker("setDate", "now");
+$("#t6_date").datepicker("setDate", ("date" in initials) ? new Date(initials.date) : "now");

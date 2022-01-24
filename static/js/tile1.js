@@ -11,6 +11,9 @@ $("#t1_year").ionRangeSlider({
   from: tiles[1].global[tiles[1].global.length - 1].year,
   onChange: function (data) {
     t1_change_year(data.from)
+  },
+  onUpdate: function (data) {
+    t1_change_year(data.from)
   }
 });
 
@@ -446,4 +449,8 @@ function t1_change_mode(mode) {
   t1_change_year(document.getElementById('t1_year').value);
 }
 
-t1_change_mode("global");
+if ("year" in initials) {
+  const t1_year_data = $("#t1_year").data("ionRangeSlider");
+  t1_year_data.update({from: initials.year})
+}
+t1_change_mode(("mode" in initials) ? initials.mode : "global");

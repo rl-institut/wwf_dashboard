@@ -1,4 +1,5 @@
 
+let t9_technology;
 const t9_installation_years = tiles[9].installations.map(function(d) { return d.year; });
 
 $("#t9_year").ionRangeSlider({
@@ -289,8 +290,9 @@ function t9_draw_current_technology(technology) {
 }
 
 function t9_change_technology(technology) {
+  t9_technology = technology;
   t9_activate_technology(technology);
   t9_draw_current_technology(technology);
 }
 
-t9_change_technology("biomass");
+t9_change_technology(("technology" in initials) ? initials.technology : "solar");

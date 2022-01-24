@@ -12,6 +12,9 @@ $("#t7_distance").ionRangeSlider({
   postfix: " km",
   onChange: function (data) {
     t7_change_distance(data.from)
+  },
+  onUpdate: function (data) {
+    t7_change_distance(data.from)
   }
 });
 
@@ -234,4 +237,9 @@ function t7_change_bars(distance_index) {
   }
 }
 
-t7_change_distance(0);
+if ("distance" in initials) {
+  const init_data = $("#t7_distance").data("ionRangeSlider");
+  init_data.update({from: distances.indexOf(parseInt(initials.distance))})
+} else {
+  t7_change_distance(0);
+}

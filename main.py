@@ -26,6 +26,7 @@ def get_tile(tile):
         tile_html=f"tiles/tile{tile}.html",
         tile_config_js=f"static/js/tile{tile}_config.js",
         tile_js=f"static/js/tile{tile}.js",
+        initials=json.dumps(request.args),
         icons=ICONS,
         debug=DEBUG
     )
@@ -36,12 +37,17 @@ def get_agora_data():
     date_str = request.args.get('date', default=dt.date.today().strftime("%d.%m.%Y"))
     date = dt.datetime.strptime(date_str, "%d.%m.%Y").date()
     agora_data, res_share = scrape.get_agora_data_for_day(date)
-    return {"data": agora_data, "res_share": res_share}
+    if agora_data:
+        return {"data": agora_data, "res_share": res_share}
+    else:
+        return {}, 503
 
 
 @app.route("/share/<int:tile>", methods=["POST"])
 async def share_tile(tile):
     options = json.loads(request.form["options"])
+    if tile == 10:
+        return {"share_link": f"static/images/drought/{options['year']}.gif"}
     filename = asyncio.new_event_loop().run_until_complete(share.share_svg(tile, options))
     return {"share_link": filename}
 

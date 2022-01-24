@@ -76,7 +76,10 @@ function share(tile, options) {
       },
       dataType: "json",
       success: function(result){
-        alert(result.share_link);
+        const download_link = document.getElementById("download");
+        download_link.href = result.share_link;
+        download_link.download = "wwf_share.png"
+        download_link.click();
       }
     }
   );

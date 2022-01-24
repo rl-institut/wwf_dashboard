@@ -9,6 +9,9 @@ $("#t4_year").ionRangeSlider({
   from: tiles[4][tiles[4].length - 1].year,
   onChange: function (data) {
     t4_change_year(data.from)
+  },
+  onUpdate: function (data) {
+    t4_change_year(data.from)
   }
 });
 
@@ -242,4 +245,9 @@ function t4_change_year(to_year) {
   }
 }
 
-t4_change_year(2020);
+if ("year" in initials) {
+  const init_data = $("#t4_year").data("ionRangeSlider");
+  init_data.update({from: initials.year})
+} else {
+  t4_change_year(tiles[4][tiles[4].length - 1].year);
+}

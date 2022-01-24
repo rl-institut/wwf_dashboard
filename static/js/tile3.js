@@ -1,4 +1,5 @@
 
+let t3_sector;
 const t3_emission_years = tiles[3].emissions.map(function(d) { return d.year; });
 
 $("#t3_year").ionRangeSlider({
@@ -9,6 +10,9 @@ $("#t3_year").ionRangeSlider({
   values: t3_emission_years,
   from: tiles[3].emissions[tiles[3].emissions.length - 1].year,
   onChange: function (data) {
+    t3_change_year(data.from)
+  },
+  onUpdate: function (data) {
     t3_change_year(data.from)
   }
 });
@@ -324,9 +328,16 @@ function t3_draw_current_sector(sector) {
 }
 
 function t3_change_sector(sector) {
+  t3_sector = sector;
   t3_activate_sector(sector);
   t3_draw_current_sector(sector);
 }
 
-t3_change_sector("agriculture");
-t3_change_year(5);
+t3_change_sector(("sector" in initials) ? initials.sector : "agriculture");
+
+if ("year" in initials) {
+  const init_data = $("#t3_year").data("ionRangeSlider");
+  init_data.update({from: t3_emission_years.indexOf(parseInt(initials.year))})
+} else {
+  t3_change_year(t3_emission_years.length - 1);
+}
