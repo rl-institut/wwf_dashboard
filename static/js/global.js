@@ -31,6 +31,7 @@ const fontWeight = {
 }
 
 const fontSize = {
+  xxsmall: "10px",
   xsmall: "12px",
   small: "14px",
   normal: "16px",
@@ -43,7 +44,9 @@ const legendLeftPadding = 8;
 // Width of one tile is representative for all tiles:
 const width = find_tile().clientWidth;
 const tile_breakpoint = 500;
+const tile_breakpoint_xs = 400;
 const is_mobile = width < tile_breakpoint;
+const is_mobile_xs = width < tile_breakpoint_xs;
 
 const margin = {top: 30, right: 50, bottom: 30, left: 50};
 const chart_width = width - margin.left - margin.right;

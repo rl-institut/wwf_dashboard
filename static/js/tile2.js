@@ -137,6 +137,10 @@ t2_pie_legend.append("text")
   .attr("letter-spacing", letterSpacing)
   .style("font-size",fontSize.small);
 
+if (is_mobile) {
+  t2_pie_legend.selectAll("text").style("font-size", fontSize.xsmall);
+}
+
 function t2_get_x_scale(year_data) {
   const max_value = Object.entries(year_data).reduce(
     function(sum, current) {
