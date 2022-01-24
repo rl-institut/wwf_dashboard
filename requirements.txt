@@ -1,5 +1,5 @@
 flask[async]==2.0.2
-uvicorn==0.17.0
+gunicorn==20.1.0
 cairosvg==2.5.2
 environs==9.3.5
 requests==2.26.0
