@@ -5,6 +5,7 @@ from requests_html import AsyncHTMLSession
 from bs4 import BeautifulSoup
 from cairosvg import svg2png
 import pyppeteer
+import logging
 
 
 SHARE_FOLDER = "static/share"
@@ -34,6 +35,7 @@ class AsyncHTMLSessionFixed(AsyncHTMLSession):
 
 
 async def share_svg(tile, options, request):
+    logger = logging.getLogger()
     filename = get_tile_filename(tile, options)
     share_path = pathlib.Path(SHARE_FOLDER) / filename
     if share_path.exists():
@@ -43,10 +45,14 @@ async def share_svg(tile, options, request):
         options_path = f"date={dt.datetime.strptime(options['date'], '%d.%m.%Y').date().isoformat()}"
     else:
         options_path = "&".join(f"{k}={v}" for k, v in options.items())
-    r = await session.get(f'{request.host_url}/{tile}?{options_path}')
+    share_url = f'{request.host_url}/{tile}?{options_path}'
+    logger.info(f"Requesting share for '{share_url}'")
+    r = await session.get(share_url)
+    logger.info("Rendering html for share url")
     await r.html.arender()
     soup = BeautifulSoup(r.html.html, features="lxml")
     svg = soup.find("svg")
+    logger.info(f"Saving svg as png to '{share_path}'")
     svg2png(bytestring=svg.prettify(), write_to=str(share_path))
     return str(share_path)
 
