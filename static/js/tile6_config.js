@@ -11,10 +11,11 @@ const t6_pie_legend_y = t6_pie_offset + 2 * t6_pie_radius + t6_pie_vspace;
 const t6_pie_legend_rect = 12;
 const t6_pie_total_height = t6_pie_offset + 2 * t6_pie_radius + t6_pie_vspace + t6_pie_legend_rect;
 
-const t6_chart_offset = 40;
+const t6_chart_offset = 60;
+const t6_chart_title_height = 30;
 const t6_chart_height = 230;
 const t6_chart_yaxis_width = 60;
-const t6_chart_total_height = t6_chart_offset + t6_chart_height;
+const t6_chart_total_height = t6_chart_offset + t6_chart_title_height + t6_chart_height;
 
 const t6_icon_offset = 40;
 const t6_icon_size = 24;

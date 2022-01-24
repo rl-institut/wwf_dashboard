@@ -96,8 +96,22 @@ t6_svg.append("line")
   .attr("stroke-width", 1);
 
 // CHART
-const t6_chart = t6_svg.append("g")
+
+"Stromerzeugung an diesem Tag (GW)"
+const t6_chart_area = t6_svg.append("g")
   .attr("transform", `translate(0, ${t6_pie_total_height + t6_puffer + t6_chart_offset})`);
+
+t6_chart_area.append("text")
+  .text("Stromerzeugung an diesem Tag (GW)")
+  .attr("x", chart_width / 2)
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "hanging")
+  .attr("font-weight", fontWeight.semibold)
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size", fontSize.normal)
+
+const t6_chart = t6_chart_area.append("g")
+  .attr("transform", `translate(0, ${t6_chart_title_height})`);
 
 // X-Axis
 t6_chart.append("g")

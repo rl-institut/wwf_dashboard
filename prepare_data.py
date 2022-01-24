@@ -196,8 +196,22 @@ def tile9():
 
 
 def tile10():
+    original_size = (577, 750)
     drought_folder = pathlib.Path(DROUGHT_DATA)
-    font = ImageFont.truetype("static/fonts/WWF.woff", 30)
+    font_month = ImageFont.truetype("static/fonts/WWF.woff", 30)
+    font_legend = ImageFont.truetype("static/fonts/OpenSans-Regular.woff", 20)
+    legend = [
+        ("#EFD655", "Ungewöhnlich trocken"),
+        ("#EEC095", "Moderate Dürre"),
+        ("#EA885E", "Schwere Dürre"),
+        ("#B03131", "Extreme Dürre"),
+        ("#740F0F", "Außergewöhnliche Dürre")
+    ]
+    legend_size = 16
+    legend_vspace = 6
+    legend_hspace = 8
+    legend_margin = 24
+    height = original_size[1] + 2 * legend_margin + 3 * legend_size + 2 * legend_vspace
     years = {
         2014: ((56, 7, 633, 757), -6),
         2015: ((56, 7, 633, 757), -6),
@@ -214,11 +228,29 @@ def tile10():
         images = {}
         for drought_raw in year_folder.iterdir():
             month = drought_raw.name[m:m + 2]
-            im = Image.open(drought_raw)
-            im = im.crop(crop)
+            im_drought = Image.open(drought_raw)
+            im_drought = im_drought.crop(crop)
+
+            im = Image.new(im_drought.mode, size=(original_size[0], height), color="white")
+            im.paste(im_drought, (0, 0))
+
             draw = ImageDraw.Draw(im)
+
+            # Add month
             draw.rectangle((10, 40, 130, 80), fill="#97b6e1")
-            draw.text((10, 10), text=months[int(month) - 1], fill="black", font=font)
+            draw.text((10, 10), text=months[int(month) - 1], fill="black", font=font_month)
+
+            # Add legend
+            draw.rectangle((0, 749, original_size[0] - 1, height - 1), outline="black")
+            for i, (color, label) in enumerate(legend):
+                x = legend_margin + int(i / 3) * original_size[0] / 2
+                y = original_size[1] + legend_margin + (i % 3) * (legend_size + legend_vspace)
+                draw.rectangle(
+                    (x, y, x + legend_size, y + legend_size),
+                    fill=color
+                )
+                draw.text((x + legend_size + legend_hspace, y + legend_size / 2), text=label, fill="black", font=font_legend, anchor="lm")
+
             images[int(month)] = im
 
         drought_file = drought_folder / f"{year}.gif"
