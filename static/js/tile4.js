@@ -233,8 +233,8 @@ function t4_change_year(to_year) {
     .attr("y1", 0)
     .attr("y2", t4_chart_height)
     .attr("stroke", wwfColor.black)
-    .attr("stroke-width", line_width)
-    .attr("stroke-dasharray", "4");
+    .attr("stroke-width", dash_width)
+    .attr("stroke-dasharray", dash_spacing);
 
   for (const technology of Object.keys(t4_technologies)) {
     t4_icons.select("#t4_text_" + technology)

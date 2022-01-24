@@ -263,6 +263,10 @@ t1_icons.append("text")
   .style("font-size", fontSize.small)
   .attr("letter-spacing", letterSpacing)
 
+if (is_mobile) {
+  t1_icons.selectAll("text").style("font-size", fontSize.xsmall);
+}
+
 // Temperature scale
 t1_temperature = t1_svg.append("g").attr("transform", `translate(0, ${t1_chart_total_height + t1_icon_total_height + t1_temperature_offset})`);
 
@@ -335,7 +339,7 @@ function t1_change_year(to_year) {
     .attr("width", t1_selected_bar_width)
     .attr("height", t1_chart_height - t1_y(year_data.ppm))
     .attr("fill",  color(year_data.temperature))
-    .attr("stroke-width", line_width)
+    .attr("stroke-width", 1)
     .attr("stroke", "rgb(0,0,0)")
 
   if (year_data.co2 != null) {
@@ -346,8 +350,8 @@ function t1_change_year(to_year) {
       .attr("y1", t1_y(year_data.ppm))
       .attr("y2", t1_y2(co2_max))
       .attr("stroke", wwfColor.black)
-      .attr("stroke-width", line_width)
-      .attr("stroke-dasharray", "4")
+      .attr("stroke-width", dash_width)
+      .attr("stroke-dasharray", dash_spacing)
 
     t1_chart.append("circle")
       .attr("id", "t1_current_circle")

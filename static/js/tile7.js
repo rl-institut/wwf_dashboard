@@ -127,6 +127,9 @@ for (const [i, labels] of t7_vehicle_labels.entries()) {
       .attr("y", y + l * 20)
       .attr("text-anchor", "end")
       .attr("dominant-baseline", "hanging")
+      .attr("font-weight", fontWeight.normal)
+      .attr("letter-spacing", letterSpacing)
+      .attr("font-size",fontSize.xsmall);
     }
 }
 
@@ -217,17 +220,17 @@ function t7_change_bars(distance_index) {
 
   // Gray-out
   if (distance_index < distance_switch) {
-    t7_chart.select("#t7_text_00").attr("fill", "black");
-    t7_chart.select("#t7_text_01").attr("fill", "black");
-    t7_chart.select("#t7_text_50").attr("fill", wwfColor.gray1);
-    t7_chart.select("#t7_icon_0").selectAll("path").style("fill", "black")
-    t7_chart.select("#t7_icon_5").selectAll("path").style("fill", wwfColor.gray1)
+    t7_chart.select("#t7_text_00").attr("fill", wwfColor.black);
+    t7_chart.select("#t7_text_01").attr("fill", wwfColor.black);
+    t7_chart.select("#t7_text_50").attr("fill", wwfColor.gray3);
+    t7_chart.select("#t7_icon_0").selectAll("path").style("fill", wwfColor.black)
+    t7_chart.select("#t7_icon_5").selectAll("path").style("fill", wwfColor.gray3)
   } else {
-    t7_chart.select("#t7_text_50").attr("fill", "black");
-    t7_chart.select("#t7_text_00").attr("fill", wwfColor.gray1);
-    t7_chart.select("#t7_text_01").attr("fill", wwfColor.gray1);
-    t7_chart.select("#t7_icon_0").selectAll("path").style("fill", wwfColor.gray1)
-    t7_chart.select("#t7_icon_5").selectAll("path").style("fill", "black")
+    t7_chart.select("#t7_text_50").attr("fill", wwfColor.black);
+    t7_chart.select("#t7_text_00").attr("fill", wwfColor.gray3);
+    t7_chart.select("#t7_text_01").attr("fill", wwfColor.gray3);
+    t7_chart.select("#t7_icon_0").selectAll("path").style("fill", wwfColor.gray3)
+    t7_chart.select("#t7_icon_5").selectAll("path").style("fill", wwfColor.black)
   }
 }
 

@@ -60,15 +60,49 @@
 
   &--share .modal-body {
     @include flex-column-align-justify-center;
+    padding: 3rem 2rem;
 
     .logos {
       @include flex-row-space-between;
       width: 100%;
+
+      &:first-of-type {
+        padding-bottom: 1.5rem;
+      }
     }
 
-    .logo a,
+    .logo {
+      @include flex-column-align-justify-center;
+      flex: 1;
+    }
+
+    .logo a {
+      text-align: center;
+      text-decoration: none;
+    }
+
     .logo img {
       height: 3rem;
+    }
+
+    .logo--fb img,
+    .logo--tg img {
+      height: 3.25rem;
+    }
+
+    .logo--wa img {
+      height: 4rem;
+    }
+
+    span {
+      display: block;
+      text-align: center;
+      margin-top: 0.5rem;
+      font-size: $font-size-small;
+    }
+
+    .logo--wa span {
+      transform: translateY(-4px);
     }
   }
 }
