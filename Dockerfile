@@ -17,4 +17,4 @@ RUN apt-get remove -y --purge make gcc build-essential \
 COPY ./ /app
 WORKDIR /app
 
-CMD gunicorn --bind 0.0.0.0:80 wsgi:app
+CMD uvicorn --bind 0.0.0.0:80 wsgi:app
