@@ -17,7 +17,7 @@ const t4_chart_unit_height = 30;
 const t4_chart_unit_vspace = 10;
 const t4_chart_height = 270;
 const t4_chart_yaxis_width = 43;
-const t4_chart_xaxis_height = 30;
+const t4_chart_xaxis_height = 40;
 const t4_chart_width = width - 2 * t4_chart_yaxis_width;
 const t4_chart_total_height = t4_chart_offset + t4_chart_unit_height + t4_chart_unit_vspace + t4_chart_height + t4_chart_xaxis_height;
 
