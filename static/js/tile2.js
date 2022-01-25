@@ -27,12 +27,20 @@ const t2_resources_names = {
   "nuclear": "Atom",
   "savings": "Einsparungen"
 };
+const t2_icons = ["i_wind_onshore", "i_bus", "i_oel", "i_gas", "i_bus", "i_pollution"];
 const t2_pie_positions = {"power": 0, "heat": 1, "traffic": 2};
 const t2_pie_sectors = [
   {"title": "Strom", "icon": "i_strom"},
   {"title": "Wärme", "icon": "i_waerme"},
   {"title": "Verkehr", "icon": "i_verkehr"}
 ];
+
+const t2_max = t2_resources.reduce(
+  (sum, key) => {
+    return sum += tiles[2][7][key]
+  },
+  0
+);
 
 const t2_bar_color = d3.scaleOrdinal()
   .domain(t2_resources)
@@ -65,10 +73,42 @@ t2_tile.append("text")
   .attr("dominant-baseline", "middle")
   .attr("letter-spacing", letterSpacing);
 
+// BAR X-Axis ticks
+
+t2_tile.append("text")
+  .text("0")
+  .attr("x", 0)
+  .attr("y", t2_bar_total_height - t2_bar_xaxis_height)
+  .attr("text-anchor", "start")
+  .attr("dominant-baseline", "hanging")
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size", fontSize.small)
+  .attr("fill", wwfColor.gray1);
+
+t2_tile.append("text")
+  .text(t2_max.toFixed(0))
+  .attr("x", width)
+  .attr("y", t2_bar_total_height - t2_bar_xaxis_height)
+  .attr("text-anchor", "end")
+  .attr("dominant-baseline", "hanging")
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size", fontSize.small)
+  .attr("fill", wwfColor.gray1);
+
+// ICONS
+
+t2_icon_renewables = t2_tile.append("g")
+  .attr("transform", `translate(0, ${t2_bar_total_height + t2_icon_offset})`);
+t2_draw_icons(t2_icon_renewables, ["renewables", "savings"], fontWeight.bold);
+
+t2_icon_fossils = t2_tile.append("g")
+  .attr("transform", `translate(0, ${t2_bar_total_height + t2_icon_offset + t2_icon_row_height + t2_icon_margin})`);
+t2_draw_icons(t2_icon_fossils, ["oil", "gas", "coal", "nuclear"]);
+
 // ARROW
 
 const t2_arrow = t2_tile.append("g")
-  .attr("transform", `translate(0, ${t2_bar_total_height + t2_puffer / 2})`)
+  .attr("transform", `translate(0, ${t2_bar_total_height + t2_icon_total_height + t2_arrow_offset + t2_puffer / 2})`)
 
 $(t2_arrow.node().appendChild(icons["arrow"].documentElement.cloneNode(true)))
   .attr("x", width / 2 - t2_arrow_width / 2)
@@ -100,7 +140,7 @@ t2_arrow.append("text")
 // PIE
 
 const t2_pie = t2_tile.append("g")
-  .attr("transform", `translate(${t2_pie_hspace}, ${t2_bar_total_height + t2_arrow_total_height + t2_pie_offset + t2_puffer / 2})`);
+  .attr("transform", `translate(${t2_pie_hspace}, ${t2_bar_total_height + t2_icon_total_height + t2_arrow_total_height + t2_pie_offset + t2_puffer / 2})`);
 
 for (const [i, sector] of t2_pie_sectors.entries()) {
   const x = i * (t2_pie_hspace + 2 * t2_pie_radius);
@@ -150,6 +190,10 @@ t2_pie_legend.append("text")
   .attr("letter-spacing", letterSpacing)
   .style("font-size",fontSize.small);
 
+if (is_mobile) {
+  t2_pie_legend.selectAll("text").style("font-size", fontSize.xsmall);
+}
+
 function t2_get_x_scale(year_data) {
   const max_value = Object.entries(year_data).reduce(
     function(sum, current) {
@@ -164,32 +208,6 @@ function t2_get_x_scale(year_data) {
   return d3.scaleLinear()
     .domain([0, max_value])
     .range([ 0, width]);
-}
-
-function t2_adjust_text(x, y, bar_width) {
-  if (bar_width < 20) {
-    return {
-      "x": x,
-      "y": y, "transform": "rotate(-90 " + x + " " + y + ")",
-      "text-anchor": "middle",
-      "dominant-baseline": "text-before-edge",
-      "font-weight": fontWeight.bold,
-      "font-size": fontSize.xsmall,
-      "letter-spacing": letterSpacing
-    }
-  } else if (bar_width < 40) {
-    return {
-      "x": x,
-      "y": y, "transform": "rotate(-90 " + x + " " + y + ")",
-      "text-anchor": "middle",
-      "dominant-baseline": "text-before-edge",
-      "font-weight": fontWeight.bold,
-      "font-size": fontSize.xsmall,
-      "letter-spacing": letterSpacing
-    }
-  } else {
-    return {"x": x + bar_width / 2, "y": y, "text-anchor": "middle", "dominant-baseline": "central", "font-weight": fontWeight.bold, "font-size": fontSize.xsmall, "letter-spacing": letterSpacing}
-  }
 }
 
 function t2_change_year(year) {
@@ -209,9 +227,9 @@ function t2_draw_bars(year_data) {
 
   const t2_bars = t2_tile
     .append("g")
-    .attr("transform", `translate(0, ${t2_bar_offset + t2_bar_title_height + t2_bar_title_padding_bottom})`)
+    .attr("transform", `translate(0, ${t2_bar_offset + t2_bar_title_height})`)
     .attr("id", "t2_bars")
-      .selectAll(null)
+    .selectAll(null)
       .data(t2_stacked_data)
       .enter()
       .append("g")
@@ -223,32 +241,9 @@ function t2_draw_bars(year_data) {
     .attr("height", t2_bar_height )
     .attr("fill", function(d) {return t2_bar_color(d.key);});
 
-  t2_bars.append("text")
-    .each(function(d) {
-      d3.select(this).text(Math.round(d[0].data[d.key]));
-      d3.select(this).attr("fill", wwfColor.white);
-      const adjustment = t2_adjust_text(t2_x(d[0][0]), t2_bar_height / 2, t2_x(d[0][1]) - t2_x(d[0][0]));
-      for (const key in adjustment) {
-        d3.select(this).attr(key, adjustment[key]);
-      }
-    })
-
-  t2_bars.append("text")
-    .attr("transform", function(d) { return "rotate(-90 " + t2_x(d[0][0]) + ", " + 0 + ")"; })
-    .text(function(d) {return t2_resources_names[d.key];})
-    .attr("x", function(d) { return t2_x(d[0][0]) - t2_bar_height - t2_bar_vspace; })
-    .attr("y", function(d) { return (t2_x(d[0][1]) - t2_x(d[0][0])) / 2})
-    .attr("fill", function(d) {
-      if (d.key == "renewables") {
-        return "#137534"
-      } else {
-        return wwfColor.black
-      }
-    })
-    .attr("text-anchor", "end")
-    .attr("dominant-baseline", "middle")
-    .attr("font-size", fontSize.small)
-    .attr("letter-spacing", letterSpacing);
+  for (const resource of t2_resources) {
+    t2_tile.select("#t2_icon_" + resource).text(year_data[resource].toFixed(0))
+  }
 }
 
 function t2_draw_pie(year_data, type) {
@@ -292,6 +287,47 @@ function t2_draw_pie(year_data, type) {
     .style("font-size", fontSize.small)
     .attr("font-weight", fontWeight.bold)
     .attr("letter-spacing", letterSpacing);
+}
+
+function t2_draw_icons(group, resources, weight=fontWeight.normal) {
+  const rect_width = (width - (resources.length - 1) * t2_icon_hspace) / resources.length;
+  for (const [i, resource] of resources.entries()) {
+    const ri = t2_resources.indexOf(resource);
+    const middle = i * (rect_width + t2_icon_hspace) + rect_width / 2;
+    $(group.node().appendChild(icons[t2_icons[ri]].documentElement.cloneNode(true)))
+      .attr("x", middle - t2_icon_size / 2)
+      .attr("y", 0)
+      .attr("width", t2_icon_size)
+      .attr("height", t2_icon_size)
+      .attr("preserveAspectRatio", "xMidYMid slice");
+
+    group.append("rect")
+      .attr("x", i * (rect_width + t2_icon_hspace))
+      .attr("y", t2_icon_size + t2_icon_vspace)
+      .attr("width", rect_width)
+      .attr("height", t2_icons_rect_height)
+      .attr("fill", t2_bar_color(resource));
+
+    group.append("text")
+      .attr("id", "t2_icon_" + resource)
+      .attr("x", middle)
+      .attr("y", t2_icon_size + t2_icon_vspace + t2_icons_rect_height / 2)
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "middle")
+      .attr("font-size", fontSize.small)
+      .attr("font-weight", fontWeight.bold)
+      .attr("fill", "white");
+
+    group.append("text")
+      .text(t2_resources_names[resource])
+      .attr("x", middle)
+      .attr("y", t2_icon_size + 2 * t2_icon_vspace + t2_icons_rect_height)
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "hanging")
+      .attr("font-size", fontSize.small)
+      .attr("font-weight", weight)
+      .attr("fill", t2_bar_color(resource));
+  }
 }
 
 if ("year" in initials) {

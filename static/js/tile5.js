@@ -182,6 +182,10 @@ for (const [i, technology] of Object.keys(t5_technologies).entries()) {
   }
 }
 
+if (is_mobile) {
+  t5_icons.selectAll("text").style("font-size", fontSize.xsmall);
+}
+
 function t5_change_year(to_year) {
   const year = parseInt(to_year);
   const year_data = tiles[5].find(element => element.year == year);
