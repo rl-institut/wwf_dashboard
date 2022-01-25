@@ -1,3 +1,5 @@
+const t5_header = ("year" in initials) ? initials.year : "";
+const t5_header_height = get_header_height(5)
 
 const t5_chart_offset = 20;
 const t5_chart_title_height = 40;

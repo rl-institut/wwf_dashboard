@@ -54,10 +54,20 @@ const t5_text_color = d3.scaleOrdinal()
 
 const t5_svg = d3.select("#t5")
   .append("svg")
-    .attr("width", width)
-    .attr("height", t5_height)
+    .attr("width", width + 2 * share_margin)
+    .attr("height", t5_header_height + t5_height + 2 * share_margin);
 
-t5_svg.append("text")
+t5_svg.append("rect")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .attr("fill", "white");
+
+draw_header(t5_svg, 5, t5_header);
+
+const t5_tile = t5_svg.append("g")
+  .attr("transform", `translate(${share_margin}, ${t5_header_height + share_margin})`);
+
+t5_tile.append("text")
   .text("Anteil der Erzeugungstechnologien am Strommix (%)")
   .attr("x", width / 2)
   .attr("y", t5_chart_offset)
@@ -65,7 +75,7 @@ t5_svg.append("text")
   .attr("dominant-baseline", "hanging")
 
 // CHART
-const t5_chart = t5_svg.append("g")
+const t5_chart = t5_tile.append("g")
   .attr("transform", `translate(${t5_chart_yaxis_width}, ${t5_chart_offset + t5_chart_title_height})`);
 
 // X-Axis
@@ -129,7 +139,7 @@ for (const technology of Object.keys(t5_technologies)) {
 
 // ICONS
 
-const t5_icons = t5_svg.append("g").attr("transform", `translate(${t5_icon_hspace}, ${t5_chart_total_height + t5_icon_offset})`);
+const t5_icons = t5_tile.append("g").attr("transform", `translate(${t5_icon_hspace}, ${t5_chart_total_height + t5_icon_offset})`);
 
 for (const [i, technology] of Object.keys(t5_technologies).entries()) {
   const y_offset = parseInt(i / 3) * (t5_icon_size + 2 * t5_icon_vspace + t5_icon_height + t5_icon_text_height + t5_icon_wrap_height)

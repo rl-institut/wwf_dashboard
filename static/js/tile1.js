@@ -44,11 +44,21 @@ const t1_selected_bar_width = t1_x.bandwidth() * 2;
 
 const t1_svg = d3.select("#t1")
   .append("svg")
-    .attr("width", width)
-    .attr("height", t1_min_height);
+    .attr("width", width + 2 * share_margin)
+    .attr("height", t1_header_height + t1_min_height + 2 * share_margin);
+
+t1_svg.append("rect")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .attr("fill", "white");
+
+draw_header(t1_svg, 1, t1_header);
+
+const t1_tile = t1_svg.append("g")
+  .attr("transform", `translate(${share_margin}, ${t1_header_height + share_margin})`);
 
 // X-Axis
-t1_svg.append("g")
+t1_tile.append("g")
   .attr("id", "t1_xaxis")
   .attr("transform", `translate(${t1_chart_axes_width}, ${t1_chart_offset + t1_chart_height + t1_chart_unit_height + t1_chart_unit_offset})`)
   .call(
@@ -66,7 +76,7 @@ d3.select("#t1_xaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t1_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 // Y-Axis (PPM)
-t1_svg.append("g")
+t1_tile.append("g")
   .attr("id", "t1_yaxis")
   .attr("transform", `translate(${chart_width + t1_chart_axes_width}, ${t1_chart_offset + t1_chart_unit_height + t1_chart_unit_offset})`)
   .call(
@@ -81,7 +91,7 @@ t1_svg.append("g")
 d3.select("#t1_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t1_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
-t1_svg.append("text")
+t1_tile.append("text")
   .text("CO2-engeriebedingte")
   .attr("y", t1_chart_offset + t1_chart_unit_height / 3)
   .attr("text-anchor", "start")
@@ -89,7 +99,7 @@ t1_svg.append("text")
   .attr("fill", wwfColor.gray2)
   .style("font-size", fontSize.xsmall)
   .attr("letter-spacing", letterSpacing)
-t1_svg.append("text")
+t1_tile.append("text")
   .text("Emissionen in Gt")
   .attr("y", t1_chart_offset + t1_chart_unit_height / 3 * 2)
   .attr("text-anchor", "start")
@@ -99,7 +109,7 @@ t1_svg.append("text")
   .attr("letter-spacing", letterSpacing)
 
 // Y2-Axis Title
-t1_svg.append("text")
+t1_tile.append("text")
   .text("CO2-Konzentration")
   .attr("x", width)
   .attr("y", t1_chart_offset)
@@ -108,7 +118,7 @@ t1_svg.append("text")
   .attr("fill", wwfColor.gray2)
   .style("font-size", fontSize.xsmall)
   .attr("letter-spacing", letterSpacing)
-t1_svg.append("text")
+t1_tile.append("text")
   .text("in der Atmosphäre")
   .attr("x", width)
   .attr("y", t1_chart_offset + t1_chart_unit_height / 3)
@@ -117,7 +127,7 @@ t1_svg.append("text")
   .attr("fill", wwfColor.gray2)
   .style("font-size", fontSize.xsmall)
   .attr("letter-spacing", letterSpacing)
-t1_svg.append("text")
+t1_tile.append("text")
   .text("in ppm")
   .attr("x", width)
   .attr("y", t1_chart_offset + t1_chart_unit_height / 3 * 2)
@@ -129,7 +139,7 @@ t1_svg.append("text")
 
 // ICONS
 
-const t1_icons = t1_svg.append("g").attr("transform", `translate(0, ${t1_chart_total_height})`);
+const t1_icons = t1_tile.append("g").attr("transform", `translate(0, ${t1_chart_total_height})`);
 
 // PPM Icon
 $(t1_icons.node().appendChild(icons["i_atmosphaere"].documentElement.cloneNode(true)))
@@ -271,7 +281,7 @@ if (is_mobile) {
 }
 
 // Temperature scale
-t1_temperature = t1_svg.append("g").attr("transform", `translate(0, ${t1_chart_total_height + t1_icon_total_height + t1_temperature_offset})`);
+t1_temperature = t1_tile.append("g").attr("transform", `translate(0, ${t1_chart_total_height + t1_icon_total_height + t1_temperature_offset})`);
 
 t1_temperature.append("text")
   .text("Temperaturänderungen")
@@ -322,7 +332,7 @@ t1_temperature.append("text")
   .attr("letter-spacing", letterSpacing)
 
 function t1_change_year(to_year) {
-  const t1_chart = t1_svg.select("#t1_chart");
+  const t1_chart = t1_tile.select("#t1_chart");
 
   // Remove data from previous selection
   t1_chart.select("#t1_current_year").remove();
@@ -363,14 +373,14 @@ function t1_change_year(to_year) {
       .attr("r", circle_width)
   }
 
-  t1_svg.select("#t1_ppm_icon").text(year_data.ppm.toFixed(0) + " ppm");
+  t1_tile.select("#t1_ppm_icon").text(year_data.ppm.toFixed(0) + " ppm");
   const current_co2 = (year_data.co2 == null) ? "- Mt" : year_data.co2.toFixed(0) + " Mt";
-  t1_svg.select("#t1_co2_icon").text(current_co2);
-  t1_svg.select("#t1_temp_icon").text(year_data.temperature.toFixed(2) + " °C");
+  t1_tile.select("#t1_co2_icon").text(current_co2);
+  t1_tile.select("#t1_temp_icon").text(year_data.temperature.toFixed(2) + " °C");
 }
 
 function t1_update_chart() {
-  const t1_chart = t1_svg.select("#t1_chart");
+  const t1_chart = t1_tile.select("#t1_chart");
 
   const color = (t1_mode == "global") ? t1_color_global : t1_color_brd;
   const co2_max = (t1_mode == "global") ? t1_co2_global_max : t1_co2_brd_max;
@@ -439,10 +449,10 @@ function t1_change_mode(mode) {
     $("#t1_brd").addClass("active");
     $("#t1_global").removeClass("active");
   }
-  t1_svg.select("#t1_temperature_left").text(-temp);
-  t1_svg.select("#t1_temperature_right").text(temp);
-  t1_svg.select("#t1_chart").remove();
-  t1_svg.append("g")
+  t1_tile.select("#t1_temperature_left").text(-temp);
+  t1_tile.select("#t1_temperature_right").text(temp);
+  t1_tile.select("#t1_chart").remove();
+  t1_tile.append("g")
     .attr("id", "t1_chart")
     .attr("transform", `translate(${t1_chart_axes_width}, ${t1_chart_offset + t1_chart_unit_height + t1_chart_unit_offset})`);
   t1_update_chart();

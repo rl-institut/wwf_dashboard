@@ -38,6 +38,11 @@
 
     <script>
       var icon_names = {{icons|safe}};
+      {% if initials %}
+        const initials = {{initials|safe}};
+      {% else %}
+        const initials = {};
+      {% endif %}
     </script>
     <script src="static/js/global.js"></script>
     {% block tiles_js %}

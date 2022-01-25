@@ -1,3 +1,5 @@
+const t3_header = ("year" in initials) ? initials.year : "";
+const t3_header_height = get_header_height(3)
 
 const t3_bar_color_reduction = "#008A88";
 const t3_bar_height = 40;

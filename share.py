@@ -42,7 +42,7 @@ async def share_svg(tile, options, request):
         return str(share_path)
     session = AsyncHTMLSessionFixed()
     if tile == 6:
-        options_path = f"date={dt.datetime.strptime(options['date'], '%d.%m.%Y').date().isoformat()}"
+        options_path = f"header=true&date={dt.datetime.strptime(options['date'], '%d.%m.%Y').date().isoformat()}"
     else:
         options_path = "&".join(f"{k}={v}" for k, v in options.items())
     share_url = f'{request.host_url}{tile}?{options_path}'

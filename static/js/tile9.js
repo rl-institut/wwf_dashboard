@@ -47,13 +47,22 @@ const t9_color = d3.scaleOrdinal()
 
 const t9_svg = d3.select("#t9")
   .append("svg")
-    .attr("width", width)
-    .attr("height", t9_height)
-  .append("g");
+    .attr("width", width + 2 * share_margin)
+    .attr("height", t9_header_height + t9_height + 2 * share_margin);
+
+t9_svg.append("rect")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .attr("fill", "white");
+
+draw_header(t9_svg, 9, t9_header);
+
+const t9_tile = t9_svg.append("g")
+  .attr("transform", `translate(${share_margin}, ${t9_header_height + share_margin})`);
 
 // EMISSIONS
 
-t9_svg.append("text")
+t9_tile.append("text")
   .text("CO2-Emissionen nach Heizungsart (g/kWh)")
   .attr("x", width / 2)
   .attr("y", t9_bar_offset)
@@ -61,7 +70,7 @@ t9_svg.append("text")
   .attr("letter-spacing", letterSpacing)
   .attr("dominant-baseline", "hanging");
 
-const t9_bar = t9_svg.append("g")
+const t9_bar = t9_tile.append("g")
   .attr("transform", `translate(${t9_bar_ticks_width}, ${t9_bar_offset + t9_bar_title_height})`);
 
 for (const technology of Object.keys(t9_technologies)) {
@@ -132,7 +141,7 @@ t9_bar.append("line")
   .attr("stroke-width", chart_axis_stroke_width);
 
 // DIVIDING-line
-t9_svg.append("line")
+t9_tile.append("line")
   .attr("x1", 0)
   .attr("x2", width)
   .attr("y1", t9_bar_total_height + t9_puffer / 2 + t9_icon_offset / 2)
@@ -142,7 +151,7 @@ t9_svg.append("line")
 
 // ICONS
 
-const t9_icons = t9_svg.append("g").attr("transform", `translate(0, ${t9_bar_total_height + t9_puffer + t9_icon_offset})`);
+const t9_icons = t9_tile.append("g").attr("transform", `translate(0, ${t9_bar_total_height + t9_puffer + t9_icon_offset})`);
 const t9_icon_left = (width - 5 * t9_circle_size - 4 * t9_icon_hspace) / 2;
 for (const [i, technology] of Object.keys(t9_technologies).entries()) {
   const icon = t9_technologies[technology].icon;
@@ -174,7 +183,7 @@ t9_icons.append("text")
   .attr("letter-spacing", letterSpacing);
 
 // CHART
-const t9_chart = t9_svg.append("g").attr("transform", `translate(${t9_chart_yaxis_width}, ${t9_bar_total_height + t9_puffer + t9_icon_total_height})`);
+const t9_chart = t9_tile.append("g").attr("transform", `translate(${t9_chart_yaxis_width}, ${t9_bar_total_height + t9_puffer + t9_icon_total_height})`);
 
 // X-Axis
 t9_chart.append("g")
