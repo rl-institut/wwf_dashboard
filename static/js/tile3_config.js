@@ -19,7 +19,7 @@ const t3_icon_total_height = t3_icon_offset + t3_circle_size + 2 * t3_icon_vspac
 
 const t3_chart_unit_height = 30;
 const t3_chart_axes_width = 40;
-const t3_chart_xaxis_height = 20;
+const t3_chart_xaxis_height = 40;
 const t3_chart_width = width - 2 * t3_chart_axes_width;
 const t3_chart_height = 260;
 const t3_chart_sector_space = 10;

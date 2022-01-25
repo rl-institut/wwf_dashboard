@@ -280,6 +280,10 @@ if (is_mobile) {
   t1_icons.selectAll("text").style("font-size", fontSize.xsmall);
 }
 
+if (is_mobile_xs) {
+  t1_icons.selectAll("text").style("font-size", fontSize.xxsmall);
+}
+
 // Temperature scale
 t1_temperature = t1_tile.append("g").attr("transform", `translate(0, ${t1_chart_total_height + t1_icon_total_height + t1_temperature_offset})`);
 
