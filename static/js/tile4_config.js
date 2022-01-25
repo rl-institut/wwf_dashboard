@@ -1,3 +1,5 @@
+const t4_header = ("year" in initials) ? initials.year : "";
+const t4_header_height = get_header_height(4)
 
 const t4_icon_offset = 10;
 const t4_icon_title_height = 20;

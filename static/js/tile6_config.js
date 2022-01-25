@@ -1,3 +1,5 @@
+const t6_header = ("date" in initials) ? initials.date : "";
+const t6_header_height = get_header_height(6);
 
 const t6_pie_offset = 10;
 const t6_pie_radius = 38;

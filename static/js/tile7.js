@@ -12,6 +12,9 @@ $("#t7_distance").ionRangeSlider({
   postfix: " km",
   onChange: function (data) {
     t7_change_distance(data.from)
+  },
+  onUpdate: function (data) {
+    t7_change_distance(data.from)
   }
 });
 
@@ -59,27 +62,35 @@ const t7_vehicles_at_distance = {
 
 const t7_svg = d3.select("#t7")
   .append("svg")
-    .attr("width", width)
-    .attr("height", t7_height)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("width", width + 2 * share_margin)
+    .attr("height", t7_header_height + t7_height + 2 * share_margin);
+
+t7_svg.append("rect")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .attr("fill", "white");
+
+draw_header(t7_svg, 7, t7_header);
+
+const t7_tile = t7_svg.append("g")
+  .attr("transform", `translate(${margin.left + share_margin}, ${margin.top + t7_header_height + share_margin})`);
 
 // Route
-t7_svg.append("text")
+t7_tile.append("text")
   .text("Entspricht der folgenden Strecke:")
   .attr("x", chart_width / 2)
   .attr("y", 0)
   .style("text-anchor", "middle")
   .attr("letter-spacing", letterSpacing);
 
-t7_svg.append("rect")
+t7_tile.append("rect")
   .attr("x", 0)
   .attr("y", t7_route_space + t7_route_upper_padding)
   .attr("width", chart_width)
   .attr("height", t7_route_height)
   .attr("fill", "#F3F3F3");
 
-t7_svg.append("text")
+t7_tile.append("text")
   .text("< >")
   .attr("x", chart_width / 2)
   .attr("y", t7_route_space + t7_route_height / 2 + t7_route_upper_padding)
@@ -94,7 +105,7 @@ const t7_x = d3.scaleBand()
   .range([ 0, chart_width ])
   .domain([0, 1, 2, 3, 4, 5]);
 
-const t7_chart_area = t7_svg.append("g")
+const t7_chart_area = t7_tile.append("g")
   .attr("transform", `translate(0, ${t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2})`);
 
 t7_chart_area.append("text")
@@ -158,8 +169,8 @@ function t7_change_distance(distance) {
 }
 
 function t7_change_route(distance) {
-  t7_svg.select("#t7_route").remove();
-  const t7_route = t7_svg.append("g")
+  t7_tile.select("#t7_route").remove();
+  const t7_route = t7_tile.append("g")
     .attr("id", "t7_route");
   t7_route.append("text")
     .text(t7_routes[distance][0])
@@ -234,4 +245,9 @@ function t7_change_bars(distance_index) {
   }
 }
 
-t7_change_distance(0);
+if ("distance" in initials) {
+  const init_data = $("#t7_distance").data("ionRangeSlider");
+  init_data.update({from: distances.indexOf(parseInt(initials.distance))})
+} else {
+  t7_change_distance(0);
+}

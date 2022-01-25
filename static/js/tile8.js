@@ -10,6 +10,9 @@ $("#t8_year").ionRangeSlider({
   from: tiles[8][tiles[8].length - 1].year,
   onChange: function (data) {
     t8_change_year(data.from)
+  },
+  onUpdate: function (data) {
+    t8_change_year(data.from)
   }
 });
 
@@ -41,13 +44,22 @@ const t8_color = d3.scaleOrdinal()
 
 const t8_svg = d3.select("#t8")
   .append("svg")
-    .attr("width", width)
-    .attr("height", t8_height)
-  .append("g");
+    .attr("width", width + 2 * share_margin)
+    .attr("height", t8_header_height + t8_height + 2 * share_margin);
+
+t8_svg.append("rect")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .attr("fill", "white");
+
+draw_header(t8_svg, 8, t8_header);
+
+const t8_tile = t8_svg.append("g")
+  .attr("transform", `translate(${share_margin}, ${t8_header_height + share_margin})`);
 
 // BAR
 
-const t8_bar = t8_svg.append("g").attr("transform", `translate(0, 0)`);
+const t8_bar = t8_tile.append("g").attr("transform", `translate(0, 0)`);
 t8_bar.append("text")
   .text("Notwendiger Ausbau pro Jahr")
   .attr("x", width / 2)
@@ -57,7 +69,7 @@ t8_bar.append("text")
   .attr("dominant-baseline", "hanging");
 
 // CHART
-const t8_chart = t8_svg.append("g").attr("transform", `translate(${t8_chart_axes_width}, ${t8_bar_total_height + t8_puffer + t8_chart_offset})`);
+const t8_chart = t8_tile.append("g").attr("transform", `translate(${t8_chart_axes_width}, ${t8_bar_total_height + t8_puffer + t8_chart_offset})`);
 
 // X-Axis
 t8_chart.append("g")
@@ -297,4 +309,9 @@ function t8_change_year(year_index) {
   }
 }
 
-t8_change_year(tiles[8].length - 1);
+if ("year" in initials) {
+  const init_data = $("#t8_year").data("ionRangeSlider");
+  init_data.update({from: t8_years.indexOf(parseInt(initials.year))})
+} else {
+  t8_change_year(t8_years.length - 1);
+}

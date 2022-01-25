@@ -1,4 +1,5 @@
 
+let t3_sector;
 const t3_emission_years = tiles[3].emissions.map(function(d) { return d.year; });
 
 $("#t3_year").ionRangeSlider({
@@ -9,6 +10,9 @@ $("#t3_year").ionRangeSlider({
   values: t3_emission_years,
   from: tiles[3].emissions[tiles[3].emissions.length - 1].year,
   onChange: function (data) {
+    t3_change_year(data.from)
+  },
+  onUpdate: function (data) {
     t3_change_year(data.from)
   }
 });
@@ -49,13 +53,22 @@ const t3_color = d3.scaleOrdinal()
 
 const t3_svg = d3.select("#t3")
   .append("svg")
-    .attr("width", width)
-    .attr("height", t3_height)
-  .append("g");
+    .attr("width", width + 2 * share_margin)
+    .attr("height", t3_header_height + t3_height + 2 * share_margin);
+
+t3_svg.append("rect")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .attr("fill", "white");
+
+draw_header(t3_svg, 3, t3_header);
+
+const t3_tile = t3_svg.append("g")
+  .attr("transform", `translate(${share_margin}, ${t3_header_height + share_margin})`);
 
 // BAR
 
-const t3_bar_area = t3_svg.append("g").attr("transform", `translate(0, 0)`);
+const t3_bar_area = t3_tile.append("g").attr("transform", `translate(0, 0)`);
 const t3_bar = t3_bar_area.append("g")
   .attr("transform", `translate(0, ${t3_bar_title_height + 2 * t3_bar_vspace})`);
 
@@ -114,7 +127,7 @@ t3_bar_area.append("text")
 
 
 // DIVIDING-line
-t3_svg.append("line")
+t3_tile.append("line")
   .attr("x1", 0)
   .attr("x2", width)
   .attr("y1", t3_bar_total_height + t3_puffer / 2 + t3_icon_offset / 2)
@@ -124,7 +137,7 @@ t3_svg.append("line")
 
 // ICONS
 
-const t3_icons = t3_svg.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer + t3_icon_offset})`);
+const t3_icons = t3_tile.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer + t3_icon_offset})`);
 const t3_icon_left = (width - 5 * t3_circle_size - 4 * t3_icon_hspace) / 2;
 for (const [i, sector] of Object.keys(t3_sectors).entries()) {
   const icon = t3_sectors[sector].icon;
@@ -158,7 +171,7 @@ t3_icons.append("text")
   .attr("dominant-baseline", "hanging")
 
 // CHART
-const t3_chart_area = t3_svg.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer + t3_icon_total_height})`);
+const t3_chart_area = t3_tile.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer + t3_icon_total_height})`);
 const t3_chart = t3_chart_area.append("g").attr("transform", `translate(${t3_chart_axes_width}, ${t3_chart_unit_height})`);
 
 // Unit
@@ -324,9 +337,16 @@ function t3_draw_current_sector(sector) {
 }
 
 function t3_change_sector(sector) {
+  t3_sector = sector;
   t3_activate_sector(sector);
   t3_draw_current_sector(sector);
 }
 
-t3_change_sector("agriculture");
-t3_change_year(5);
+t3_change_sector(("sector" in initials) ? initials.sector : "agriculture");
+
+if ("year" in initials) {
+  const init_data = $("#t3_year").data("ionRangeSlider");
+  init_data.update({from: t3_emission_years.indexOf(parseInt(initials.year))})
+} else {
+  t3_change_year(t3_emission_years.length - 1);
+}

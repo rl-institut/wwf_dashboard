@@ -1,3 +1,5 @@
+const t9_header = "";
+const t9_header_height = get_header_height(9, false)
 
 const t9_emissions_color = "black";
 const t9_bar_ticks_width = width / 2.5;

@@ -9,6 +9,9 @@ $("#t4_year").ionRangeSlider({
   from: tiles[4][tiles[4].length - 1].year,
   onChange: function (data) {
     t4_change_year(data.from)
+  },
+  onUpdate: function (data) {
+    t4_change_year(data.from)
   }
 });
 
@@ -44,12 +47,22 @@ const t4_color = d3.scaleOrdinal()
 
 const t4_svg = d3.select("#t4")
   .append("svg")
-    .attr("width", width)
-    .attr("height", t4_height)
+    .attr("width", width + 2 * share_margin)
+    .attr("height", t4_header_height + t4_height + 2 * share_margin);
+
+t4_svg.append("rect")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .attr("fill", "white");
+
+draw_header(t4_svg, 4, t4_header);
+
+const t4_tile = t4_svg.append("g")
+  .attr("transform", `translate(${share_margin}, ${t4_header_height + share_margin})`);
 
 // ICONS
 
-const t4_icons = t4_svg.append("g");
+const t4_icons = t4_tile.append("g");
 
 t4_icons.append("text")
   .text("Anzahl der Klimatechnologien im Einsatz")
@@ -105,7 +118,7 @@ for (const [i, technology] of Object.keys(t4_technologies).entries()) {
 
 
 // CHART
-const t4_chart_body = t4_svg.append("g")
+const t4_chart_body = t4_tile.append("g")
   .attr("transform", `translate(0, ${t4_icon_total_height + t4_chart_offset})`);
 const t4_chart = t4_chart_body.append("g").attr("transform", `translate(${t4_chart_yaxis_width}, ${t4_chart_unit_height + t4_chart_unit_vspace})`);
 
@@ -242,4 +255,9 @@ function t4_change_year(to_year) {
   }
 }
 
-t4_change_year(2020);
+if ("year" in initials) {
+  const init_data = $("#t4_year").data("ionRangeSlider");
+  init_data.update({from: initials.year})
+} else {
+  t4_change_year(tiles[4][tiles[4].length - 1].year);
+}

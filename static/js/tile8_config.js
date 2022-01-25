@@ -1,3 +1,5 @@
+const t8_header = ("year" in initials) ? initials.year : "";
+const t8_header_height = get_header_height(8)
 
 const t8_bar_height = 52;
 const t8_bar_title_height = 20;

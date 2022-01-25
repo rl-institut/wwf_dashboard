@@ -9,6 +9,9 @@ $("#t2_year").ionRangeSlider({
   from: tiles[2][tiles[2].length - 1].year,
   onChange: function (data) {
     t2_change_year(data.from)
+  },
+  onUpdate: function (data) {
+    t2_change_year(data.from)
   }
 });
 
@@ -33,7 +36,7 @@ const t2_pie_sectors = [
 
 const t2_bar_color = d3.scaleOrdinal()
   .domain(t2_resources)
-  .range([wwfColor.mediumGreen, "co#000", "#3A3A3A", "#5A5A5A", "#808080", wwfColor.aqua]);
+  .range([wwfColor.mediumGreen, "black", "#3A3A3A", "#5A5A5A", "#808080", wwfColor.aqua]);
 
 const t2_pie_color = d3.scaleOrdinal()
     .domain(["ee", "ne", "ne2"])
@@ -41,10 +44,20 @@ const t2_pie_color = d3.scaleOrdinal()
 
 const t2_svg = d3.select("#t2")
   .append("svg")
-    .attr("width", width)
-    .attr("height", t2_height);
+    .attr("width", width + 2 * share_margin)
+    .attr("height", t2_header_height + t2_height + 2 * share_margin);
 
-t2_svg.append("text")
+t2_svg.append("rect")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .attr("fill", "white");
+
+draw_header(t2_svg, 2, t2_header);
+
+const t2_tile = t2_svg.append("g")
+  .attr("transform", `translate(${share_margin}, ${t2_header_height + share_margin})`);
+
+t2_tile.append("text")
   .text("Energieverbrauch in Deutschland (GWh)")
   .attr("x", width / 2)
   .attr("y", t2_bar_offset)
@@ -54,7 +67,7 @@ t2_svg.append("text")
 
 // ARROW
 
-const t2_arrow = t2_svg.append("g")
+const t2_arrow = t2_tile.append("g")
   .attr("transform", `translate(0, ${t2_bar_total_height + t2_puffer / 2})`)
 
 $(t2_arrow.node().appendChild(icons["arrow"].documentElement.cloneNode(true)))
@@ -86,7 +99,7 @@ t2_arrow.append("text")
 
 // PIE
 
-const t2_pie = t2_svg.append("g")
+const t2_pie = t2_tile.append("g")
   .attr("transform", `translate(${t2_pie_hspace}, ${t2_bar_total_height + t2_arrow_total_height + t2_pie_offset + t2_puffer / 2})`);
 
 for (const [i, sector] of t2_pie_sectors.entries()) {
@@ -180,8 +193,8 @@ function t2_adjust_text(x, y, bar_width) {
 }
 
 function t2_change_year(year) {
-  t2_svg.select("#t2_bars").remove();
-  t2_svg.selectAll("t2_pie").remove();
+  t2_tile.select("#t2_bars").remove();
+  t2_tile.selectAll("t2_pie").remove();
 
   const year_data = tiles[2].find(element => element.year == year);
   t2_draw_bars(year_data);
@@ -194,7 +207,7 @@ function t2_draw_bars(year_data) {
   let t2_x = t2_get_x_scale(year_data)
   const t2_stacked_data = d3.stack().keys(t2_resources)([year_data]);
 
-  const t2_bars = t2_svg
+  const t2_bars = t2_tile
     .append("g")
     .attr("transform", `translate(0, ${t2_bar_offset + t2_bar_title_height + t2_bar_title_padding_bottom})`)
     .attr("id", "t2_bars")
@@ -281,4 +294,9 @@ function t2_draw_pie(year_data, type) {
     .attr("letter-spacing", letterSpacing);
 }
 
-t2_change_year(2020);
+if ("year" in initials) {
+  const year_data = $("#t2_year").data("ionRangeSlider");
+  year_data.update({from: initials.year})
+} else {
+  t2_change_year(tiles[2][tiles[2].length - 1].year);
+}

@@ -36,15 +36,22 @@ const t6_pie_color = d3.scaleOrdinal()
 
 const t6_svg = d3.select("#t6")
   .append("svg")
-    .attr("width", width)
-    .attr("height", t6_height)
-  .append("g")
-    .attr("transform", `translate(${t6_chart_yaxis_width}, 0)`);
+    .attr("width", width + 2 * share_margin)
+    .attr("height", t6_header_height + t6_height + 2 * share_margin);
 
+t6_svg.append("rect")
+  .attr("width", "100%")
+  .attr("height", "100%")
+  .attr("fill", "white");
+
+draw_header(t6_svg, 6, t6_header);
+
+const t6_tile = t6_svg.append("g")
+  .attr("transform", `translate(${t6_chart_yaxis_width + share_margin}, ${t6_header_height + share_margin})`);
 
 // PIE
 
-const t6_pie_legend = t6_svg.append("g")
+const t6_pie_legend = t6_tile.append("g")
   .attr("transform", `translate(${t6_pie_legend_x}, ${t6_pie_legend_y})`);
 t6_pie_legend.append("rect")
   .attr("width", t6_pie_legend_rect)
@@ -72,13 +79,13 @@ t6_pie_legend.append("text")
   .attr("letter-spacing", letterSpacing)
   .style("font-size", fontSize.xsmall);
 
-t6_svg.append("text")
+t6_tile.append("text")
   .text("Anteil Erneuerbarer")
   .attr("x", chart_width / 2 + t6_pie_hspace)
   .attr("y", t6_pie_offset + t6_pie_radius - t6_pie_text_height / 2)
   .attr("letter-spacing", letterSpacing)
   .style("font-size", fontSize.small);
-t6_svg.append("text")
+t6_tile.append("text")
   .text("an diesem Tag")
   .attr("x", chart_width / 2 + t6_pie_hspace)
   .attr("y", t6_pie_offset + t6_pie_radius + t6_pie_text_height / 2)
@@ -87,7 +94,7 @@ t6_svg.append("text")
   .style("font-size", fontSize.small);
 
 // DIVIDING-line
-t6_svg.append("line")
+t6_tile.append("line")
   .attr("x1", 0)
   .attr("x2", width)
   .attr("y1", t6_pie_total_height + t6_puffer / 2 + t6_chart_offset / 2)
@@ -98,7 +105,7 @@ t6_svg.append("line")
 // CHART
 
 "Stromerzeugung an diesem Tag (GW)"
-const t6_chart_area = t6_svg.append("g")
+const t6_chart_area = t6_tile.append("g")
   .attr("transform", `translate(0, ${t6_pie_total_height + t6_puffer + t6_chart_offset})`);
 
 t6_chart_area.append("text")
@@ -152,7 +159,7 @@ d3.select("#t6_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0)
 
 // ICONS
 
-const t6_icons = t6_svg.append("g")
+const t6_icons = t6_tile.append("g")
   .attr("transform", `translate(0, ${t6_pie_total_height + t6_puffer + t6_chart_total_height + t6_icon_offset})`);
 
 for (const technology of Object.keys(t6_technologies)) {
@@ -203,6 +210,15 @@ function t6_change_date() {
       success: function(result){
         t6_draw_chart(result.data);
         t6_draw_pie(result.res_share);
+      },
+      error: function() {
+        const area_chart = t6_chart.append("g")
+          .attr("id", "t6_area")
+        area_chart.append("text")
+          .text("Leider keine Daten vorhanden")
+          .attr("x", chart_width / 2)
+          .attr("y", t6_chart_height / 2)
+          .attr("text-anchor", "middle")
       }
     }
   );
@@ -243,7 +259,7 @@ function t6_draw_pie(res_share) {
   const t6_pie_data = t6_pie(Object.entries(t6_pie_data_raw))
 
   const arc = d3.arc().innerRadius(0).outerRadius(t6_pie_radius)
-  t6_svg
+  t6_tile
     .selectAll("t6_pie")
     .data(t6_pie_data)
     .enter()
@@ -253,7 +269,7 @@ function t6_draw_pie(res_share) {
     .attr('d', arc)
     .attr('fill', function(d){return t6_pie_color(d.data[0])})
 
-  t6_svg.append("text")
+  t6_tile.append("text")
     .attr("id", "t6_pie_text")
     .text(res_share.toFixed(0) + "%")
     .attr("x", chart_width / 2 - t6_pie_radius - t6_pie_hspace)
@@ -280,4 +296,4 @@ function t6_increase_date() {
   if (date <= $("#t6_date").datepicker("getEndDate")) {$("#t6_date").datepicker("setDate", date);}
 }
 
-$("#t6_date").datepicker("setDate", "now");
+$("#t6_date").datepicker("setDate", ("date" in initials) ? new Date(initials.date) : "now");

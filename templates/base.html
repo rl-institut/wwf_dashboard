@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% if not debug %}
+    {% if password %}
       <script type="text/javascript">
         var s = "";
-        const pw = "panda";
+        const pw = "{{password}}";
         while (s != pw) {
           s = prompt("Bitte Passwort eingeben");
           if (s != pw) {
@@ -23,6 +23,7 @@
 
   <body>
     <section class="dashboard">
+      <a id="download" href="" download="wwf_share.png" hidden></a>
       <div class="dashboard__maxwidth">
         {% block tiles_html %}
         {% endblock tiles_html %}
@@ -37,6 +38,11 @@
 
     <script>
       var icon_names = {{icons|safe}};
+      {% if initials %}
+        const initials = {{initials|safe}};
+      {% else %}
+        const initials = {};
+      {% endif %}
     </script>
     <script src="static/js/global.js"></script>
     {% block tiles_js %}

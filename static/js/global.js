@@ -56,6 +56,52 @@ const chart_axis_stroke_width = 1;
 const circle_width = 6;
 const rect_round = 16;
 
+const headers = [
+  {
+    title: ["CO2-Ausstoß verschärft Klimakrise"],
+    description: ["Mit den weltweit steigenden Emissionen steigen Jahr für Jahr", "auch die CO2-Konzentration in der Atmosphäre und die", "Temperatur auf der Erde."]
+  },
+  {
+    title: ["Energieversorgung wird effizienter und", "erneuerbar"],
+    description: ["Unser Energieverbrauch basiert immer noch weitgehend auf Öl,", "Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der", "Anteil der Erneuerbaren Energien gering. Aber das ändert sich."]
+  },
+  {
+    title: ["Klimaschutz in allen Sektoren"],
+    description: ["Bis 2045 soll Deutschland klimaneutral sein. Dafür muss der", "CO2-Ausstoß in allen Sektoren gesenkt werden."]
+  },
+  {
+    title: ["Klimatechnologien sind im Kommen"],
+    description: ["Strombasierte Technologien finden immer breitere Anwendung,", "egal ob beim Heizen, in der Mobilität oder als Speicherlösungen."]
+  },
+  {
+    title: ["Immer mehr Erneuerbare Energien"],
+    description: ["Kohle, Gas, Öl und Atomenergie sind seit den 90er Jahren auf", "dem Rückzug. Wind- und Solarkraftwerke gewinnen hingegen bei", "der Stromerzeugung an Bedeutung."]
+  },
+  {
+    title: ["Der Strommix verändert sich von Tag zu Tag"],
+    description: ["Die Stromerzeugung schwankt je nach Wind, Sonnenschein und ", "Stromverbrauch. Immer zur Mittagszeit gibt es am meisten PV.", "An Wochenenden brauchen wir weniger Strom."]
+  },
+  {
+    title: ["Klimafreundliche Mobilität"],
+    description: ["Eine kluge Verkehrswende ist auch Mobilitätswende:", "Auf die bewusste Auswahl klimafreundlicher Verkehrsmittel", "kommt es an."]
+  },
+  {
+    title: ["Elektrifizierung führt zu steigendem", "Strombedarf"],
+    description: ["Für Elektroautos und strombasierte Heizungen brauchen wir ", "immer mehr Strom. Dies schaffen wir durch den beschleunigten ", "Ausbau von Wind- und Solarkraftwerken."]
+  },
+  {
+    title: ["Zu viele fossile Heizungen"],
+    description: ["Die Wärmewende gilt als der “schlafender Riese“ für den", "Klimaschutz. Nicht immer werden viele fossil befeuerte", "Heizungen verbaut. Dabei gibt es längst klimafreundliche", "Alternativen zu Öl und Gas."]
+  },
+]
+
+const header_margin = 20;
+const header_title_height = 30;
+const header_line_height = 24;
+const has_header = "header" in initials;
+const share_margin = has_header * 32;
+
+
 
 function find_tile() {
   for (let i = 1; i <= 10; i++) {
@@ -76,7 +122,10 @@ function share(tile, options) {
       },
       dataType: "json",
       success: function(result){
-        alert(result.share_link);
+        const download_link = document.getElementById("download");
+        download_link.href = result.share_link;
+        download_link.download = "wwf_share.png"
+        download_link.click();
       }
     }
   );
@@ -119,5 +168,49 @@ $.ajax(
     }
   )
 
-// Embed icons via:
-// svg.node().appendChild(icons["i_bus"].documentElement)
+function get_header_height(tile, with_subtitle=true) {
+  if (!has_header) {return 0}
+  let height = headers[tile - 1].title.length * header_title_height + headers[tile - 1].description.length * header_line_height + 3 * header_margin;
+  if (with_subtitle) {
+    height += header_line_height + 2 * header_margin;
+  }
+  return height;
+}
+
+function draw_header(svg, tile, scenario) {
+  if (!has_header) {return}
+  const header_height = get_header_height(tile, false);
+  const header = svg.append("g")
+    .attr("transform", `translate(${share_margin}, ${share_margin})`);
+
+  header.append("rect")
+    .attr("width", width)
+    .attr("height", header_height)
+    .attr("stroke", "black")
+    .attr("fill", "white");
+  for (const [i, title] of headers[tile - 1].title.entries()) {
+    header.append("text")
+      .text(title)
+      .attr("x", header_margin)
+      .attr("y", header_margin + i * header_title_height)
+      .attr("font-family", "WWF, sans-serif")
+      .attr("font-size", 30)
+      .attr("dominant-baseline", "hanging");
+  }
+  for (const [i, line] of headers[tile - 1].description.entries()) {
+    header.append("text")
+      .text(line)
+      .attr("x", header_margin)
+      .attr("y", headers[tile - 1].title.length * header_title_height + 2 * header_margin + i * header_line_height)
+      .attr("font-family", "Open Sans, sans-serif")
+      .attr("dominant-baseline", "hanging");
+  }
+  header.append("text")
+    .text(scenario)
+    .attr("x", width / 2)
+    .attr("y", header_height + header_margin)
+    .attr("font-family", "Open Sans, sans-serif")
+    .attr("font-weight", fontWeight.bold)
+    .attr("text-anchor", "middle")
+    .attr("dominant-baseline", "hanging");
+}

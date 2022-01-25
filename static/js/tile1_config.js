@@ -1,4 +1,11 @@
 
+const t1_header_height = get_header_height(1);
+let t1_header = "";
+if (("year" in initials) && ("mode" in initials)) {
+  t1_header = (initials.mode == "global") ? "Global" : "Deutschland";
+  t1_header += ", " + initials.year;
+}
+
 const t1_temperature_colors = ["#08306b", "#08519c", "#2171b5", "#4292c6", "#6baed6", "#9ecae1", "#c6dbef", "#deebf7", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d"];
 
 const t1_mode_width = 280;

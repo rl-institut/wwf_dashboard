@@ -1,3 +1,5 @@
+const t7_header = ("distance" in initials) ? initials.distance + " km" : "";
+const t7_header_height = get_header_height(7);
 
 const t7_route_upper_padding = 16;
 const t7_route_space = 7;
