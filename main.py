@@ -5,7 +5,7 @@ import datetime as dt
 import json
 from flask import Flask, render_template, request
 
-from settings import DEBUG, ICONS
+from settings import DEBUG, ICONS, PASSWORD
 import scrape
 import share
 
@@ -34,7 +34,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def dashboard():
-    return render_template("index.html", icons=ICONS, debug=DEBUG)
+    return render_template("index.html", icons=ICONS, debug=DEBUG, password=PASSWORD)
 
 
 @app.route("/<int:tile>", methods=["GET"])
@@ -46,7 +46,8 @@ def get_tile(tile):
         tile_js=f"static/js/tile{tile}.js",
         initials=json.dumps(request.args),
         icons=ICONS,
-        debug=DEBUG
+        debug=DEBUG,
+        password=PASSWORD
     )
 
 
