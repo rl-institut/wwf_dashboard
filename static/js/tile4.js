@@ -19,10 +19,10 @@ const t4_height = (typeof t4_min_height !== 'undefined') ? Math.max(t4_min_heigh
 const t4_puffer = is_mobile ? 0 : t4_height - t4_min_height;
 
 const t4_technologies = {
-  "heatpumps": {"title": "Wärmepumpen", "icon": "i_waermepumpe_large"},
-  "storages": {"title": "Heimspeicher", "icon": "i_heimspeicher_large"},
-  "ecars": {"title": "E-Autos", "icon": "i_e-auto_large"},
-  "charging": {"title": "Ladesäulen", "icon": "i_ladesaeule_large"}
+  "heatpumps": {"title": "Wärmepumpen", "icon": "i_waermepumpe_32"},
+  "storages": {"title": "Heimspeicher", "icon": "i_heimspeicher_32"},
+  "ecars": {"title": "E-Autos", "icon": "i_e-auto_32"},
+  "charging": {"title": "Ladesäulen", "icon": "i_ladesaeule_32"}
 };
 
 const t4_ecars_max = tiles[4].reduce(function(max, current){if (current.ecars > max) {return current.ecars} else {return max}}, 0) / 1000;
