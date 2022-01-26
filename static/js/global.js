@@ -62,7 +62,7 @@ const rect_round = 16;
 const headers = [
   {
     title: ["CO2-Ausstoß verschärft Klimakrise"],
-    description: ["Mit den weltweit steigenden Emissionen steigen Jahr für Jahr", "auch die CO2-Konzentration in der Atmosphäre und die", "Temperatur auf der Erde."]
+    description: ["Mit den weltweit steigenden Emissionen steigen Jahr für", "Jahr auch die CO2-Konzentration in der Atmosphäre und die", "Temperatur auf der Erde."]
   },
   {
     title: ["Energieversorgung wird effizienter und", "erneuerbar"],
@@ -70,19 +70,19 @@ const headers = [
   },
   {
     title: ["Klimaschutz in allen Sektoren"],
-    description: ["Bis 2045 soll Deutschland klimaneutral sein. Dafür muss der", "CO2-Ausstoß in allen Sektoren gesenkt werden."]
+    description: ["Bis 2045 soll Deutschland klimaneutral sein.", "Dafür muss der CO2-Ausstoß in allen Sektoren gesenkt werden."]
   },
   {
     title: ["Klimatechnologien sind im Kommen"],
-    description: ["Strombasierte Technologien finden immer breitere Anwendung,", "egal ob beim Heizen, in der Mobilität oder als Speicherlösungen."]
+    description: ["Strombasierte Technologien finden immer breitere", "Anwendung, egal ob beim Heizen, in der Mobilität oder", "als Speicherlösungen."]
   },
   {
     title: ["Immer mehr Erneuerbare Energien"],
-    description: ["Kohle, Gas, Öl und Atomenergie sind seit den 90er Jahren auf", "dem Rückzug. Wind- und Solarkraftwerke gewinnen hingegen bei", "der Stromerzeugung an Bedeutung."]
+    description: ["Kohle, Gas, Öl und Atomenergie sind seit den 90er Jahren", "auf dem Rückzug. Wind- und Solarkraftwerke gewinnen" ,"hingegen bei der Stromerzeugung an Bedeutung."]
   },
   {
     title: ["Der Strommix verändert sich von Tag zu Tag"],
-    description: ["Die Stromerzeugung schwankt je nach Wind, Sonnenschein und ", "Stromverbrauch. Immer zur Mittagszeit gibt es am meisten PV.", "An Wochenenden brauchen wir weniger Strom."]
+    description: ["Die Stromerzeugung schwankt je nach Wind,", "Sonnenschein und Stromverbrauch. Immer zur Mittagszeit", "gibt es am meisten PV. An Wochenenden brauchen wir", "weniger Strom."]
   },
   {
     title: ["Klimafreundliche Mobilität"],
@@ -162,14 +162,25 @@ for (let i = 0; i < icon_names.length; i++) {
 }
 
 $.ajax(
-    {
-      url: "static/images/agora_logo.svg",
-      async: false,
-      success: function(data) {
-        icons["agora_logo"] = data;
-      }
+  {
+    url: "static/images/agora_logo.svg",
+    async: false,
+    success: function(data) {
+      icons["agora_logo"] = data;
     }
-  )
+  }
+)
+
+$.ajax(
+  {
+    url: "static/logos/WWF_Logo.svg",
+    async: false,
+    success: function(data) {
+      icons["wwf_logo"] = data;
+    }
+  }
+)
+const wwfLogo = {width: 32, height: 47};
 
 function get_header_height(tile, with_subtitle=true) {
   if (!has_header) {return 0}
@@ -191,6 +202,14 @@ function draw_header(svg, tile, scenario) {
     .attr("height", header_height)
     .attr("stroke", "black")
     .attr("fill", "white");
+
+  $(header.node().appendChild(icons["wwf_logo"].documentElement.cloneNode(true)))
+    .attr("x", width - header_margin - wwfLogo.width)
+    .attr("y", header_margin)
+    .attr("width", wwfLogo.width)
+    .attr("height", wwfLogo.height)
+    .attr("preserveAspectRatio", "xMidYMid slice");
+
   for (const [i, title] of headers[tile - 1].title.entries()) {
     header.append("text")
       .text(title)
