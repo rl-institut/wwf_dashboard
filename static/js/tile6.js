@@ -12,10 +12,10 @@ const t6_height = (typeof t5_min_height !== 'undefined') ? Math.max(t5_min_heigh
 const t6_puffer = is_mobile ? 0 : (t6_height - t6_min_height);
 
 const t6_technologies = {
-  "renewables": {"title": "Sonstige Erneuerbare", "icon": "i_sonstige_ee", "icon_color": "white"},
-  "wind_onshore": {"title": "Windenergie an Land", "icon": "i_wind_onshore", "icon_color": "black"},
-  "pv": {"title": "Photovoltaik", "icon": "i_pv", "icon_color": "black"},
-  "fossil": {"title": "Konventionelle Kraftwerke", "icon": "i_pollution", "icon_color": "white"},
+  "renewables": {"title": "Sonstige Erneuerbare", "icon": "i_sonstige_ee_16", "icon_color": "white"},
+  "wind_onshore": {"title": "Windenergie an Land", "icon": "i_wind_onshore_16", "icon_color": "black"},
+  "pv": {"title": "Photovoltaik", "icon": "i_pv_16", "icon_color": "black"},
+  "fossil": {"title": "Konventionelle Kraftwerke", "icon": "i_pollution_16", "icon_color": "white"},
 };
 
 const y_max = 120000;

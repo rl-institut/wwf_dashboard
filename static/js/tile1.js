@@ -240,11 +240,11 @@ $(t1_icons.node().appendChild(icons["i_temperaturen"].documentElement.cloneNode(
   .attr("preserveAspectRatio", "xMidYMid slice");
 
 t1_icons.append("rect")
+  .attr("id", "t1_temp_rect")
   .attr("x", 2 * t1_icon_width + 2 * t1_icon_hspace)
   .attr("y", t1_icon_size + t1_icon_vspace)
   .attr("width", t1_icon_width)
-  .attr("height", t1_icon_height)
-  .attr("fill", "#FEE1D3")
+  .attr("height", t1_icon_height);
 
 t1_icons.append("text")
   .attr("id", "t1_temp_icon")
@@ -381,6 +381,7 @@ function t1_change_year(to_year) {
   const current_co2 = (year_data.co2 == null) ? "- Mt" : year_data.co2.toFixed(0) + " Mt";
   t1_tile.select("#t1_co2_icon").text(current_co2);
   t1_tile.select("#t1_temp_icon").text(year_data.temperature.toFixed(2) + " °C");
+  t1_tile.select("#t1_temp_rect").attr("fill", color(year_data.temperature))
 }
 
 function t1_update_chart() {

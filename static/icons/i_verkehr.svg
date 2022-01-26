@@ -5,11 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   id="svg2742"
+   width="20"
+   height="20"
+   viewBox="0 0 20 20"
    version="1.1"
-   viewBox="0 0 26.458336 26.458336"
-   height="26.458336mm"
-   width="26.458336mm">
+   id="svg2742">
   <defs
      id="defs2736" />
   <metadata
@@ -25,14 +25,14 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(188.79911,-50.276045)"
-     id="layer1">
+     id="layer1"
+     transform="matrix(0.77097391,0,0,0.77097391,145.28672,-39.0801)">
     <g
-       transform="translate(-129.39062,57.555007)"
-       id="g2691" />
+       id="g2691"
+       transform="translate(-129.39062,57.555007)" />
     <path
-       id="rect2667"
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.92865628;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
        d="m -182.65941,52.353328 -1.66449,7.467762 h -3.36207 v 2.544547 h 1.98696 v 8.593788 c 0,0.2922 0.23542,0.52762 0.52761,0.52762 h 1.86191 v 3.47937 h 3.22667 v -3.47937 h 9.05888 v 3.47937 h 3.22668 v -3.47937 h 1.86138 c 0.2922,0 0.52762,-0.23542 0.52762,-0.52762 v -8.593788 h 2.14405 V 59.82109 h -3.4897 l -1.66399,-7.467762 z m 0.87437,1.030429 h 12.4473 l 1.85105,8.298718 h -16.14733 z m -2.3642,8.263061 0.1602,0.03566 h -0.1602 z m 16.85737,0.03152 10e-4,0.0041 h -0.0207 z m -13.72216,3.230811 a 1.6753602,1.6753602 0 0 1 1.67535,1.675349 1.6753602,1.6753602 0 0 1 -1.67535,1.67535 1.6753602,1.6753602 0 0 1 -1.67535,-1.67535 1.6753602,1.6753602 0 0 1 1.67535,-1.675349 z m 10.92078,0 a 1.6753603,1.6753603 0 0 1 1.67535,1.675349 1.6753603,1.6753603 0 0 1 -1.67535,1.67535 1.6753603,1.6753603 0 0 1 -1.67535,-1.67535 1.6753603,1.6753603 0 0 1 1.67535,-1.675349 z"
-       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.92865628;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
+       id="rect2667" />
   </g>
 </svg>

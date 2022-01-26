@@ -5,11 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   id="svg4562"
+   width="20"
+   height="20"
+   viewBox="0 0 20 20"
    version="1.1"
-   viewBox="0 0 26.458336 26.458336"
-   height="26.458336mm"
-   width="26.458336mm">
+   id="svg4562">
   <defs
      id="defs4556" />
   <metadata
@@ -25,11 +25,11 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(237.7318,-59.364962)"
-     id="layer1">
+     id="layer1"
+     transform="matrix(0.74246313,0,0,0.74246313,176.81027,-44.02353)">
     <path
-       id="path1257"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.24559763px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m -224.67141,59.600071 c -1.53357,0 -2.76779,1.44534 -2.76779,3.240643 v 5.746936 l -1.87638,1.165807 v -1.387502 h -1.4366 v 2.271686 h 0.0139 l -2.2841,1.419569 v -1.401974 h -1.4366 v 2.271686 h 0.0367 l -2.67012,1.659335 v 2.226204 l 9.65315,-2.228797 0.52917,7.733374 -3.77341,2.104257 v 1.503787 l 6.01255,-1.388031 6.01204,1.388031 v -1.503787 l -3.77342,-2.103728 0.52917,-7.733903 9.65264,2.228797 v -2.226204 l -2.78019,-1.727544 v -2.203477 h -1.43661 v 1.311011 l -2.16524,-1.345645 v -2.254647 h -1.43609 v 1.362181 l -1.83451,-1.139984 v -5.747438 c 0,-1.795303 -1.23474,-3.240643 -2.7683,-3.240643 z"
-       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.24559763px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+       id="path1257" />
   </g>
 </svg>
