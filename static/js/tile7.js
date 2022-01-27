@@ -73,12 +73,12 @@ t7_svg.append("rect")
 draw_header(t7_svg, 7, t7_header);
 
 const t7_tile = t7_svg.append("g")
-  .attr("transform", `translate(${margin.left + share_margin}, ${margin.top + t7_header_height + share_margin})`);
+  .attr("transform", `translate(${share_margin}, ${t7_header_height + t7_route_offset + share_margin})`);
 
 // Route
 t7_tile.append("text")
   .text("Entspricht der folgenden Strecke:")
-  .attr("x", chart_width / 2)
+  .attr("x", width / 2)
   .attr("y", 0)
   .style("text-anchor", "middle")
   .attr("letter-spacing", letterSpacing);
@@ -86,13 +86,13 @@ t7_tile.append("text")
 t7_tile.append("rect")
   .attr("x", 0)
   .attr("y", t7_route_space + t7_route_upper_padding)
-  .attr("width", chart_width)
+  .attr("width", width)
   .attr("height", t7_route_height)
   .attr("fill", "#F3F3F3");
 
 t7_tile.append("text")
   .text("< >")
-  .attr("x", chart_width / 2)
+  .attr("x", width / 2)
   .attr("y", t7_route_space + t7_route_height / 2 + t7_route_upper_padding)
   .attr("font-weight", "bold")
   .style("text-anchor", "middle")
@@ -102,11 +102,11 @@ t7_tile.append("text")
 // CHART
 
 const t7_x = d3.scaleBand()
-  .range([ 0, chart_width ])
+  .range([ 0, t7_chart_width ])
   .domain([0, 1, 2, 3, 4, 5]);
 
 const t7_chart_area = t7_tile.append("g")
-  .attr("transform", `translate(0, ${t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2})`);
+  .attr("transform", `translate(${t7_chart_hoffset}, ${t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2})`);
 
 t7_chart_area.append("text")
   .text("CO2-Emissionen pro Person in")
@@ -156,7 +156,7 @@ for (const [i, icon] of t7_vehicle_icons.entries()) {
 
 t7_chart.append("line")
   .attr("x1", 0)
-  .attr("x2", chart_width)
+  .attr("x2", t7_chart_width)
   .attr("y1", t7_chart_height)
   .attr("y2", t7_chart_height)
   .attr("stroke", wwfColor.black)
@@ -174,14 +174,14 @@ function t7_change_route(distance) {
     .attr("id", "t7_route");
   t7_route.append("text")
     .text(t7_routes[distance][0])
-    .attr("x", chart_width / 2 - t7_route_text_space)
+    .attr("x", width / 2 - t7_route_text_space)
     .attr("y", t7_route_space + t7_route_height / 2 + t7_route_upper_padding)
     .attr("font-weight", fontWeight.bold)
     .style("text-anchor", "end")
     .style("dominant-baseline", "central");
   t7_route.append("text")
     .text(t7_routes[distance][1])
-    .attr("x", chart_width / 2 + t7_route_text_space)
+    .attr("x", width / 2 + t7_route_text_space)
     .attr("y", t7_route_space + t7_route_height / 2 + t7_route_upper_padding)
     .attr("font-weight", fontWeight.bold)
     .style("text-anchor", "starts")
