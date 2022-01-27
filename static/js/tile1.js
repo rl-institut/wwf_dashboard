@@ -29,10 +29,10 @@ const t1_x = d3.scaleBand()
   .domain(tiles[1].global.map(function(d) { return d.year; }))
 const t1_y = d3.scaleLinear()
   .range([ t1_chart_height, 0 ])
-  .domain([0, t1_ppm_max]);
+  .domain([0, t1_ppm_max * 1.2]);
 let t1_y2 = d3.scaleLinear()
   .range([ t1_chart_height, 0 ])
-  .domain([0, t1_co2_global_max]);
+  .domain([0, t1_co2_global_max * 1.2]);
 const t1_color_global = d3.scaleQuantize()
   .domain([-t1_temp_global, t1_temp_global])
   .range(t1_temperature_colors);
@@ -92,7 +92,7 @@ d3.select("#t1_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t1_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 t1_tile.append("text")
-  .text("CO2-engeriebedingte")
+  .text("CO2-energiebedingte")
   .attr("y", t1_chart_offset + t1_chart_unit_height / 3)
   .attr("text-anchor", "start")
   .attr("dominant-baseline", "hanging")
@@ -370,7 +370,7 @@ function t1_change_year(to_year) {
       .attr("x1", t1_x(year))
       .attr("x2", t1_x(year))
       .attr("y1", t1_y(year_data.ppm))
-      .attr("y2", t1_y2(co2_max))
+      .attr("y2", t1_y2(t1_y2.domain()[1]))
       .attr("stroke", wwfColor.black)
       .attr("stroke-width", dash_width)
       .attr("stroke-dasharray", dash_spacing)
@@ -380,12 +380,16 @@ function t1_change_year(to_year) {
       .attr("cx", t1_x(year))
       .attr("cy", t1_y2(year_data.co2))
       .attr("r", circle_width)
+      .attr("fill", wwfColor.gray2);
   }
 
   t1_tile.select("#t1_ppm_icon").text(year_data.ppm.toFixed(0) + " ppm");
   const current_co2 = (year_data.co2 == null) ? "- Mt" : year_data.co2.toFixed(0) + " Mt";
   t1_tile.select("#t1_co2_icon").text(current_co2);
   t1_tile.select("#t1_temp_icon").text(year_data.temperature.toFixed(2) + " °C");
+  const current_temp = t1_mode == "global" ? t1_temp_global : t1_temp_brd;
+  const use_white = year_data.temperature >= current_temp - 3 * (2 * current_temp / 16);
+  t1_tile.select("#t1_temp_icon").attr("fill", (use_white) ? "white" : "black")
   t1_tile.select("#t1_temp_rect").attr("fill", color(year_data.temperature))
 }
 
@@ -397,7 +401,7 @@ function t1_update_chart() {
 
   t1_y2 = d3.scaleLinear()
     .range([ t1_chart_height, 0 ])
-    .domain([0, co2_max]);
+    .domain([0, co2_max * 1.2]);
 
   // Y2-Axis (CO2)
   t1_chart.append("g")
@@ -429,7 +433,7 @@ function t1_update_chart() {
   t1_chart.append("path")
     .datum(tiles[1].global)
     .attr("fill", "none")
-    .attr("stroke", "gray")
+    .attr("stroke", wwfColor.black)
     .attr("stroke-width", line_width)
     .attr("d", d3.line()
       .x(function(d) { return t1_x(d.year) + t1_x.bandwidth() / 2 })
@@ -440,7 +444,7 @@ function t1_update_chart() {
   t1_chart.append("path")
     .datum(tiles[1][t1_mode])
     .attr("fill", "none")
-    .attr("stroke", wwfColor.black)
+    .attr("stroke", wwfColor.gray2)
     .attr("stroke-width", line_width)
     .attr("d", d3.line()
       .x(function(d) { return t1_x(d.year) + t1_x.bandwidth() / 2 })
