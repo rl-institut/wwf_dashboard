@@ -179,13 +179,13 @@ t4_y_grid.selectAll(".tick").select("line")
 t4_y_grid.select('.domain').attr('stroke-width', 0);
 
 t4_chart_body.append("text")
-  .text("Heimspeicher, Wärmepumpen,")
+  .text("Heimspeicher,")
   .attr("dominant-baseline", "hanging")
   .attr("fill", wwfColor.gray1)
   .attr("font-size", fontSize.xsmall)
   .attr("letter-spacing", letterSpacing);
 t4_chart_body.append("text")
-  .text("Ladesäulen (Tsd.)")
+  .text("Wärmepumpen (Tsd.)")
   .attr("y", t4_chart_unit_height / 2)
   .attr("dominant-baseline", "hanging")
   .attr("fill", wwfColor.gray1)
@@ -207,6 +207,14 @@ t4_chart.append("g")
 d3.select("#t4_yaxis2").select('.domain').attr('stroke-width', 0);
 d3.select("#t4_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
 
+t4_chart_body.append("text")
+  .text("Ladesäulen,")
+  .attr("x", width)
+  .attr("text-anchor", "end")
+  .attr("dominant-baseline", "hanging")
+  .attr("fill", wwfColor.gray1)
+  .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing);
 t4_chart_body.append("text")
   .text("E-Autos (Tsd.)")
   .attr("x", width)
