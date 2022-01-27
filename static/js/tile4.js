@@ -25,11 +25,11 @@ const t4_technologies = {
   "charging": {"title": "Ladesäulen", "icon": "i_ladesaeule_32"}
 };
 
-const t4_ecars_max = tiles[4].reduce(function(max, current){if (current.ecars > max) {return current.ecars} else {return max}}, 0) / 1000;
+const t4_heatpumps_max = tiles[4].reduce(function(max, current){if (current.heatpumps > max) {return current.heatpumps} else {return max}}, 0) / 1000;
 const t4_others_max = Math.max(
   tiles[4].reduce(function(max, current){if (current.charging > max) {return current.charging} else {return max}}, 0),
   tiles[4].reduce(function(max, current){if (current.storages > max) {return current.storages} else {return max}}, 0),
-  tiles[4].reduce(function(max, current){if (current.heatpumps > max) {return current.heatpumps} else {return max}}, 0)
+  tiles[4].reduce(function(max, current){if (current.ecars > max) {return current.ecars} else {return max}}, 0)
 ) / 1000;
 
 const t4_x = d3.scaleLinear()
@@ -37,10 +37,10 @@ const t4_x = d3.scaleLinear()
   .domain([tiles[4][0].year, tiles[4][tiles[4].length - 1].year]);
 const t4_y = d3.scaleLinear()
   .range([t4_chart_height, 0])
-  .domain([0, t4_ecars_max]);
+  .domain([0, t4_others_max]);
 const t4_y2 = d3.scaleLinear()
   .range([ t4_chart_height, 0 ])
-  .domain([0, t4_others_max]);
+  .domain([0, t4_heatpumps_max]);
 const t4_color = d3.scaleOrdinal()
   .domain(Object.keys(t4_technologies))
   .range([wwfColor.red, wwfColor.berry, wwfColor.aqua, wwfColor.darkBlue]);
@@ -150,7 +150,7 @@ t4_chart.append("line")
   .attr("stroke", wwfColor.black)
   .attr("stroke-width", chart_axis_stroke_width);
 
-// Y-Axis (E-Cars)
+// Y2-Axis (Heatpumps)
 t4_chart.append("g")
   .attr("id", "t4_yaxis")
   .attr("transform", "translate(" + t4_chart_width + ", 0)")
@@ -179,20 +179,14 @@ t4_y_grid.selectAll(".tick").select("line")
 t4_y_grid.select('.domain').attr('stroke-width', 0);
 
 t4_chart_body.append("text")
-  .text("Heimspeicher,")
-  .attr("dominant-baseline", "hanging")
-  .attr("fill", wwfColor.gray1)
-  .attr("font-size", fontSize.xsmall)
-  .attr("letter-spacing", letterSpacing);
-t4_chart_body.append("text")
   .text("Wärmepumpen (Tsd.)")
-  .attr("y", t4_chart_unit_height / 2)
+  .attr("y", t4_chart_unit_height / 3 * 2)
   .attr("dominant-baseline", "hanging")
   .attr("fill", wwfColor.gray1)
   .attr("font-size", fontSize.xsmall)
   .attr("letter-spacing", letterSpacing);
 
-// Y2-Axis (Others)
+// Y-Axis (Others)
 t4_chart.append("g")
   .attr("id", "t4_yaxis2")
   .call(
@@ -216,9 +210,18 @@ t4_chart_body.append("text")
   .attr("font-size", fontSize.xsmall)
   .attr("letter-spacing", letterSpacing);
 t4_chart_body.append("text")
+  .text("Heimspeicher,")
+  .attr("x", width)
+  .attr("y", t4_chart_unit_height / 3)
+  .attr("text-anchor", "end")
+  .attr("dominant-baseline", "hanging")
+  .attr("fill", wwfColor.gray1)
+  .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing);
+t4_chart_body.append("text")
   .text("E-Autos (Tsd.)")
   .attr("x", width)
-  .attr("y", t4_chart_unit_height / 2)
+  .attr("y", t4_chart_unit_height / 3 * 2)
   .attr("text-anchor", "end")
   .attr("dominant-baseline", "hanging")
   .attr("fill", wwfColor.gray1)
@@ -227,9 +230,9 @@ t4_chart_body.append("text")
 
 // Add technology paths
 for (const technology of Object.keys(t4_technologies)) {
-  let y = t4_y2;
-  if (technology == "ecars") {
-    y = t4_y;
+  let y = t4_y;
+  if (technology == "heatpumps") {
+    y = t4_y2;
   }
   t4_chart.append("path")
     .datum(tiles[4])

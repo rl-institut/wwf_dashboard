@@ -13,7 +13,7 @@ const t4_icon_wrap_height = 20;
 const t4_icon_total_height = t4_icon_offset + 3 * t4_icon_title_height + 5 * t4_icon_vspace + 2 * t4_icon_size + 2 * t4_icon_height + t4_icon_wrap_height;
 
 const t4_chart_offset = 30;
-const t4_chart_unit_height = 30;
+const t4_chart_unit_height = 40;
 const t4_chart_unit_vspace = 10;
 const t4_chart_height = 270;
 const t4_chart_yaxis_width = 43;
