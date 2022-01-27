@@ -3,3 +3,4 @@
 /static/share/*.png
 /agora_data/*.json
 /raw_data/
+*.pyc
