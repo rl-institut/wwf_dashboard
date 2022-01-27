@@ -63,9 +63,17 @@ const t9_tile = t9_svg.append("g")
 // EMISSIONS
 
 t9_tile.append("text")
-  .text("CO2-Emissionen nach Heizungsart (g/kWh)")
+  .text("CO2-Emissionen nach Heizungsart")
   .attr("x", width / 2)
   .attr("y", t9_bar_offset)
+  .attr("text-anchor", "middle")
+  .attr("letter-spacing", letterSpacing)
+  .attr("dominant-baseline", "hanging");
+
+t9_tile.append("text")
+  .text("(g/kWh)")
+  .attr("x", width / 2)
+  .attr("y", t9_bar_offset + t9_bar_title_height / 2)
   .attr("text-anchor", "middle")
   .attr("letter-spacing", letterSpacing)
   .attr("dominant-baseline", "hanging");
@@ -123,9 +131,20 @@ t9_bar.append("g")
 d3.select("#t9_emissions_y").select('.domain').attr('stroke-width', 0);
 d3.select("#t9_emissions_y").selectAll(".tick").select("line").attr("stroke-width", 0);
 
+d3.select("#t9_emissions_y").select("text").attr("transform", `translate(0, ${-t9_solar_text_voffset})`);
+
 t9_bar.append("text")
-  .text("(als ergänzendes Heizsystem)")
-  .attr("x", t9_solar_text_offset)
+  .text("(als ergänzendes")
+  .attr("x", -t9_solar_text_hoffset)
+  .attr("y", t9_emissions_y("solar") + t9_emissions_y.bandwidth() - t9_solar_text_voffset)
+  .attr("text-anchor", "end")
+  .attr("font-weight", fontWeight.thin)
+  .attr("letter-spacing", letterSpacing)
+  .attr("font-size", fontSize.xsmall)
+
+t9_bar.append("text")
+  .text("Heizsystem)")
+  .attr("x", -t9_solar_text_hoffset)
   .attr("y", t9_emissions_y("solar") + t9_emissions_y.bandwidth())
   .attr("text-anchor", "end")
   .attr("font-weight", fontWeight.thin)
@@ -183,7 +202,7 @@ t9_icons.append("text")
   .attr("letter-spacing", letterSpacing);
 
 // CHART
-const t9_chart = t9_tile.append("g").attr("transform", `translate(${t9_chart_yaxis_width}, ${t9_bar_total_height + t9_puffer + t9_icon_total_height})`);
+const t9_chart = t9_tile.append("g").attr("transform", `translate(${t9_chart_yaxis_width}, ${t9_bar_total_height + t9_puffer + t9_icon_total_height + t9_chart_title_height})`);
 
 // X-Axis
 t9_chart.append("g")
