@@ -18,7 +18,7 @@ const t9_technologies = {
   "solar": {"title": "Solarthermie", "icon": "i_pv"},
   "heatpump": {"title": "Erdwärmepumpe", "icon": "i_waermepumpe"},
   "gas": {"title": "Gasheizung", "icon": "i_gas"},
-  "biomass": {"title": "Pelletheizung", "icon": "i_biomass"},
+  "biomass": {"title": "Pelletheizung", "icon": "i_pellet"},
   "oil": {"title": "Ölheizung", "icon": "i_oel"},
 };
 
