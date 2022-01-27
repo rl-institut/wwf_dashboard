@@ -1,5 +1,5 @@
 
-const t8_years = tiles[8].map(function(d) { return d.year; });
+const t8_years = tiles[8].map(function(d) { return d.year; }).slice(1);
 
 $("#t8_year").ionRangeSlider({
   grid: true,
@@ -236,7 +236,7 @@ function t8_change_year(year_index) {
   let wind = year_data.wind;
   let pv = year_data.pv;
   if (year > tiles[8][0].year) {
-    const last_year = t8_years[year_index - 1];
+    const last_year = (year == tiles[8][1].year) ? tiles[8][0].year : t8_years[year_index - 1];
     const last_year_data = tiles[8].find(element => element.year == last_year);
     wind -= last_year_data.wind;
     pv -= last_year_data.pv;
@@ -273,14 +273,14 @@ function t8_change_year(year_index) {
     .attr("fill", t8_color("pv"));
   if (middle > 0) {
     $(t8_expansion.node().appendChild(icons["i_wind_onshore"].documentElement.cloneNode(true)))
-      .attr("x", middle / 2 - t8_icon_size - t8_icon_hspace / 2)
+      .attr("x", middle / 2 - 2 * t8_icon_size - t8_icon_hspace / 2)
       .attr("y", t8_bar_height / 2 - t8_icon_size / 2)
       .attr("width", t8_icon_size)
       .attr("height", t8_icon_size)
       .attr("preserveAspectRatio", "xMidYMid slice");
     t8_expansion.append("text")
       .text(wind.toFixed(0) + " GW")
-      .attr("x", middle / 2 + t8_icon_hspace / 2)
+      .attr("x", middle / 2 + - t8_icon_size - t8_icon_hspace / 2)
       .attr("y", t8_bar_height / 2)
       .attr("text-anchor", "left")
       .attr("dominant-baseline", "central")
@@ -291,14 +291,14 @@ function t8_change_year(year_index) {
   }
   if (width - middle > 0) {
     $(t8_expansion.node().appendChild(icons["i_pv"].documentElement.cloneNode(true)))
-      .attr("x", middle + (width - middle) / 2 - t8_icon_size - t8_icon_hspace / 2)
+      .attr("x", middle + (width - middle) / 2 - 2 * t8_icon_size - t8_icon_hspace / 2)
       .attr("y", t8_bar_height / 2 - t8_icon_size / 2)
       .attr("width", t8_icon_size)
       .attr("height", t8_icon_size)
       .attr("preserveAspectRatio", "xMidYMid slice");
     t8_expansion.append("text")
       .text(pv.toFixed(0) + " GW")
-      .attr("x", middle + (width - middle) / 2 + t8_icon_hspace / 2)
+      .attr("x", middle + (width - middle) / 2 - t8_icon_size + t8_icon_hspace / 2)
       .attr("y", t8_bar_height / 2)
       .attr("text-anchor", "left")
       .attr("dominant-baseline", "central")
