@@ -24,7 +24,9 @@ const t6_icon_size = 24;
 const t6_icon_margin = 4;
 const t6_icon_padding = 8;
 const t6_icon_row_height = 10;
-const t6_icon_wrap = 2;
-const t6_icon_total_height = t6_icon_offset + 2 * t6_icon_size + t6_icon_row_height;
+const t6_icon_wrap = (is_mobile) ? 1 : 2
+const t6_icon_total_height = t6_icon_offset + (4 / t6_icon_wrap) * t6_icon_size + (4 / t6_icon_wrap - 1) * t6_icon_row_height;
 
-const t6_min_height = t6_pie_total_height + t6_chart_total_height + t6_icon_total_height;
+const t6_bottom_offset = 20;
+
+const t6_min_height = t6_pie_total_height + t6_chart_total_height + t6_icon_total_height + t6_bottom_offset;
