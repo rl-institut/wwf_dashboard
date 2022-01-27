@@ -219,6 +219,9 @@ function t6_change_date() {
           .attr("x", chart_width / 2)
           .attr("y", t6_chart_height / 2)
           .attr("text-anchor", "middle")
+          .attr("font-weight", fontWeight.thin)
+          .attr("letter-spacing", letterSpacing)
+          .style("font-size", fontSize.small)
       }
     }
   );
