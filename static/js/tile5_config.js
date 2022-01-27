@@ -2,7 +2,7 @@ const t5_header = ("year" in initials) ? initials.year : "";
 const t5_header_height = get_header_height(5)
 
 const t5_chart_offset = 20;
-const t5_chart_title_height = 40;
+const t5_chart_title_height = 50;
 const t5_chart_yaxis_width = 30;
 const t5_chart_xaxis_height = 30;
 const t5_chart_width = width - 2 * t5_chart_yaxis_width;

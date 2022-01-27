@@ -95,7 +95,7 @@ t6_tile.append("text")
 
 // DIVIDING-line
 t6_tile.append("line")
-  .attr("x1", 0)
+  .attr("x1", 0 - margin.left)
   .attr("x2", width)
   .attr("y1", t6_pie_total_height + t6_puffer / 2 + t6_chart_offset / 2)
   .attr("y2", t6_pie_total_height + t6_puffer / 2 + t6_chart_offset / 2)

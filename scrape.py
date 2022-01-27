@@ -8,6 +8,8 @@ import pandas
 RAW_DATA_FOLDER = "agora_data"
 AGORA_DATA_URL = "https://www.agora-energiewende.de/service/agorameter/chart/data/power_generation/{date}/{date}/today/chart.json"
 
+MAX_DATA_VALUE = 120000
+
 
 def get_agora_data_for_day(date: dt.date):
     if date == dt.date.today():
@@ -41,6 +43,8 @@ def get_agora_data_for_day(date: dt.date):
             [[float(value) for i, value in enumerate(d[1]) if i % 2] for d in data[:-1]]
         )
         df = df.transpose()
+        if df.max().max() > MAX_DATA_VALUE:
+            raise ValueError
         columns = [
             "pv",
             "wind_onshore",

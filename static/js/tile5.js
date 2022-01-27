@@ -68,11 +68,18 @@ const t5_tile = t5_svg.append("g")
   .attr("transform", `translate(${share_margin}, ${t5_header_height + share_margin})`);
 
 t5_tile.append("text")
-  .text("Anteil der Erzeugungstechnologien am Strommix (%)")
+  .text("Anteil der Erzeugungstechnologien")
   .attr("x", width / 2)
   .attr("y", t5_chart_offset)
   .attr("text-anchor", "middle")
-  .attr("dominant-baseline", "hanging")
+  .attr("dominant-baseline", "hanging");
+
+t5_tile.append("text")
+  .text("am Strommix (%)")
+  .attr("x", width / 2)
+  .attr("y", t5_chart_offset + t5_chart_title_height / 2)
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "hanging");
 
 // CHART
 const t5_chart = t5_tile.append("g")

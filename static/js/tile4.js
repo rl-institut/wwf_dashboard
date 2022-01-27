@@ -251,7 +251,7 @@ function t4_change_year(to_year) {
 
   for (const technology of Object.keys(t4_technologies)) {
     t4_icons.select("#t4_text_" + technology)
-      .text(year_data[technology])
+      .text(numberWithCommas(year_data[technology]))
   }
 }
 
