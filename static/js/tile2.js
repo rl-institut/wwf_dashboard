@@ -27,7 +27,7 @@ const t2_resources_names = {
   "nuclear": "Atom",
   "savings": "Einsparungen"
 };
-const t2_icons = ["i_wind_onshore", "i_bus", "i_oel", "i_gas", "i_bus", "i_pollution"];
+const t2_icons = ["i_wind_onshore", "i_oel", "i_gas", "i_coal", "i_pollution", "i_blaetter"];
 const t2_pie_positions = {"power": 0, "heat": 1, "traffic": 2};
 const t2_pie_sectors = [
   {"title": "Strom", "icon": "i_strom"},
