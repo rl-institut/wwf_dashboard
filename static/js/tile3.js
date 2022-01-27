@@ -73,7 +73,7 @@ const t3_bar = t3_bar_area.append("g")
   .attr("transform", `translate(0, ${t3_bar_title_height + 2 * t3_bar_vspace})`);
 
 t3_bar_area.append("text")
-  .text("Treibhausgasemissionen in Deutschland")
+  .text("Treibhausgasemissionen Deutschland")
   .attr("x", width / 2)
   .attr("y", t3_bar_vspace)
   .attr("text-anchor", "middle")
