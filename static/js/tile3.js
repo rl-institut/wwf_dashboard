@@ -272,7 +272,7 @@ function t3_change_year(year_index) {
     .attr("fill", t3_bar_color_reduction);
   if (middle > 0) {
     t3_emissions.append("text")
-      .text(year_data.emissions.toFixed(0))
+      .text(numberWithCommas(year_data.emissions.toFixed(0)))
       .attr("x", middle / 2)
       .attr("y", t3_bar_height / 2)
       .attr("text-anchor", "middle")
@@ -285,7 +285,7 @@ function t3_change_year(year_index) {
   if (width - middle > 0) {
     const reduction = t3_emissions_1990 - year_data.emissions;
     t3_emissions.append("text")
-      .text(reduction.toFixed(0))
+      .text(numberWithCommas(reduction.toFixed(0)))
       .attr("x", middle + (width - middle) / 2)
       .attr("y", t3_bar_height / 2)
       .attr("text-anchor", "middle")
@@ -326,7 +326,7 @@ function t3_draw_current_sector(sector) {
   t3_chart.select("#sector_number").remove();
   const value = tiles[3].sectors[tiles[3].sectors.length - 1][sector];
   t3_chart.append("text")
-    .text(value.toFixed(0))
+    .text(numberWithCommas(value.toFixed(0)))
     .attr("id", "sector_number")
     .attr("x", t3_chart_width + t3_chart_sector_space)
     .attr("y", t3_y(value))
