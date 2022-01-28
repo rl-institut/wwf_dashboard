@@ -28,7 +28,7 @@ const t2_resources_names = {
   "others": "Sonstiges",
   "savings": "Einsparungen"
 };
-const t2_icons = ["i_wind_onshore", "i_oel", "i_gas", "i_coal", "i_pollution", "i_pollution", "i_blaetter"];
+const t2_icons = ["i_wind_onshore", "i_oel", "i_gas", "i_coal", "i_pollution", "i_industrie", "i_blaetter"];
 const t2_pie_positions = {"power": 0, "heat": 1, "traffic": 2};
 const t2_pie_sectors = [
   {"title": "Strom", "icon": "i_strom"},
@@ -45,7 +45,7 @@ const t2_max = t2_resources.reduce(
 
 const t2_bar_color = d3.scaleOrdinal()
   .domain(t2_resources)
-  .range([wwfColor.mediumGreen, "black", "#3A3A3A", "#5A5A5A", "#808080", "#808080", wwfColor.aqua]);
+  .range([wwfColor.mediumGreen, "black", "#3A3A3A", "#5A5A5A", "#808080", "#9E9E9E", wwfColor.aqua]);
 
 const t2_pie_color = d3.scaleOrdinal()
     .domain(["ee", "ne", "ne2"])
@@ -325,7 +325,7 @@ function t2_draw_icons(group, resources, weight=fontWeight.normal) {
       .attr("y", t2_icon_size + 2 * t2_icon_vspace + t2_icons_rect_height)
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "hanging")
-      .attr("font-size", fontSize.small)
+      .attr("font-size", (is_mobile) ? fontSize.xsmall : fontSize.small)
       .attr("font-weight", weight)
       .attr("fill", t2_bar_color(resource));
   }
