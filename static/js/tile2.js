@@ -18,16 +18,17 @@ $("#t2_year").ionRangeSlider({
 const t2_height = (typeof t1_min_height !== 'undefined') ? Math.max(t1_min_height, t2_min_height) : t2_min_height;
 const t2_puffer = is_mobile ? 0 : (t2_height - t2_min_height);
 
-const t2_resources = ["renewables", "oil", "gas", "coal", "nuclear", "savings"];
+const t2_resources = ["renewables", "oil", "gas", "coal", "nuclear", "others", "savings"];
 const t2_resources_names = {
   "renewables": "Erneuerbare Energien",
   "oil": "Öl",
   "gas": "Gas",
   "coal": "Kohle",
   "nuclear": "Atom",
+  "others": "Sonstiges",
   "savings": "Einsparungen"
 };
-const t2_icons = ["i_wind_onshore", "i_oel", "i_gas", "i_coal", "i_pollution", "i_blaetter"];
+const t2_icons = ["i_wind_onshore", "i_oel", "i_gas", "i_coal", "i_pollution", "i_pollution", "i_blaetter"];
 const t2_pie_positions = {"power": 0, "heat": 1, "traffic": 2};
 const t2_pie_sectors = [
   {"title": "Strom", "icon": "i_strom"},
@@ -44,7 +45,7 @@ const t2_max = t2_resources.reduce(
 
 const t2_bar_color = d3.scaleOrdinal()
   .domain(t2_resources)
-  .range([wwfColor.mediumGreen, "black", "#3A3A3A", "#5A5A5A", "#808080", wwfColor.aqua]);
+  .range([wwfColor.mediumGreen, "black", "#3A3A3A", "#5A5A5A", "#808080", "#808080", wwfColor.aqua]);
 
 const t2_pie_color = d3.scaleOrdinal()
     .domain(["ee", "ne", "ne2"])
@@ -66,7 +67,7 @@ const t2_tile = t2_svg.append("g")
   .attr("transform", `translate(${share_margin}, ${t2_header_height + share_margin})`);
 
 t2_tile.append("text")
-  .text("Energieverbrauch in Deutschland (GWh)")
+  .text("Energieverbrauch in Deutschland (TWh)")
   .attr("x", width / 2)
   .attr("y", t2_bar_offset)
   .attr("text-anchor", "middle")
@@ -103,7 +104,7 @@ t2_draw_icons(t2_icon_renewables, ["renewables", "savings"], fontWeight.bold);
 
 t2_icon_fossils = t2_tile.append("g")
   .attr("transform", `translate(0, ${t2_bar_total_height + t2_icon_offset + t2_icon_row_height + t2_icon_margin})`);
-t2_draw_icons(t2_icon_fossils, ["oil", "gas", "coal", "nuclear"]);
+t2_draw_icons(t2_icon_fossils, ["oil", "gas", "coal", "nuclear", "others"]);""
 
 // ARROW
 

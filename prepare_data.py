@@ -47,17 +47,24 @@ def tile1():
 
 
 def tile2():
+    def calculate_twh(series):
+        return series
+
     data = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
         sheet_name="02 Primärenergieverbrauch (2)",
         header=6,
-        usecols=[3, 4, 5, 6, 7, 8, 9, 12, 14],
+        usecols=[3, 4, 5, 6, 7, 9, 10, 11, 12, 14],
         nrows=31,
     )
-    data.columns = ["year", "coal1", "coal2", "oil", "gas1", "gas2", "renewables", "nuclear", "savings"]
+    data.columns = ["year", "coal1", "coal2", "oil", "gas", "renewables", "others", "export", "nuclear", "savings"]
     data["coal"] = data["coal1"] + data["coal2"]
-    data["gas"] = data["gas1"] + data["gas2"]
-    data = data[["year", "coal", "oil", "gas", "renewables", "nuclear", "savings"]]
+    data["others"] = data["others"] + data["export"]
+    technologies = ["coal", "oil", "gas", "renewables", "others", "nuclear", "savings"]
+    data = data[["year"] + technologies]
+    PJ_to_TWh = 0.27777777777778
+    data[technologies] = data[technologies] * PJ_to_TWh
+    data[data < 10] = 0
 
     traffic = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
@@ -262,4 +269,4 @@ def tile10():
         json.dump(data, json_file)
 
 
-tile10()
+tile2()
