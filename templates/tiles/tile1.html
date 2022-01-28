@@ -1,55 +1,3 @@
-<div class="modal fade modal--share" id="modalShareTile1" tabindex="-1" aria-labelledby="modalShareLabelTile1" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="modalShareLabelTile1">Diagramm teilen</h3>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="logos">
-          <div class="logo logo--tw">
-            <a href="" >
-              <img src="../../static/logos/twitter_logo.svg" alt="Twitter Logo" aria-describedby="share-tw">
-              <span id="share-tw">Twitter</span>
-            </a>
-          </div>
-          <div class="logo logo--ig">
-            <a href="">
-              <img src="../../static/logos/Instagram_Glyph_Gradient_RGB.png" alt="Instagram Logo" aria-describedby="share-ig">
-              <span id="share-ig">Instagram</span>
-            </a>
-          </div>
-          <div class="logo logo--li">
-            <a href="">
-              <img src="../../static/logos/LI-In-Bug.png" alt="LinkedIn Logo" aria-describedby="share-li">
-              <span id="share-li">LinkedIn</span>
-            </a>
-          </div>
-        </div>
-        <div class="logos">
-          <div class="logo logo--fb">
-            <a href="">
-              <img src="../../static/logos/f_logo_RGB-Blue_1024.svg" alt="Facebook Logo" aria-describedby="share-fb">
-              <span id="share-fb">Facebook</span>
-            </a>
-          </div>
-          <div class="logo logo--wa">
-            <a href="">
-              <img src="../../static/logos/WhatsApp_Logo.svg" alt="WhatsApp Logo" aria-describedby="share-wa">
-              <span id="share-wa">WhatsApp</span>
-            </a>
-          </div>
-          <div class="logo logo--tg">
-            <a href="">
-              <img src="../../static/logos/Logo.svg" alt="Telegram Logo" aria-describedby="share-tg">
-              <span id="share-tg">Telegram</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="modal fade" id="modalTile1" tabindex="-1" aria-labelledby="modalLabelTile1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-fullscreen-md-down">
@@ -113,7 +61,7 @@
     <div class="tile__top">
       <h3>CO<sub>2</sub>-Ausstoß verschärft Klimakrise</h3>
       <div class="tile__options">
-        <button class="share" onclick="share(1, {year: document.getElementById('t1_year').value, mode: t1_mode});" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalShareTile1"></button>
+        <button class="share" onclick="share(1, {year: document.getElementById('t1_year').value, mode: t1_mode});"></button>
         <button class="info" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile1"></button>
       </div>
     </div>
