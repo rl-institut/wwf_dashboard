@@ -65,6 +65,7 @@ def get_agora_data_for_day(date: dt.date):
         # Agora data sometimes does not include c02_gkWh
         df.columns = columns if len(df.columns) == 15 else columns[:-1]
         df["renewables"] = df[["wind_offshore", "hydro", "biomass", "pump"]].sum(axis=1)
+        df = df / 1000
         df = df[["wind_onshore", "pv", "fossil", "renewables"]].reset_index()
         df.to_json(pathlib.Path(RAW_DATA_FOLDER) / ts_filename, orient="records")
         share = {"renewable_share": (1 - df["fossil"].sum() / df.sum().sum()) * 100}

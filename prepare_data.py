@@ -47,9 +47,6 @@ def tile1():
 
 
 def tile2():
-    def calculate_twh(series):
-        return series
-
     data = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
         sheet_name="02 Primärenergieverbrauch (2)",
@@ -269,4 +266,4 @@ def tile10():
         json.dump(data, json_file)
 
 
-tile2()
+tile6()

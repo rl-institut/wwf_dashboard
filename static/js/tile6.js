@@ -18,10 +18,10 @@ const t6_technologies = {
   "fossil": {"title": "Konventionelle Kraftwerke", "icon": "i_pollution_16", "icon_color": "white"},
 };
 
-const y_max = 120000;
+const y_max = 120;
 
 const t6_x = d3.scaleLinear()
-  .range([ 0, chart_width ])
+  .range([ 0, t6_chart_width ])
   .domain([0, 23])
 const t6_y = d3.scaleLinear()
   .range([ t6_chart_height, 0 ])
@@ -47,7 +47,7 @@ t6_svg.append("rect")
 draw_header(t6_svg, 6, t6_header);
 
 const t6_tile = t6_svg.append("g")
-  .attr("transform", `translate(${t6_chart_yaxis_width + share_margin}, ${t6_header_height + share_margin})`);
+  .attr("transform", `translate(${share_margin}, ${t6_header_height + share_margin})`);
 
 // PIE
 
@@ -95,7 +95,7 @@ t6_tile.append("text")
 
 // DIVIDING-line
 t6_tile.append("line")
-  .attr("x1", 0 - margin.left)
+  .attr("x1", 0)
   .attr("x2", width)
   .attr("y1", t6_pie_total_height + t6_puffer / 2 + t6_chart_offset / 2)
   .attr("y2", t6_pie_total_height + t6_puffer / 2 + t6_chart_offset / 2)
@@ -106,16 +106,25 @@ t6_tile.append("line")
 
 "Stromerzeugung an diesem Tag (GW)"
 const t6_chart_area = t6_tile.append("g")
-  .attr("transform", `translate(0, ${t6_pie_total_height + t6_puffer + t6_chart_offset})`);
+  .attr("transform", `translate(${t6_chart_yaxis_width}, ${t6_pie_total_height + t6_puffer + t6_chart_offset})`);
 
 t6_chart_area.append("text")
-  .text("Stromerzeugung an diesem Tag (GW)")
+  .text("Stromerzeugung an diesem Tag")
   .attr("x", chart_width / 2)
   .attr("text-anchor", "middle")
   .attr("dominant-baseline", "hanging")
   .attr("font-weight", fontWeight.semibold)
   .attr("letter-spacing", letterSpacing)
-  .attr("font-size", fontSize.normal)
+  .attr("font-size", fontSize.normal);
+
+t6_chart_area.append("text")
+  .text("(GW)")
+  .attr("x", -t6_chart_yaxis_width)
+  .attr("text-anchor", "start")
+  .attr("dominant-baseline", "hanging")
+  .attr("fill", wwfColor.gray1)
+  .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing);
 
 const t6_chart = t6_chart_area.append("g")
   .attr("transform", `translate(0, ${t6_chart_title_height})`);
@@ -136,11 +145,21 @@ d3.select("#t6_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0)
 
 t6_chart.append("line")
   .attr("x1", 0)
-  .attr("x2", chart_width)
+  .attr("x2", t6_chart_width)
   .attr("y1", t6_chart_height)
   .attr("y2", t6_chart_height)
   .attr("stroke", wwfColor.black)
   .attr("stroke-width", chart_axis_stroke_width);
+
+t6_chart.append("text")
+  .text("Uhrzeit")
+  .attr("x", t6_chart_width / 2)
+  .attr("y", t6_chart_height + t6_chart_xaxis_height)
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "hanging")
+  .attr("fill", wwfColor.gray1)
+  .attr("font-size", fontSize.xsmall)
+  .attr("letter-spacing", letterSpacing);
 
 // Y-Axis
 t6_chart.append("g")
@@ -164,7 +183,7 @@ const t6_icons = t6_tile.append("g")
 
 for (const technology of Object.keys(t6_technologies)) {
   const i = Object.keys(t6_technologies).indexOf(technology)
-  const x = (i % t6_icon_wrap) * chart_width / 2;
+  const x = (i % t6_icon_wrap) * t6_chart_width / 2 + t6_chart_yaxis_width;
   const y = (parseInt(i / t6_icon_wrap)) * (t6_icon_size + t6_icon_row_height);
 
   // Icon text gets 1/5 of height, symbol and rect get 2/5 of height
