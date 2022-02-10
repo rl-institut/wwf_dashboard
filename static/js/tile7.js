@@ -200,7 +200,7 @@ function t7_change_bars(distance_index) {
     if (distance_index >= distance_switch) {
       bar_index += 1;
     }
-    const emissions_per_km = tiles[7].find(element => element.vehicle == t7_vehicle_names[vehicle]).emission;
+    const emissions_per_km = tiles[7].find(element => element.vehicle == t7_vehicle_names[vehicle]).emission / 1000;
     emissions[bar_index] = emissions_per_km * distances[distance_index];
   }
 
@@ -219,7 +219,7 @@ function t7_change_bars(distance_index) {
 
     if (((distance_index < distance_switch) && (i < 5)) || ((distance_index >= distance_switch) && (i > 0))) {
       t7_bars.append("text")
-        .text(emissions[i].toFixed(0))
+        .text(emissions[i].toFixed(3))
         .attr("x", x + t7_x.bandwidth() / 2)
         .attr("y", height - t7_bar_text_space)
         .attr("text-anchor", "middle")

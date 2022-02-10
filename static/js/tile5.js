@@ -97,7 +97,11 @@ t5_chart.append("g")
     )
   )
   .selectAll("text")
-    .style("text-anchor", "end");
+    .attr("text-anchor", "middle")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("letter-spacing", letterSpacing)
+    .attr("font-weight", fontWeight.thin);
 d3.select("#t5_xaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t5_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -115,8 +119,13 @@ t5_chart.append("g")
   .call(
     d3.axisLeft(t5_y)
   )
-  .select('.domain')
-    .attr('stroke-width', 0);
+  .selectAll('text')
+    .style("text-anchor", "end")
+    .attr("fill", wwfColor.gray2)
+    .attr("font-size", fontSize.xsmall)
+    .attr("letter-spacing", letterSpacing)
+    .attr("font-weight", fontWeight.thin);
+d3.select("#t5_yaxis").select('.domain').attr('stroke-width', 0);
 d3.select("#t5_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
 const t5_y_grid = t5_chart.append("g")
