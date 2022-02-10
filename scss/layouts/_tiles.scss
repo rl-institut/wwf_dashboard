@@ -70,6 +70,10 @@
     &--date-picker {
       @include flex-row-justify-center;
       padding-top: 2rem;
+      
+      img {
+        cursor: pointer;
+      }
     }
   }
 }

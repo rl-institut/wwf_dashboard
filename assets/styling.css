@@ -550,4 +550,8 @@ h3 {
           justify-content: center;
   padding-top: 2rem;
 }
+
+.tile__slider--date-picker img {
+  cursor: pointer;
+}
 /*# sourceMappingURL=styling.css.map */
