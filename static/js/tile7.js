@@ -218,8 +218,12 @@ function t7_change_bars(distance_index) {
       .attr("height", t7_chart_height - height)
 
     if (((distance_index < distance_switch) && (i < 5)) || ((distance_index >= distance_switch) && (i > 0))) {
+      let em = emissions[i];
+      if (em > 100) {
+        em = Math.round(em);
+      }
       t7_bars.append("text")
-        .text(emissions[i].toFixed(3))
+        .text(em.toLocaleString(undefined, {maximumFractionDigits: 2}))
         .attr("x", x + t7_x.bandwidth() / 2)
         .attr("y", height - t7_bar_text_space)
         .attr("text-anchor", "middle")
