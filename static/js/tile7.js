@@ -18,7 +18,7 @@ $("#t7_distance").ionRangeSlider({
   }
 });
 
-const t7_height = (typeof t8_min_height !== 'undefined') ? Math.max(t7_min_height, t8_min_height) : t7_min_height;
+const t7_height = (typeof t6_min_height !== 'undefined') ? Math.max(t6_min_height, t7_min_height) : t7_min_height;
 const t7_puffer = is_mobile ? 0 : (t7_height - t7_min_height);
 
 const t7_routes = [

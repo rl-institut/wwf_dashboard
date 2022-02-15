@@ -17,6 +17,10 @@ $("#t1_year").ionRangeSlider({
   }
 });
 
+const t1_slider_height = 120;
+const t1_height = (typeof t10_min_height !== 'undefined') ? Math.max(t10_min_height - t1_slider_height, t1_min_height) : t1_min_height;
+const t1_puffer = is_mobile ? 0 : (t1_height - t1_min_height);
+
 const t1_ppm_max = tiles[1].global.reduce(function(max, current){if (current.ppm > max) {return current.ppm} else {return max}}, 0);
 const t1_co2_global_max = tiles[1].global.reduce(function(max, current){if (current.co2 > max) {return current.co2} else {return max}}, 0);
 const t1_co2_brd_max = tiles[1].brd.reduce(function(max, current){if (current.co2 > max) {return current.co2} else {return max}}, 0);
@@ -45,7 +49,7 @@ const t1_selected_bar_width = t1_x.bandwidth() * 2;
 const t1_svg = d3.select("#t1")
   .append("svg")
     .attr("width", width + 2 * share_margin)
-    .attr("height", t1_header_height + t1_min_height + 2 * share_margin);
+    .attr("height", t1_header_height + t1_height + 2 * share_margin);
 
 t1_svg.append("rect")
   .attr("width", "100%")
@@ -144,7 +148,7 @@ t1_tile.append("text")
 
 // ICONS
 
-const t1_icons = t1_tile.append("g").attr("transform", `translate(0, ${t1_chart_total_height})`);
+const t1_icons = t1_tile.append("g").attr("transform", `translate(0, ${t1_chart_total_height + t1_puffer / 3})`);
 
 // PPM Icon
 $(t1_icons.node().appendChild(icons["i_atmosphaere"].documentElement.cloneNode(true)))
@@ -290,7 +294,7 @@ if (is_mobile_xs) {
 }
 
 // Temperature scale
-t1_temperature = t1_tile.append("g").attr("transform", `translate(0, ${t1_chart_total_height + t1_icon_total_height + t1_temperature_offset})`);
+t1_temperature = t1_tile.append("g").attr("transform", `translate(0, ${t1_chart_total_height + t1_icon_total_height + t1_temperature_offset + t1_puffer * 2 / 3})`);
 
 t1_temperature.append("text")
   .text("Temperaturänderungen")

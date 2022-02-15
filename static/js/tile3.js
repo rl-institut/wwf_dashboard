@@ -36,7 +36,7 @@ const t3_sectors_max = Object.keys(t3_sectors).reduce(
   0
 );
 
-const t3_height = (typeof t3_min_height !== 'undefined') ? Math.max(t3_min_height, t3_min_height) : t3_min_height;
+const t3_height = (typeof t2_min_height !== 'undefined') ? Math.max(t2_min_height, t3_min_height) : t3_min_height;
 const t3_puffer = is_mobile ? 0 : (t3_height - t3_min_height);
 
 const t3_emissions_1990 = tiles[3].emissions[0].emissions;

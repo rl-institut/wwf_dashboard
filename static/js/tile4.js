@@ -15,7 +15,7 @@ $("#t4_year").ionRangeSlider({
   }
 });
 
-const t4_height = (typeof t4_min_height !== 'undefined') ? Math.max(t4_min_height, t4_min_height) : t4_min_height;
+const t4_height = (typeof t5_min_height !== 'undefined') ? Math.max(t5_min_height, t4_min_height) : t4_min_height;
 const t4_puffer = is_mobile ? 0 : t4_height - t4_min_height;
 
 const t4_technologies = {
