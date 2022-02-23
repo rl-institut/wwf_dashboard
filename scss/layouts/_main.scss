@@ -1,6 +1,6 @@
 .dashboard {
-  @include flex-row-justify-center;
   width: 100%;
+  max-width: 1208px;
   padding: $layout-padding-small;
 
   @media only screen and (max-width: $tile-width) {
@@ -12,15 +12,11 @@
     padding: 0;
   }
 
-  &__maxwidth {
-    width: 100%;
-    max-width: $layout-max-width;
-  }
-
   &__row {
     @include flex-column-align-center;
+    width: 100%;
 
-    @media only screen and (min-width: $screen-width-min-l) {
+    @media only screen and (min-width: 1208px) {
       @include flex-row-space-between;
       flex-wrap: wrap;
       align-items: stretch;
