@@ -410,7 +410,6 @@ h3 {
 }
 
 .dashboard__maxwidth {
-  width: 100%;
   max-width: 1208px;
 }
 
@@ -425,9 +424,10 @@ h3 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 100%;
 }
 
-@media only screen and (min-width: calc(1262px + 1px)) {
+@media only screen and (min-width: 1208px) {
   .dashboard__row {
     display: -webkit-box;
     display: -ms-flexbox;
