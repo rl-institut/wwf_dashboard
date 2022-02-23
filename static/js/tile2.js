@@ -243,7 +243,7 @@ function t2_draw_bars(year_data) {
     .attr("fill", function(d) {return t2_bar_color(d.key);});
 
   for (const resource of t2_resources) {
-    t2_tile.select("#t2_icon_" + resource).text(numberWithCommas(year_data[resource].toFixed(0)))
+    t2_tile.select("#t2_icon_" + resource).text(year_data[resource].toLocaleString(undefined, {maximumFractionDigits: 0}))
   }
 }
 

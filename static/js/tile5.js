@@ -219,7 +219,7 @@ function t5_change_year(to_year) {
 
   for (const technology of Object.keys(t5_technologies)) {
     t5_icons.select("#t5_text_" + technology)
-      .text(year_data[technology].toFixed(1) + " %")
+      .text(year_data[technology].toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1}) + " %")
   }
 }
 

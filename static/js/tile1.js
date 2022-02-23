@@ -388,7 +388,7 @@ function t1_change_year(to_year) {
   }
 
   t1_tile.select("#t1_ppm_icon").text(year_data.ppm.toFixed(0) + " ppm");
-  const current_co2 = (year_data.co2 == null) ? "- Mt" : numberWithCommas(year_data.co2.toFixed(0)) + " Mt";
+  const current_co2 = (year_data.co2 == null) ? "- Mt" : year_data.co2.toLocaleString(undefined, {maximumFractionDigits: 0}) + " Mt";
   t1_tile.select("#t1_co2_icon").text(current_co2);
   t1_tile.select("#t1_temp_icon").text(year_data.temperature.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " °C");
   const current_temp = t1_mode == "global" ? t1_temp_global : t1_temp_brd;
