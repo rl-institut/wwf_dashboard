@@ -382,8 +382,17 @@ h3 {
 }
 
 .dashboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 100%;
-  max-width: 1208px;
   padding: 1.5rem;
 }
 
@@ -398,6 +407,10 @@ h3 {
   .dashboard {
     padding: 0;
   }
+}
+
+.dashboard__maxwidth {
+  max-width: 1208px;
 }
 
 .dashboard__row {
