@@ -223,7 +223,7 @@ function t6_change_date() {
   $.get(
     {
       url: "agora",
-      async: false,
+      async: true,
       data: {date: date},
       dataType: "json",
       success: function(result){
