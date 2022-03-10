@@ -155,7 +155,7 @@ for (const technology of Object.keys(t5_technologies)) {
 
 // ICONS
 
-const t5_icons = t5_tile.append("g").attr("transform", `translate(${t5_icon_hspace}, ${t5_chart_total_height + t5_icon_offset + t5_puffer})`);
+const t5_icons = t5_tile.append("g").attr("transform", `translate(${t5_icon_hspace}, ${t5_chart_total_height + t5_icon_offset + t5_puffer / 2})`);
 
 for (const [i, technology] of Object.keys(t5_technologies).entries()) {
   const y_offset = parseInt(i / 3) * (t5_icon_size + 2 * t5_icon_vspace + t5_icon_height + t5_icon_text_height + t5_icon_wrap_height)
