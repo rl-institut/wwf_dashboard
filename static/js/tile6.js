@@ -8,7 +8,7 @@ $("#t6_date").datepicker(
 );
 $("#t6_date").on("changeDate", t6_change_date);
 
-const t6_height = (typeof t7_min_height !== 'undefined') ? Math.max(t7_min_height, t6_min_height) : t6_min_height;
+const t6_height = (is_mobile) ? t6_min_height : (typeof t7_min_height !== 'undefined') ? Math.max(t7_min_height, t6_min_height) : t6_min_height;
 const t6_puffer = is_mobile ? 0 : (t6_height - t6_min_height);
 
 const t6_technologies = {
