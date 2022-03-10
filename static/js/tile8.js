@@ -60,7 +60,7 @@ const t8_tile = t8_svg.append("g")
 
 // BAR
 
-const t8_bar = t8_tile.append("g").attr("transform", `translate(0, 0)`);
+const t8_bar = t8_tile.append("g").attr("transform", `translate(0, ${t8_puffer / 2})`);
 t8_bar.append("text")
   .text("Notwendiger Ausbau pro Jahr")
   .attr("x", width / 2)
