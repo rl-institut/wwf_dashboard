@@ -244,5 +244,5 @@ for (const modal of modals) {
 
 function setModalPosition(event) {
   const modal = event.target;
-  modal.style.marginTop = `${window.top.scrollY}px`;
+  modal.style.marginTop = `${window.scrollY}px`;
 }
