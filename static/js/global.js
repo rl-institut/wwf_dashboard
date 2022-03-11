@@ -237,9 +237,11 @@ function draw_header(svg, tile, scenario) {
     .attr("dominant-baseline", "hanging");
 }
 
-const modals = document.querySelectorAll(".modal");
-for (const modal of modals) {
-    modal.addEventListener('show.bs.modal', setModalPosition);
+if (window.top.document.querySelector("iframe")) {
+  const modals = document.querySelectorAll(".modal");
+  for (const modal of modals) {
+      modal.addEventListener('show.bs.modal', setModalPosition);
+  }
 }
 
 function setModalPosition(event) {
