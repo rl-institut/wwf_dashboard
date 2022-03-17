@@ -4,7 +4,9 @@ import nest_asyncio
 import datetime as dt
 import json
 from flask import Flask, render_template, request
+from flask_cors import CORS
 
+import settings
 from settings import DEBUG, ICONS, PASSWORD
 import scrape
 import share
@@ -30,6 +32,7 @@ dictConfig({
 })
 
 app = Flask(__name__)
+CORS(app, origins=settings.CORS_ORIGINS)
 
 
 @app.route("/", methods=["GET"])

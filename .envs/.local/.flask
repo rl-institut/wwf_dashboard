@@ -1,2 +1,3 @@
 
 DEBUG=True
+CORS_ORIGINS=https://wwf.de
