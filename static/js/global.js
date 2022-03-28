@@ -120,7 +120,6 @@ function share(tile, options) {
     {
       url: "share/" + tile,
       data: {
-        svg: tile_svg.outerHTML,
         options: JSON.stringify(options),
       },
       dataType: "json",
