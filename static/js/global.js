@@ -94,7 +94,7 @@ const headers = [
   },
   {
     title: ["Zu viele fossile Heizungen"],
-    description: ["Die Wärmewende gilt als der “schlafender Riese“ für den", "Klimaschutz. Nicht immer werden viele fossil befeuerte", "Heizungen verbaut. Dabei gibt es längst klimafreundliche", "Alternativen zu Öl und Gas."]
+    description: ["Die Wärmewende gilt als der “schlafender Riese“ für den", "Klimaschutz. Noch immer werden viele fossil befeuerte", "Heizungen verbaut. Dabei gibt es längst klimafreundliche", "Alternativen zu Öl und Gas."]
   },
 ]
 
