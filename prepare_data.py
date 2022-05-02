@@ -266,7 +266,43 @@ def tile10():
         json.dump(data, json_file)
 
 
-for i in range(1, 11):
-    if i == 6:
-        continue
-    exec(f"tile{i}()")
+def tile11():
+    imports = pandas.read_excel(
+        os.path.join(RAW_DATA_PATH, FILENAME),
+        sheet_name="11 Fossile Abhängigkeiten",
+        header=7,
+        usecols="D:G",
+        nrows=5,
+    )
+    imports.columns = ["year", "coal", "oil", "gas"]
+
+    data = {
+        "imports": imports.to_dict(orient="records"),
+    }
+
+    nrows = 5
+    for i, type_ in enumerate(("coal", "oil", "gas")):
+        header = 7 + i * (4 + nrows)
+        df = pandas.read_excel(
+            os.path.join(RAW_DATA_PATH, FILENAME),
+            sheet_name="11 Fossile Abhängigkeiten",
+            header=header,
+            usecols=[8, 9, 10, 11, 12, 15],
+            nrows=5,
+            index_col=0
+        )
+        df.columns = list(df.columns)[1:4] + ["others", "import"]
+        df = (df * 100).round()
+        df = df.reset_index()
+        data[type_] = df.to_dict(orient="records")
+
+    with open(os.path.join(DATA_PATH, "tile11.json"), "w") as json_file:
+        json.dump(data, json_file)
+
+
+tile11()
+
+# for i in range(1, 12):
+#     if i == 6:
+#         continue
+#     exec(f"tile{i}()")
