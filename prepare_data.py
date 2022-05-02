@@ -6,7 +6,7 @@ import pathlib
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-FILENAME = "WWF_Daten_Dashboard_Version 4.1._18.1.2022.xlsx"
+FILENAME = "WWF_Daten_Dashboard_V10_Final plus fossile Abhängigkeit_28. März 2022.xlsx"
 
 DATA_PATH = "static/data"
 RAW_DATA_PATH = "raw_data"
@@ -49,7 +49,7 @@ def tile1():
 def tile2():
     data = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
-        sheet_name="02 Primärenergieverbrauch (2)",
+        sheet_name="02 Energieverbrauch",
         header=6,
         usecols=[3, 4, 5, 6, 7, 9, 10, 11, 12, 14],
         nrows=31,
@@ -65,7 +65,7 @@ def tile2():
 
     traffic = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
-        sheet_name="02 Primärenergieverbrauch (2)",
+        sheet_name="02 Energieverbrauch",
         header=6,
         usecols=[16, 17, 18],
         nrows=31,
@@ -74,7 +74,7 @@ def tile2():
 
     power = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
-        sheet_name="02 Primärenergieverbrauch (2)",
+        sheet_name="02 Energieverbrauch",
         header=6,
         usecols=[22, 23, 24],
         nrows=31,
@@ -83,7 +83,7 @@ def tile2():
 
     heat = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
-        sheet_name="02 Primärenergieverbrauch (2)",
+        sheet_name="02 Energieverbrauch",
         header=6,
         usecols=[28, 29, 30],
         nrows=31,
@@ -150,7 +150,7 @@ def tile5():
 def tile7():
     data = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
-        sheet_name="07 Emissionen nach Personen-km",
+        sheet_name="07 Klima-Mobilität",
         header=8,
         usecols=[2, 3, 5],
         nrows=30,
@@ -177,7 +177,7 @@ def tile8():
 def tile9():
     installations = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
-        sheet_name="09 Gebäudewärme",
+        sheet_name="09 Heizungen",
         header=7,
         usecols=range(3, 9),
         nrows=11,
@@ -185,12 +185,12 @@ def tile9():
     installations.columns = ["year", "biomass", "heatpump", "gas", "oil", "solar"]
     emissions = pandas.read_excel(
         os.path.join(RAW_DATA_PATH, FILENAME),
-        sheet_name="09 Gebäudewärme",
+        sheet_name="09 Heizungen",
         header=7,
         usecols=range(12, 19),
         nrows=1,
     )
-    emissions.columns = ["biomass", "heatpump", "gas", "oil", "solar"]
+    emissions.columns = ["solar", "heatpump", "gas", "biomass", "oil"]
     data = {
         "installations": installations.to_dict(orient="records"),
         "emissions": emissions.iloc[0].to_dict()
@@ -266,4 +266,7 @@ def tile10():
         json.dump(data, json_file)
 
 
-tile6()
+for i in range(1, 11):
+    if i == 6:
+        continue
+    exec(f"tile{i}()")
