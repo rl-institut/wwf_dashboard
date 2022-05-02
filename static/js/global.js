@@ -1,3 +1,6 @@
+
+const num_tiles = 11;
+
 const wwfColor = {
   white: "rgb(255, 255, 255)",
   black: "rgb(0, 0, 0)",
@@ -96,7 +99,11 @@ const headers = [
     title: ["Zu viele fossile Heizungen"],
     description: ["Die Wärmewende gilt als der “schlafender Riese“ für den", "Klimaschutz. Noch immer werden viele fossil befeuerte", "Heizungen verbaut. Dabei gibt es längst klimafreundliche", "Alternativen zu Öl und Gas."]
   },
-]
+  {
+    title: ["Mit Erneuerbaren und Effizienz", "fossile Abhängigkeiten ersetzen"],
+    description: ["Bei Erdgas, Öl und Steinkohle ist Deutschland ", "fast gänzlich von Importen aus dem Ausland abhängig.", "Indem wir Erneuerbare Energien ausbauen und Energie einsparen,", "erhöhen wir die Energiesicherheit."]
+  }
+];
 
 const header_margin = 20;
 const header_title_height = 30;
@@ -107,7 +114,7 @@ const share_margin = has_header * 32;
 
 
 function find_tile() {
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= num_tiles; i++) {
     let tile = document.getElementById("t" + i);
     if (tile) {return tile}
   }
@@ -134,7 +141,7 @@ function share(tile, options) {
 }
 
 var tiles = {};
-for (let i = 1; i <= 10; i++) {
+for (let i = 1; i <= num_tiles; i++) {
   $.ajax(
     {
       url: "static/data/tile" + i + ".json",
