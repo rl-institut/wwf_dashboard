@@ -1,19 +1,19 @@
 
-let t11_sector;
-const t11_emission_years = tiles[11].imports.map(function(d) { return d.year; });
+let t11_import_type;
+const t11_years = tiles[11].imports.map(function(d) { return d.year; });
 
 $("#t11_year").ionRangeSlider({
   grid: true,
   prettify_enabled: false,
   skin: "round",
   hide_min_max: true,
-  values: t11_emission_years,
+  values: t11_years,
   from: tiles[11].imports[tiles[11].imports.length - 1].year,
   onChange: function (data) {
-    t11_change_year(data.from)
+    t11_change_year(data.from);
   },
   onUpdate: function (data) {
-    t11_change_year(data.from)
+    t11_change_year(data.from);
   }
 });
 
@@ -26,9 +26,9 @@ const t11_imports = {
 const t11_imports_max = Object.keys(t11_imports).reduce(
   (max, key) => {
     if (tiles[11].imports[0][key] > max) {
-      return tiles[11].imports[0][key]
+      return tiles[11].imports[0][key];
     } else {
-      return max
+      return max;
     }
   },
   0
@@ -46,6 +46,9 @@ const t11_y = d3.scaleLinear()
 const t11_color = d3.scaleOrdinal()
   .domain(Object.keys(t11_imports))
   .range([wwfColor.black, wwfColor.red, wwfColor.yellow]);
+const t11_text_color = d3.scaleOrdinal()
+  .domain(Object.keys(t11_imports))
+  .range([wwfColor.white, wwfColor.white, wwfColor.black]);
 
 const t11_svg = d3.select("#t11")
   .append("svg")
@@ -62,94 +65,26 @@ draw_header(t11_svg, 3, t11_header);
 const t11_tile = t11_svg.append("g")
   .attr("transform", `translate(${share_margin}, ${t11_header_height + share_margin})`);
 
-// BAR
-
-const t11_bar_area = t11_tile.append("g").attr("transform", `translate(0, 0)`);
-const t11_bar = t11_bar_area.append("g")
-  .attr("transform", `translate(0, ${t11_bar_title_height + 2 * t11_bar_vspace})`);
-
-t11_bar_area.append("text")
-  .text("Treibhausgasemissionen Deutschland")
-  .attr("x", width / 2)
-  .attr("y", t11_bar_vspace)
-  .attr("text-anchor", "middle")
-  .attr("dominant-baseline", "hanging")
-  .attr("font-weight", fontWeight.normal)
-  .attr("letter-spacing", letterSpacing)
-  .attr("font-size",fontSize.normal);
-
-t11_bar_area.append("text")
-  .text("Mio. t CO2-Äquivalente")
-  .attr("x", width / 2)
-  .attr("y", t11_bar_vspace + t11_bar_title_height / 2)
-  .attr("text-anchor", "middle")
-  .attr("dominant-baseline", "hanging")
-  .attr("font-weight", fontWeight.thin)
-  .attr("letter-spacing", letterSpacing)
-  .attr("font-size",fontSize.xsmall);
-
-t11_bar_area.append("rect")
-  .attr("x", 0)
-  .attr("y", 3 * t11_bar_vspace + t11_bar_title_height + t11_bar_height)
-  .attr("width", t11_bar_legend_size)
-  .attr("height", t11_bar_legend_size);
-
-t11_bar_area.append("rect")
-  .attr("x", width / 2)
-  .attr("y", 3 * t11_bar_vspace + t11_bar_title_height + t11_bar_height)
-  .attr("width", t11_bar_legend_size)
-  .attr("height", t11_bar_legend_size)
-  .attr("fill", t11_bar_color_reduction);
-
-t11_bar_area.append("text")
-  .text("Emissionen")
-  .attr("x", t11_bar_legend_size + legendLeftPadding)
-  .attr("y", 3 * t11_bar_vspace + t11_bar_title_height + t11_bar_height + t11_bar_legend_size / 2)
-  .attr("text-anchor", "left")
-  .attr("dominant-baseline", "central")
-  .attr("font-size", fontSize.xsmall)
-  .attr("font-weight", fontWeight.normal)
-  .attr("letter-spacing", letterSpacing);
-
-t11_bar_area.append("text")
-  .text("Emissionsreduktion")
-  .attr("x", width / 2 + t11_bar_legend_size + legendLeftPadding)
-  .attr("y", 3 * t11_bar_vspace + t11_bar_title_height + t11_bar_height + t11_bar_legend_size / 2)
-  .attr("text-anchor", "left")
-  .attr("dominant-baseline", "central")
-  .attr("font-size", fontSize.xsmall)
-  .attr("font-weight", fontWeight.normal)
-  .attr("letter-spacing", letterSpacing);
-
-
-// DIVIDING-line
-t11_tile.append("line")
-  .attr("x1", 0)
-  .attr("x2", width)
-  .attr("y1", t11_bar_total_height + t11_puffer / 2 + t11_icon_offset / 2)
-  .attr("y2", t11_bar_total_height + t11_puffer / 2 + t11_icon_offset / 2)
-  .attr("stroke", tickColor)
-  .attr("stroke-width", 1);
 
 // ICONS
 
-const t11_icons = t11_tile.append("g").attr("transform", `translate(0, ${t11_bar_total_height + t11_puffer + t11_icon_offset})`);
-const t11_icon_left = (width - 5 * t11_circle_size - 4 * t11_icon_hspace) / 2;
-for (const [i, sector] of Object.keys(t11_sectors).entries()) {
-  const icon = t11_sectors[sector].icon;
+const t11_icons = t11_tile.append("g").attr("transform", `translate(0, ${t11_puffer + t11_icon_offset})`);
+const t11_icon_left = (width - 3 * t11_circle_size - 2 * t11_icon_hspace) / 2;
+for (const [i, import_type] of Object.keys(t11_imports).entries()) {
+  const icon = t11_imports[import_type].icon;
   const x = t11_icon_left + i * (t11_circle_size + t11_icon_hspace) + t11_circle_size / 2;
   t11_icons.append("circle")
-    .attr("id", "t11_circle_" + sector)
-    .attr("onclick", `t11_change_sector("${sector}")`)
+    .attr("id", "t11_circle_" + import_type)
+    .attr("onclick", `t11_change_import_type("${import_type}")`)
     .attr("onmouseover", function() { d3.select(this).style("cursor", "pointer"); })
     .attr("cx", x)
     .attr("cy", t11_circle_size / 2)
     .attr("r", t11_circle_size / 2)
     .attr("fill", t11_circe_color_gray);
   $(t11_icons.node().appendChild(icons[icon].documentElement.cloneNode(true)))
-    .attr("onclick", `t11_change_sector("${sector}")`)
+    .attr("onclick", `t11_change_import_type("${import_type}")`)
     .attr("onmouseover", function() { d3.select(this).style("cursor", "pointer"); })
-    .attr("id", "t11_icon_" + sector)
+    .attr("id", "t11_icon_" + import_type)
     .attr("x", x - t11_icon_size / 2)
     .attr("y", t11_circle_size / 2 - t11_icon_size / 2)
     .attr("width", t11_icon_size)
@@ -164,21 +99,21 @@ t11_icons.append("text")
   .attr("x", width / 2)
   .attr("y", t11_circle_size + t11_icon_vspace)
   .attr("text-anchor", "middle")
-  .attr("dominant-baseline", "hanging")
+  .attr("dominant-baseline", "hanging");
 
 // CHART
-const t11_chart_area = t11_tile.append("g").attr("transform", `translate(0, ${t11_bar_total_height + t11_puffer + t11_icon_total_height})`);
+const t11_chart_area = t11_tile.append("g").attr("transform", `translate(0, ${t11_puffer + t11_icon_total_height})`);
 const t11_chart = t11_chart_area.append("g").attr("transform", `translate(${t11_chart_axes_width}, ${t11_chart_unit_height})`);
 
 // Unit
 t11_chart_area.append("text")
-  .text("Mio. t CO2-Äquivalente")
+  .text("Fossile Energieimporte (TWh)")
   .attr("x", 0)
   .attr("y", 0)
   .attr("dominant-baseline", "hanging")
   .attr("fill", wwfColor.gray2)
   .style("font-size", fontSize.xsmall)
-  .attr("letter-spacing", letterSpacing)
+  .attr("letter-spacing", letterSpacing);
 
 // X-Axis
 t11_chart.append("g")
@@ -187,7 +122,7 @@ t11_chart.append("g")
   .call(
     d3.axisBottom(t11_x).ticks(3).tickFormat(
       function(year) {
-        return year
+        return year;
       }
     )
   )
@@ -227,122 +162,215 @@ const t11_y_grid = t11_chart.append("g")
       .tickSize(-t11_chart_width)
       .tickFormat('')
       .ticks(5)
-    )
+    );
 t11_y_grid.selectAll(".tick").select("line")
   .attr("stroke-width", tickStrokeWidth)
-  .attr("stroke", tickColor)
+  .attr("stroke", tickColor);
 t11_y_grid.select('.domain').attr('stroke-width', 0);
 
 // Grayed sector paths
-for (const sector of Object.keys(t11_sectors)) {
+for (const import_type of Object.keys(t11_imports)) {
   t11_chart.append("path")
-    .datum(tiles[3].sectors)
+    .datum(tiles[11].imports)
     .attr("fill", "none")
     .attr("stroke", "#E2E2E2")
     .attr("stroke-width", line_width)
     .attr("d", d3.line()
-      .x(function(d) {return t11_x(d.year)})
-      .y(function(d) {return t11_y(d[sector])})
-    )
+      .x(function(d) {return t11_x(d.year);})
+      .y(function(d) {return t11_y(d[import_type]);})
+    );
+}
+
+// BARS
+
+const t11_bar_area = t11_tile.append("g").attr("transform", `translate(0, ${t11_puffer + t11_icon_total_height + t11_chart_total_height + t11_bar_offset})`);
+
+t11_bar_area.append("text")
+  .text("Importabhängigkeit Deutschlands und")
+  .attr("x", width / 2)
+  .attr("text-anchor", "middle")
+  .attr("letter-spacing", letterSpacing)
+  .attr("dominant-baseline", "hanging");
+
+t11_bar_area.append("text")
+  .text("wichtigste Lieferländer (%)")
+  .attr("x", width / 2)
+  .attr("y", t11_bar_title_height / 2)
+  .attr("text-anchor", "middle")
+  .attr("letter-spacing", letterSpacing)
+  .attr("dominant-baseline", "hanging");
+
+const t11_bar_width = t11_chart_width - t11_bar_text_offset - t11_bar_text_width;
+
+const t11_bar = t11_bar_area.append("g").attr("transform", `translate(0, ${t11_bar_title_height + t11_bar_title_offset})`);
+
+t11_bar.append("text")
+  .text("Importabhängigkeit")
+  .attr("x", t11_bar_width + t11_bar_text_offset)
+  .attr("y", t11_bar_height / 2)
+  .attr("text-anchor", "start")
+  .attr("dominant-baseline", "middle")
+  .attr("fill", wwfColor.black)
+  .attr("font-weight", fontWeight.bold)
+  .style("font-size", fontSize.small)
+  .attr("letter-spacing", letterSpacing);
+
+t11_bar.append("rect")
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("width", t11_bar_width)
+  .attr("height", t11_bar_height)
+  .attr("fill", wwfColor.gray3);
+
+for (let i = 0; i <= 3; i++) {
+  t11_bar.append("rect")
+    .attr("x", 0)
+    .attr("y", 0 + t11_bar_height + t11_bar_top_vspace + i * (t11_bar_height + t11_bar_vspace))
+    .attr("width", t11_bar_width)
+    .attr("height", t11_bar_height)
+    .attr("fill", wwfColor.gray3);
 }
 
 function t11_change_year(year_index) {
-  const year = t11_emission_years[year_index];
-  const year_data = tiles[3].emissions.find(element => element.year == year);
+  const year = t11_years[year_index];
+  const year_data = tiles[11][t11_import_type].find(element => element.year == year);
 
-  t11_bar.select("#t11_emissions").remove();
-  const t11_emissions = t11_bar.append("g")
-    .attr("id", "t11_emissions");
+  t11_chart.select("#t11_year_line").remove();
+  t11_chart.append("line")
+    .attr("id", "t11_year_line")
+    .attr("x1", t11_x(year))
+    .attr("x2", t11_x(year))
+    .attr("y1", 0)
+    .attr("y2", t11_chart_height)
+    .attr("stroke", wwfColor.black)
+    .attr("stroke-width", dash_width)
+    .attr("stroke-dasharray", dash_spacing);
 
-  const middle = width * (year_data.emissions / t11_emissions_1990);
-  t11_emissions.append("rect")
-    .attr("x", 0)
+  const t11_bar_imports_x = d3.scaleLinear()
+    .range([0, t11_bar_width])
+    .domain([0, 100]);
+
+  t11_bar.select("#t11_imports").remove();
+  const t11_imports = t11_bar.append("g")
+    .attr("id", "t11_imports");
+
+  // Total imports
+  t11_imports.append("rect")
+    .attr("x", t11_bar_width - t11_bar_imports_x(year_data.import))
     .attr("y", 0)
-    .attr("width", middle)
-    .attr("height", t11_bar_height);
-  t11_emissions.append("rect")
-    .attr("x", middle)
-    .attr("y", 0)
-    .attr("width", width - middle)
+    .attr("width", t11_bar_imports_x(year_data.import))
     .attr("height", t11_bar_height)
-    .attr("fill", t11_bar_color_reduction);
-  if (middle > 0) {
-    t11_emissions.append("text")
-      .text(year_data.emissions.toLocaleString(undefined, {maximumFractionDigits: 0}))
-      .attr("x", middle / 2)
-      .attr("y", t11_bar_height / 2)
-      .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "central")
-      .attr("fill", wwfColor.white)
-      .attr("font-weight", fontWeight.bold)
-      .attr("letter-spacing", letterSpacing)
-      .attr("font-size",fontSize.xsmall);
-  }
-  if (width - middle > 0) {
-    const reduction = t11_emissions_1990 - year_data.emissions;
-    t11_emissions.append("text")
-      .text(reduction.toLocaleString(undefined, {maximumFractionDigits: 0}))
-      .attr("x", middle + (width - middle) / 2)
-      .attr("y", t11_bar_height / 2)
-      .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "central")
-      .attr("fill", wwfColor.white)
-      .attr("font-weight", fontWeight.bold)
-      .attr("letter-spacing", letterSpacing)
-      .attr("font-size",fontSize.xsmall);
+    .attr("fill", t11_color(t11_import_type));
+
+  t11_imports.append("text")
+    .text(year_data["import"].toLocaleString(undefined, {maximumFractionDigits: 0}))
+    .attr("x", t11_bar_width - t11_bar_text_offset)
+    .attr("y", t11_bar_height / 2)
+    .attr("text-anchor", "end")
+    .attr("dominant-baseline", "middle")
+    .attr("fill", t11_text_color(t11_import_type))
+    .attr("font-weight", fontWeight.bold)
+    .style("font-size", fontSize.small)
+    .attr("letter-spacing", letterSpacing);
+
+  countries = Object.keys(year_data).filter(key => !["year", "import"].includes(key));
+  for (const [i, country] of countries.entries()) {
+    t11_imports.append("rect")
+      .attr("x", t11_bar_width - t11_bar_imports_x(year_data[country]))
+      .attr("y", t11_bar_height + t11_bar_top_vspace + i * (t11_bar_height + t11_bar_vspace))
+      .attr("width", t11_bar_imports_x(year_data[country]))
+      .attr("height", t11_bar_height)
+      .attr("fill", t11_color(t11_import_type));
+
+    t11_imports.append("text")
+      .text(country)
+      .attr("x", t11_bar_width + t11_bar_flag_size + 2 * t11_bar_text_offset)
+      .attr("y", t11_bar_height + t11_bar_top_vspace + i * (t11_bar_height + t11_bar_vspace) + t11_bar_height / 2)
+      .attr("text-anchor", "start")
+      .attr("dominant-baseline", "middle")
+      .attr("fill", wwfColor.black)
+      .attr("font-weight", fontWeight.normal)
+      .style("font-size", fontSize.small)
+      .attr("letter-spacing", letterSpacing);
+
+    if (year_data[country] < 9) {
+      t11_imports.append("text")
+        .text(year_data[country].toLocaleString(undefined, {maximumFractionDigits: 0}))
+        .attr("x", t11_bar_width - t11_bar_imports_x(year_data[country]) - t11_bar_text_offset)
+        .attr("y", t11_bar_height + t11_bar_top_vspace + i * (t11_bar_height + t11_bar_vspace) + t11_bar_height / 2)
+        .attr("text-anchor", "end")
+        .attr("dominant-baseline", "middle")
+        .attr("fill", wwfColor.black)
+        .attr("font-weight", fontWeight.bold)
+        .style("font-size", fontSize.small)
+        .attr("letter-spacing", letterSpacing);
+    } else {
+      t11_imports.append("text")
+        .text(year_data[country].toLocaleString(undefined, {maximumFractionDigits: 0}))
+        .attr("x", t11_bar_width - t11_bar_text_offset)
+        .attr("y", t11_bar_height + t11_bar_top_vspace + i * (t11_bar_height + t11_bar_vspace) + t11_bar_height / 2)
+        .attr("text-anchor", "end")
+        .attr("dominant-baseline", "middle")
+        .attr("fill", t11_text_color(t11_import_type))
+        .attr("font-weight", fontWeight.bold)
+        .style("font-size", fontSize.small)
+        .attr("letter-spacing", letterSpacing);
+    }
   }
 }
 
-function t11_activate_sector(sector) {
+function t11_activate_import_type(import_type) {
   t11_icons.select("#t11_sector_title")
-    .text(t11_sectors[sector].title)
+    .text(t11_imports[import_type].title);
   t11_icons.selectAll("circle")
-    .attr("fill", t11_circe_color_gray)
+    .attr("fill", t11_circe_color_gray);
   t11_icons.selectAll("path")
-    .style("fill", wwfColor.black)
-  t11_icons.select("#t11_circle_" + sector)
-    .attr("fill", t11_color(sector))
-  t11_icons.select("#t11_icon_" + sector).select("path")
-    .style("fill", wwfColor.white)
+    .style("fill", wwfColor.black);
+  t11_icons.select("#t11_circle_" + import_type)
+    .attr("fill", t11_color(import_type));
+  t11_icons.select("#t11_icon_" + import_type).select("path")
+    .style("fill", wwfColor.white);
 }
 
-function t11_draw_current_sector(sector) {
-  t11_chart.select("#sector_line").remove();
+function t11_draw_current_import_type(import_type) {
+  t11_chart.select("#import_type_line").remove();
   t11_chart.append("g")
-    .attr("id", "sector_line")
+    .attr("id", "import_type_line")
     .append("path")
-      .datum(tiles[3].sectors)
+      .datum(tiles[11].imports)
       .attr("fill", "none")
-      .attr("stroke", t11_color(sector))
+      .attr("stroke", t11_color(import_type))
       .attr("stroke-width", line_width)
       .attr("d", d3.line()
-        .x(function(d) {return t11_x(d.year)})
-        .y(function(d) {return t11_y(d[sector])})
-      )
-  t11_chart.select("#sector_number").remove();
-  const value = tiles[3].sectors[tiles[3].sectors.length - 1][sector];
+        .x(function(d) {return t11_x(d.year);})
+        .y(function(d) {return t11_y(d[import_type]);})
+      );
+  t11_chart.select("#import_type_number").remove();
+  const value = tiles[11].imports[tiles[11].imports.length - 1][import_type];
   t11_chart.append("text")
     .text(value.toLocaleString(undefined, {maximumFractionDigits: 0}))
-    .attr("id", "sector_number")
-    .attr("x", t11_chart_width + t11_chart_sector_space)
+    .attr("id", "import_type_number")
+    .attr("x", t11_chart_width + t11_chart_import_type_space)
     .attr("y", t11_y(value))
     .attr("dominant-baseline", "middle")
-    .attr("fill", t11_color(sector))
+    .attr("fill", t11_color(import_type))
     .attr("font-size", fontSize.xsmall)
     .attr("font-weight", fontWeight.thin);
 }
 
-function t11_change_sector(sector) {
-  t11_sector = sector;
-  t11_activate_sector(sector);
-  t11_draw_current_sector(sector);
+function t11_change_import_type(import_type) {
+  t11_import_type = import_type;
+  t11_activate_import_type(import_type);
+  t11_draw_current_import_type(import_type);
+  t11_change_year($("#t11_year").data("ionRangeSlider").result.from);
 }
 
-t11_change_sector(("sector" in initials) ? initials.sector : "agriculture");
-
+t11_import_type = ("import_type" in initials) ? initials.import_type : "coal";
 if ("year" in initials) {
   const init_data = $("#t11_year").data("ionRangeSlider");
-  init_data.update({from: t11_emission_years.indexOf(parseInt(initials.year))})
+  init_data.update({from: t11_years.indexOf(parseInt(initials.year))});
 } else {
-  t11_change_year(t11_emission_years.length - 1);
+  t11_change_year(t11_years.length - 1);
 }
+
+t11_change_import_type(t11_import_type);

@@ -291,8 +291,9 @@ def tile11():
             nrows=5,
             index_col=0
         )
-        df.columns = list(df.columns)[1:4] + ["others", "import"]
+        df.columns = list(df.columns)[:4] + ["import"]
         df = (df * 100).round()
+        df.index.name = "year"
         df = df.reset_index()
         data[type_] = df.to_dict(orient="records")
 
