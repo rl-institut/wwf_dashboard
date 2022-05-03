@@ -24,12 +24,12 @@ const t11_imports = {
 };
 
 const t11_flags = {
-  "Australien": "au",
-  "Kasachstan": "kz",
-  "USA": "um",
-  "Russland": "ru",
-  "Norwegen": "no",
-  "Niederlande": "nl"
+  "Australien": "au_small",
+  "Kasachstan": "kz_small",
+  "USA": "um_small",
+  "Russland": "ru_small",
+  "Norwegen": "no_small",
+  "Niederlande": "nl_small"
 };
 
 const t11_imports_max = Object.keys(t11_imports).reduce(

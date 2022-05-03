@@ -100,6 +100,9 @@ const headers = [
     description: ["Die Wärmewende gilt als der “schlafender Riese“ für den", "Klimaschutz. Noch immer werden viele fossil befeuerte", "Heizungen verbaut. Dabei gibt es längst klimafreundliche", "Alternativen zu Öl und Gas."]
   },
   {
+    title: "Placeholder for tile 10, which is shared as GIF"
+  },
+  {
     title: ["Mit Erneuerbaren und Effizienz", "fossile Abhängigkeiten ersetzen"],
     description: ["Bei Erdgas, Öl und Steinkohle ist Deutschland ", "fast gänzlich von Importen aus dem Ausland abhängig.", "Indem wir Erneuerbare Energien ausbauen und Energie einsparen,", "erhöhen wir die Energiesicherheit."]
   }
