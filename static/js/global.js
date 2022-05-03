@@ -31,7 +31,7 @@ const fontWeight = {
   normal: 400,
   semibold: 500,
   bold: 600
-}
+};
 
 const fontSize = {
   xxsmall: "10px",
@@ -39,7 +39,7 @@ const fontSize = {
   small: "14px",
   normal: "16px",
   large: "18px"
-}
+};
 
 const letterSpacing = "0.3px";
 const legendLeftPadding = 8;
@@ -116,7 +116,7 @@ const share_margin = has_header * 32;
 function find_tile() {
   for (let i = 1; i <= num_tiles; i++) {
     let tile = document.getElementById("t" + i);
-    if (tile) {return tile}
+    if (tile) {return tile;}
   }
 }
 
@@ -133,7 +133,7 @@ function share(tile, options) {
       success: function(result){
         const download_link = document.getElementById("download");
         download_link.href = result.share_link;
-        download_link.download = "wwf_share.png"
+        download_link.download = "wwf_share.png";
         download_link.click();
       }
     }
@@ -150,7 +150,7 @@ for (let i = 1; i <= num_tiles; i++) {
         tiles[i] = data;
       }
     }
-  )
+  );
 }
 
 var icons = {};
@@ -164,7 +164,20 @@ for (let i = 0; i < icon_names.length; i++) {
         icons[name] = data;
       }
     }
-  )
+  );
+}
+
+for (let i = 0; i < flags.length; i++) {
+  let name = flags[i];
+  $.ajax(
+    {
+      url: "static/images/flags/" + name + ".svg",
+      async: false,
+      success: function(data) {
+        icons[name] = data;
+      }
+    }
+  );
 }
 
 $.ajax(
@@ -175,7 +188,7 @@ $.ajax(
       icons["agora_logo"] = data;
     }
   }
-)
+);
 
 $.ajax(
   {
@@ -185,11 +198,11 @@ $.ajax(
       icons["wwf_logo"] = data;
     }
   }
-)
+);
 const wwfLogo = {width: 32, height: 47};
 
 function get_header_height(tile, with_subtitle=true) {
-  if (!has_header) {return 0}
+  if (!has_header) {return 0;}
   let height = headers[tile - 1].title.length * header_title_height + headers[tile - 1].description.length * header_line_height + 3 * header_margin;
   if (with_subtitle) {
     height += header_line_height + 2 * header_margin;
@@ -198,7 +211,7 @@ function get_header_height(tile, with_subtitle=true) {
 }
 
 function draw_header(svg, tile, scenario) {
-  if (!has_header) {return}
+  if (!has_header) {return;}
   const header_height = get_header_height(tile, false);
   const header = svg.append("g")
     .attr("transform", `translate(${share_margin}, ${share_margin})`);

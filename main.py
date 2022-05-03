@@ -7,7 +7,7 @@ from flask import Flask, render_template, request
 from flask_cors import CORS
 
 import settings
-from settings import DEBUG, ICONS, PASSWORD
+from settings import DEBUG, ICONS, FLAGS, PASSWORD
 import scrape
 import share
 
@@ -37,7 +37,7 @@ CORS(app, origins=settings.CORS_ORIGINS)
 
 @app.route("/", methods=["GET"])
 def dashboard():
-    return render_template("index.html", icons=ICONS, debug=DEBUG, password=PASSWORD)
+    return render_template("index.html", icons=ICONS, flags=FLAGS, debug=DEBUG, password=PASSWORD)
 
 
 @app.route("/<int:tile>", methods=["GET"])
@@ -49,6 +49,7 @@ def get_tile(tile):
         tile_js=f"static/js/tile{tile}.js",
         initials=json.dumps(request.args),
         icons=ICONS,
+        flags=FLAGS,
         debug=DEBUG,
         password=PASSWORD
     )

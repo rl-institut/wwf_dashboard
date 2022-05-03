@@ -1,5 +1,5 @@
 const t11_header = ("year" in initials) ? initials.year : "";
-const t11_header_height = get_header_height(11)
+const t11_header_height = get_header_height(11);
 
 const t11_icon_offset = 40;
 const t11_circle_size = 40;
