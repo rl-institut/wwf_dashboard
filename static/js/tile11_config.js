@@ -25,7 +25,7 @@ const t11_bar_height = 25;
 const t11_bar_top_vspace = 40;
 const t11_bar_vspace = 15;
 const t11_bar_text_width = 100;
-const t11_bar_flag_size = 16;
+const t11_bar_flag_size = 20;
 const t11_bar_text_offset = 10;
 const t11_bar_total_height = t11_bar_offset + t11_bar_title_height + t11_bar_title_offset + t11_bar_top_vspace + 3 * t11_bar_vspace + 5 * t11_bar_height;
 

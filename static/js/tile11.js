@@ -29,7 +29,8 @@ const t11_flags = {
   "USA": "um_small",
   "Russland": "ru_small",
   "Norwegen": "no_small",
-  "Niederlande": "nl_small"
+  "Niederlande": "nl_small",
+  "Sonstige ": "i_world"
 };
 
 const t11_imports_max = Object.keys(t11_imports).reduce(
@@ -291,14 +292,12 @@ function t11_change_year(year_index) {
       .attr("height", t11_bar_height)
       .attr("fill", t11_color(t11_import_type));
 
-    if (country != "Sonstige ") {
-      $(t11_imports.node().appendChild(icons[t11_flags[country]].documentElement.cloneNode(true)))
-        .attr("x", t11_bar_width + t11_bar_text_offset)
-        .attr("y", t11_bar_height + t11_bar_top_vspace + i * (t11_bar_height + t11_bar_vspace) + t11_bar_height / 2 - t11_bar_flag_size / 2)
-        .attr("width", t11_bar_flag_size)
-        .attr("height", t11_bar_flag_size)
-        .attr("preserveAspectRatio", "xMidYMid slice");
-    }
+    $(t11_imports.node().appendChild(icons[t11_flags[country]].documentElement.cloneNode(true)))
+      .attr("x", t11_bar_width + t11_bar_text_offset)
+      .attr("y", t11_bar_height + t11_bar_top_vspace + i * (t11_bar_height + t11_bar_vspace) + t11_bar_height / 2 - t11_bar_flag_size / 2)
+      .attr("width", t11_bar_flag_size)
+      .attr("height", t11_bar_flag_size)
+      .attr("preserveAspectRatio", "xMidYMid slice");
 
     t11_imports.append("text")
       .text(country)
