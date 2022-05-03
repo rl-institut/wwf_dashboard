@@ -70,7 +70,7 @@ t11_svg.append("rect")
   .attr("height", "100%")
   .attr("fill", "white");
 
-draw_header(t11_svg, 3, t11_header);
+draw_header(t11_svg, 11, t11_header);
 
 const t11_tile = t11_svg.append("g")
   .attr("transform", `translate(${share_margin}, ${t11_header_height + share_margin})`);
