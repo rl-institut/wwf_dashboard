@@ -196,14 +196,14 @@ for (const import_type of Object.keys(t11_imports)) {
 const t11_bar_area = t11_tile.append("g").attr("transform", `translate(0, ${t11_puffer + t11_icon_total_height + t11_chart_total_height + t11_bar_offset})`);
 
 t11_bar_area.append("text")
-  .text("Importabhängigkeit Deutschlands und")
+  .text("Importabhängigkeit Deutschlands")
   .attr("x", width / 2)
   .attr("text-anchor", "middle")
   .attr("letter-spacing", letterSpacing)
   .attr("dominant-baseline", "hanging");
 
 t11_bar_area.append("text")
-  .text("wichtigste Lieferländer (%)")
+  .text("und Hauptlieferländer (%)")
   .attr("x", width / 2)
   .attr("y", t11_bar_title_height / 2)
   .attr("text-anchor", "middle")
