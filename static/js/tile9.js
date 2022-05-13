@@ -25,7 +25,7 @@ const t9_technologies = {
 const t9_technologies_max = Math.max(...Object.values(tiles[9].installations[tiles[9].installations.length - 1])) / 1000;
 const t9_emissions_max = Math.max(...Object.values(tiles[9].emissions));
 
-const t9_height = (is_mobile) ? t9_min_height : (typeof t8_min_height !== 'undefined') ? Math.max(t8_min_height, t9_min_height) : t9_min_height;
+const t9_height = get_tile_height(9);
 const t9_puffer = is_mobile ? 0 : (t9_height - t9_min_height);
 
 const t9_emissions_x = d3.scaleLinear()

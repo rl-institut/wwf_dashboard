@@ -24,8 +24,7 @@ const t8_gw_max = (
   tiles[8].reduce(function(max, current){if (current.wind > max) {return current.wind} else {return max}}, 0)
 );
 
-const t9_slider_height = 120;
-const t8_height = (is_mobile) ? t8_min_height : (typeof t9_min_height !== 'undefined') ? Math.max(t9_min_height - t9_slider_height, t8_min_height) : t8_min_height;
+const t8_height = get_tile_height(8);
 const t8_puffer = is_mobile ? 0 : (t8_height - t8_bar_total_height - t8_chart_total_height) / 2;
 
 const t8_emissions_1990 = tiles[3].emissions[0].emissions;

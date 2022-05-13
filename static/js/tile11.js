@@ -44,7 +44,7 @@ const t11_imports_max = Object.keys(t11_imports).reduce(
   0
 );
 
-const t11_height = (is_mobile) ? t11_min_height : (typeof t2_min_height !== 'undefined') ? Math.max(t2_min_height, t11_min_height) : t11_min_height;
+const t11_height = get_tile_height(11);
 const t11_puffer = is_mobile ? 0 : (t11_height - t11_min_height);
 
 const t11_x = d3.scaleLinear()

@@ -15,7 +15,7 @@ $("#t5_year").ionRangeSlider({
   }
 });
 
-const t5_height = (is_mobile) ? t5_min_height : (typeof t4_min_height !== 'undefined') ? Math.max(t4_min_height, t5_min_height) : t5_min_height;
+const t5_height = get_tile_height(5);
 const t5_puffer = is_mobile ? 0 : t5_height - t5_min_height;
 
 const t5_technologies = {

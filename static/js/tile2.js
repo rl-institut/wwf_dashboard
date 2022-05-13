@@ -15,7 +15,7 @@ $("#t2_year").ionRangeSlider({
   }
 });
 
-const t2_height = (is_mobile) ? t2_min_height : (typeof t3_min_height !== 'undefined') ? Math.max(t3_min_height, t2_min_height) : t2_min_height;
+const t2_height = get_tile_height(2);
 const t2_puffer = is_mobile ? 0 : (t2_height - t2_min_height);
 
 const t2_resources = ["renewables", "oil", "gas", "coal", "nuclear", "others", "savings"];

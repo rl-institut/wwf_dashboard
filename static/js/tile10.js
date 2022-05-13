@@ -13,7 +13,7 @@ $("#t10_year").ionRangeSlider({
   }
 });
 
-const t10_height = (is_mobile) ? t10_min_height : (typeof t1_min_height !== 'undefined') ? Math.max(t1_min_height, t10_min_height) : t10_min_height;
+const t10_height = get_tile_height(10);
 
 const drought = document.getElementById("drought");
 drought.width = width;

@@ -1,5 +1,38 @@
 
 const num_tiles = 11;
+// Historically, tile number equals position on dashboard - but meanwhile postion and tile number diverged.
+// Neighbours: Position-Tile pairs
+const neighbours = {
+  1: 1,
+  2: 10,
+  3: 11,
+  4: 2,
+  5: 3,
+  6: 4,
+  7: 5,
+  8: 6,
+  9: 7,
+  10: 8,
+  11: 9,
+}
+
+const tiles_with_no_slider = [6, 8];
+const slider_height = 120;
+
+function get_tile_height(tile) {
+  const tile_min_height = eval(`t${tile}_min_height`);
+  const tile_position = Object.keys(neighbours).find(key => neighbours[key] === tile);
+  const neighbour_position = tile_position & 1 ? parseInt(tile_position) + 1 : parseInt(tile_position) - 1;
+  const neighbour_tile = neighbours[neighbour_position];
+  if (is_mobile || neighbour_position > num_tiles || typeof eval(`t${neighbour_tile}_min_height`) == 'undefined') {
+    return tile_min_height;
+  }
+  let reduce_height = 0;
+  if (tiles_with_no_slider.includes(tile) && !tiles_with_no_slider.includes(neighbour_tile)) {
+    reduce_height = slider_height;
+  }
+  return Math.max(eval(`t${neighbour_tile}_min_height`) - reduce_height, tile_min_height)
+}
 
 const wwfColor = {
   white: "rgb(255, 255, 255)",

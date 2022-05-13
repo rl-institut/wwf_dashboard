@@ -17,8 +17,7 @@ $("#t1_year").ionRangeSlider({
   }
 });
 
-const t1_slider_height = 120;
-const t1_height = (is_mobile) ? t1_min_height : (typeof t10_min_height !== 'undefined') ? Math.max(t10_min_height - t1_slider_height, t1_min_height) : t1_min_height;
+const t1_height = get_tile_height(1);
 const t1_puffer = is_mobile ? 0 : (t1_height - t1_min_height);
 
 const t1_ppm_max = tiles[1].global.reduce(function(max, current){if (current.ppm > max) {return current.ppm} else {return max}}, 0);
