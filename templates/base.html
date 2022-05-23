@@ -35,11 +35,7 @@
         onReady: function () {
           if ('parentIFrame' in window) {
             const pageInfo = parentIFrame.getPageInfo(function (pageInfo) {
-              const modalHeight = 516;
-              let scrollTop = pageInfo.scrollTop;
-              let clientHeight = pageInfo.clientHeight;
-
-              let modalTop = (scrollTop - clientHeight) - modalHeight;
+              let modalTop = (pageInfo.scrollTop - pageInfo.offsetTop) + 100;
               let modals = document.querySelectorAll('.modal');
               for (let modal of modals ) {
                 modalTop <= 0 ?
