@@ -35,15 +35,17 @@
         onReady: function () {
           if ('parentIFrame' in window) {
             const pageInfo = parentIFrame.getPageInfo(function (pageInfo) {
-              const modalHeight = 195;
+              const modalHeight = 516;
               let scrollTop = pageInfo.scrollTop;
               let clientHeight = pageInfo.clientHeight;
 
-              let modalTop = (scrollTop - clientHeight) + modalHeight;
-
-              modalTop <= 0 ?
-                document.querySelector('.modal').style.top = 0 :
-                document.querySelector('.modal').style.top = `${modalTop}px`
+              let modalTop = (scrollTop - clientHeight) - modalHeight;
+              let modals = document.querySelectorAll('.modal');
+              for (let modal of modals ) {
+                modalTop <= 0 ?
+                  modal.style.top = 0 :
+                  modal.style.top = `${modalTop}px`;
+              }
             });
           }
         }
