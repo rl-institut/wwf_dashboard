@@ -24,14 +24,19 @@ function get_tile_height(tile) {
   const tile_position = Object.keys(neighbours).find(key => neighbours[key] === tile);
   const neighbour_position = tile_position & 1 ? parseInt(tile_position) + 1 : parseInt(tile_position) - 1;
   const neighbour_tile = neighbours[neighbour_position];
-  if (is_mobile || neighbour_position > num_tiles || typeof eval(`t${neighbour_tile}_min_height`) == 'undefined') {
+  try {
+    neighbour_min_height = eval(`t${neighbour_tile}_min_height`);
+  } catch(e) {
+    return tile_min_height;
+  }
+  if (is_mobile || neighbour_position > num_tiles) {
     return tile_min_height;
   }
   let reduce_height = 0;
   if (tiles_with_no_slider.includes(tile) && !tiles_with_no_slider.includes(neighbour_tile)) {
     reduce_height = slider_height;
   }
-  return Math.max(eval(`t${neighbour_tile}_min_height`) - reduce_height, tile_min_height)
+  return Math.max(neighbour_min_height - reduce_height, tile_min_height)
 }
 
 const wwfColor = {
