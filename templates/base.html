@@ -36,7 +36,7 @@
           if ('parentIFrame' in window) {
             const pageInfo = parentIFrame.getPageInfo(function (pageInfo) {
               let modalTop = (pageInfo.scrollTop - pageInfo.offsetTop) + 100;
-              let modalHeight = pageInfo.clientHeight;
+              let modalHeight = pageInfo.clientHeight * 0.8;
               let modals = document.querySelectorAll('.modal');
               for (let modal of modals ) {
                 modalTop <= 0 ? modal.style.top = 0 : modal.style.top = `${modalTop}px`;
