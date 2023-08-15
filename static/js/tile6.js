@@ -322,6 +322,5 @@ function t6_increase_date() {
   }
 }
 
-let two_days_earlier = new Date();
-two_days_earlier.setDate(two_days_earlier.getDate() - 2);
-$("#t6_date").datepicker("setDate", ("date" in initials) ? new Date(initials.date) : two_days_earlier);
+const today = new Date();
+$("#t6_date").datepicker("setDate", ("date" in initials) ? new Date(initials.date) : today);
