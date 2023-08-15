@@ -1,3 +1,4 @@
+import calendar
 import datetime as dt
 import pathlib
 import json
@@ -80,7 +81,16 @@ def get_agora_data_for_day(date: dt.date) -> tuple[dict, float]:
 
 
 def get_start_of_week(date: dt.date):
-    return dt.date(year=date.year, month=date.month, day=date.day - date.weekday())
+    start_of_week_day = date.day - date.weekday()
+    year = date.year
+    month = date.month
+    if start_of_week_day < 1:
+        month = month - 1
+        if month < 1:
+            month = 12
+            year = year - 1
+        start_of_week_day = calendar.monthrange(year, month)[1] + start_of_week_day
+    return dt.date(year=year, month=month, day=start_of_week_day)
 
 
 def get_smard_data_for_day(date: dt.date) -> tuple[dict, float]:
