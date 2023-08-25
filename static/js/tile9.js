@@ -22,7 +22,7 @@ const t9_technologies = {
   "oil": {"title": "Ölheizung", "icon": "i_oel"},
 };
 
-const t9_technologies_max = Math.max(...Object.values(tiles[9].installations[tiles[9].installations.length - 1])) / 1000;
+const t9_technologies_max = Math.max(...Object.values(tiles[9].installations[tiles[9].installations.length - 2])) / 1000;
 const t9_emissions_max = Math.max(...Object.values(tiles[9].emissions));
 
 const t9_height = get_tile_height(9);

@@ -30,8 +30,8 @@ const t5_technologies = {
 const t5_renewables = Object.keys(t5_technologies).filter(key => key != "fossil");
 const t5_y_max = t5_renewables.reduce(
   (max, key) => {
-    if (tiles[5][tiles[5].length - 1][key] > max) {
-      return tiles[5][tiles[5].length - 1][key]
+    if (tiles[5][tiles[5].length - 3][key] > max) {
+      return tiles[5][tiles[5].length - 3][key]
     } else {
       return max
     }

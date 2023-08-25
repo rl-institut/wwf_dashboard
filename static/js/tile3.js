@@ -27,8 +27,8 @@ const t3_sectors = {
 
 const t3_sectors_max = Object.keys(t3_sectors).reduce(
   (max, key) => {
-    if (tiles[3].sectors[0][key] > max) {
-      return tiles[3].sectors[0][key]
+    if (tiles[3].sectors[2][key] > max) {
+      return tiles[3].sectors[2][key]
     } else {
       return max
     }
