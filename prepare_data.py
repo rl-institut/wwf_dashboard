@@ -224,6 +224,8 @@ def tile10():
         2018: ((59, 10, 636, 760), -9),
         2019: ((59, 10, 636, 760), -9),
         2020: ((59, 10, 636, 760), -9),
+        2021: ((59, 10, 636, 760), -9),
+        2022: ((59, 10, 636, 760), -9),
     }
     months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
     for year, (crop, m) in years.items():
@@ -302,6 +304,6 @@ def tile11():
 
 
 for i in range(1, 12):
-    if i == 6 or i == 10:
+    if i == 6:
         continue
     exec(f"tile{i}()")
