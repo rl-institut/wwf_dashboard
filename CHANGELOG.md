@@ -6,6 +6,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 
 ## [Unreleased]
 ### Changed
+- updated data to year 2022
 - Tile6 API from agora to SMARD 
 
 ## [1.0.0] - 2022
