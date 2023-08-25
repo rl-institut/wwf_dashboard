@@ -23,16 +23,6 @@ const t11_imports = {
   "gas": {"title": "Gas", "icon": "i_gas"},
 };
 
-const t11_flags = {
-  "Australien": "au_small",
-  "Kasachstan": "kz_small",
-  "USA": "um_small",
-  "Russland": "ru_small",
-  "Norwegen": "no_small",
-  "Niederlande": "nl_small",
-  "Sonstige ": "i_world"
-};
-
 const t11_imports_max = Object.keys(t11_imports).reduce(
   (max, key) => {
     if (tiles[11].imports[0][key] > max) {
@@ -231,15 +221,6 @@ t11_bar.append("rect")
   .attr("width", t11_bar_width)
   .attr("height", t11_bar_height)
   .attr("fill", wwfColor.gray3);
-
-for (let i = 0; i <= 3; i++) {
-  t11_bar.append("rect")
-    .attr("x", 0)
-    .attr("y", 0 + t11_bar_height + t11_bar_top_vspace + i * (t11_bar_height + t11_bar_vspace))
-    .attr("width", t11_bar_width)
-    .attr("height", t11_bar_height)
-    .attr("fill", wwfColor.gray3);
-}
 
 function t11_change_year(year_index) {
   const year = t11_years[year_index];
