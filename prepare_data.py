@@ -6,7 +6,7 @@ import pathlib
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-FILENAME = "WWF_Daten_Dashboard_Überarbeitung_Stand 24 Juli 2023_V2.1.xlsx"
+FILENAME = "WWF_Daten_Dashboard_Überarbeitung_Stand 23 August 2023_V2.4.xlsx"
 
 DATA_PATH = "static/data"
 RAW_DATA_PATH = "raw_data"
@@ -272,7 +272,7 @@ def tile11():
         sheet_name="03 Fossile Abhängigkeiten",
         header=7,
         usecols="D:G",
-        nrows=5,
+        nrows=7,
     )
     imports.columns = ["year", "coal", "oil", "gas"]
 
@@ -287,11 +287,11 @@ def tile11():
             os.path.join(RAW_DATA_PATH, FILENAME),
             sheet_name="03 Fossile Abhängigkeiten",
             header=header,
-            usecols=[8, 9, 10, 11, 12, 15],
-            nrows=5,
+            usecols=[8, 15],
+            nrows=7,
             index_col=0
         )
-        df.columns = list(df.columns)[:4] + ["import"]
+        df.columns = ["import"]
         df = (df * 100).round()
         df.index.name = "year"
         df = df.reset_index()
@@ -302,6 +302,6 @@ def tile11():
 
 
 for i in range(1, 12):
-    if i == 6:
+    if i == 6 or i == 10:
         continue
     exec(f"tile{i}()")
