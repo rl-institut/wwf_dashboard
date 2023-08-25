@@ -2,6 +2,8 @@
 import pathlib
 import environs
 
+VERSION = "1.0.0dev"
+
 env = environs.Env()
 
 DEBUG = env.bool("DEBUG", False)
