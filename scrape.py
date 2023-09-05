@@ -110,9 +110,8 @@ def get_smard_data_for_day(date: dt.date) -> tuple[dict, float]:
         "pump_storages": 4070,
     }
     week_date = get_start_of_week(date)
-    timestamp = time.mktime(
-        dt.datetime(week_date.year, week_date.month, week_date.day).timetuple()
-    )
+    timestamp = int(dt.datetime(week_date.year, week_date.month, week_date.day,
+                    tzinfo=dt.timezone(dt.timedelta(hours=2))).timestamp())
     timestamp_formatted = str(int(timestamp)) + "000"
 
     week_day_index = 24 * date.weekday()
