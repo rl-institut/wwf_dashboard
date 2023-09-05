@@ -1,11 +1,11 @@
-FROM python:3.8.0-slim
+FROM python:3.10.0-slim
 
 RUN apt-get update && \
     apt-get install -y \
         build-essential \
         make \
         gcc \
-        libffi6 libffi-dev libcairo2-dev \
+        libffi7 libffi-dev libcairo2-dev \
 ca-certificates \
 fonts-liberation \
 libappindicator3-1 \
