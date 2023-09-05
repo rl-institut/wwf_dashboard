@@ -1,5 +1,6 @@
 import calendar
 import datetime as dt
+import logging
 import pathlib
 import json
 import js2xml
@@ -122,6 +123,9 @@ def get_smard_data_for_day(date: dt.date) -> tuple[dict, float]:
             technology_id=technology_id, date=timestamp_formatted
         )
         response = requests.get(url)
+        if response.status_code != 200:
+            logging.error(f"Could not scrape SMARD data for {url=}. Status code {response.status_code}, reason: {response.reason}, details: {response.text}")
+            raise ValueError(f"No SMARD data for {technology=}")
         technology_data = response.json()
         for i in range(week_day_index, week_day_index + 24):
             value = technology_data["series"][i][1]
