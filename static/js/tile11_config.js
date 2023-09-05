@@ -11,7 +11,7 @@ const t11_icon_title_height = 22;
 const t11_icon_total_height = t11_icon_offset + t11_circle_size + 2 * t11_icon_vspace + t11_icon_title_height;
 
 const t11_chart_unit_height = 30;
-const t11_chart_axes_width = 40;
+const t11_chart_axes_width = 50;
 const t11_chart_xaxis_height = 40;
 const t11_chart_width = width - 2 * t11_chart_axes_width;
 const t11_chart_height = 260;

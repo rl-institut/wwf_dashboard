@@ -40,7 +40,7 @@ const t4_y = d3.scaleLinear()
   .domain([0, t4_others_max]);
 const t4_y2 = d3.scaleLinear()
   .range([ t4_chart_height, 0 ])
-  .domain([0, t4_heatpumps_max]);
+  .domain([0, Math.round(t4_heatpumps_max / 100) * 100]);
 const t4_color = d3.scaleOrdinal()
   .domain(Object.keys(t4_technologies))
   .range([wwfColor.red, wwfColor.berry, wwfColor.aqua, wwfColor.darkBlue]);
