@@ -31,7 +31,7 @@ const t8_emissions_1990 = tiles[3].emissions[0].emissions;
 
 const t8_x = d3.scaleLinear()
   .range([ 0, t8_chart_width ])
-  .domain([tiles[3].sectors[0].year, tiles[3].sectors[tiles[3].sectors.length - 1].year]);
+  .domain([tiles[8][0].year, tiles[8][tiles[8].length - 1].year]);
 const t8_y = d3.scaleLinear()
   .range([ t8_chart_height, 0 ])
   .domain([0, t8_twh_max]);
@@ -61,7 +61,7 @@ const t8_tile = t8_svg.append("g")
 
 const t8_bar = t8_tile.append("g").attr("transform", `translate(0, ${t8_puffer / 2})`);
 t8_bar.append("text")
-  .text("Notwendiger Ausbau pro Jahr")
+  .text("Ausbauziele der Bundesregierung pro Jahr")
   .attr("x", width / 2)
   .attr("y", t8_bar_vspace)
   .attr("text-anchor", "middle")

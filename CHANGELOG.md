@@ -7,6 +7,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 ## [Unreleased]
 ### Fixed
 - y-Axis maximum in tiles 3,5,9
+- x-Axis in tile 8
 
 ### Changed
 - remove country-specific imports in tile 11
