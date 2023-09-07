@@ -14,6 +14,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 - updated data to year 2022
 - Tile6 API from agora to SMARD 
 - Show all imports at once on tile 11
+- Set heatpump technology y-Axis to millions
 
 ## [1.0.0] - 2022
 ### Added

@@ -40,7 +40,7 @@ const t4_y = d3.scaleLinear()
   .domain([0, t4_others_max]);
 const t4_y2 = d3.scaleLinear()
   .range([ t4_chart_height, 0 ])
-  .domain([0, Math.round(t4_heatpumps_max / 100) * 100]);
+  .domain([0, Math.round(t4_heatpumps_max / 100) * 100 / 1000]);
 const t4_color = d3.scaleOrdinal()
   .domain(Object.keys(t4_technologies))
   .range([wwfColor.red, wwfColor.berry, wwfColor.aqua, wwfColor.darkBlue]);
@@ -179,7 +179,7 @@ t4_y_grid.selectAll(".tick").select("line")
 t4_y_grid.select('.domain').attr('stroke-width', 0);
 
 t4_chart_body.append("text")
-  .text("Wärmepumpen (Tsd.)")
+  .text("Wärmepumpen (Mio.)")
   .attr("y", t4_chart_unit_height / 3 * 2)
   .attr("dominant-baseline", "hanging")
   .attr("fill", wwfColor.gray1)
@@ -241,7 +241,7 @@ for (const technology of Object.keys(t4_technologies)) {
     .attr("stroke-width", line_width)
     .attr("d", d3.line()
       .x(function(d) {return t4_x(d.year)})
-      .y(function(d) {return y(d[technology] / 1000)})
+      .y(function(d) {return y(technology == "heatpumps" ? d[technology] / 1000000 : d[technology] / 1000)})
     )
 }
 
