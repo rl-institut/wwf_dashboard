@@ -6,7 +6,7 @@ const t11_circle_size = 40;
 const t11_circe_color_gray = "#ECECEC";
 const t11_icon_size = 20;
 const t11_icon_hspace = 6;
-const t11_icon_vspace = 20;
+const t11_icon_vspace = 6;
 const t11_icon_title_height = 22;
 const t11_icon_total_height = t11_icon_offset + t11_circle_size + 2 * t11_icon_vspace + t11_icon_title_height;
 
@@ -24,9 +24,9 @@ const t11_bar_title_offset = 15;
 const t11_bar_height = 25;
 const t11_bar_top_vspace = 40;
 const t11_bar_vspace = 15;
-const t11_bar_text_width = 100;
+const t11_bar_text_width = 200;
 const t11_bar_flag_size = 20;
 const t11_bar_text_offset = 10;
 const t11_bar_total_height = t11_bar_offset + t11_bar_title_height + t11_bar_title_offset + t11_bar_top_vspace + 3 * t11_bar_vspace + 5 * t11_bar_height;
 
-const t11_min_height = t11_bar_total_height + t11_icon_total_height + t11_chart_total_height;
+const t11_min_height = t11_bar_total_height + t11_chart_total_height;
