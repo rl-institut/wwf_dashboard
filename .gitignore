@@ -4,3 +4,4 @@
 /agora_data/*.json
 /raw_data/
 *.pyc
+node_modules
