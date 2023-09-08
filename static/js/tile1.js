@@ -1,18 +1,15 @@
 
-document.addEventListener("globalSetupComplete", function (e) {
+document.addEventListener("globalSetupComplete", function () {
   if (debug) {console.log("Setup tile #1");}
 
   t1_header_height = get_header_height(1);
   let t1_header = "";
   if (("year" in initials) && ("mode" in initials)) {
-    t1_header = (initials.mode == "global") ? "Global" : "Deutschland";
+    t1_header = (initials.mode === "global") ? "Global" : "Deutschland";
     t1_header += ", " + initials.year;
   }
 
   const t1_temperature_colors = ["#08306b", "#08519c", "#2171b5", "#4292c6", "#6baed6", "#9ecae1", "#c6dbef", "#deebf7", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d"];
-
-  const t1_mode_width = 280;
-  const t1_mode_height = 24;
 
   const t1_chart_offset = 20;
   const t1_chart_unit_height = 44;
@@ -50,10 +47,10 @@ document.addEventListener("globalSetupComplete", function (e) {
     max: tiles[1].global[tiles[1].global.length - 1].year,
     from: tiles[1].global[tiles[1].global.length - 1].year,
     onChange: function (data) {
-      t1_change_year(data.from)
+      t1_change_year(data.from);
     },
     onUpdate: function (data) {
-      t1_change_year(data.from)
+      t1_change_year(data.from);
     }
   });
 
@@ -62,23 +59,23 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   const t1_ppm_max = tiles[1].global.reduce(function (max, current) {
     if (current.ppm > max) {
-      return current.ppm
+      return current.ppm;
     } else {
-      return max
+      return max;
     }
   }, 0);
   const t1_co2_global_max = tiles[1].global.reduce(function (max, current) {
     if (current.co2 > max) {
-      return current.co2
+      return current.co2;
     } else {
-      return max
+      return max;
     }
   }, 0);
   const t1_co2_brd_max = tiles[1].brd.reduce(function (max, current) {
     if (current.co2 > max) {
-      return current.co2
+      return current.co2;
     } else {
-      return max
+      return max;
     }
   }, 0);
 
@@ -89,7 +86,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .range([0, chart_width])
       .domain(tiles[1].global.map(function (d) {
         return d.year;
-      }))
+      }));
   const t1_y = d3.scaleLinear()
       .range([t1_chart_height, 0])
       .domain([0, t1_ppm_max * 1.2]);
@@ -127,7 +124,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .call(
           d3.axisBottom(t1_x).tickValues(
               t1_x.domain().filter(function (d, idx) {
-                return idx % 20 == 0
+                return idx % 20 === 0;
               })
           )
       )
@@ -136,7 +133,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("fill", wwfColor.gray2)
       .attr("font-weight", fontWeight.normal)
       .attr("letter-spacing", letterSpacing)
-      .attr("font-size", fontSize.xsmall)
+      .attr("font-size", fontSize.xsmall);
   d3.select("#t1_xaxis").select('.domain').attr('stroke-width', 0);
   d3.select("#t1_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -152,7 +149,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("fill", wwfColor.black)
       .attr("font-weight", fontWeight.bold)
       .attr("letter-spacing", letterSpacing)
-      .attr("font-size", fontSize.xsmall)
+      .attr("font-size", fontSize.xsmall);
   d3.select("#t1_yaxis").select('.domain').attr('stroke-width', 0);
   d3.select("#t1_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -164,7 +161,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("fill", wwfColor.gray2)
       .attr("font-weight", fontWeight.bold)
       .style("font-size", fontSize.xsmall)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
   t1_tile.append("text")
       .text("Emissionen in Mt")
       .attr("y", t1_chart_offset + t1_chart_unit_height / 3 * 2)
@@ -173,7 +170,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("fill", wwfColor.gray2)
       .attr("font-weight", fontWeight.bold)
       .style("font-size", fontSize.xsmall)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   // Y2-Axis Title
   t1_tile.append("text")
@@ -185,7 +182,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("fill", wwfColor.black)
       .attr("font-weight", fontWeight.bold)
       .style("font-size", fontSize.xsmall)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
   t1_tile.append("text")
       .text("in der Atmosphäre")
       .attr("x", width)
@@ -195,7 +192,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("fill", wwfColor.black)
       .attr("font-weight", fontWeight.bold)
       .style("font-size", fontSize.xsmall)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
   t1_tile.append("text")
       .text("in ppm")
       .attr("x", width)
@@ -205,14 +202,14 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("fill", wwfColor.black)
       .attr("font-weight", fontWeight.bold)
       .style("font-size", fontSize.xsmall)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   // ICONS
 
   const t1_icons = t1_tile.append("g").attr("transform", `translate(0, ${t1_chart_total_height + t1_puffer / 3})`);
 
   // PPM Icon
-  $(t1_icons.node().appendChild(icons["i_atmosphaere"].documentElement.cloneNode(true)))
+  $(t1_icons.node().appendChild(icons.i_atmosphaere.documentElement.cloneNode(true)))
       .attr("x", t1_icon_width / 2 - t1_icon_size / 2)
       .attr("y", 0)
       .attr("width", t1_icon_size)
@@ -224,7 +221,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("y", t1_icon_size + t1_icon_vspace)
       .attr("width", t1_icon_width)
       .attr("height", t1_icon_height)
-      .attr("fill", wwfColor.black)
+      .attr("fill", wwfColor.black);
 
   t1_icons.append("text")
       .attr("id", "t1_ppm_icon")
@@ -237,7 +234,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .style("dominant-baseline", "central")
       .style("text-anchor", "middle")
       .style("font-size", fontSize.normal)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   t1_icons.append("text")
       .text("Konzentration in")
@@ -246,7 +243,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("text-anchor", "middle")
       .style("font-size", fontSize.small)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
   t1_icons.append("text")
       .text("der Atmosphäre")
       .attr("x", t1_icon_width / 2)
@@ -254,10 +251,10 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("text-anchor", "middle")
       .style("font-size", fontSize.small)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   // CO2 Icon
-  $(t1_icons.node().appendChild(icons["i_pollution"].documentElement.cloneNode(true)))
+  $(t1_icons.node().appendChild(icons.i_pollution.documentElement.cloneNode(true)))
       .attr("x", t1_icon_width + t1_icon_hspace + t1_icon_width / 2 - t1_icon_size / 2)
       .attr("y", 0)
       .attr("width", t1_icon_size)
@@ -269,7 +266,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("y", t1_icon_size + t1_icon_vspace)
       .attr("width", t1_icon_width)
       .attr("height", t1_icon_height)
-      .attr("fill", wwfColor.gray1)
+      .attr("fill", wwfColor.gray1);
 
   t1_icons.append("text")
       .attr("id", "t1_co2_icon")
@@ -282,7 +279,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .style("dominant-baseline", "central")
       .style("text-anchor", "middle")
       .style("font-size", fontSize.normal)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   t1_icons.append("text")
       .text("Energiebedingte")
@@ -291,7 +288,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("text-anchor", "middle")
       .style("font-size", fontSize.small)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
   t1_icons.append("text")
       .text("Emissionen")
       .attr("x", t1_icon_width + t1_icon_hspace + t1_icon_width / 2)
@@ -299,10 +296,10 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("text-anchor", "middle")
       .style("font-size", fontSize.small)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   // Temp Icon
-  $(t1_icons.node().appendChild(icons["i_temperaturen"].documentElement.cloneNode(true)))
+  $(t1_icons.node().appendChild(icons.i_temperaturen.documentElement.cloneNode(true)))
       .attr("x", 2 * t1_icon_width + 2 * t1_icon_hspace + t1_icon_width / 2 - t1_icon_size / 2)
       .attr("y", 0)
       .attr("width", t1_icon_size)
@@ -327,7 +324,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .style("dominant-baseline", "central")
       .style("text-anchor", "middle")
       .style("font-size", fontSize.normal)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   t1_icons.append("text")
       .text("Temperatur-")
@@ -336,7 +333,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("text-anchor", "middle")
       .style("font-size", fontSize.small)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
   t1_icons.append("text")
       .text("änderung")
       .attr("x", 2 * t1_icon_width + 2 * t1_icon_hspace + t1_icon_width / 2)
@@ -344,7 +341,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("text-anchor", "middle")
       .style("font-size", fontSize.small)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   if (is_mobile) {
     t1_icons.selectAll("text").style("font-size", fontSize.xsmall);
@@ -364,7 +361,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("text-anchor", "middle")
       .style("font-size", fontSize.xsmall)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   for (const [i, color] of t1_temperature_colors.entries()) {
     t1_temperature.append("rect")
@@ -373,7 +370,7 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("width", t1_temperature_size)
         .attr("height", t1_temperature_size)
         .attr("fill", color)
-        .attr("stroke-width", 0)
+        .attr("stroke-width", 0);
   }
 
   t1_temperature.append("text")
@@ -384,7 +381,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("text-anchor", "middle")
       .style("font-size", fontSize.xsmall)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   t1_temperature.append("text")
       .text("0")
@@ -393,7 +390,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("text-anchor", "middle")
       .style("font-size", fontSize.small)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   t1_temperature.append("text")
       .attr("id", "t1_temperature_right")
@@ -403,7 +400,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("text-anchor", "middle")
       .style("font-size", fontSize.xsmall)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   function t1_change_year(to_year) {
     const t1_chart = t1_tile.select("#t1_chart");
@@ -413,11 +410,10 @@ document.addEventListener("globalSetupComplete", function (e) {
     t1_chart.select("#t1_current_line").remove();
     t1_chart.select("#t1_current_circle").remove();
 
-    const color = (t1_mode == "global") ? t1_color_global : t1_color_brd;
-    const co2_max = (t1_mode == "global") ? t1_co2_global_max : t1_co2_brd_max;
+    const color = (t1_mode === "global") ? t1_color_global : t1_color_brd;
 
     const year = parseInt(to_year);
-    const year_data = tiles[1][t1_mode].find(element => element.year == year);
+    const year_data = tiles[1][t1_mode].find(element => element.year === year);
 
     t1_chart.append("rect")
         .attr("id", "t1_current_year")
@@ -427,7 +423,7 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("height", t1_chart_height - t1_y(year_data.ppm))
         .attr("fill", color(year_data.temperature))
         .attr("stroke-width", 1)
-        .attr("stroke", "rgb(0,0,0)")
+        .attr("stroke", "rgb(0,0,0)");
 
     if (year_data.co2 != null) {
       t1_chart.append("line")
@@ -438,7 +434,7 @@ document.addEventListener("globalSetupComplete", function (e) {
           .attr("y2", t1_y2(t1_y2.domain()[1]))
           .attr("stroke", wwfColor.black)
           .attr("stroke-width", dash_width)
-          .attr("stroke-dasharray", dash_spacing)
+          .attr("stroke-dasharray", dash_spacing);
 
       t1_chart.append("circle")
           .attr("id", "t1_current_circle")
@@ -455,17 +451,17 @@ document.addEventListener("globalSetupComplete", function (e) {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }) + " °C");
-    const current_temp = t1_mode == "global" ? t1_temp_global : t1_temp_brd;
+    const current_temp = t1_mode === "global" ? t1_temp_global : t1_temp_brd;
     const use_white = year_data.temperature >= current_temp - 3 * (2 * current_temp / 16);
-    t1_tile.select("#t1_temp_icon").attr("fill", (use_white) ? "white" : "black")
-    t1_tile.select("#t1_temp_rect").attr("fill", color(year_data.temperature))
+    t1_tile.select("#t1_temp_icon").attr("fill", (use_white) ? "white" : "black");
+    t1_tile.select("#t1_temp_rect").attr("fill", color(year_data.temperature));
   }
 
   function t1_update_chart() {
     const t1_chart = t1_tile.select("#t1_chart");
 
-    const color = (t1_mode == "global") ? t1_color_global : t1_color_brd;
-    const co2_max = (t1_mode == "global") ? t1_co2_global_max : t1_co2_brd_max;
+    const color = (t1_mode === "global") ? t1_color_global : t1_color_brd;
+    const co2_max = (t1_mode === "global") ? t1_co2_global_max : t1_co2_brd_max;
 
     t1_y2 = d3.scaleLinear()
         .range([t1_chart_height, 0])
@@ -482,7 +478,7 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("fill", wwfColor.gray2)
         .attr("font-weight", fontWeight.bold)
         .attr("letter-spacing", letterSpacing)
-        .attr("font-size", fontSize.xsmall)
+        .attr("font-size", fontSize.xsmall);
     d3.select("#t1_yaxis2").select('.domain').attr('stroke-width', 0);
     d3.select("#t1_yaxis2").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -513,12 +509,12 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {
-              return t1_x(d.year) + t1_x.bandwidth() / 2
+              return t1_x(d.year) + t1_x.bandwidth() / 2;
             })
             .y(function (d) {
-              return t1_y(d.ppm)
+              return t1_y(d.ppm);
             })
-        )
+        );
 
     // CO2
     t1_chart.append("path")
@@ -528,21 +524,21 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {
-              return t1_x(d.year) + t1_x.bandwidth() / 2
+              return t1_x(d.year) + t1_x.bandwidth() / 2;
             })
             .y(function (d) {
-              return t1_y2(d.co2)
+              return t1_y2(d.co2);
             })
             .defined(function (d) {
               return d.co2 !== null;
             })
-        )
+        );
   }
 
   function t1_change_mode(mode) {
     t1_mode = mode;
-    const temp = (mode == "global") ? t1_temp_global : t1_temp_brd;
-    if (mode == "global") {
+    const temp = (mode === "global") ? t1_temp_global : t1_temp_brd;
+    if (mode === "global") {
       $("#t1_global").addClass("active");
       $("#t1_brd").removeClass("active");
     } else {
@@ -565,6 +561,6 @@ document.addEventListener("globalSetupComplete", function (e) {
   }
   t1_change_mode(("mode" in initials) ? initials.mode : "global");
 
-  document.getElementById("t1_global").addEventListener("click", function () {t1_change_mode("global")});
-  document.getElementById("t1_brd").addEventListener("click", function () {t1_change_mode("brd")});
+  document.getElementById("t1_global").addEventListener("click", function () {t1_change_mode("global");});
+  document.getElementById("t1_brd").addEventListener("click", function () {t1_change_mode("brd");});
 });
