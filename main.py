@@ -43,7 +43,7 @@ def dashboard():
         "index.html",
         icons=ICONS,
         flags=FLAGS,
-        debug=DEBUG,
+        debug="true" if DEBUG else "false",
         password=PASSWORD,
         version=VERSION,
     )
@@ -59,7 +59,7 @@ def get_tile(tile):
         initials=json.dumps(request.args),
         icons=ICONS,
         flags=FLAGS,
-        debug=DEBUG,
+        debug="true" if DEBUG else "false",
         password=PASSWORD,
     )
 
@@ -85,6 +85,23 @@ async def share_tile(tile):
         share.share_svg(tile, options, request)
     )
     return {"share_link": filename}
+
+if DEBUG:
+    @app.route("/iframe", methods=["GET"])
+    def get_iframe():
+        return render_template(
+            "iframe.html",
+            iframe_source=f"http://127.0.0.1:5000",
+            debug="true" if DEBUG else "false",
+        )
+
+    @app.route("/iframe/<int:tile>", methods=["GET"])
+    def get_iframe_tile(tile):
+        return render_template(
+            "iframe.html",
+            iframe_source=f"http://127.0.0.1:5000/{tile}",
+            debug="true" if DEBUG else "false",
+        )
 
 
 if __name__ == "__main__":

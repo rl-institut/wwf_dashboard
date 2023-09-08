@@ -1,4 +1,30 @@
 
+const wwfHeaderHeight = 84;
+let iFrameHeight;
+
+document.addEventListener("iFrameSetupComplete", function (e) {
+  if (debug) {
+    console.log("Setup GLOBAL");
+  }
+
+  iFrameHeight = wwfParentHeight - wwfHeaderHeight;
+  if (debug) {
+    console.log("iFrameHeight =", iFrameHeight);
+  }
+
+  const globalCompleteEvent = new Event("globalSetupComplete");
+  document.dispatchEvent(globalCompleteEvent);
+});
+
+function get_tile_height(tile) {
+  const header_height = find_tile(tile).parentNode.parentNode.getElementsByClassName("tile__header")[0].clientHeight;
+  const tileHeight = iFrameHeight - header_height;
+  if (debug) {
+    console.log(`Tile #${tile} Height =`, tileHeight);
+  }
+  return tileHeight;
+}
+
 const num_tiles = 11;
 // Historically, tile number equals position on dashboard - but meanwhile postion and tile number diverged.
 // Neighbours: Position-Tile pairs
@@ -14,29 +40,13 @@ const neighbours = {
   9: 7,
   10: 8,
   11: 9,
-}
+};
 
 const tiles_with_no_slider = [6, 8];
 const slider_height = 120;
 
-function get_tile_height(tile) {
-  const tile_min_height = eval(`t${tile}_min_height`);
-  const tile_position = Object.keys(neighbours).find(key => neighbours[key] === tile);
-  const neighbour_position = tile_position & 1 ? parseInt(tile_position) + 1 : parseInt(tile_position) - 1;
-  const neighbour_tile = neighbours[neighbour_position];
-  try {
-    neighbour_min_height = eval(`t${neighbour_tile}_min_height`);
-  } catch(e) {
-    return tile_min_height;
-  }
-  if (is_mobile || neighbour_position > num_tiles) {
-    return tile_min_height;
-  }
-  let reduce_height = 0;
-  if (tiles_with_no_slider.includes(tile) && !tiles_with_no_slider.includes(neighbour_tile)) {
-    reduce_height = slider_height;
-  }
-  return Math.max(neighbour_min_height - reduce_height, tile_min_height)
+function find_tile(tile) {
+  return document.getElementById("t" + tile);
 }
 
 const wwfColor = {
@@ -83,7 +93,7 @@ const letterSpacing = "0.3px";
 const legendLeftPadding = 8;
 
 // Width of one tile is representative for all tiles:
-const width = find_tile().clientWidth;
+const width = find_tile(1).clientWidth;
 const tile_breakpoint = 500;
 const tile_breakpoint_xs = 400;
 const is_mobile = width < tile_breakpoint;
@@ -119,7 +129,7 @@ const headers = [
   },
   {
     title: ["Immer mehr Erneuerbare Energien"],
-    description: ["Kohle, Gas, Öl und Atomenergie sind seit den 90er Jahren", "auf dem Rückzug. Wind- und Solarkraftwerke gewinnen" ,"hingegen bei der Stromerzeugung an Bedeutung."]
+    description: ["Kohle, Gas, Öl und Atomenergie sind seit den 90er Jahren", "auf dem Rückzug. Wind- und Solarkraftwerke gewinnen", "hingegen bei der Stromerzeugung an Bedeutung."]
   },
   {
     title: ["Der Strommix verändert sich von Tag zu Tag"],
@@ -153,44 +163,35 @@ const has_header = "header" in initials;
 const share_margin = has_header * 32;
 
 
-
-function find_tile() {
-  for (let i = 1; i <= num_tiles; i++) {
-    let tile = document.getElementById("t" + i);
-    if (tile) {return tile;}
-  }
-}
-
-
 function share(tile, options) {
   const tile_svg = document.getElementById("t" + tile).firstChild;
   $.post(
-    {
-      url: "share/" + tile,
-      data: {
-        options: JSON.stringify(options),
-      },
-      dataType: "json",
-      success: function(result){
-        const download_link = document.getElementById("download");
-        download_link.href = result.share_link;
-        download_link.download = "wwf_share.png";
-        download_link.click();
+      {
+        url: "share/" + tile,
+        data: {
+          options: JSON.stringify(options),
+        },
+        dataType: "json",
+        success: function (result) {
+          const download_link = document.getElementById("download");
+          download_link.href = result.share_link;
+          download_link.download = "wwf_share.png";
+          download_link.click();
+        }
       }
-    }
   );
 }
 
 var tiles = {};
 for (let i = 1; i <= num_tiles; i++) {
   $.ajax(
-    {
-      url: "static/data/tile" + i + ".json",
-      async: false,
-      success: function(data) {
-        tiles[i] = data;
+      {
+        url: "static/data/tile" + i + ".json",
+        async: false,
+        success: function (data) {
+          tiles[i] = data;
+        }
       }
-    }
   );
 }
 
@@ -198,52 +199,54 @@ var icons = {};
 for (let i = 0; i < icon_names.length; i++) {
   let name = icon_names[i];
   $.ajax(
-    {
-      url: "static/icons/" + name + ".svg",
-      async: false,
-      success: function(data) {
-        icons[name] = data;
+      {
+        url: "static/icons/" + name + ".svg",
+        async: false,
+        success: function (data) {
+          icons[name] = data;
+        }
       }
-    }
   );
 }
 
 for (let i = 0; i < flags.length; i++) {
   let name = flags[i];
   $.ajax(
-    {
-      url: "static/images/flags/" + name + ".svg",
-      async: false,
-      success: function(data) {
-        icons[name] = data;
+      {
+        url: "static/images/flags/" + name + ".svg",
+        async: false,
+        success: function (data) {
+          icons[name] = data;
+        }
       }
-    }
   );
 }
 
 $.ajax(
-  {
-    url: "static/images/agora_logo.svg",
-    async: false,
-    success: function(data) {
-      icons["agora_logo"] = data;
+    {
+      url: "static/images/agora_logo.svg",
+      async: false,
+      success: function (data) {
+        icons["agora_logo"] = data;
+      }
     }
-  }
 );
 
 $.ajax(
-  {
-    url: "static/logos/WWF_Logo.svg",
-    async: false,
-    success: function(data) {
-      icons["wwf_logo"] = data;
+    {
+      url: "static/logos/WWF_Logo.svg",
+      async: false,
+      success: function (data) {
+        icons["wwf_logo"] = data;
+      }
     }
-  }
 );
 const wwfLogo = {width: 32, height: 47};
 
-function get_header_height(tile, with_subtitle=true) {
-  if (!has_header) {return 0;}
+function get_header_height(tile, with_subtitle = true) {
+  if (!has_header) {
+    return 0;
+  }
   let height = headers[tile - 1].title.length * header_title_height + headers[tile - 1].description.length * header_line_height + 3 * header_margin;
   if (with_subtitle) {
     height += header_line_height + 2 * header_margin;
@@ -252,47 +255,49 @@ function get_header_height(tile, with_subtitle=true) {
 }
 
 function draw_header(svg, tile, scenario) {
-  if (!has_header) {return;}
+  if (!has_header) {
+    return;
+  }
   const header_height = get_header_height(tile, false);
   const header = svg.append("g")
-    .attr("transform", `translate(${share_margin}, ${share_margin})`);
+      .attr("transform", `translate(${share_margin}, ${share_margin})`);
 
   header.append("rect")
-    .attr("width", width)
-    .attr("height", header_height)
-    .attr("stroke", "black")
-    .attr("fill", "white");
+      .attr("width", width)
+      .attr("height", header_height)
+      .attr("stroke", "black")
+      .attr("fill", "white");
 
   $(header.node().appendChild(icons["wwf_logo"].documentElement.cloneNode(true)))
-    .attr("x", width - header_margin - wwfLogo.width)
-    .attr("y", header_margin)
-    .attr("width", wwfLogo.width)
-    .attr("height", wwfLogo.height)
-    .attr("preserveAspectRatio", "xMidYMid slice");
+      .attr("x", width - header_margin - wwfLogo.width)
+      .attr("y", header_margin)
+      .attr("width", wwfLogo.width)
+      .attr("height", wwfLogo.height)
+      .attr("preserveAspectRatio", "xMidYMid slice");
 
   for (const [i, title] of headers[tile - 1].title.entries()) {
     header.append("text")
-      .text(title)
-      .attr("x", header_margin)
-      .attr("y", header_margin + i * header_title_height)
-      .attr("font-family", "WWF, sans-serif")
-      .attr("font-size", 30)
-      .attr("dominant-baseline", "hanging");
+        .text(title)
+        .attr("x", header_margin)
+        .attr("y", header_margin + i * header_title_height)
+        .attr("font-family", "WWF, sans-serif")
+        .attr("font-size", 30)
+        .attr("dominant-baseline", "hanging");
   }
   for (const [i, line] of headers[tile - 1].description.entries()) {
     header.append("text")
-      .text(line)
-      .attr("x", header_margin)
-      .attr("y", headers[tile - 1].title.length * header_title_height + 2 * header_margin + i * header_line_height)
-      .attr("font-family", "Open Sans, sans-serif")
-      .attr("dominant-baseline", "hanging");
+        .text(line)
+        .attr("x", header_margin)
+        .attr("y", headers[tile - 1].title.length * header_title_height + 2 * header_margin + i * header_line_height)
+        .attr("font-family", "Open Sans, sans-serif")
+        .attr("dominant-baseline", "hanging");
   }
   header.append("text")
-    .text(scenario)
-    .attr("x", width / 2)
-    .attr("y", header_height + header_margin)
-    .attr("font-family", "Open Sans, sans-serif")
-    .attr("font-weight", fontWeight.bold)
-    .attr("text-anchor", "middle")
-    .attr("dominant-baseline", "hanging");
+      .text(scenario)
+      .attr("x", width / 2)
+      .attr("y", header_height + header_margin)
+      .attr("font-family", "Open Sans, sans-serif")
+      .attr("font-weight", fontWeight.bold)
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "hanging");
 }

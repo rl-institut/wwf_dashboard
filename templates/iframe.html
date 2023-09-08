@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="/static/libs/iframeResizer.min.js"></script>
+<div style="width:1280px; height:1000px">
+    <iframe uc-src="{{ iframe_source }}" sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-popups-to-escape-sandbox" allowfullscreen="" id="iFrameResizer0" style="overflow: hidden; height: 11404px;" scrolling="no" src="{{ iframe_source }}"></iframe>
+</div>
+<script>
+    var debug = {{ debug|safe }};
+  iFrameResize({}, '#iFrameResizer0');
+</script>
+</body>
+</html>

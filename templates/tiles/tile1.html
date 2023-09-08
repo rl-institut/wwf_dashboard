@@ -79,24 +79,26 @@
 
 <section class="tile">
   <div class="tile__header">
-    <div class="tile__top">
-      <h3>CO<sub>2</sub>-Ausstoß verschärft Klimakrise</h3>
-      <div class="tile__options">
-        <button class="share" title="Bild herunterladen" onclick="share(1, {year: document.getElementById('t1_year').value, mode: t1_mode});"></button>
-        <button class="info" title="Informationen" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile1"></button>
+    <div class="tile__info">
+      <div class="tile__top">
+        <h3>CO<sub>2</sub>-Ausstoß verschärft Klimakrise</h3>
+        <div class="tile__options">
+          <button class="share" title="Bild herunterladen" onclick="share(1, {year: document.getElementById('t1_year').value, mode: t1_mode});"></button>
+          <button class="info" title="Informationen" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile1"></button>
+        </div>
       </div>
+      <p>Mit den weltweit steigenden Emissionen steigt Jahr für Jahr auch die CO<sub>2</sub>-Konzentration in der Atmosphäre und die Temperatur auf der Erde.</p>
     </div>
-    <p>Mit den weltweit steigenden Emissionen steigt Jahr für Jahr auch die CO<sub>2</sub>-Konzentration in der Atmosphäre und die Temperatur auf der Erde.</p>
-  </div>
-  <div class="tile__slider">
-    <input type="text" class="js-range-slider" id="t1_year" />
+    <div class="tile__slider">
+      <input type="text" class="js-range-slider" id="t1_year" />
+    </div>
   </div>
   <div class="tile__tabs">
     <div class="tile1-tabs">
-      <div id="t1_global" class="tile1-tabs__left active" onclick="t1_change_mode('global');">
+      <div id="t1_global" class="tile1-tabs__left active">
         Global
       </div>
-      <div id="t1_brd" class="tile1-tabs__right" onclick="t1_change_mode('brd');">
+      <div id="t1_brd" class="tile1-tabs__right">
         Deutschland
       </div>
     </div>
