@@ -1,5 +1,6 @@
 
-const wwfHeaderHeight = 84;
+const wwfHeaderHeight = 90;
+const tileMinHeight = 800;
 let iFrameHeight;
 
 document.addEventListener("iFrameSetupComplete", function (e) {
@@ -22,7 +23,7 @@ function get_tile_height(tile) {
   if (debug) {
     console.log(`Tile #${tile} Height =`, tileHeight);
   }
-  return tileHeight;
+  return Math.max(tileHeight, tileMinHeight - header_height - wwfHeaderHeight);
 }
 
 const num_tiles = 11;

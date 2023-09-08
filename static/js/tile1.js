@@ -14,10 +14,9 @@ document.addEventListener("globalSetupComplete", function () {
   const t1_chart_offset = 20;
   const t1_chart_unit_height = 44;
   const t1_chart_unit_offset = 10;
-  const t1_chart_height = 242;
   const t1_chart_xaxis_height = 50;
   const t1_chart_axes_width = 60;
-  const t1_chart_total_height = t1_chart_offset + t1_chart_unit_height + t1_chart_unit_offset + t1_chart_height + t1_chart_xaxis_height;
+  const t1_chart_total_height_without_chart = t1_chart_offset + t1_chart_unit_height + t1_chart_unit_offset + t1_chart_xaxis_height;
 
   const t1_icon_size = 24;
   const t1_icon_vspace = 10;
@@ -34,7 +33,15 @@ document.addEventListener("globalSetupComplete", function () {
   const t1_temperature_size = (width - 2 * t1_temperature_lrspace) / t1_temperature_colors.length;
   const t1_temperature_total_height = t1_temperature_offset + 2 * t1_temperature_text_height + 2 * +t1_temperature_size + 2 * t1_temperature_vspace;
 
-  const t1_min_height = t1_chart_total_height + t1_icon_total_height + t1_temperature_total_height;
+  const t1_min_height = t1_chart_total_height_without_chart + t1_icon_total_height + t1_temperature_total_height;
+  const t1_height = get_tile_height(1);
+  const t1_chart_min_height = 100;
+  const t1_chart_ideal_height = 240;
+  const t1_chart_height = Math.round(Math.min(Math.max(t1_height - t1_min_height, t1_chart_min_height), t1_chart_ideal_height));
+  if (debug) {console.log("Chart #1 height = ", t1_chart_height);}
+  const t1_chart_total_height = t1_chart_total_height_without_chart + t1_chart_height;
+  const t1_puffer = is_mobile ? 0 : (t1_height - t1_min_height - t1_chart_height);
+  if (debug) {console.log("Puffer #1 height = ", t1_puffer);}
 
   let t1_mode = "global";
 
@@ -53,9 +60,6 @@ document.addEventListener("globalSetupComplete", function () {
       t1_change_year(data.from);
     }
   });
-
-  const t1_height = get_tile_height(1);
-  const t1_puffer = is_mobile ? 0 : (t1_height - t1_min_height);
 
   const t1_ppm_max = tiles[1].global.reduce(function (max, current) {
     if (current.ppm > max) {
