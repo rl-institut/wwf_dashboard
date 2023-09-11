@@ -1,4 +1,6 @@
 
+let t1_mode = "global";
+
 document.addEventListener("globalSetupComplete", function () {
   if (debug) {console.log("Setup tile #1");}
 
@@ -42,8 +44,6 @@ document.addEventListener("globalSetupComplete", function () {
   const t1_chart_total_height = t1_chart_total_height_without_chart + t1_chart_height;
   const t1_puffer = is_mobile ? 0 : (t1_height - t1_min_height - t1_chart_height);
   if (debug) {console.log("Puffer #1 height = ", t1_puffer);}
-
-  let t1_mode = "global";
 
   $("#t1_year").ionRangeSlider({
     grid: true,
