@@ -43,10 +43,7 @@ const neighbours = {
   11: 9,
 };
 
-const tiles_with_no_slider = [6, 8];
-const slider_height = 120;
-
-function find_tile(tile) {
+function find_tile(tile=null) {
   return document.getElementById("t" + tile);
 }
 
@@ -94,7 +91,7 @@ const letterSpacing = "0.3px";
 const legendLeftPadding = 8;
 
 // Width of one tile is representative for all tiles:
-const width = find_tile(1).clientWidth;
+const width = document.getElementsByClassName("tile")[0].getElementsByClassName("tile__chart")[0].clientWidth;
 const tile_breakpoint = 500;
 const tile_breakpoint_xs = 400;
 const is_mobile = width < tile_breakpoint;
@@ -109,7 +106,6 @@ const dash_width = 1;
 const dash_spacing = 2;
 const chart_axis_stroke_width = 1;
 const circle_width = 6;
-const rect_round = 16;
 
 const headers = [
   {
@@ -165,7 +161,6 @@ const share_margin = has_header * 32;
 
 
 function share(tile, options) {
-  const tile_svg = document.getElementById("t" + tile).firstChild;
   $.post(
       {
         url: "share/" + tile,
@@ -228,7 +223,7 @@ $.ajax(
       url: "static/images/agora_logo.svg",
       async: false,
       success: function (data) {
-        icons["agora_logo"] = data;
+        icons.agora_logo = data;
       }
     }
 );
@@ -238,7 +233,7 @@ $.ajax(
       url: "static/logos/WWF_Logo.svg",
       async: false,
       success: function (data) {
-        icons["wwf_logo"] = data;
+        icons.wwf_logo = data;
       }
     }
 );
@@ -269,7 +264,7 @@ function draw_header(svg, tile, scenario) {
       .attr("stroke", "black")
       .attr("fill", "white");
 
-  $(header.node().appendChild(icons["wwf_logo"].documentElement.cloneNode(true)))
+  $(header.node().appendChild(icons.wwf_logo.documentElement.cloneNode(true)))
       .attr("x", width - header_margin - wwfLogo.width)
       .attr("y", header_margin)
       .attr("width", wwfLogo.width)
