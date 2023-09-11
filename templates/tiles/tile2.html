@@ -59,17 +59,20 @@
 
 <div class="tile">
   <div class="tile__header">
-    <div class="tile__top">
-      <h3>Energieversorgung wird effizienter und erneuerbar</h3>
-      <div class="tile__options">
-        <button class="share" title="Bild herunterladen" onclick="share(2, {year: document.getElementById('t2_year').value});" tabindex="0"></button>
-        <button class="info" title="Informationen" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile2"></button>
+    <div class="tile__info">
+      <div class="tile__top">
+        <h3>Energieversorgung wird effizienter und erneuerbar</h3>
+        <div class="tile__options">
+          <button class="share" title="Bild herunterladen" onclick="share(2, {year: document.getElementById('t2_year').value});" tabindex="0"></button>
+          <button class="info" title="Informationen" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile2"></button>
+        </div>
       </div>
+      <p>Unser Energieverbrauch basiert immer noch weitgehend auf Öl, Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der Anteil der Erneuerbaren Energien gering. Aber das ändert sich.</p>
     </div>
-    <p>Unser Energieverbrauch basiert immer noch weitgehend auf Öl, Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der Anteil der Erneuerbaren Energien gering. Aber das ändert sich.</p>
-  </div>
-  <div class="tile__slider">
-    <input type="text" class="js-range-slider" id="t2_year"/>
+
+    <div class="tile__slider">
+      <input type="text" class="js-range-slider" id="t2_year"/>
+    </div>
   </div>
   <div class="tile__chart">
     <div id="t2"></div>

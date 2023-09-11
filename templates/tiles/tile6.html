@@ -73,17 +73,19 @@
 
 <div class="tile">
   <div class="tile__header">
-    <div class="tile__top">
-      <h3>Der Strommix verändert sich von Tag zu Tag</h3>
-      <div class="tile__options">
-        <button class="share" title="Bild herunterladen" onclick="share(6, {date: $('#t6_date').val()});" tabindex="0"></button>
-        <button class="info" title="Informationen" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile6"></button>
+    <div class="tile__info">
+      <div class="tile__top">
+        <h3>Der Strommix verändert sich von Tag zu Tag</h3>
+        <div class="tile__options">
+          <button class="share" title="Bild herunterladen" onclick="share(6, {date: $('#t6_date').val()});" tabindex="0"></button>
+          <button class="info" title="Informationen" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile6"></button>
+        </div>
       </div>
+      <p>Die Stromerzeugung schwankt je nach Wind, Sonnenschein und Stromverbrauch. Immer zur Mittagszeit gibt es am meisten PV. An Wochenenden brauchen wir weniger Strom.</p>
     </div>
-    <p>Die Stromerzeugung schwankt je nach Wind, Sonnenschein und Stromverbrauch. Immer zur Mittagszeit gibt es am meisten PV. An Wochenenden brauchen wir weniger Strom.</p>
-  </div>
-  <div class="tile__slider tile__slider--date-picker">
-    <img src="static/icons/i_pfeil_links.svg" style="width: 20px; height: 20px; margin-right: 0.5rem; margin-top: 0.5rem;" onclick="t6_decrease_date();"><input id="t6_date" type="text" class="form-control"><img src="static/icons/i_pfeil_rechts.svg" style="width: 20px; height: 20px; margin-left: 0.5rem; margin-top: 0.5rem;" onclick="t6_increase_date();">
+    <div class="tile__slider tile__slider--date-picker">
+      <img src="static/icons/i_pfeil_links.svg" style="width: 20px; height: 20px; margin-right: 0.5rem; margin-top: 0.5rem;" onclick="t6_decrease_date();"><input id="t6_date" type="text" class="form-control"><img src="static/icons/i_pfeil_rechts.svg" style="width: 20px; height: 20px; margin-left: 0.5rem; margin-top: 0.5rem;" onclick="t6_increase_date();">
+    </div>
   </div>
   <div class="tile__chart">
     <div id="t6"></div>
