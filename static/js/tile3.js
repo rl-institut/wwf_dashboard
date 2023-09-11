@@ -4,7 +4,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   }
 
   const t3_header = ("year" in initials) ? initials.year : "";
-  const t3_header_height = get_header_height(3)
+  const t3_header_height = get_header_height(3);
 
   const t3_bar_color_reduction = "#008A88";
   const t3_bar_height = 40;
@@ -45,10 +45,10 @@ document.addEventListener("globalSetupComplete", function (e) {
     values: t3_emission_years,
     from: tiles[3].emissions[tiles[3].emissions.length - 1].year,
     onChange: function (data) {
-      t3_change_year(data.from)
+      t3_change_year(data.from);
     },
     onUpdate: function (data) {
-      t3_change_year(data.from)
+      t3_change_year(data.from);
     }
   });
 
@@ -63,9 +63,9 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t3_sectors_max = Object.keys(t3_sectors).reduce(
       (max, key) => {
         if (tiles[3].sectors[2][key] > max) {
-          return tiles[3].sectors[2][key]
+          return tiles[3].sectors[2][key];
         } else {
-          return max
+          return max;
         }
       },
       0
@@ -207,7 +207,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("x", width / 2)
       .attr("y", t3_circle_size + t3_icon_vspace)
       .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "hanging")
+      .attr("dominant-baseline", "hanging");
 
   // CHART
   const t3_chart_area = t3_tile.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer + t3_icon_total_height})`);
@@ -221,7 +221,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging")
       .attr("fill", wwfColor.gray2)
       .style("font-size", fontSize.xsmall)
-      .attr("letter-spacing", letterSpacing)
+      .attr("letter-spacing", letterSpacing);
 
   // X-Axis
   t3_chart.append("g")
@@ -230,7 +230,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .call(
           d3.axisBottom(t3_x).ticks(3).tickFormat(
               function (year) {
-                return year
+                return year;
               }
           )
       )
@@ -270,10 +270,10 @@ document.addEventListener("globalSetupComplete", function (e) {
               .tickSize(-t3_chart_width)
               .tickFormat('')
               .ticks(5)
-      )
+      );
   t3_y_grid.selectAll(".tick").select("line")
       .attr("stroke-width", tickStrokeWidth)
-      .attr("stroke", tickColor)
+      .attr("stroke", tickColor);
   t3_y_grid.select('.domain').attr('stroke-width', 0);
 
   // Grayed sector paths
@@ -285,12 +285,12 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {
-              return t3_x(d.year)
+              return t3_x(d.year);
             })
             .y(function (d) {
-              return t3_y(d[sector])
+              return t3_y(d[sector]);
             })
-        )
+        );
   }
 
   function t3_change_year(year_index) {
@@ -342,15 +342,15 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   function t3_activate_sector(sector) {
     t3_icons.select("#t3_sector_title")
-        .text(t3_sectors[sector].title)
+        .text(t3_sectors[sector].title);
     t3_icons.selectAll("circle")
-        .attr("fill", t3_circe_color_gray)
+        .attr("fill", t3_circe_color_gray);
     t3_icons.selectAll("path")
-        .style("fill", wwfColor.black)
+        .style("fill", wwfColor.black);
     t3_icons.select("#t3_circle_" + sector)
-        .attr("fill", t3_color(sector))
+        .attr("fill", t3_color(sector));
     t3_icons.select("#t3_icon_" + sector).select("path")
-        .style("fill", wwfColor.white)
+        .style("fill", wwfColor.white);
   }
 
   function t3_draw_current_sector(sector) {
@@ -364,12 +364,12 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {
-              return t3_x(d.year)
+              return t3_x(d.year);
             })
             .y(function (d) {
-              return t3_y(d[sector])
+              return t3_y(d[sector]);
             })
-        )
+        );
     t3_chart.select("#sector_number").remove();
     const value = tiles[3].sectors[tiles[3].sectors.length - 1][sector];
     t3_chart.append("text")
@@ -393,7 +393,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   if ("year" in initials) {
     const init_data = $("#t3_year").data("ionRangeSlider");
-    init_data.update({from: t3_emission_years.indexOf(parseInt(initials.year))})
+    init_data.update({from: t3_emission_years.indexOf(parseInt(initials.year))});
   } else {
     t3_change_year(t3_emission_years.length - 1);
   }
