@@ -95,6 +95,7 @@ const width = document.getElementsByClassName("tile")[0].getElementsByClassName(
 const tile_breakpoint = 500;
 const tile_breakpoint_xs = 400;
 const is_mobile = width < tile_breakpoint;
+if (debug) {console.log("Mobile = ", is_mobile);}
 const is_mobile_xs = width < tile_breakpoint_xs;
 
 const margin = {top: 30, right: 50, bottom: 30, left: 50};

@@ -254,11 +254,12 @@ def tile10():
         ("#B03131", "Extreme Dürre"),
         ("#740F0F", "Außergewöhnliche Dürre"),
     ]
+    legend_width = 100
     legend_size = 16
     legend_vspace = 10
     legend_hspace = 8
     legend_margin = 24
-    height = original_size[1] + 2 * legend_margin + 3 * legend_size + 2 * legend_vspace
+
     years = {
         2014: ((56, 7, 633, 757), -6),
         2015: ((56, 7, 633, 757), -6),
@@ -287,54 +288,64 @@ def tile10():
     for year, (crop, m) in years.items():
         year_folder = pathlib.Path(RAW_DATA_PATH) / "drought" / str(year)
 
-        images = {}
-        for drought_raw in year_folder.iterdir():
-            month = drought_raw.name[m : m + 2]
-            im_drought = Image.open(drought_raw)
-            im_drought = im_drought.crop(crop)
+        for device_width in ("small", "wide"):
+            if device_width == "small":
+                width = original_size[0]
+                height = original_size[1] + 2 * legend_margin + 3 * legend_size + 2 * legend_vspace
+            else:
+                width = int(original_size[0] * 1.5)
+                height = original_size[1]
 
-            im = Image.new(
-                im_drought.mode, size=(original_size[0], height), color="white"
-            )
-            im.paste(im_drought, (0, 0))
+            images = {}
+            for drought_raw in year_folder.iterdir():
+                month = drought_raw.name[m : m + 2]
+                im_drought = Image.open(drought_raw)
+                im_drought = im_drought.crop(crop)
 
-            draw = ImageDraw.Draw(im)
-
-            # Add month
-            draw.rectangle((10, 40, 130, 80), fill="#97b6e1")
-            draw.text(
-                (10, 10), text=months[int(month) - 1], fill="black", font=font_month
-            )
-
-            # Add legend
-            # draw.rectangle((0, 749, original_size[0] - 1, height - 1), outline="black")
-            for i, (color, label) in enumerate(legend):
-                x = legend_margin + int(i / 3) * original_size[0] / 2
-                y = (
-                    original_size[1]
-                    + legend_margin
-                    + (i % 3) * (legend_size + legend_vspace)
+                im = Image.new(
+                    im_drought.mode, size=(width, height), color="white"
                 )
-                draw.rectangle((x, y, x + legend_size, y + legend_size), fill=color)
+                im.paste(im_drought, (0, 0))
+
+                draw = ImageDraw.Draw(im)
+
+                # Add month
+                draw.rectangle((10, 40, 130, 80), fill="#97b6e1")
                 draw.text(
-                    (x + legend_size + legend_hspace, y + legend_size / 2),
-                    text=label,
-                    fill="black",
-                    font=font_legend,
-                    anchor="lm",
+                    (10, 10), text=months[int(month) - 1], fill="black", font=font_month
                 )
 
-            images[int(month)] = im
+                # Add legend
+                legend_x_offset = 0 if device_width == "small" else original_size[0]
+                legend_y_offset = original_size[1] if device_width == "small" else 0
+                wrap = 3 if device_width == "small" else 6
+                for i, (color, label) in enumerate(legend):
+                    x = legend_x_offset + legend_margin + int(i / wrap) * original_size[0] / 2
+                    y = (
+                        legend_y_offset
+                        + legend_margin
+                        + (i % wrap) * (legend_size + legend_vspace)
+                    )
+                    draw.rectangle((x, y, x + legend_size, y + legend_size), fill=color)
+                    draw.text(
+                        (x + legend_size + legend_hspace, y + legend_size / 2),
+                        text=label,
+                        fill="black",
+                        font=font_legend,
+                        anchor="lm",
+                    )
 
-        drought_file = drought_folder / f"{year}.gif"
-        sorted_images = [images[k] for k in sorted(images.keys())]
-        sorted_images[0].save(
-            drought_file,
-            save_all=True,
-            append_images=sorted_images[1:],
-            duration=1000,
-            loop=0,
-        )
+                images[int(month)] = im
+
+            drought_file = drought_folder / f"{year}_{device_width}.gif"
+            sorted_images = [images[k] for k in sorted(images.keys())]
+            sorted_images[0].save(
+                drought_file,
+                save_all=True,
+                append_images=sorted_images[1:],
+                duration=1000,
+                loop=0,
+            )
 
     data = [{"year": year} for year in years]
     with open(os.path.join(DATA_PATH, "tile10.json"), "w") as json_file:
