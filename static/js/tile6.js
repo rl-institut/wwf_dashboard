@@ -6,7 +6,7 @@ document.addEventListener("globalSetupComplete", function () {
     const t6_header = ("date" in initials) ? initials.date : "";
     const t6_header_height = get_header_height(6);
 
-    const t6_pie_offset = 10;
+    const t6_pie_offset = 2;
     const t6_pie_radius = 38;
     const t6_pie_text_width = 0;
     const t6_pie_text_height = 20;
@@ -18,14 +18,14 @@ document.addEventListener("globalSetupComplete", function () {
     const t6_pie_legend_rect = 12;
     const t6_pie_total_height = t6_pie_offset + 2 * t6_pie_radius + t6_pie_vspace + t6_pie_legend_rect;
 
-    const t6_chart_offset = 60;
+    const t6_chart_offset = 40;
     const t6_chart_title_height = 30;
-    const t6_chart_height = 230;
+    const t6_chart_height_ideal = 230;
+    let t6_chart_height = 100;
     const t6_chart_yaxis_width = 40;
     const t6_chart_width = width - 2 * t6_chart_yaxis_width;
     const t6_chart_xaxis_height = 30;
-    const t6_chart_xaxis_title_height = 20;
-    const t6_chart_total_height = t6_chart_offset + t6_chart_title_height + t6_chart_height + t6_chart_xaxis_height + t6_chart_xaxis_title_height;
+    const t6_chart_total_height_without_chart = t6_chart_offset + t6_chart_title_height + t6_chart_xaxis_height;
 
     const t6_icon_offset = 20;
     const t6_icon_size = 24;
@@ -37,7 +37,13 @@ document.addEventListener("globalSetupComplete", function () {
 
     const t6_bottom_offset = 20;
 
-    const t6_min_height = t6_pie_total_height + t6_chart_total_height + t6_icon_total_height + t6_bottom_offset;
+    const t6_min_height = t6_pie_total_height + t6_chart_total_height_without_chart + t6_icon_total_height + t6_bottom_offset;
+    if (debug) {console.log("Chart #6 min height = ", t6_min_height);}
+    const t6_height = get_tile_height(6);
+    t6_chart_height = Math.round(Math.min(Math.max(t6_height - t6_min_height, t6_chart_height), t6_chart_height_ideal));
+    const t6_chart_total_height = t6_chart_total_height_without_chart + t6_chart_height;
+    const t6_puffer = is_mobile ? 0 : (t6_height - t6_min_height - t6_chart_height);
+    if (debug) {console.log("Puffer #6 = ", t6_puffer);}
 
     $("#t6_date").datepicker(
         {
@@ -48,9 +54,6 @@ document.addEventListener("globalSetupComplete", function () {
         }
     );
     $("#t6_date").on("changeDate", t6_change_date);
-
-    const t6_height = get_tile_height(6);
-    const t6_puffer = is_mobile ? 0 : (t6_height - t6_min_height);
 
     const t6_technologies = {
         "renewables": {"title": "Sonstige Erneuerbare", "icon": "i_sonstige_ee_16", "icon_color": "white"},
@@ -90,9 +93,12 @@ document.addEventListener("globalSetupComplete", function () {
     const t6_tile = t6_svg.append("g")
         .attr("transform", `translate(${share_margin}, ${t6_header_height + share_margin})`);
 
+    const t6_pie_area = t6_tile.append("g")
+        .attr("transform", `translate(0, ${t6_puffer / 3})`);
+
     // PIE
 
-    const t6_pie_legend = t6_tile.append("g")
+    const t6_pie_legend = t6_pie_area.append("g")
         .attr("transform", `translate(${t6_pie_legend_x}, ${t6_pie_legend_y})`);
     t6_pie_legend.append("rect")
         .attr("width", t6_pie_legend_rect)
@@ -120,13 +126,13 @@ document.addEventListener("globalSetupComplete", function () {
         .attr("letter-spacing", letterSpacing)
         .style("font-size", fontSize.xsmall);
 
-    t6_tile.append("text")
+    t6_pie_area.append("text")
         .text("Anteil Erneuerbarer")
         .attr("x", chart_width / 2 + t6_pie_hspace)
         .attr("y", t6_pie_offset + t6_pie_radius - t6_pie_text_height / 2)
         .attr("letter-spacing", letterSpacing)
         .style("font-size", fontSize.small);
-    t6_tile.append("text")
+    t6_pie_area.append("text")
         .text("an diesem Tag")
         .attr("x", chart_width / 2 + t6_pie_hspace)
         .attr("y", t6_pie_offset + t6_pie_radius + t6_pie_text_height / 2)
@@ -146,7 +152,7 @@ document.addEventListener("globalSetupComplete", function () {
     // CHART
 
     const t6_chart_area = t6_tile.append("g")
-        .attr("transform", `translate(${t6_chart_yaxis_width}, ${t6_pie_total_height + t6_puffer + t6_chart_offset})`);
+        .attr("transform", `translate(${t6_chart_yaxis_width}, ${t6_pie_total_height + t6_puffer * 2/3 + t6_chart_offset})`);
 
     t6_chart_area.append("text")
         .text("Stromerzeugung an diesem Tag")
@@ -218,8 +224,8 @@ document.addEventListener("globalSetupComplete", function () {
 
     // ICONS
 
-    const t6_icons = t6_tile.append("g")
-        .attr("transform", `translate(0, ${t6_pie_total_height + t6_puffer + t6_chart_total_height + t6_icon_offset})`);
+    const t6_icons = t6_chart_area.append("g")
+        .attr("transform", `translate(0, ${t6_chart_total_height - t6_chart_offset + t6_icon_offset})`);
 
     for (const technology of Object.keys(t6_technologies)) {
         const i = Object.keys(t6_technologies).indexOf(technology);
@@ -323,7 +329,7 @@ document.addEventListener("globalSetupComplete", function () {
         const t6_pie_data = t6_pie(Object.entries(t6_pie_data_raw));
 
         const arc = d3.arc().innerRadius(0).outerRadius(t6_pie_radius);
-        t6_tile
+        t6_pie_area
             .selectAll("t6_pie")
             .data(t6_pie_data)
             .enter()
@@ -337,7 +343,7 @@ document.addEventListener("globalSetupComplete", function () {
                 return t6_pie_color(d.data[0]);
             });
 
-        t6_tile.append("text")
+        t6_pie_area.append("text")
             .attr("id", "t6_pie_text")
             .text(res_share.toFixed(0) + "%")
             .attr("x", chart_width / 2 - t6_pie_radius - t6_pie_hspace)
@@ -372,4 +378,6 @@ document.addEventListener("globalSetupComplete", function () {
     const today = new Date();
     $("#t6_date").datepicker("setDate", ("date" in initials) ? new Date(initials.date) : today);
 
+    document.getElementById("t6_arrow_left").addEventListener("click", function () {t6_decrease_date();});
+    document.getElementById("t6_arrow_right").addEventListener("click", function () {t6_increase_date();});
 });
