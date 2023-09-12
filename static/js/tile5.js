@@ -1,10 +1,10 @@
-document.addEventListener("globalSetupComplete", function (e) {
+document.addEventListener("globalSetupComplete", function () {
   if (debug) {
     console.log("Setup tile #5");
   }
 
   const t5_header = ("year" in initials) ? initials.year : "";
-  const t5_header_height = get_header_height(5)
+  const t5_header_height = get_header_height(5);
 
   const t5_chart_offset = 20;
   const t5_chart_title_height = 50;
@@ -37,10 +37,10 @@ document.addEventListener("globalSetupComplete", function (e) {
     max: tiles[5][tiles[5].length - 1].year,
     from: tiles[5][tiles[5].length - 1].year,
     onChange: function (data) {
-      t5_change_year(data.from)
+      t5_change_year(data.from);
     },
     onUpdate: function (data) {
-      t5_change_year(data.from)
+      t5_change_year(data.from);
     }
   });
 
@@ -56,13 +56,13 @@ document.addEventListener("globalSetupComplete", function (e) {
     "fossil": {"title": ["Fossil / Nuklear"], "icon": "i_pollution"},
   };
 
-  const t5_renewables = Object.keys(t5_technologies).filter(key => key != "fossil");
+  const t5_renewables = Object.keys(t5_technologies).filter(key => key !== "fossil");
   const t5_y_max = t5_renewables.reduce(
       (max, key) => {
         if (tiles[5][tiles[5].length - 3][key] > max) {
-          return tiles[5][tiles[5].length - 3][key]
+          return tiles[5][tiles[5].length - 3][key];
         } else {
-          return max
+          return max;
         }
       },
       0
@@ -121,7 +121,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .call(
           d3.axisBottom(t5_x).ticks(5).tickFormat(
               function (year) {
-                return year
+                return year;
               }
           )
       )
@@ -163,10 +163,10 @@ document.addEventListener("globalSetupComplete", function (e) {
               .tickSize(-t5_chart_width)
               .tickFormat('')
               .ticks(5)
-      )
+      );
   t5_y_grid.selectAll(".tick").select("line")
       .attr("stroke-width", tickStrokeWidth)
-      .attr("stroke", tickColor)
+      .attr("stroke", tickColor);
   t5_y_grid.select('.domain').attr('stroke-width', 0);
 
   // Add technology paths
@@ -178,12 +178,12 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {
-              return t5_x(d.year)
+              return t5_x(d.year);
             })
             .y(function (d) {
-              return t5_y(d[technology])
+              return t5_y(d[technology]);
             })
-        )
+        );
   }
 
   // ICONS
@@ -191,7 +191,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t5_icons = t5_tile.append("g").attr("transform", `translate(${t5_icon_hspace}, ${t5_chart_total_height + t5_icon_offset + t5_puffer / 2})`);
 
   for (const [i, technology] of Object.keys(t5_technologies).entries()) {
-    const y_offset = parseInt(i / 3) * (t5_icon_size + 2 * t5_icon_vspace + t5_icon_height + t5_icon_text_height + t5_icon_wrap_height)
+    const y_offset = parseInt(i / 3) * (t5_icon_size + 2 * t5_icon_vspace + t5_icon_height + t5_icon_text_height + t5_icon_wrap_height);
     $(t5_icons.node().appendChild(icons[t5_technologies[technology].icon].documentElement.cloneNode(true)))
         .attr("x", (i % 3) * (t5_icon_hspace + t5_icon_width) + t5_icon_width / 2 - t5_icon_size / 2)
         .attr("y", y_offset)
@@ -237,7 +237,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   function t5_change_year(to_year) {
     const year = parseInt(to_year);
-    const year_data = tiles[5].find(element => element.year == year);
+    const year_data = tiles[5].find(element => element.year === year);
 
     t5_chart.select("#t5_year_line").remove();
     t5_chart.append("line")
@@ -255,13 +255,13 @@ document.addEventListener("globalSetupComplete", function (e) {
           .text(year_data[technology].toLocaleString(undefined, {
             minimumFractionDigits: 1,
             maximumFractionDigits: 1
-          }) + " %")
+          }) + " %");
     }
   }
 
   if ("year" in initials) {
     const init_data = $("#t5_year").data("ionRangeSlider");
-    init_data.update({from: initials.year})
+    init_data.update({from: initials.year});
   } else {
     t5_change_year(tiles[5][tiles[5].length - 1].year);
   }
