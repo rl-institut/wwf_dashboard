@@ -1,3 +1,6 @@
+
+let t9_technology;
+
 document.addEventListener("globalSetupComplete", function () {
   if (debug) {
     console.log("Setup tile #9");
@@ -8,21 +11,22 @@ document.addEventListener("globalSetupComplete", function () {
 
   const t9_bar_ticks_width = width / 2.5;
   const t9_bar_width = width - t9_bar_ticks_width;
-  const t9_bar_height = 180;
+  const t9_bar_height_ideal = 180;
+  let t9_bar_height = 140;
   const t9_bar_title_height = 50;
-  const t9_bar_offset = 50;
+  const t9_bar_offset = 10;
   const t9_bar_hspace = 5;
   const t9_bar_gap = 12;
   const t9_solar_text_hoffset = 9;
   const t9_solar_text_voffset = 15;
-  const t9_bar_total_height = t9_bar_offset + t9_bar_title_height + t9_bar_height;
+  const t9_bar_total_height_without_chart = t9_bar_offset + t9_bar_title_height;
 
   const t9_icon_offset = 40;
   const t9_circle_size = 40;
   const t9_circe_color_gray = "#ECECEC";
   const t9_icon_size = 20;
   const t9_icon_hspace = 6;
-  const t9_icon_vspace = 20;
+  const t9_icon_vspace = 10;
   const t9_icon_title_height = 22;
   const t9_icon_total_height = t9_icon_offset + t9_circle_size + 2 * t9_icon_vspace + t9_icon_title_height;
 
@@ -32,12 +36,18 @@ document.addEventListener("globalSetupComplete", function () {
   const t9_chart_yaxis_width = 33;
   const t9_chart_xaxis_height = 20;
   const t9_chart_width = width - 2 * t9_chart_axes_width;
-  const t9_chart_height = 260;
-  const t9_chart_total_height = t9_chart_title_height + t9_chart_unit_height + t9_chart_height + t9_chart_xaxis_height;
+  const t9_chart_height_ideal = 260;
+  let t9_chart_height = 100;
+  const t9_chart_total_height_without_chart = t9_chart_title_height + t9_chart_unit_height + t9_chart_xaxis_height;
 
-  const t9_min_height = t9_bar_total_height + t9_icon_total_height + t9_chart_total_height;
+  const t9_min_height = t9_bar_total_height_without_chart + t9_icon_total_height + t9_chart_total_height_without_chart;
+  const t9_height = get_tile_height(9);
+  const t9_chart_ratio = t9_chart_height_ideal / (t9_chart_height_ideal + t9_bar_height_ideal);
+  t9_bar_height = Math.round(Math.min(Math.max((t9_height - t9_min_height) * (1 - t9_chart_ratio), t9_bar_height), t9_bar_height_ideal));
+  t9_chart_height = Math.round(Math.min(Math.max((t9_height - t9_min_height) * t9_chart_ratio, t9_chart_height), t9_chart_height_ideal));
+  const t9_bar_total_height = t9_bar_total_height_without_chart + t9_bar_height;
+  const t9_puffer = is_mobile ? 0 : (t9_height - t9_min_height - t9_bar_height - t9_chart_height);
 
-  let t9_technology;
   const t9_installation_years = tiles[9].installations.map(function (d) {
     return d.year;
   });
@@ -64,9 +74,6 @@ document.addEventListener("globalSetupComplete", function () {
 
   const t9_technologies_max = Math.max(...Object.values(tiles[9].installations[tiles[9].installations.length - 2])) / 1000;
   const t9_emissions_max = Math.max(...Object.values(tiles[9].emissions));
-
-  const t9_height = get_tile_height(9);
-  const t9_puffer = is_mobile ? 0 : (t9_height - t9_min_height);
 
   const t9_emissions_x = d3.scaleLinear()
       .range([0, t9_bar_width])
@@ -101,8 +108,10 @@ document.addEventListener("globalSetupComplete", function () {
       .attr("transform", `translate(${share_margin}, ${t9_header_height + share_margin})`);
 
   // EMISSIONS
+  const t9_bar_area = t9_tile.append("g")
+      .attr("transform", `translate(0, ${t9_puffer / 3})`);
 
-  t9_tile.append("text")
+  t9_bar_area.append("text")
       .text("CO2-Emissionen nach Heizungsart")
       .attr("x", width / 2)
       .attr("y", t9_bar_offset)
@@ -110,7 +119,7 @@ document.addEventListener("globalSetupComplete", function () {
       .attr("letter-spacing", letterSpacing)
       .attr("dominant-baseline", "hanging");
 
-  t9_tile.append("text")
+  t9_bar_area.append("text")
       .text("(g/kWh)")
       .attr("x", width / 2)
       .attr("y", t9_bar_offset + t9_bar_title_height / 2)
@@ -118,7 +127,7 @@ document.addEventListener("globalSetupComplete", function () {
       .attr("letter-spacing", letterSpacing)
       .attr("dominant-baseline", "hanging");
 
-  const t9_bar = t9_tile.append("g")
+  const t9_bar = t9_bar_area.append("g")
       .attr("transform", `translate(${t9_bar_ticks_width}, ${t9_bar_offset + t9_bar_title_height})`);
 
   for (const technology of Object.keys(t9_technologies)) {
@@ -210,14 +219,13 @@ document.addEventListener("globalSetupComplete", function () {
 
   // ICONS
 
-  const t9_icons = t9_tile.append("g").attr("transform", `translate(0, ${t9_bar_total_height + t9_puffer + t9_icon_offset})`);
+  const t9_icons = t9_tile.append("g").attr("transform", `translate(0, ${t9_bar_total_height + t9_puffer * 2/3 + t9_icon_offset})`);
   const t9_icon_left = (width - 5 * t9_circle_size - 4 * t9_icon_hspace) / 2;
   for (const [i, technology] of Object.keys(t9_technologies).entries()) {
     const icon = t9_technologies[technology].icon;
     const x = t9_icon_left + i * (t9_circle_size + t9_icon_hspace) + t9_circle_size / 2;
     t9_icons.append("circle")
         .attr("id", "t9_circle_" + technology)
-        .attr("onclick", `t9_change_technology("${technology}")`)
         .attr("onmouseover", function () {
           d3.select(this).style("cursor", "pointer");
         })
@@ -226,7 +234,6 @@ document.addEventListener("globalSetupComplete", function () {
         .attr("r", t9_circle_size / 2)
         .attr("fill", t9_circe_color_gray);
     $(t9_icons.node().appendChild(icons[icon].documentElement.cloneNode(true)))
-        .attr("onclick", `t9_change_technology("${technology}")`)
         .attr("onmouseover", function () {
           d3.select(this).style("cursor", "pointer");
         })
@@ -236,6 +243,9 @@ document.addEventListener("globalSetupComplete", function () {
         .attr("width", t9_icon_size)
         .attr("height", t9_icon_size)
         .attr("preserveAspectRatio", "xMidYMid slice");
+
+    document.getElementById("t9_circle_" + technology).addEventListener("click", function () {t9_change_technology(technology);});
+    document.getElementById("t9_icon_" + technology).addEventListener("click", function () {t9_change_technology(technology);});
   }
 
   t9_icons.append("text")
@@ -246,7 +256,7 @@ document.addEventListener("globalSetupComplete", function () {
       .attr("letter-spacing", letterSpacing);
 
   // CHART
-  const t9_chart = t9_tile.append("g").attr("transform", `translate(${t9_chart_yaxis_width}, ${t9_bar_total_height + t9_puffer + t9_icon_total_height + t9_chart_title_height})`);
+  const t9_chart = t9_tile.append("g").attr("transform", `translate(${t9_chart_yaxis_width}, ${t9_bar_total_height + t9_puffer * 2/3 + t9_icon_total_height + t9_chart_title_height})`);
 
   // X-Axis
   t9_chart.append("g")
