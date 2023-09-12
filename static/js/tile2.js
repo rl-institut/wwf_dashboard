@@ -6,7 +6,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t2_header = ("year" in initials) ? initials.year : "";
   const t2_header_height = get_header_height(2);
 
-  const t2_bar_offset = 20;
+  const t2_bar_offset = 0;
   const t2_bar_title_height = 20;
   const t2_bar_height = 20;
   const t2_bar_vspace = 10;
@@ -14,7 +14,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t2_bar_total_height = t2_bar_offset + t2_bar_title_height + t2_bar_height + t2_bar_vspace + t2_bar_xaxis_height;
 
   const t2_icon_offset_ideal = 30;
-  let t2_icon_offset = 0;
+  let t2_icon_offset = -20;
   const t2_icons_rect_height = 26;
   const t2_icon_size = 16;
   const t2_icon_vspace = 5;
@@ -28,7 +28,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t2_arrow_offset_ideal = 30;
   let t2_arrow_offset = 0;
   const t2_arrow_width = 50;
-  const t2_arrow_height = 70;
+  const t2_arrow_height = 65;
   const t2_arrow_text_height = 24;
   const t2_arrow_total_height = t2_arrow_offset + t2_arrow_height;
 
@@ -36,7 +36,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   let t2_pie_offset = 10;
   const t2_pie_radius = 38;
   const t2_pie_hspace = (width - 6 * t2_pie_radius) / 4;
-  const t2_pie_vspace = 10;
+  const t2_pie_vspace = 5;
   const t2_pie_icon_size = 20;
   const t2_pie_legend_size = 12;
   const t2_pie_legend_padding_top_ideal = 10;
@@ -47,6 +47,21 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   const t2_min_height = t2_bar_total_height + t2_icon_total_height + t2_arrow_total_height + t2_pie_total_height;
   if (debug) {console.log("Puffer #2 min height = ", t2_min_height);}
+  const t2_height = get_tile_height(2);
+  const t2_ideal_height = t2_arrow_offset_ideal + t2_icon_margin_ideal + t2_pie_offset_ideal + t2_pie_legend_padding_top_ideal + t2_icon_offset_ideal;
+  if (debug) {console.log("Puffer #2 ideal height = ", t2_ideal_height);}
+  let t2_puffer;
+  if (t2_height - t2_min_height > t2_ideal_height) {
+    t2_arrow_offset = t2_arrow_offset_ideal;
+    t2_icon_margin = t2_icon_margin_ideal;
+    t2_pie_offset = t2_pie_offset_ideal;
+    t2_pie_legend_padding_top = t2_pie_legend_padding_top_ideal;
+    t2_icon_offset = t2_icon_offset_ideal;
+    t2_puffer = Math.max(0, is_mobile ? 0 : (t2_height - t2_min_height - t2_ideal_height));
+  } else {
+    t2_puffer = Math.max(0, is_mobile ? 0 : (t2_height - t2_min_height));
+  }
+  if (debug) {console.log("Puffer #2 height = ", t2_puffer);}
 
   $("#t2_year").ionRangeSlider({
     grid: true,
@@ -63,22 +78,6 @@ document.addEventListener("globalSetupComplete", function (e) {
       t2_change_year(data.from);
     }
   });
-
-  const t2_height = get_tile_height(2);
-  const t2_ideal_height = t2_arrow_offset_ideal + t2_icon_margin_ideal + t2_pie_offset_ideal + t2_pie_legend_padding_top_ideal + t2_icon_offset_ideal;
-  if (debug) {console.log("Puffer #2 ideal height = ", t2_ideal_height);}
-  let t2_puffer;
-  if (t2_height - t2_min_height > t2_ideal_height) {
-    t2_arrow_offset = t2_arrow_offset_ideal;
-    t2_icon_margin = t2_icon_margin_ideal;
-    t2_pie_offset = t2_pie_offset_ideal;
-    t2_pie_legend_padding_top = t2_pie_legend_padding_top_ideal;
-    t2_icon_offset = t2_icon_offset_ideal;
-    t2_puffer = Math.max(0, is_mobile ? 0 : (t2_height - t2_min_height - t2_ideal_height));
-  } else {
-    t2_puffer = Math.max(0, is_mobile ? 0 : (t2_height - t2_min_height));
-  }
-  if (debug) {console.log("Puffer #2 height = ", t2_puffer);}
 
   const t2_resources = ["renewables", "oil", "gas", "coal", "nuclear", "others", "savings"];
   const t2_resources_names = {
@@ -136,7 +135,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("x", width / 2)
       .attr("y", t2_bar_offset)
       .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "middle")
+      .attr("dominant-baseline", "hanging")
       .attr("letter-spacing", letterSpacing);
 
   // BAR X-Axis ticks
