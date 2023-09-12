@@ -29,8 +29,9 @@ document.addEventListener("globalSetupComplete", function (e) {
   let t2_arrow_offset = 0;
   const t2_arrow_width = 50;
   const t2_arrow_height = 65;
+  const t2_arrow_height_measured = 40;
   const t2_arrow_text_height = 24;
-  const t2_arrow_total_height = t2_arrow_offset + t2_arrow_height;
+  const t2_arrow_total_height = t2_arrow_offset + t2_arrow_height_measured;
 
   const t2_pie_offset_ideal = 40;
   let t2_pie_offset = 10;
