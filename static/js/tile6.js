@@ -1,4 +1,4 @@
-document.addEventListener("globalSetupComplete", function (e) {
+document.addEventListener("globalSetupComplete", function () {
     if (debug) {
         console.log("Setup tile #6");
     }
@@ -32,7 +32,7 @@ document.addEventListener("globalSetupComplete", function (e) {
     const t6_icon_margin = 4;
     const t6_icon_padding = 8;
     const t6_icon_row_height = 10;
-    const t6_icon_wrap = (is_mobile) ? 1 : 2
+    const t6_icon_wrap = (is_mobile) ? 1 : 2;
     const t6_icon_total_height = t6_icon_offset + (4 / t6_icon_wrap) * t6_icon_size + (4 / t6_icon_wrap - 1) * t6_icon_row_height;
 
     const t6_bottom_offset = 20;
@@ -63,7 +63,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
     const t6_x = d3.scaleLinear()
         .range([0, t6_chart_width])
-        .domain([0, 23])
+        .domain([0, 23]);
     const t6_y = d3.scaleLinear()
         .range([t6_chart_height, 0])
         .domain([0, y_max]);
@@ -73,7 +73,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
     const t6_pie_color = d3.scaleOrdinal()
         .domain(["ee", "ne", "ne2"])
-        .range([wwfColor.mediumGreen, wwfColor.black, wwfColor.black])
+        .range([wwfColor.mediumGreen, wwfColor.black, wwfColor.black]);
 
     const t6_svg = d3.select("#t6")
         .append("svg")
@@ -105,7 +105,7 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("dominant-baseline", "central")
         .attr("font-weight", fontWeight.normal)
         .attr("letter-spacing", letterSpacing)
-        .style("font-size", fontSize.xsmall)
+        .style("font-size", fontSize.xsmall);
     t6_pie_legend.append("rect")
         .attr("x", t6_pie_legend_width / 2)
         .attr("width", t6_pie_legend_rect)
@@ -145,7 +145,6 @@ document.addEventListener("globalSetupComplete", function (e) {
 
     // CHART
 
-    "Stromerzeugung an diesem Tag (GW)"
     const t6_chart_area = t6_tile.append("g")
         .attr("transform", `translate(${t6_chart_yaxis_width}, ${t6_pie_total_height + t6_puffer + t6_chart_offset})`);
 
@@ -180,7 +179,7 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("fill", wwfColor.gray1)
         .attr("font-weight", fontWeight.thin)
         .attr("letter-spacing", letterSpacing)
-        .attr("font-size", fontSize.xsmall)
+        .attr("font-size", fontSize.xsmall);
     d3.select("#t6_xaxis").select('.domain').attr('stroke-width', 0);
     d3.select("#t6_xaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -213,7 +212,7 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("fill", wwfColor.gray1)
         .attr("font-weight", fontWeight.thin)
         .attr("letter-spacing", letterSpacing)
-        .attr("font-size", fontSize.xsmall)
+        .attr("font-size", fontSize.xsmall);
     d3.select("#t6_yaxis").select('.domain').attr('stroke-width', 0);
     d3.select("#t6_yaxis").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -223,7 +222,7 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("transform", `translate(0, ${t6_pie_total_height + t6_puffer + t6_chart_total_height + t6_icon_offset})`);
 
     for (const technology of Object.keys(t6_technologies)) {
-        const i = Object.keys(t6_technologies).indexOf(technology)
+        const i = Object.keys(t6_technologies).indexOf(technology);
         const x = (i % t6_icon_wrap) * t6_chart_width / 2 + t6_chart_yaxis_width;
         const y = (parseInt(i / t6_icon_wrap)) * (t6_icon_size + t6_icon_row_height);
 
@@ -236,7 +235,7 @@ document.addEventListener("globalSetupComplete", function (e) {
             .attr("dominant-baseline", "central")
             .attr("font-weight", fontWeight.normal)
             .attr("letter-spacing", letterSpacing)
-            .style("font-size", fontSize.xsmall)
+            .style("font-size", fontSize.xsmall);
 
         t6_icons.append("rect")
             .attr("x", x)
@@ -251,7 +250,7 @@ document.addEventListener("globalSetupComplete", function (e) {
             .attr("y", y + t6_icon_margin)
             .attr("width", t6_icon_size - 2 * t6_icon_margin)
             .attr("height", t6_icon_size - 2 * t6_icon_margin)
-            .attr("preserveAspectRatio", "xMidYMid slice")
+            .attr("preserveAspectRatio", "xMidYMid slice");
 
         t6_icons.select("#t6_icon_" + technology)
             .selectAll("path")
@@ -273,7 +272,7 @@ document.addEventListener("globalSetupComplete", function (e) {
                 },
                 error: function () {
                     const area_chart = t6_chart.append("g")
-                        .attr("id", "t6_area")
+                        .attr("id", "t6_area");
                     area_chart.append("text")
                         .text("Leider keine Daten vorhanden")
                         .attr("x", chart_width / 2)
@@ -281,7 +280,7 @@ document.addEventListener("globalSetupComplete", function (e) {
                         .attr("text-anchor", "middle")
                         .attr("font-weight", fontWeight.thin)
                         .attr("letter-spacing", letterSpacing)
-                        .style("font-size", fontSize.small)
+                        .style("font-size", fontSize.small);
                 }
             }
         );
@@ -297,7 +296,7 @@ document.addEventListener("globalSetupComplete", function (e) {
             .y1(d => t6_y(d[1]));
 
         const area_chart = t6_chart.append("g")
-            .attr("id", "t6_area")
+            .attr("id", "t6_area");
 
         const series = area_chart
             .selectAll(".series")
@@ -317,13 +316,13 @@ document.addEventListener("globalSetupComplete", function (e) {
     }
 
     function t6_draw_pie(res_share) {
-        const t6_pie_data_raw = {"ne": (100 - res_share) / 2, "ee": res_share, "ne2": (100 - res_share) / 2}
+        const t6_pie_data_raw = {"ne": (100 - res_share) / 2, "ee": res_share, "ne2": (100 - res_share) / 2};
         const t6_pie = d3.pie().value(function (d) {
-            return d[1]
-        }).sort(null)
-        const t6_pie_data = t6_pie(Object.entries(t6_pie_data_raw))
+            return d[1];
+        }).sort(null);
+        const t6_pie_data = t6_pie(Object.entries(t6_pie_data_raw));
 
-        const arc = d3.arc().innerRadius(0).outerRadius(t6_pie_radius)
+        const arc = d3.arc().innerRadius(0).outerRadius(t6_pie_radius);
         t6_tile
             .selectAll("t6_pie")
             .data(t6_pie_data)
@@ -331,12 +330,12 @@ document.addEventListener("globalSetupComplete", function (e) {
             .append('path')
             .attr("transform", `translate(${chart_width / 2 - t6_pie_radius - t6_pie_hspace}, ${t6_pie_offset + t6_pie_radius})`)
             .attr("stroke", function (d) {
-                return t6_pie_color(d.data[0])
+                return t6_pie_color(d.data[0]);
             })
             .attr('d', arc)
             .attr('fill', function (d) {
-                return t6_pie_color(d.data[0])
-            })
+                return t6_pie_color(d.data[0]);
+            });
 
         t6_tile.append("text")
             .attr("id", "t6_pie_text")
@@ -348,7 +347,7 @@ document.addEventListener("globalSetupComplete", function (e) {
             .style("text-anchor", "middle")
             .attr("font-weight", fontWeight.bold)
             .attr("letter-spacing", letterSpacing)
-            .style("font-size", fontSize.small)
+            .style("font-size", fontSize.small);
     }
 
     function t6_decrease_date() {
