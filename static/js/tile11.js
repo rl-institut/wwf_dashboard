@@ -1,3 +1,6 @@
+
+let t11_import_type;
+
 document.addEventListener("globalSetupComplete", function (e) {
   if (debug) {
     console.log("Setup tile #11");
@@ -6,37 +9,34 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t11_header = ("year" in initials) ? initials.year : "";
   const t11_header_height = get_header_height(11);
 
-  const t11_icon_offset = 40;
-  const t11_circle_size = 40;
-  const t11_circe_color_gray = "#ECECEC";
+  const t11_circle_size = 35;
   const t11_icon_size = 20;
-  const t11_icon_hspace = 6;
-  const t11_icon_vspace = 6;
-  const t11_icon_title_height = 22;
-  const t11_icon_total_height = t11_icon_offset + t11_circle_size + 2 * t11_icon_vspace + t11_icon_title_height;
 
   const t11_chart_unit_height = 30;
   const t11_chart_axes_width = 50;
   const t11_chart_xaxis_height = 40;
   const t11_chart_width = width - 2 * t11_chart_axes_width;
-  const t11_chart_height = 260;
-  const t11_chart_import_type_space = 10;
-  const t11_chart_total_height = t11_chart_unit_height + t11_chart_height + t11_chart_xaxis_height;
+  const t11_chart_height_ideal = 260;
+  let t11_chart_height = 100;
+  const t11_chart_total_height_without_chart = t11_chart_unit_height + t11_chart_xaxis_height;
 
-  const t11_bar_offset = 20;
+  const t11_bar_offset = 0;
   const t11_bar_title_height = 48;
   const t11_bar_title_offset = 15;
   const t11_bar_height = 25;
-  const t11_bar_top_vspace = 40;
   const t11_bar_vspace = 15;
-  const t11_bar_text_width = 200;
-  const t11_bar_flag_size = 20;
+  const t11_bar_text_width = 180;
   const t11_bar_text_offset = 10;
-  const t11_bar_total_height = t11_bar_offset + t11_bar_title_height + t11_bar_title_offset + t11_bar_top_vspace + 3 * t11_bar_vspace + 5 * t11_bar_height;
+  const t11_bar_bottom_padding = 5;  // Needed as circle is cut in 800px otherwise
+  const t11_bar_total_height = t11_bar_offset + t11_bar_title_height + t11_bar_title_offset + 2 * t11_bar_vspace + 3 * t11_bar_height + t11_bar_bottom_padding;
 
-  const t11_min_height = t11_bar_total_height + t11_chart_total_height;
+  const t11_min_height = t11_bar_total_height + t11_chart_total_height_without_chart;
+  const t11_height = get_tile_height(11);
+  t11_chart_height = Math.round(Math.min(Math.max(t11_height - t11_min_height, t11_chart_height), t11_chart_height_ideal));
+  const t11_chart_total_height = t11_chart_total_height_without_chart + t11_chart_height;
+  const t11_puffer = is_mobile ? 0 : (t11_height - t11_min_height - t11_chart_height);
+  if (debug) {console.log("Puffer #11 height = ", t11_puffer);}
 
-  let t11_import_type;
   const t11_years = tiles[11].imports.map(function (d) {
     return d.year;
   });
@@ -73,9 +73,6 @@ document.addEventListener("globalSetupComplete", function (e) {
       0
   );
 
-  const t11_height = get_tile_height(11);
-  const t11_puffer = is_mobile ? 0 : (t11_height - t11_min_height);
-
   const t11_x = d3.scaleLinear()
       .range([0, t11_chart_width])
       .domain([tiles[11].imports[0].year, tiles[11].imports[tiles[11].imports.length - 1].year]);
@@ -105,7 +102,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("transform", `translate(${share_margin}, ${t11_header_height + share_margin})`);
 
   // CHART
-  const t11_chart_area = t11_tile.append("g").attr("transform", `translate(0, ${t11_puffer})`);
+  const t11_chart_area = t11_tile.append("g").attr("transform", `translate(0, ${t11_puffer * 1/3})`);
   const t11_chart = t11_chart_area.append("g").attr("transform", `translate(${t11_chart_axes_width}, ${t11_chart_unit_height})`);
 
   // Unit
@@ -190,7 +187,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   // BARS
 
-  const t11_bar_area = t11_tile.append("g").attr("transform", `translate(0, ${t11_puffer + t11_chart_total_height + t11_bar_offset})`);
+  const t11_bar_area = t11_tile.append("g").attr("transform", `translate(0, ${t11_puffer * 2/3 + t11_chart_total_height + t11_bar_offset})`);
 
   t11_bar_area.append("text")
       .text("Importabhängigkeit Deutschlands")
@@ -207,7 +204,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("letter-spacing", letterSpacing)
       .attr("dominant-baseline", "hanging");
 
-  const t11_bar_width = t11_chart_width - t11_bar_text_offset - t11_bar_text_width;
+  const t11_bar_width = width - t11_bar_text_offset - t11_bar_text_width - t11_chart_axes_width;
 
   const t11_bar = t11_bar_area.append("g").attr("transform", `translate(0, ${t11_bar_title_height + t11_bar_title_offset})`);
 
