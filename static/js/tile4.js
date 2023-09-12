@@ -8,7 +8,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   const t4_icon_offset = 10;
   const t4_icon_title_height = 20;
-  const t4_icon_vspace = 10;
+  const t4_icon_vspace = 5;
   const t4_icon_size = 30;
   const t4_icon_width = 75;
   const t4_icon_hspace = (width - 2 * t4_icon_width) / 3;
@@ -20,13 +20,17 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t4_chart_offset = 0;
   const t4_chart_unit_height = 40;
   const t4_chart_unit_vspace = 10;
-  const t4_chart_height = 270;
+  const t4_chart_height_ideal = 270;
+  let t4_chart_height = 100;
   const t4_chart_yaxis_width = 45;
   const t4_chart_xaxis_height = 40;
   const t4_chart_width = width - 2 * t4_chart_yaxis_width;
-  const t4_chart_total_height = t4_chart_offset + t4_chart_unit_height + t4_chart_unit_vspace + t4_chart_height + t4_chart_xaxis_height;
+  const t4_chart_total_height_without_chart = t4_chart_offset + t4_chart_unit_height + t4_chart_unit_vspace + t4_chart_xaxis_height;
 
-  const t4_min_height = t4_icon_total_height + t4_chart_total_height;
+  const t4_min_height = t4_icon_total_height + t4_chart_total_height_without_chart;
+  const t4_height = get_tile_height(4);
+  t4_chart_height = Math.round(Math.min(Math.max(t4_height - t4_min_height, t4_chart_height), t4_chart_height_ideal));
+  const t4_puffer = is_mobile ? 0 : t4_height - t4_min_height - t4_chart_height;
 
   $("#t4_year").ionRangeSlider({
     grid: true,
@@ -43,9 +47,6 @@ document.addEventListener("globalSetupComplete", function (e) {
       t4_change_year(data.from);
     }
   });
-
-  const t4_height = get_tile_height(4);
-  const t4_puffer = is_mobile ? 0 : t4_height - t4_min_height;
 
   const t4_technologies = {
     "heatpumps": {"title": "Wärmepumpen", "icon": "i_waermepumpe_32"},
@@ -115,7 +116,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   // ICONS
 
-  const t4_icons = t4_tile.append("g");
+  const t4_icons = t4_tile.append("g").attr("transform", `translate(0, ${t4_puffer / 3})`);
 
   t4_icons.append("text")
       .text("Anzahl der Klimatechnologien im Einsatz")
@@ -172,7 +173,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   // CHART
   const t4_chart_body = t4_tile.append("g")
-      .attr("transform", `translate(0, ${t4_icon_total_height + t4_chart_offset})`);
+      .attr("transform", `translate(0, ${t4_icon_total_height + t4_chart_offset + t4_puffer * 2/3})`);
   const t4_chart = t4_chart_body.append("g").attr("transform", `translate(${t4_chart_yaxis_width}, ${t4_chart_unit_height + t4_chart_unit_vspace})`);
 
   // X-Axis
