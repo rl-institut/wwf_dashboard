@@ -3,6 +3,8 @@ const wwfHeaderHeight = 90;
 const tileMinHeight = 800;
 let iFrameHeight;
 
+const has_header = "header" in initials;
+
 document.addEventListener("iFrameSetupComplete", function (e) {
   if (debug) {
     console.log("Setup GLOBAL");
@@ -18,6 +20,7 @@ document.addEventListener("iFrameSetupComplete", function (e) {
 });
 
 function get_tile_height(tile) {
+  if (has_header) {return 600;}
   const header_height = find_tile(tile).parentNode.parentNode.getElementsByClassName("tile__header")[0].clientHeight;
   const tileHeight = iFrameHeight - header_height;
   if (debug) {console.log(`Tile #${tile} Original Height =`, tileHeight);}
@@ -157,7 +160,6 @@ const headers = [
 const header_margin = 20;
 const header_title_height = 30;
 const header_line_height = 24;
-const has_header = "header" in initials;
 const share_margin = has_header * 32;
 
 
