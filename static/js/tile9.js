@@ -1,12 +1,11 @@
-document.addEventListener("globalSetupComplete", function (e) {
+document.addEventListener("globalSetupComplete", function () {
   if (debug) {
     console.log("Setup tile #9");
   }
 
   const t9_header = "";
-  const t9_header_height = get_header_height(9, false)
+  const t9_header_height = get_header_height(9, false);
 
-  const t9_emissions_color = "black";
   const t9_bar_ticks_width = width / 2.5;
   const t9_bar_width = width - t9_bar_ticks_width;
   const t9_bar_height = 180;
@@ -51,7 +50,7 @@ document.addEventListener("globalSetupComplete", function (e) {
     values: t9_installation_years,
     from: tiles[9].installations[tiles[9].installations.length - 1].year,
     onChange: function (data) {
-      t9_change_year(data.from)
+      t9_change_year(data.from);
     }
   });
 
@@ -168,7 +167,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .style("text-anchor", "end")
       .attr("font-weight", fontWeight.normal)
       .attr("letter-spacing", letterSpacing)
-      .attr("font-size", fontSize.xsmall)
+      .attr("font-size", fontSize.xsmall);
   d3.select("#t9_emissions_y").select('.domain').attr('stroke-width', 0);
   d3.select("#t9_emissions_y").selectAll(".tick").select("line").attr("stroke-width", 0);
 
@@ -181,7 +180,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("text-anchor", "end")
       .attr("font-weight", fontWeight.thin)
       .attr("letter-spacing", letterSpacing)
-      .attr("font-size", fontSize.xsmall)
+      .attr("font-size", fontSize.xsmall);
 
   t9_bar.append("text")
       .text("Heizsystem)")
@@ -190,7 +189,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("text-anchor", "end")
       .attr("font-weight", fontWeight.thin)
       .attr("letter-spacing", letterSpacing)
-      .attr("font-size", fontSize.xsmall)
+      .attr("font-size", fontSize.xsmall);
 
   t9_bar.append("line")
       .attr("x1", 0)
@@ -256,7 +255,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .call(
           d3.axisBottom(t9_x).ticks(3).tickFormat(
               function (year) {
-                return year
+                return year;
               }
           )
       )
@@ -298,10 +297,10 @@ document.addEventListener("globalSetupComplete", function (e) {
               .tickSize(-t9_chart_width)
               .tickFormat('')
               .ticks(5)
-      )
+      );
   t9_y_grid.selectAll(".tick").select("line")
       .attr("stroke-width", tickStrokeWidth)
-      .attr("stroke", tickColor)
+      .attr("stroke", tickColor);
   t9_y_grid.select('.domain').attr('stroke-width', 0);
 
   t9_chart.append("text")
@@ -330,25 +329,25 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {
-              return t9_x(d.year)
+              return t9_x(d.year);
             })
             .y(function (d) {
-              return t9_y(d[technology] / 1000)
+              return t9_y(d[technology] / 1000);
             })
-        )
+        );
   }
 
   function t9_activate_technology(technology) {
     t9_icons.selectAll("circle")
-        .attr("fill", t9_circe_color_gray)
+        .attr("fill", t9_circe_color_gray);
     t9_icons.selectAll("path")
-        .style("fill", wwfColor.black)
+        .style("fill", wwfColor.black);
     t9_icons.select("#t9_circle_" + technology)
-        .attr("fill", t9_color(technology))
+        .attr("fill", t9_color(technology));
     t9_icons.select("#t9_icon_" + technology).select("path")
-        .style("fill", wwfColor.white)
+        .style("fill", wwfColor.white);
     t9_icons.select("#t9_technology_title")
-        .text(t9_technologies[technology].title)
+        .text(t9_technologies[technology].title);
   }
 
   function t9_draw_current_technology(technology) {
@@ -362,12 +361,12 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {
-              return t9_x(d.year)
+              return t9_x(d.year);
             })
             .y(function (d) {
-              return t9_y(d[technology] / 1000)
+              return t9_y(d[technology] / 1000);
             })
-        )
+        );
   }
 
   function t9_change_technology(technology) {
