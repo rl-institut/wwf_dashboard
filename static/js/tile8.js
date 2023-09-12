@@ -4,7 +4,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   }
 
   const t8_header = ("year" in initials) ? initials.year : "";
-  const t8_header_height = get_header_height(8)
+  const t8_header_height = get_header_height(8);
 
   const t8_bar_height = 52;
   const t8_bar_title_height = 20;
@@ -37,10 +37,10 @@ document.addEventListener("globalSetupComplete", function (e) {
     values: t8_years,
     from: tiles[8][tiles[8].length - 1].year,
     onChange: function (data) {
-      t8_change_year(data.from)
+      t8_change_year(data.from);
     },
     onUpdate: function (data) {
-      t8_change_year(data.from)
+      t8_change_year(data.from);
     }
   });
 
@@ -48,24 +48,24 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   const t8_twh_max = tiles[8].reduce(function (max, current) {
     if (current.primary > max) {
-      return current.primary
+      return current.primary;
     } else {
-      return max
+      return max;
     }
   }, 0);
   const t8_gw_max = (
       tiles[8].reduce(function (max, current) {
         if (current.pv > max) {
-          return current.pv
+          return current.pv;
         } else {
-          return max
+          return max;
         }
       }, 0) +
       tiles[8].reduce(function (max, current) {
         if (current.wind > max) {
-          return current.wind
+          return current.wind;
         } else {
-          return max
+          return max;
         }
       }, 0)
   );
@@ -124,7 +124,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .call(
           d3.axisBottom(t8_x).ticks(3).tickFormat(
               function (year) {
-                return year
+                return year;
               }
           )
       )
@@ -166,10 +166,10 @@ document.addEventListener("globalSetupComplete", function (e) {
               .tickSize(-t8_chart_width)
               .tickFormat('')
               .ticks(5)
-      )
+      );
   t8_y_grid.selectAll(".tick").select("line")
       .attr("stroke-width", tickStrokeWidth)
-      .attr("stroke", tickColor)
+      .attr("stroke", tickColor);
   t8_y_grid.select('.domain').attr('stroke-width', 0);
 
   t8_chart.append("text")
@@ -246,17 +246,17 @@ document.addEventListener("globalSetupComplete", function (e) {
         .datum(tiles[8])
         .attr("fill", "none")
         .attr("stroke", function (d) {
-          return t8_color(sector)
+          return t8_color(sector);
         })
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {
-              return t8_x(d.year)
+              return t8_x(d.year);
             })
             .y(function (d) {
-              return t8_y(d[sector])
+              return t8_y(d[sector]);
             })
-        )
+        );
   }
 
   t8_chart.append("text")
@@ -322,7 +322,7 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("height", t8_bar_height)
         .attr("fill", t8_color("pv"));
     if (middle > 0) {
-      $(t8_expansion.node().appendChild(icons["i_wind_onshore"].documentElement.cloneNode(true)))
+      $(t8_expansion.node().appendChild(icons.i_wind_onshore.documentElement.cloneNode(true)))
           .attr("x", middle / 2 - 2 * t8_icon_size - t8_icon_hspace / 2)
           .attr("y", t8_bar_height / 2 - t8_icon_size / 2)
           .attr("width", t8_icon_size)
@@ -340,7 +340,7 @@ document.addEventListener("globalSetupComplete", function (e) {
           .attr("font-weight", fontWeight.bold);
     }
     if (width - middle > 0) {
-      $(t8_expansion.node().appendChild(icons["i_pv"].documentElement.cloneNode(true)))
+      $(t8_expansion.node().appendChild(icons.i_pv.documentElement.cloneNode(true)))
           .attr("x", middle + (width - middle) / 2 - 2 * t8_icon_size - t8_icon_hspace / 2)
           .attr("y", t8_bar_height / 2 - t8_icon_size / 2)
           .attr("width", t8_icon_size)
@@ -361,7 +361,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   if ("year" in initials) {
     const init_data = $("#t8_year").data("ionRangeSlider");
-    init_data.update({from: t8_years.indexOf(parseInt(initials.year))})
+    init_data.update({from: t8_years.indexOf(parseInt(initials.year))});
   } else {
     t8_change_year(t8_years.length - 1);
   }
