@@ -17,16 +17,20 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t7_unit_height = 60;
   const t7_chart_hoffset = 10;
   const t7_chart_width = width - 2 * t7_chart_hoffset;
-  const t7_chart_height = 230;
+  const t7_chart_height_ideal = 230;
+  let t7_chart_height = 100;
   const t7_bar_gap = 30;
   const t7_bar_text_space = 8;
   const t7_icon_size = 21;
   const t7_icon_space = 10;
   const t7_legend_height = 110;
 
-  const t7_chart_total_height = t7_unit_height + t7_chart_height + t7_icon_size + 2 * t7_icon_space + t7_legend_height;
+  const t7_chart_total_height_without_chart = t7_unit_height + t7_icon_size + 2 * t7_icon_space + t7_legend_height;
 
-  const t7_min_height = t7_route_total_height + t7_chart_total_height;
+  const t7_min_height = t7_route_total_height + t7_chart_total_height_without_chart;
+  const t7_height = get_tile_height(7);
+  t7_chart_height = Math.round(Math.min(Math.max(t7_height - t7_min_height, t7_chart_height), t7_chart_height_ideal));
+  const t7_puffer = is_mobile ? 0 : (t7_height - t7_min_height - t7_chart_height);
 
   const distances = [5, 35, 550, 1900];
   const distance_switch = 2;  // At which distance aiplanes are shown instead of bicycles
@@ -46,9 +50,6 @@ document.addEventListener("globalSetupComplete", function (e) {
       t7_change_distance(data.from);
     }
   });
-
-  const t7_height = get_tile_height(7);
-  const t7_puffer = is_mobile ? 0 : (t7_height - t7_min_height);
 
   const t7_routes = [
     ["Berlin-Mitte", "Berlin-Neukölln"],
@@ -105,21 +106,24 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("transform", `translate(${share_margin}, ${t7_header_height + t7_route_offset + share_margin})`);
 
   // Route
-  t7_tile.append("text")
+  const t7_route_area = t7_tile.append("g")
+      .attr("transform", `translate(0, ${t7_puffer / 3})`);
+
+  t7_route_area.append("text")
       .text("Entspricht der folgenden Strecke:")
       .attr("x", width / 2)
       .attr("y", 0)
       .style("text-anchor", "middle")
       .attr("letter-spacing", letterSpacing);
 
-  t7_tile.append("rect")
+  t7_route_area.append("rect")
       .attr("x", 0)
       .attr("y", t7_route_space + t7_route_upper_padding)
       .attr("width", width)
       .attr("height", t7_route_height)
       .attr("fill", "#F3F3F3");
 
-  t7_tile.append("text")
+  t7_route_area.append("text")
       .text("< >")
       .attr("x", width / 2)
       .attr("y", t7_route_space + t7_route_height / 2 + t7_route_upper_padding)
@@ -129,13 +133,12 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("letter-spacing", letterSpacing);
 
   // CHART
-
   const t7_x = d3.scaleBand()
       .range([0, t7_chart_width])
       .domain([0, 1, 2, 3, 4, 5]);
 
   const t7_chart_area = t7_tile.append("g")
-      .attr("transform", `translate(${t7_chart_hoffset}, ${t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2})`);
+      .attr("transform", `translate(${t7_chart_hoffset}, ${t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2 + t7_puffer * 2/3})`);
 
   t7_chart_area.append("text")
       .text("CO2-Emissionen pro Person in")
@@ -199,7 +202,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   function t7_change_route(distance) {
     t7_tile.select("#t7_route").remove();
-    const t7_route = t7_tile.append("g")
+    const t7_route = t7_route_area.append("g")
         .attr("id", "t7_route");
     t7_route.append("text")
         .text(t7_routes[distance][0])
