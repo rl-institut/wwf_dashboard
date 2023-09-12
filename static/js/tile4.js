@@ -4,7 +4,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   }
 
   const t4_header = ("year" in initials) ? initials.year : "";
-  const t4_header_height = get_header_height(4)
+  const t4_header_height = get_header_height(4);
 
   const t4_icon_offset = 10;
   const t4_icon_title_height = 20;
@@ -17,7 +17,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   const t4_icon_total_height = t4_icon_offset + 3 * t4_icon_title_height + 5 * t4_icon_vspace + 2 * t4_icon_size + 2 * t4_icon_height + t4_icon_wrap_height;
 
-  const t4_chart_offset = 30;
+  const t4_chart_offset = 0;
   const t4_chart_unit_height = 40;
   const t4_chart_unit_vspace = 10;
   const t4_chart_height = 270;
@@ -37,10 +37,10 @@ document.addEventListener("globalSetupComplete", function (e) {
     max: tiles[4][tiles[4].length - 1].year,
     from: tiles[4][tiles[4].length - 1].year,
     onChange: function (data) {
-      t4_change_year(data.from)
+      t4_change_year(data.from);
     },
     onUpdate: function (data) {
-      t4_change_year(data.from)
+      t4_change_year(data.from);
     }
   });
 
@@ -56,31 +56,31 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   const t4_heatpumps_max = tiles[4].reduce(function (max, current) {
     if (current.heatpumps > max) {
-      return current.heatpumps
+      return current.heatpumps;
     } else {
-      return max
+      return max;
     }
   }, 0) / 1000;
   const t4_others_max = Math.max(
       tiles[4].reduce(function (max, current) {
         if (current.charging > max) {
-          return current.charging
+          return current.charging;
         } else {
-          return max
+          return max;
         }
       }, 0),
       tiles[4].reduce(function (max, current) {
         if (current.storages > max) {
-          return current.storages
+          return current.storages;
         } else {
-          return max
+          return max;
         }
       }, 0),
       tiles[4].reduce(function (max, current) {
         if (current.ecars > max) {
-          return current.ecars
+          return current.ecars;
         } else {
-          return max
+          return max;
         }
       }, 0)
   ) / 1000;
@@ -131,7 +131,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("transform", `translate(${t4_icon_hspace}, ${t4_icon_offset + t4_icon_title_height + t4_icon_vspace})`);
 
   for (const [i, technology] of Object.keys(t4_technologies).entries()) {
-    const y_offset = parseInt(i / 2) * (t4_icon_size + 2 * t4_icon_vspace + t4_icon_height + t4_icon_title_height + t4_icon_wrap_height)
+    const y_offset = parseInt(i / 2) * (t4_icon_size + 2 * t4_icon_vspace + t4_icon_height + t4_icon_title_height + t4_icon_wrap_height);
     t4_icons_body.append("text")
         .text(t4_technologies[technology].title)
         .attr("x", (i % 2) * (t4_icon_hspace + t4_icon_width) + t4_icon_width / 2)
@@ -182,7 +182,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .call(
           d3.axisBottom(t4_x).ticks(3).tickFormat(
               function (year) {
-                return year
+                return year;
               }
           )
       )
@@ -225,10 +225,10 @@ document.addEventListener("globalSetupComplete", function (e) {
               .tickSize(-t4_chart_width)
               .tickFormat('')
               .ticks(5)
-      )
+      );
   t4_y_grid.selectAll(".tick").select("line")
       .attr("stroke-width", tickStrokeWidth)
-      .attr("stroke", tickColor)
+      .attr("stroke", tickColor);
   t4_y_grid.select('.domain').attr('stroke-width', 0);
 
   t4_chart_body.append("text")
@@ -284,7 +284,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   // Add technology paths
   for (const technology of Object.keys(t4_technologies)) {
     let y = t4_y;
-    if (technology == "heatpumps") {
+    if (technology === "heatpumps") {
       y = t4_y2;
     }
     t4_chart.append("path")
@@ -294,17 +294,17 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {
-              return t4_x(d.year)
+              return t4_x(d.year);
             })
             .y(function (d) {
-              return y(technology == "heatpumps" ? d[technology] / 1000000 : d[technology] / 1000)
+              return y(technology === "heatpumps" ? d[technology] / 1000000 : d[technology] / 1000);
             })
-        )
+        );
   }
 
   function t4_change_year(to_year) {
     const year = parseInt(to_year);
-    const year_data = tiles[4].find(element => element.year == year);
+    const year_data = tiles[4].find(element => element.year === year);
 
     t4_chart.select("#t4_year_line").remove();
     t4_chart.append("line")
@@ -319,13 +319,13 @@ document.addEventListener("globalSetupComplete", function (e) {
 
     for (const technology of Object.keys(t4_technologies)) {
       t4_icons.select("#t4_text_" + technology)
-          .text(year_data[technology].toLocaleString())
+          .text(year_data[technology].toLocaleString());
     }
   }
 
   if ("year" in initials) {
     const init_data = $("#t4_year").data("ionRangeSlider");
-    init_data.update({from: initials.year})
+    init_data.update({from: initials.year});
   } else {
     t4_change_year(tiles[4][tiles[4].length - 1].year);
   }
