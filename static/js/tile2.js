@@ -11,7 +11,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t2_bar_height = 20;
   const t2_bar_vspace = 10;
   const t2_bar_xaxis_height = 20;
-  const t2_bar_total_height = t2_bar_offset + t2_bar_title_height + t2_bar_height + t2_bar_vspace + t2_bar_xaxis_height;
+  let t2_bar_total_height = t2_bar_offset + t2_bar_title_height + t2_bar_height + t2_bar_vspace + t2_bar_xaxis_height;
 
   const t2_icon_offset_ideal = 30;
   let t2_icon_offset = -20;
@@ -23,7 +23,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t2_icon_margin_ideal = 20;
   let t2_icon_margin = 0;
   const t2_icon_row_height = t2_icon_size + 2 * t2_icon_vspace + t2_icons_rect_height + t2_icon_text_height;
-  const t2_icon_total_height = t2_icon_offset + 2 * t2_icon_row_height + t2_icon_margin;
+  let t2_icon_total_height = t2_icon_offset + 2 * t2_icon_row_height + 2 * t2_icon_margin;
 
   const t2_arrow_offset_ideal = 30;
   let t2_arrow_offset = 0;
@@ -31,7 +31,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t2_arrow_height = 65;
   const t2_arrow_height_measured = 40;
   const t2_arrow_text_height = 24;
-  const t2_arrow_total_height = t2_arrow_offset + t2_arrow_height_measured;
+  let t2_arrow_total_height = t2_arrow_offset + t2_arrow_height_measured;
 
   const t2_pie_offset_ideal = 40;
   let t2_pie_offset = 10;
@@ -44,7 +44,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   let t2_pie_legend_padding_top = 0;
   const t2_pie_legend_hspace = 10;
   const t2_pie_legend_width = width - 2 * (t2_pie_hspace + t2_pie_radius);
-  const t2_pie_total_height = t2_pie_offset + t2_pie_icon_size + 2 * t2_pie_vspace + 2 * t2_pie_radius + t2_pie_legend_padding_top + t2_pie_legend_size;
+  let t2_pie_total_height = t2_pie_offset + t2_pie_icon_size + 2 * t2_pie_vspace + 2 * t2_pie_radius + t2_pie_legend_padding_top + t2_pie_legend_size;
 
   const t2_min_height = t2_bar_total_height + t2_icon_total_height + t2_arrow_total_height + t2_pie_total_height;
   if (debug) {console.log("Puffer #2 min height = ", t2_min_height);}
@@ -58,6 +58,10 @@ document.addEventListener("globalSetupComplete", function (e) {
     t2_pie_offset = t2_pie_offset_ideal;
     t2_pie_legend_padding_top = t2_pie_legend_padding_top_ideal;
     t2_icon_offset = t2_icon_offset_ideal;
+    t2_bar_total_height = t2_bar_offset + t2_bar_title_height + t2_bar_height + t2_bar_vspace + t2_bar_xaxis_height;
+    t2_icon_total_height = t2_icon_offset + 2 * t2_icon_row_height + 2 * t2_icon_margin;
+    t2_arrow_total_height = t2_arrow_offset + t2_arrow_height_measured;
+    t2_pie_total_height = t2_pie_offset + t2_pie_icon_size + 2 * t2_pie_vspace + 2 * t2_pie_radius + t2_pie_legend_padding_top + t2_pie_legend_size;
     t2_puffer = Math.max(0, is_mobile ? 0 : (t2_height - t2_min_height - t2_ideal_height));
   } else {
     t2_puffer = Math.max(0, is_mobile ? 0 : (t2_height - t2_min_height));
