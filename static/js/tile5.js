@@ -11,9 +11,9 @@ document.addEventListener("globalSetupComplete", function () {
   const t5_chart_yaxis_width = 30;
   const t5_chart_xaxis_height = 30;
   const t5_chart_width = width - 2 * t5_chart_yaxis_width;
-  const t5_chart_height = 230;
-  const t5_chart_total_height = t5_chart_offset + t5_chart_title_height + t5_chart_height + t5_chart_xaxis_height;
-
+  const t5_chart_height_ideal = 230;
+  let t5_chart_height = 100;
+  const t5_chart_total_height_without_chart = t5_chart_offset + t5_chart_title_height + t5_chart_xaxis_height;
 
   const t5_icon_offset = 30;
   const t5_icon_width = 90;
@@ -26,7 +26,11 @@ document.addEventListener("globalSetupComplete", function () {
   const t5_icon_row_height = t5_icon_size + 2 * t5_icon_vspace + t5_icon_height + t5_icon_text_height;
   const t5_icon_total_height = t5_icon_offset + 2 * t5_icon_row_height + t5_icon_wrap_height;
 
-  const t5_min_height = t5_chart_total_height + t5_icon_total_height;
+  const t5_min_height = t5_chart_total_height_without_chart + t5_icon_total_height;
+  const t5_height = get_tile_height(5);
+  t5_chart_height = Math.round(Math.min(Math.max(t5_height - t5_min_height, t5_chart_height), t5_chart_height_ideal));
+  const t5_chart_total_height = t5_chart_total_height_without_chart + t5_chart_height;
+  const t5_puffer = is_mobile ? 0 : t5_height - t5_min_height - t5_chart_height;
 
   $("#t5_year").ionRangeSlider({
     grid: true,
@@ -43,9 +47,6 @@ document.addEventListener("globalSetupComplete", function () {
       t5_change_year(data.from);
     }
   });
-
-  const t5_height = get_tile_height(5);
-  const t5_puffer = is_mobile ? 0 : t5_height - t5_min_height;
 
   const t5_technologies = {
     "wind_onshore": {"title": ["Windenergie", "an Land"], "icon": "i_wind_onshore"},
@@ -96,14 +97,17 @@ document.addEventListener("globalSetupComplete", function () {
   const t5_tile = t5_svg.append("g")
       .attr("transform", `translate(${share_margin}, ${t5_header_height + share_margin})`);
 
-  t5_tile.append("text")
+  const t5_chart_area = t5_tile.append("g")
+      .attr("transform", `translate(0, ${t5_puffer / 3})`);
+
+  t5_chart_area.append("text")
       .text("Anteil der Erzeugungstechnologien")
       .attr("x", width / 2)
       .attr("y", t5_chart_offset)
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "hanging");
 
-  t5_tile.append("text")
+  t5_chart_area.append("text")
       .text("am Strommix (%)")
       .attr("x", width / 2)
       .attr("y", t5_chart_offset + t5_chart_title_height / 2)
@@ -111,7 +115,7 @@ document.addEventListener("globalSetupComplete", function () {
       .attr("dominant-baseline", "hanging");
 
   // CHART
-  const t5_chart = t5_tile.append("g")
+  const t5_chart = t5_chart_area.append("g")
       .attr("transform", `translate(${t5_chart_yaxis_width}, ${t5_chart_offset + t5_chart_title_height})`);
 
   // X-Axis
@@ -188,7 +192,7 @@ document.addEventListener("globalSetupComplete", function () {
 
   // ICONS
 
-  const t5_icons = t5_tile.append("g").attr("transform", `translate(${t5_icon_hspace}, ${t5_chart_total_height + t5_icon_offset + t5_puffer / 2})`);
+  const t5_icons = t5_tile.append("g").attr("transform", `translate(${t5_icon_hspace}, ${t5_chart_total_height + t5_icon_offset + t5_puffer * 2/3})`);
 
   for (const [i, technology] of Object.keys(t5_technologies).entries()) {
     const y_offset = parseInt(i / 3) * (t5_icon_size + 2 * t5_icon_vspace + t5_icon_height + t5_icon_text_height + t5_icon_wrap_height);
