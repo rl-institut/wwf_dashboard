@@ -1,4 +1,3 @@
-
 import os
 import json
 import pandas
@@ -21,9 +20,13 @@ def tile1():
         usecols=[2, 3, 4, 5],
         nrows=51,
     )
-    global_data = global_data.applymap(lambda x: x.replace("\xa0", "") if isinstance(x, str) else x)
+    global_data = global_data.applymap(
+        lambda x: x.replace("\xa0", "") if isinstance(x, str) else x
+    )
     global_data.columns = ["year", "co2", "ppm", "temperature"]
-    global_data = global_data.astype({"year": int, "co2": float, "ppm": float, "temperature": float})
+    global_data = global_data.astype(
+        {"year": int, "co2": float, "ppm": float, "temperature": float}
+    )
     global_data = global_data.sort_values("year")
 
     brd_data = pandas.read_excel(
@@ -33,15 +36,21 @@ def tile1():
         usecols=[2, 4, 6, 7],
         nrows=51,
     )
-    brd_data = brd_data.applymap(lambda x: x.replace("\xa0", "") if isinstance(x, str) else x)
+    brd_data = brd_data.applymap(
+        lambda x: x.replace("\xa0", "") if isinstance(x, str) else x
+    )
     brd_data.columns = ["year", "ppm", "co2", "temperature"]
     brd_data["co2"].iloc[31:] = None
     brd_data = brd_data.astype(
-        {"year": int, "ppm": float, "co2": float, "temperature": float})
+        {"year": int, "ppm": float, "co2": float, "temperature": float}
+    )
     brd_data = brd_data.replace({np.nan: None})
     brd_data = brd_data.sort_values("year")
 
-    data = {"global": global_data.to_dict(orient="records"), "brd": brd_data.to_dict(orient="records")}
+    data = {
+        "global": global_data.to_dict(orient="records"),
+        "brd": brd_data.to_dict(orient="records"),
+    }
     with open(os.path.join(DATA_PATH, "tile1.json"), "w") as json_file:
         json.dump(data, json_file)
 
@@ -54,7 +63,18 @@ def tile2():
         usecols=[3, 4, 5, 6, 7, 9, 10, 11, 12, 14],
         nrows=33,
     )
-    data.columns = ["year", "coal1", "coal2", "oil", "gas", "renewables", "others", "export", "nuclear", "savings"]
+    data.columns = [
+        "year",
+        "coal1",
+        "coal2",
+        "oil",
+        "gas",
+        "renewables",
+        "others",
+        "export",
+        "nuclear",
+        "savings",
+    ]
     data["coal"] = data["coal1"] + data["coal2"]
     data["others"] = data["others"] + data["export"]
     technologies = ["coal", "oil", "gas", "renewables", "others", "nuclear", "savings"]
@@ -110,9 +130,21 @@ def tile3():
         usecols=range(8, 16),
         nrows=11,
     )
-    sectors.columns = ["year", "energy", "industry", "house", "agriculture", "traffic", "waste", "total"]
+    sectors.columns = [
+        "year",
+        "energy",
+        "industry",
+        "house",
+        "agriculture",
+        "traffic",
+        "waste",
+        "total",
+    ]
     sectors = sectors.interpolate()
-    data = {"emissions": emissions.to_dict(orient="records"), "sectors": sectors.to_dict(orient="records")}
+    data = {
+        "emissions": emissions.to_dict(orient="records"),
+        "sectors": sectors.to_dict(orient="records"),
+    }
     with open(os.path.join(DATA_PATH, "tile3.json"), "w") as json_file:
         json.dump(data, json_file)
 
@@ -136,13 +168,22 @@ def tile5():
         header=9,
         usecols=[1, 2, 3, 12, 14, 16, 17, 18],
         nrows=33,
-        index_col=0
+        index_col=0,
     )
     data = data.applymap(lambda x: None if x == "k.A." else x)
     data = data.interpolate(limit_direction="both")
     data = data.divide(data["Bruttostromerzeugung gesamt"], axis="index") * 100
     data = data.reset_index()
-    data.columns = ["year", "total", "fossil", "wind_onshore", "wind_offshore", "hydro", "biomass", "pv"]
+    data.columns = [
+        "year",
+        "total",
+        "fossil",
+        "wind_onshore",
+        "wind_offshore",
+        "hydro",
+        "biomass",
+        "pv",
+    ]
     data.iloc[30, 0] = 2020
     data.to_json(os.path.join(DATA_PATH, "tile5.json"), orient="records")
 
@@ -156,7 +197,7 @@ def tile7():
         nrows=30,
     )
     data.columns = ["vehicle", "emission", "type"]
-    data = data.fillna(method='ffill')
+    data = data.fillna(method="ffill")
     data.to_json(os.path.join(DATA_PATH, "tile7.json"), orient="records")
 
 
@@ -171,7 +212,9 @@ def tile8():
     data.columns = ["year", "primary", "power", "pv", "wind_onshore", "wind_offshore"]
     data = data.interpolate()
     data["wind"] = data["wind_onshore"] + data["wind_offshore"]
-    data[["year", "primary", "power", "pv", "wind"]].to_json(os.path.join(DATA_PATH, "tile8.json"), orient="records")
+    data[["year", "primary", "power", "pv", "wind"]].to_json(
+        os.path.join(DATA_PATH, "tile8.json"), orient="records"
+    )
 
 
 def tile9():
@@ -193,7 +236,7 @@ def tile9():
     emissions.columns = ["solar", "heatpump", "gas", "biomass", "oil"]
     data = {
         "installations": installations.to_dict(orient="records"),
-        "emissions": emissions.iloc[0].to_dict()
+        "emissions": emissions.iloc[0].to_dict(),
     }
     with open(os.path.join(DATA_PATH, "tile9.json"), "w") as json_file:
         json.dump(data, json_file)
@@ -209,7 +252,7 @@ def tile10():
         ("#EEC095", "Moderate Dürre"),
         ("#EA885E", "Schwere Dürre"),
         ("#B03131", "Extreme Dürre"),
-        ("#740F0F", "Außergewöhnliche Dürre")
+        ("#740F0F", "Außergewöhnliche Dürre"),
     ]
     legend_size = 16
     legend_vspace = 10
@@ -227,41 +270,71 @@ def tile10():
         2021: ((59, 10, 636, 760), -9),
         2022: ((59, 10, 636, 760), -9),
     }
-    months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
+    months = [
+        "Januar",
+        "Februar",
+        "März",
+        "April",
+        "Mai",
+        "Juni",
+        "Juli",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "Dezember",
+    ]
     for year, (crop, m) in years.items():
         year_folder = pathlib.Path(RAW_DATA_PATH) / "drought" / str(year)
 
         images = {}
         for drought_raw in year_folder.iterdir():
-            month = drought_raw.name[m:m + 2]
+            month = drought_raw.name[m : m + 2]
             im_drought = Image.open(drought_raw)
             im_drought = im_drought.crop(crop)
 
-            im = Image.new(im_drought.mode, size=(original_size[0], height), color="white")
+            im = Image.new(
+                im_drought.mode, size=(original_size[0], height), color="white"
+            )
             im.paste(im_drought, (0, 0))
 
             draw = ImageDraw.Draw(im)
 
             # Add month
             draw.rectangle((10, 40, 130, 80), fill="#97b6e1")
-            draw.text((10, 10), text=months[int(month) - 1], fill="black", font=font_month)
+            draw.text(
+                (10, 10), text=months[int(month) - 1], fill="black", font=font_month
+            )
 
             # Add legend
             # draw.rectangle((0, 749, original_size[0] - 1, height - 1), outline="black")
             for i, (color, label) in enumerate(legend):
                 x = legend_margin + int(i / 3) * original_size[0] / 2
-                y = original_size[1] + legend_margin + (i % 3) * (legend_size + legend_vspace)
-                draw.rectangle(
-                    (x, y, x + legend_size, y + legend_size),
-                    fill=color
+                y = (
+                    original_size[1]
+                    + legend_margin
+                    + (i % 3) * (legend_size + legend_vspace)
                 )
-                draw.text((x + legend_size + legend_hspace, y + legend_size / 2), text=label, fill="black", font=font_legend, anchor="lm")
+                draw.rectangle((x, y, x + legend_size, y + legend_size), fill=color)
+                draw.text(
+                    (x + legend_size + legend_hspace, y + legend_size / 2),
+                    text=label,
+                    fill="black",
+                    font=font_legend,
+                    anchor="lm",
+                )
 
             images[int(month)] = im
 
         drought_file = drought_folder / f"{year}.gif"
         sorted_images = [images[k] for k in sorted(images.keys())]
-        sorted_images[0].save(drought_file, save_all=True, append_images=sorted_images[1:], duration=1000, loop=0)
+        sorted_images[0].save(
+            drought_file,
+            save_all=True,
+            append_images=sorted_images[1:],
+            duration=1000,
+            loop=0,
+        )
 
     data = [{"year": year} for year in years]
     with open(os.path.join(DATA_PATH, "tile10.json"), "w") as json_file:
@@ -291,7 +364,7 @@ def tile11():
             header=header,
             usecols=[8, 15],
             nrows=7,
-            index_col=0
+            index_col=0,
         )
         df.columns = ["import"]
         df = (df * 100).round()
@@ -303,7 +376,7 @@ def tile11():
         json.dump(data, json_file)
 
 
-for i in range(1, 12):
-    if i == 6:
+for tile_id in range(1, 12):
+    if tile_id == 6:
         continue
-    exec(f"tile{i}()")
+    exec(f"tile{tile_id}()")
