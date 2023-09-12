@@ -40,10 +40,10 @@ document.addEventListener("globalSetupComplete", function (e) {
     from: 0,
     postfix: " km",
     onChange: function (data) {
-      t7_change_distance(data.from)
+      t7_change_distance(data.from);
     },
     onUpdate: function (data) {
-      t7_change_distance(data.from)
+      t7_change_distance(data.from);
     }
   });
 
@@ -55,7 +55,7 @@ document.addEventListener("globalSetupComplete", function (e) {
     ["Berlin-Mitte", "Potsdam"],
     ["Berlin-Mitte", "Frankfurt/Main"],
     ["Berlin-Mitte", "Barcelona"]
-  ]
+  ];
 
   const t7_vehicle_labels = [
     ["Fahrrad /", "Fußgänger"],
@@ -64,11 +64,11 @@ document.addEventListener("globalSetupComplete", function (e) {
     ["Bus"],
     ["PKW"],
     ["Flugzeug"],
-  ]
+  ];
 
   const t7_vehicle_icons = [
     "i_fussgaenger_fahrrad", "i_bahn", "i_e_auto", "i_fernbus", "i_verkehr", "i_flugzeug"
-  ]
+  ];
 
   const t7_vehicle_names = {
     "bicycle": "Fahrrad",
@@ -80,14 +80,14 @@ document.addEventListener("globalSetupComplete", function (e) {
     "pkw": "PKW (konventionell)",
     "airplane_short": "Flugzeug (Inland)",
     "airplane_long": "Flugzeug (Fern)"
-  }
+  };
 
   const t7_vehicles_at_distance = {
     5: ["bicycle", "train_short", "e_pkw", "bus_short", "pkw"],
     35: ["bicycle", "train_short", "e_pkw", "bus_short", "pkw"],
     550: ["train_long", "e_pkw", "bus_long", "pkw", "airplane_short"],
     1900: ["train_long", "e_pkw", "bus_long", "pkw", "airplane_long"],
-  }
+  };
 
   const t7_svg = d3.select("#t7")
       .append("svg")
@@ -229,7 +229,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       if (distance_index >= distance_switch) {
         bar_index += 1;
       }
-      const emissions_per_km = tiles[7].find(element => element.vehicle == t7_vehicle_names[vehicle]).emission / 1000;
+      const emissions_per_km = tiles[7].find(element => element.vehicle === t7_vehicle_names[vehicle]).emission / 1000;
       emissions[bar_index] = emissions_per_km * distances[distance_index];
     }
 
@@ -244,7 +244,7 @@ document.addEventListener("globalSetupComplete", function (e) {
           .attr("x", x + t7_bar_gap / 2)
           .attr("y", height)
           .attr("width", t7_x.bandwidth() - t7_bar_gap)
-          .attr("height", t7_chart_height - height)
+          .attr("height", t7_chart_height - height);
 
       if (((distance_index < distance_switch) && (i < 5)) || ((distance_index >= distance_switch) && (i > 0))) {
         let em = emissions[i];
@@ -267,20 +267,20 @@ document.addEventListener("globalSetupComplete", function (e) {
       t7_chart.select("#t7_text_00").attr("fill", wwfColor.black);
       t7_chart.select("#t7_text_01").attr("fill", wwfColor.black);
       t7_chart.select("#t7_text_50").attr("fill", wwfColor.gray3);
-      t7_chart.select("#t7_icon_0").selectAll("path").style("fill", wwfColor.black)
-      t7_chart.select("#t7_icon_5").selectAll("path").style("fill", wwfColor.gray3)
+      t7_chart.select("#t7_icon_0").selectAll("path").style("fill", wwfColor.black);
+      t7_chart.select("#t7_icon_5").selectAll("path").style("fill", wwfColor.gray3);
     } else {
       t7_chart.select("#t7_text_50").attr("fill", wwfColor.black);
       t7_chart.select("#t7_text_00").attr("fill", wwfColor.gray3);
       t7_chart.select("#t7_text_01").attr("fill", wwfColor.gray3);
-      t7_chart.select("#t7_icon_0").selectAll("path").style("fill", wwfColor.gray3)
-      t7_chart.select("#t7_icon_5").selectAll("path").style("fill", wwfColor.black)
+      t7_chart.select("#t7_icon_0").selectAll("path").style("fill", wwfColor.gray3);
+      t7_chart.select("#t7_icon_5").selectAll("path").style("fill", wwfColor.black);
     }
   }
 
   if ("distance" in initials) {
     const init_data = $("#t7_distance").data("ionRangeSlider");
-    init_data.update({from: distances.indexOf(parseInt(initials.distance))})
+    init_data.update({from: distances.indexOf(parseInt(initials.distance))});
   } else {
     t7_change_distance(0);
   }
