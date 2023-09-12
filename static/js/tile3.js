@@ -1,3 +1,6 @@
+
+let t3_sector;
+
 document.addEventListener("globalSetupComplete", function (e) {
   if (debug) {
     console.log("Setup tile #3");
@@ -26,13 +29,19 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t3_chart_axes_width = 40;
   const t3_chart_xaxis_height = 40;
   const t3_chart_width = width - 2 * t3_chart_axes_width;
-  const t3_chart_height = 260;
   const t3_chart_sector_space = 10;
-  const t3_chart_total_height = t3_chart_unit_height + t3_chart_height + t3_chart_xaxis_height;
+  const t3_chart_total_height_without_chart = t3_chart_unit_height + t3_chart_xaxis_height;
 
-  const t3_min_height = t3_bar_total_height + t3_icon_total_height + t3_chart_total_height;
+  const t3_min_height = t3_bar_total_height + t3_icon_total_height + t3_chart_total_height_without_chart;
+  const t3_height = get_tile_height(3);
+  const t3_chart_min_height = 100;
+  const t3_chart_ideal_height = 260;
+  const t3_chart_height = Math.round(Math.min(Math.max(t3_height - t3_min_height, t3_chart_min_height), t3_chart_ideal_height));
+  if (debug) {console.log("Chart #1 height = ", t3_chart_height);}
+  const t3_chart_total_height = t3_chart_total_height_without_chart + t3_chart_height;
+  const t3_puffer = is_mobile ? 0 : (t3_height - t3_min_height - t3_chart_height);
+  if (debug) {console.log("Puffer #1 height = ", t3_puffer);}
 
-  let t3_sector;
   const t3_emission_years = tiles[3].emissions.map(function (d) {
     return d.year;
   });
@@ -71,9 +80,6 @@ document.addEventListener("globalSetupComplete", function (e) {
       0
   );
 
-  const t3_height = get_tile_height(3);
-  const t3_puffer = is_mobile ? 0 : (t3_height - t3_min_height);
-
   const t3_emissions_1990 = tiles[3].emissions[0].emissions;
 
   const t3_x = d3.scaleLinear()
@@ -103,7 +109,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   // BAR
 
-  const t3_bar_area = t3_tile.append("g").attr("transform", `translate(0, 0)`);
+  const t3_bar_area = t3_tile.append("g").attr("transform", `translate(0, ${t3_puffer / 4})`);
   const t3_bar = t3_bar_area.append("g")
       .attr("transform", `translate(0, ${t3_bar_title_height + 2 * t3_bar_vspace})`);
 
@@ -172,14 +178,13 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   // ICONS
 
-  const t3_icons = t3_tile.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer + t3_icon_offset})`);
+  const t3_icons = t3_tile.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer * 3/4 + t3_icon_offset})`);
   const t3_icon_left = (width - 5 * t3_circle_size - 4 * t3_icon_hspace) / 2;
   for (const [i, sector] of Object.keys(t3_sectors).entries()) {
     const icon = t3_sectors[sector].icon;
     const x = t3_icon_left + i * (t3_circle_size + t3_icon_hspace) + t3_circle_size / 2;
     t3_icons.append("circle")
         .attr("id", "t3_circle_" + sector)
-        .attr("onclick", `t3_change_sector("${sector}")`)
         .attr("onmouseover", function () {
           d3.select(this).style("cursor", "pointer");
         })
@@ -188,7 +193,6 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("r", t3_circle_size / 2)
         .attr("fill", t3_circe_color_gray);
     $(t3_icons.node().appendChild(icons[icon].documentElement.cloneNode(true)))
-        .attr("onclick", `t3_change_sector("${sector}")`)
         .attr("onmouseover", function () {
           d3.select(this).style("cursor", "pointer");
         })
@@ -198,6 +202,9 @@ document.addEventListener("globalSetupComplete", function (e) {
         .attr("width", t3_icon_size)
         .attr("height", t3_icon_size)
         .attr("preserveAspectRatio", "xMidYMid slice");
+
+    document.getElementById("t3_circle_" + sector).addEventListener("click", function () {t3_change_sector(sector);});
+    document.getElementById("t3_icon_" + sector).addEventListener("click", function () {t3_change_sector(sector);});
   }
 
   // Selected sector title
@@ -210,7 +217,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("dominant-baseline", "hanging");
 
   // CHART
-  const t3_chart_area = t3_tile.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer + t3_icon_total_height})`);
+  const t3_chart_area = t3_tile.append("g").attr("transform", `translate(0, ${t3_bar_total_height + t3_puffer * 3/4 + t3_icon_total_height})`);
   const t3_chart = t3_chart_area.append("g").attr("transform", `translate(${t3_chart_axes_width}, ${t3_chart_unit_height})`);
 
   // Unit
