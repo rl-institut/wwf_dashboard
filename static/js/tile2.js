@@ -52,10 +52,10 @@ document.addEventListener("globalSetupComplete", function (e) {
     max: tiles[2][tiles[2].length - 1].year,
     from: tiles[2][tiles[2].length - 1].year,
     onChange: function (data) {
-      t2_change_year(data.from)
+      t2_change_year(data.from);
     },
     onUpdate: function (data) {
-      t2_change_year(data.from)
+      t2_change_year(data.from);
     }
   });
 
@@ -82,7 +82,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   const t2_max = t2_resources.reduce(
       (sum, key) => {
-        return sum += tiles[2][7][key]
+        return sum += tiles[2][7][key];
       },
       0
   );
@@ -153,9 +153,9 @@ document.addEventListener("globalSetupComplete", function (e) {
   // ARROW
 
   const t2_arrow = t2_tile.append("g")
-      .attr("transform", `translate(0, ${t2_bar_total_height + t2_icon_total_height + t2_arrow_offset + t2_puffer / 2})`)
+      .attr("transform", `translate(0, ${t2_bar_total_height + t2_icon_total_height + t2_arrow_offset + t2_puffer / 2})`);
 
-  $(t2_arrow.node().appendChild(icons["arrow"].documentElement.cloneNode(true)))
+  $(t2_arrow.node().appendChild(icons.arrow.documentElement.cloneNode(true)))
       .attr("x", width / 2 - t2_arrow_width / 2)
       .attr("y", 0)
       .attr("width", t2_arrow_width)
@@ -243,13 +243,13 @@ document.addEventListener("globalSetupComplete", function (e) {
     const max_value = Object.entries(year_data).reduce(
         function (sum, current) {
           if (t2_resources.includes(current[0])) {
-            return sum + current[1]
+            return sum + current[1];
           } else {
-            return sum
+            return sum;
           }
         },
         0
-    )
+    );
     return d3.scaleLinear()
         .domain([0, max_value])
         .range([0, width]);
@@ -259,7 +259,7 @@ document.addEventListener("globalSetupComplete", function (e) {
     t2_tile.select("#t2_bars").remove();
     t2_tile.selectAll("t2_pie").remove();
 
-    const year_data = tiles[2].find(element => element.year == year);
+    const year_data = tiles[2].find(element => element.year === year);
     t2_draw_bars(year_data);
     t2_draw_pie(year_data, "power");
     t2_draw_pie(year_data, "heat");
@@ -267,7 +267,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   }
 
   function t2_draw_bars(year_data) {
-    let t2_x = t2_get_x_scale(year_data)
+    let t2_x = t2_get_x_scale(year_data);
     const t2_stacked_data = d3.stack().keys(t2_resources)([year_data]);
 
     const t2_bars = t2_tile
@@ -277,7 +277,7 @@ document.addEventListener("globalSetupComplete", function (e) {
         .selectAll(null)
         .data(t2_stacked_data)
         .enter()
-        .append("g")
+        .append("g");
 
     t2_bars.append("rect")
         .attr("x", function (d) {
@@ -293,35 +293,35 @@ document.addEventListener("globalSetupComplete", function (e) {
         });
 
     for (const resource of t2_resources) {
-      t2_tile.select("#t2_icon_" + resource).text(year_data[resource].toLocaleString(undefined, {maximumFractionDigits: 0}))
+      t2_tile.select("#t2_icon_" + resource).text(year_data[resource].toLocaleString(undefined, {maximumFractionDigits: 0}));
     }
   }
 
   function t2_draw_pie(year_data, type) {
-    const pie_data_raw = {"ne": (100 - year_data[type]) / 2, "ee": year_data[type], "ne2": (100 - year_data[type]) / 2}
+    const pie_data_raw = {"ne": (100 - year_data[type]) / 2, "ee": year_data[type], "ne2": (100 - year_data[type]) / 2};
     const pie = d3.pie().value(function (d) {
-      return d[1]
-    }).sort(null)
-    const pie_data = pie(Object.entries(pie_data_raw))
+      return d[1];
+    }).sort(null);
+    const pie_data = pie(Object.entries(pie_data_raw));
 
     const position = t2_pie_positions[type];
     const x = t2_pie_radius + t2_pie_hspace * position + t2_pie_radius * 2 * position;
-    const arc = d3.arc().innerRadius(0).outerRadius(t2_pie_radius)
+    const arc = d3.arc().innerRadius(0).outerRadius(t2_pie_radius);
     t2_pie.selectAll("t2_pie")
         .data(pie_data)
         .enter()
         .append('path')
         .attr("transform", `translate(${x}, ${t2_pie_icon_size + t2_pie_vspace + t2_pie_radius})`)
         .attr("stroke", function (d) {
-          return t2_pie_color(d.data[0])
+          return t2_pie_color(d.data[0]);
         })
         .attr('d', arc)
         .attr('fill', function (d) {
-          return t2_pie_color(d.data[0])
+          return t2_pie_color(d.data[0]);
         });
 
     const pie_text = t2_pie.append("g")
-        .attr("id", "t2_" + type + "_text")
+        .attr("id", "t2_" + type + "_text");
 
     pie_text.append("text")
         .text(year_data[type])
@@ -389,7 +389,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   if ("year" in initials) {
     const year_data = $("#t2_year").data("ionRangeSlider");
-    year_data.update({from: initials.year})
+    year_data.update({from: initials.year});
   } else {
     t2_change_year(tiles[2][tiles[2].length - 1].year);
   }
