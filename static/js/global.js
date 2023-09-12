@@ -20,10 +20,10 @@ document.addEventListener("iFrameSetupComplete", function (e) {
 function get_tile_height(tile) {
   const header_height = find_tile(tile).parentNode.parentNode.getElementsByClassName("tile__header")[0].clientHeight;
   const tileHeight = iFrameHeight - header_height;
-  if (debug) {
-    console.log(`Tile #${tile} Height =`, tileHeight);
-  }
-  return Math.max(tileHeight, tileMinHeight - header_height - wwfHeaderHeight);
+  if (debug) {console.log(`Tile #${tile} Original Height =`, tileHeight);}
+  const tileHeightActual = Math.max(tileHeight, tileMinHeight - header_height - wwfHeaderHeight);
+  if (debug) {console.log(`Tile #${tile} Actual Height =`, tileHeightActual);}
+  return tileHeightActual;
 }
 
 const num_tiles = 11;
