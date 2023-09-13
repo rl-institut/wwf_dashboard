@@ -121,7 +121,7 @@ const headers = [
     description: ["Die Energiewende beim Strom ist ein Erfolg. Unser gesamter", "Energieverbrauch basiert aber immer noch auf Öl, Gas und", "Kohle. Vor allem im Wärme- und Verkehrssektor ist der", "Anteil der Erneuerbaren Energien gering."]
   },
   {
-    title: ["Klimaschutz muss es in allen", "Sektoren geben"],
+    title: ["Klimaschutz muss es in ", "allen Sektoren geben"],
     description: ["Bis 2045 soll Deutschland klimaneutral sein. Dafür muss", "der CO2-Ausstoß in allen Sektoren gesenkt werden. Das", "muss auch in Zukunft das Ziel sein und verbindlich", "erreicht werden."]
   },
   {
@@ -152,8 +152,8 @@ const headers = [
     title: "Placeholder for tile 10, which is shared as GIF"
   },
   {
-    title: ["Erneuerbare und Effizienz", "befreien uns von fossilen", "Abhängigkeiten", "Abhängigkeiten ersetzen"],
-    description: ["Der Krieg in der Ukraine sowie die Energiekrise von 2022", "haben gezeigt: Deutschlands Abhängigkeit von fossilen Importen", "ist eine Gefahr für unsere Gesellschaft. Indem wir", "Erneuerbare Energien ausbauen und Energie einsparen,", "erhöhen wir die Energiesicherheit."]
+    title: ["Erneuerbare und Effizienz", "befreien uns von fossilen", "Abhängigkeiten"],
+    description: ["Der Krieg in der Ukraine sowie die Energiekrise von 2022", "haben gezeigt: Deutschlands Abhängigkeit von fossilen", "Importen ist eine Gefahr für unsere Gesellschaft. Indem wir", "Erneuerbare Energien ausbauen und Energie einsparen,", "erhöhen wir die Energiesicherheit."]
   }
 ];
 
