@@ -2,22 +2,56 @@
   <div class="modal-dialog modal-lg modal-fullscreen-md-down">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="modalLabelTile2">Energieversorgung wird effizienter und erneuerbar</h3>
+        <h3 class="modal-title" id="modalLabelTile2">Wo bleiben die Wärme- und Mobilitätswende?</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <h4>Immer mehr Erneuerbare Energien – vor allem beim Strom</h4>
-        <p>Die Energiewende steht für ein wichtiges Ziel: Erneuerbare Energien ausbauen. Und tatsächlich ist in den letzten 30 Jahren schon viel passiert. Schon knapp die Hälfte des Stroms in Deutschland stammt aus erneuerbaren Quellen. Konventioneller Atom- und Kohlestrom wird dafür entsprechend zurückgefahren.</p>
-        <h4>Öl und Gas zum Heizen und Autofahren</h4>
-        <p>Allerdings sieht das Bild anders aus, wenn man (neben Strom) die gesamte Energie betrachtet, die wir hierzulande einsetzen. Meistens wird dieser Wert als Primärenergieverbrauch bezeichnet und in Petajoule pro Jahr gemessen. Was man hier erkennt: Der Anteil Erneuerbarer Energien wächst zwar seit 1990. Und auch Einspareffekte werden über die Jahre erkennbar. Zugleich wird aber deutlich: Öl und Gas haben immer noch eine zentrale Bedeutung. Der Verkehrs- und auch der Wärmesektor sind weiterhin überwiegend fossil. Hier werden Elektrifizierung bzw. Kraftstoffe auf Strombasis für einen höheren Anteil der Erneuerbaren benötigt.</p>
-        <h4>Quellen und weiterführende Informationen</h4>
+        <p>Die Energiewende steht für ein wichtiges Ziel: Erneuerbare Energien in allen Sektoren ausbauen. Und tatsächlich ist in den letzten 30 Jahren schon viel passiert. Schon rund die Hälfte des Stroms in Deutschland stammt aus erneuerbaren Quellen. Konventioneller Atom- oder Kohlestrom wurden dafür entsprechend zurückgefahren.</p>
+        <h4>Problem: Öl und Gas zum Heizen und Autofahren</h4>
+        <p>Allerdings sieht das Bild anders aus, wenn man (neben Strom) die gesamte Energie betrachtet, die wir hierzulande einsetzen. Meistens wird dieser Wert als Primärenergieverbrauch bezeichnet und in Petajoule pro Jahr gemessen. Was man hier erkennt: Der Anteil Erneuerbarer Energien wächst zwar seit 1990. Und auch Einspareffekte werden über die Jahre erkennbar. Zugleich wird aber deutlich: Öl und Gas haben immer noch eine zentrale Bedeutung. Der Verkehrs- und auch der Wärmesektor sind weiterhin überwiegend fossil und kommen bei der Erfüllung der Klimaziele nicht hinterher. Hier wird eine Umstellung auf klima- und umweltfreundliche Erneuerbare benötigt.</p>
+        <h4>Weiterführende Informationen:</h4>
+        <ul class="modal__sources">
+          <li>
+            <span class="name">WWF Deutschland</span>
+            <span class="link">
+              <a href="https://www.wwf.de/themen-projekte/klima-energie/klimaschutz-und-energiewende-in-deutschland/erneuerbare-und-fossile-energien" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                100% Erneuerbare Energien
+              </a>
+            </span>
+          </li>
+          <li>
+            <span class="name">WWF Deutschland</span>
+            <span class="link">
+              <a href="https://www.wwf.de/themen-projekte/klima-energie/klimaschutz-und-energiewende-in-deutschland/ohne-waermewende-keine-energiewende" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Wärmewende
+              </a>
+            </span>
+          </li>
+          <li>
+            <span class="name">WWF Deutschland</span>
+            <span class="link">
+              <a href="https://blog.wwf.de/gespaltene-klimaregierung/" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                Sofortprogramme
+              </a>
+            </span>
+          </li>
+        </ul>
+        <h4>Quellen:</h4>
         <ul class="modal__sources">
           <li>
             <span class="name">AG Energiebilanzen</span>
             <span class="link">
-              <a href="https://ag-energiebilanzen.de/10-0-Auswertungstabellen.html" target="_blank" rel="noopener noreferrer">
+              <a href="https://ag-energiebilanzen.de/daten-und-fakten/auswertungstabellen/" target="_blank" rel="noopener noreferrer">
                 <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
                 Auswertungstabellen
+              </a>
+              <a href="https://ag-energiebilanzen.de/daten-und-fakten/primaerenergieverbrauch/" target="_blank" rel="noopener noreferrer">
+                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
+                und Primärenergieverbrauch
               </a>
             </span>
           </li>
@@ -39,17 +73,8 @@
               </a>
             </span>
           </li>
-          <li>
-            <span class="name">WWF Deutschland</span>
-            <span class="link">
-              <a href="https://www.wwf.de/themen-projekte/klima-energie/klimaschutz-und-energiewende-in-deutschland/erneuerbare-und-fossile-energien" target="_blank" rel="noopener noreferrer">
-                <img src="../../static/icons/i_open.svg" alt="" aria-hidden="true">
-                100% Erneuerbare Energien
-              </a>
-            </span>
-          </li>
         </ul>
-        {% with title="Energieversorgung wird effizienter und erneuerbar" %}
+        {% with title="Wo bleiben die Wärme- und Mobilitätswende?" %}
           {% include "license.html" %}
         {% endwith %}
       </div>
@@ -61,13 +86,13 @@
   <div class="tile__header">
     <div class="tile__info">
       <div class="tile__top">
-        <h3>Energieversorgung wird effizienter und erneuerbar</h3>
+        <h3>Wo bleiben die Wärme- und Mobilitätswende?</h3>
         <div class="tile__options">
           <button class="share" title="Bild herunterladen" onclick="share(2, {year: document.getElementById('t2_year').value});" tabindex="0"></button>
           <button class="info" title="Informationen" tabindex="0" data-bs-toggle="modal" data-bs-target="#modalTile2"></button>
         </div>
       </div>
-      <p>Unser Energieverbrauch basiert immer noch weitgehend auf Öl, Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der Anteil der Erneuerbaren Energien gering. Aber das ändert sich.</p>
+      <p>Die Energiewende beim Strom ist ein Erfolg. Unser gesamter Energieverbrauch basiert aber immer noch auf Öl, Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der Anteil der Erneuerbaren Energien gering. </p>
     </div>
 
     <div class="tile__slider">
