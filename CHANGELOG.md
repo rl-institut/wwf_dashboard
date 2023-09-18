@@ -10,6 +10,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 - x-Axis in tile 8
 
 ### Changed
+- updated tile and info texts
 - remove country-specific imports in tile 11
 - updated data to year 2022
 - Tile6 API from agora to SMARD 
