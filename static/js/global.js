@@ -113,47 +113,47 @@ const circle_width = 6;
 
 const headers = [
   {
-    title: ["CO2-Ausstoß verschärft Klimakrise"],
-    description: ["Mit den weltweit steigenden Emissionen steigen Jahr für", "Jahr auch die CO2-Konzentration in der Atmosphäre und die", "Temperatur auf der Erde."]
+    title: ["CO2-Ausstoß verschärft", "Erderhitzung"],
+    description: ["Mit den von uns Menschen verursachten Emissionen steigt", "Jahr für Jahr auch die CO2-Konzentration in der Atmosphäre", "und die Temperatur auf der Erde."]
   },
   {
-    title: ["Energieversorgung wird effizienter und", "erneuerbar"],
-    description: ["Unser Energieverbrauch basiert immer noch weitgehend auf Öl,", "Gas und Kohle. Vor allem im Wärme- und Verkehrssektor ist der", "Anteil der Erneuerbaren Energien gering. Aber das ändert sich."]
+    title: ["Wo bleiben die Wärme-", "und Mobilitätswende?"],
+    description: ["Die Energiewende beim Strom ist ein Erfolg. Unser gesamter", "Energieverbrauch basiert aber immer noch auf Öl, Gas und", "Kohle. Vor allem im Wärme- und Verkehrssektor ist der", "Anteil der Erneuerbaren Energien gering."]
   },
   {
-    title: ["Klimaschutz in allen Sektoren"],
-    description: ["Bis 2045 soll Deutschland klimaneutral sein.", "Dafür muss der CO2-Ausstoß in allen Sektoren gesenkt werden."]
+    title: ["Klimaschutz muss es in ", "allen Sektoren geben"],
+    description: ["Bis 2045 soll Deutschland klimaneutral sein. Dafür muss", "der CO2-Ausstoß in allen Sektoren gesenkt werden. Das", "muss auch in Zukunft das Ziel sein und verbindlich", "erreicht werden."]
   },
   {
-    title: ["Klimatechnologien sind im Kommen"],
-    description: ["Strombasierte Technologien finden immer breitere", "Anwendung, egal ob beim Heizen, in der Mobilität oder", "als Speicherlösungen."]
+    title: ["Klimatechnologien wachsen", "exponentiell"],
+    description: ["Strombasierte Technologien finden immer breitere", "Anwendung, egal ob beim Heizen, in der Mobilität oder", "als Speicherlösungen. Dieser Hochlauf revolutioniert unser", "Energiesystem – im Sinne des Klimaschutzes."]
   },
   {
-    title: ["Immer mehr Erneuerbare Energien"],
-    description: ["Kohle, Gas, Öl und Atomenergie sind seit den 90er Jahren", "auf dem Rückzug. Wind- und Solarkraftwerke gewinnen", "hingegen bei der Stromerzeugung an Bedeutung."]
+    title: ["Immer mehr Erneuerbare", "Energien"],
+    description: ["Kohle, Gas, Öl und Atomenergie sind seit den 90er Jahren", "auf dem Rückzug. Wind- und Solarkraftwerke setzen sich" ,"hingegen bei der Stromerzeugung an die Spitze. Inzwischen", "häufen sich die Tage, an denen wir uns hauptsächlich", "erneuerbar versorgen."]
   },
   {
-    title: ["Der Strommix verändert sich von Tag zu Tag"],
-    description: ["Die Stromerzeugung schwankt je nach Wind,", "Sonnenschein und Stromverbrauch. Immer zur Mittagszeit", "gibt es am meisten PV. An Wochenenden brauchen wir", "weniger Strom."]
+    title: ["Der Strommix verändert", "sich von Tag zu Tag"],
+    description: ["Die Stromerzeugung schwankt je nach Wind, Sonnenschein", "und Stromverbrauch. Immer zur Mittagszeit gibt es am", "meisten PV. An Wochenenden brauchen wir weniger Strom."]
   },
   {
-    title: ["Klimafreundliche Mobilität"],
-    description: ["Eine kluge Verkehrswende ist auch Mobilitätswende:", "Auf die bewusste Auswahl klimafreundlicher Verkehrsmittel", "kommt es an."]
+    title: ["Klimafreundlich mobil sein"],
+    description: ["Eine kluge Verkehrswende ist auch eine Mobilitätswende:", " Auf die bewusste Auswahl klimafreundlicher Verkehrsmittel", "kommt es an. Die Politik muss für entsprechende Angebote", "sorgen."]
   },
   {
-    title: ["Elektrifizierung führt zu steigendem", "Strombedarf"],
-    description: ["Für Elektroautos und strombasierte Heizungen brauchen wir ", "immer mehr Strom. Dies schaffen wir durch den beschleunigten ", "Ausbau von Wind- und Solarkraftwerken."]
+    title: ["Elektrifizierung führt zu", "steigendem Strombedarf"],
+    description: ["Für Elektroautos und strombasierte Heizungen brauchen wir", "immer mehr Strom. Dies schaffen wir durch den", "beschleunigten Ausbau von Wind- und Solarkraftwerken."]
   },
   {
     title: ["Zu viele fossile Heizungen"],
-    description: ["Die Wärmewende gilt als der “schlafender Riese“ für den", "Klimaschutz. Noch immer werden viele fossil befeuerte", "Heizungen verbaut. Dabei gibt es längst klimafreundliche", "Alternativen zu Öl und Gas."]
+    description: ["Die Wärmewende ist notwendig. Das zeigt ein Blick auf", "die Fakten. Immer noch boomen fossil befeuerte Heizungen,", "obwohl es längst tatsächlich klimafreundliche Alternativen", "gibt."]
   },
   {
     title: "Placeholder for tile 10, which is shared as GIF"
   },
   {
-    title: ["Mit Erneuerbaren und", "Effizienz fossile", "Abhängigkeiten ersetzen"],
-    description: ["Bei Erdgas, Öl und Steinkohle ist Deutschland ", "fast gänzlich von Importen aus dem Ausland abhängig.", "Indem wir Erneuerbare Energien ausbauen und", "Energie einsparen, erhöhen wir die Energiesicherheit."]
+    title: ["Erneuerbare und Effizienz befreien uns von", "fossilen Abhängigkeiten"],
+    description: ["Der Krieg in der Ukraine sowie die Energiekrise von 2022", "haben gezeigt: Deutschlands Abhängigkeit von fossilen", "Importen ist eine Gefahr für unsere Gesellschaft. Indem wir", "Erneuerbare Energien ausbauen und Energie einsparen,", "erhöhen wir die Energiesicherheit."]
   }
 ];
 
