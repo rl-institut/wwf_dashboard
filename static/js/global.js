@@ -152,7 +152,7 @@ const headers = [
     title: "Placeholder for tile 10, which is shared as GIF"
   },
   {
-    title: ["Erneuerbare und Effizienz", "befreien uns von fossilen", "Abhängigkeiten"],
+    title: ["Erneuerbare und Effizienz befreien uns von", "fossilen Abhängigkeiten"],
     description: ["Der Krieg in der Ukraine sowie die Energiekrise von 2022", "haben gezeigt: Deutschlands Abhängigkeit von fossilen", "Importen ist eine Gefahr für unsere Gesellschaft. Indem wir", "Erneuerbare Energien ausbauen und Energie einsparen,", "erhöhen wir die Energiesicherheit."]
   }
 ];
