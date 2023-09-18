@@ -44,7 +44,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   let t2_pie_legend_padding_top = 0;
   const t2_pie_legend_hspace = 10;
   const t2_pie_legend_width = width - 2 * (t2_pie_hspace + t2_pie_radius);
-  const t2_pie_bottom = 20;  // Quick fix, as pie area exceeds margin for some reason I don't understand
+  const t2_pie_bottom = 30;  // Quick fix, as pie area exceeds margin for some reason I don't understand
   let t2_pie_total_height = t2_pie_offset + t2_pie_icon_size + 2 * t2_pie_vspace + 2 * t2_pie_radius + t2_pie_legend_padding_top + t2_pie_legend_size + t2_pie_bottom;
 
   const t2_min_height = t2_bar_total_height + t2_icon_total_height + t2_arrow_total_height + t2_pie_total_height;
