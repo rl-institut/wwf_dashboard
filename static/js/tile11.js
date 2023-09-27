@@ -21,7 +21,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t11_chart_total_height_without_chart = t11_chart_unit_height + t11_chart_xaxis_height;
 
   const t11_bar_offset = 0;
-  const t11_bar_title_height = 48;
+  const t11_bar_title_height = 24;
   const t11_bar_title_offset = 15;
   const t11_bar_height = 25;
   const t11_bar_vspace = 15;
@@ -190,16 +190,8 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t11_bar_area = t11_tile.append("g").attr("transform", `translate(0, ${t11_puffer * 2/3 + t11_chart_total_height + t11_bar_offset})`);
 
   t11_bar_area.append("text")
-      .text("Importabhängigkeit Deutschlands")
+      .text("Importabhängigkeit")
       .attr("x", width / 2)
-      .attr("text-anchor", "middle")
-      .attr("letter-spacing", letterSpacing)
-      .attr("dominant-baseline", "hanging");
-
-  t11_bar_area.append("text")
-      .text("und Hauptlieferländer (%)")
-      .attr("x", width / 2)
-      .attr("y", t11_bar_title_height / 2)
       .attr("text-anchor", "middle")
       .attr("letter-spacing", letterSpacing)
       .attr("dominant-baseline", "hanging");
