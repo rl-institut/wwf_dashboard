@@ -37,7 +37,7 @@ document.addEventListener("globalSetupComplete", function () {
   const t9_chart_yaxis_width = 33;
   const t9_chart_xaxis_height = 20;
   const t9_chart_width = width - 2 * t9_chart_axes_width;
-  const t9_chart_height_ideal = 260;
+  const t9_chart_height_ideal = 220;
   let t9_chart_height = 100;
   let t9_chart_total_height = t9_chart_title_height + t9_chart_unit_height + t9_chart_height + t9_chart_xaxis_height;
 
@@ -114,7 +114,7 @@ document.addEventListener("globalSetupComplete", function () {
   t9_svg.append("rect")
       .attr("width", "100%")
       .attr("height", "100%")
-      .attr("fill", "white");
+      .attr("fill", "#F4F3EA");
 
   draw_header(t9_svg, 9, t9_header);
 

@@ -110,7 +110,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   t8_svg.append("rect")
       .attr("width", "100%")
       .attr("height", "100%")
-      .attr("fill", "white");
+      .attr("fill", "#F4F3EA");
 
   draw_header(t8_svg, 8, t8_header);
 

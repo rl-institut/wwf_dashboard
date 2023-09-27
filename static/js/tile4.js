@@ -107,7 +107,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   t4_svg.append("rect")
       .attr("width", "100%")
       .attr("height", "100%")
-      .attr("fill", "white");
+      .attr("fill", "#F4F3EA");
 
   draw_header(t4_svg, 4, t4_header);
 

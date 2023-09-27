@@ -3,7 +3,7 @@
   max-width: $tile-max-width;
   padding: $tile-padding;
   margin-bottom: $layout-padding;
-  border: 1px solid $gray-2;
+  background-color: #F4F3EA;
 
   @media only screen and (max-width: $screen-width-max-xs) {
     padding: 1rem;
@@ -25,6 +25,10 @@
     h3 {
       padding-right: 0.5rem;
       margin-bottom: 1rem;
+      font-family: "Open Sans",sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0;
     }
 
     p {

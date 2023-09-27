@@ -303,7 +303,7 @@ def tile10():
                 im_drought = im_drought.crop(crop)
 
                 im = Image.new(
-                    im_drought.mode, size=(width, height), color="white"
+                    im_drought.mode, size=(width, height), color="#f4f3ea"
                 )
                 im.paste(im_drought, (0, 0))
 
