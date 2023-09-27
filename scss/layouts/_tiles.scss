@@ -73,9 +73,18 @@
     &--date-picker {
       @include flex-row-justify-center;
       padding-top: 2rem;
+      flex-wrap: wrap;
       
       img {
         cursor: pointer;
+      }
+
+      small {
+        order: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 0.75rem;
+        padding-bottom: 0.25rem;
       }
     }
   }
