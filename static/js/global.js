@@ -1,6 +1,7 @@
 
 const wwfHeaderHeight = 90;
-const tileMinHeight = 800;
+const tileMinDesktopHeight = 800;  // Minimum tile height for desktop view, including wwf header and tile header
+const tileMinSVGHeight = 430;  // Minimum SVG height
 let iFrameHeight;
 
 const has_header = "header" in initials;
@@ -24,7 +25,8 @@ function get_tile_height(tile) {
   const header_height = find_tile(tile).parentNode.parentNode.getElementsByClassName("tile__header")[0].clientHeight;
   const tileHeight = iFrameHeight - header_height;
   if (debug) {console.log(`Tile #${tile} Original Height =`, tileHeight);}
-  const tileHeightActual = Math.max(tileHeight, tileMinHeight - header_height - wwfHeaderHeight);
+  if (debug) {console.log(`Tile #${tile} Header Height =`, header_height);}
+  const tileHeightActual = Math.max(tileHeight, tileMinDesktopHeight - header_height - wwfHeaderHeight, tileMinSVGHeight);
   if (debug) {console.log(`Tile #${tile} Actual Height =`, tileHeightActual);}
   return tileHeightActual;
 }
