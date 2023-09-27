@@ -10,37 +10,49 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t3_header_height = get_header_height(3);
 
   const t3_bar_color_reduction = "#008A88";
-  const t3_bar_height = 40;
+  const t3_bar_height_ideal = 40;
+  let t3_bar_height = 20;
   const t3_bar_title_height = 48;
   const t3_bar_vspace = 15;
   const t3_bar_legend_size = 16;
-  const t3_bar_total_height = t3_bar_title_height + 4 * t3_bar_vspace + t3_bar_height + t3_bar_legend_size;
+  let t3_bar_total_height = t3_bar_title_height + 4 * t3_bar_vspace + t3_bar_height + t3_bar_legend_size;
 
   const t3_icon_offset = 40;
-  const t3_circle_size = 40;
+  const t3_circle_size_ideal = 40;
+  let t3_circle_size = 30;
   const t3_circe_color_gray = "#ECECEC";
   const t3_icon_size = 20;
   const t3_icon_hspace = 6;
-  const t3_icon_vspace = 20;
+  const t3_icon_vspace = 10;
   const t3_icon_title_height = 22;
-  const t3_icon_total_height = t3_icon_offset + t3_circle_size + 2 * t3_icon_vspace + t3_icon_title_height;
-
+  let t3_icon_total_height = t3_icon_offset + t3_circle_size + 2 * t3_icon_vspace + t3_icon_title_height;
+  
+  const t3_chart_height_ideal = 200;
+  let t3_chart_height = 100;
   const t3_chart_unit_height = 30;
   const t3_chart_axes_width = 40;
   const t3_chart_xaxis_height = 40;
   const t3_chart_width = width - 2 * t3_chart_axes_width;
   const t3_chart_sector_space = 10;
-  const t3_chart_total_height_without_chart = t3_chart_unit_height + t3_chart_xaxis_height;
+  let t3_chart_total_height = t3_chart_unit_height + t3_chart_xaxis_height + t3_chart_height;
 
-  const t3_min_height = t3_bar_total_height + t3_icon_total_height + t3_chart_total_height_without_chart;
+  const t3_min_height = t3_bar_total_height + t3_icon_total_height + t3_chart_total_height;
   const t3_height = get_tile_height(3);
-  const t3_chart_min_height = 100;
-  const t3_chart_ideal_height = 260;
-  const t3_chart_height = Math.round(Math.min(Math.max(t3_height - t3_min_height, t3_chart_min_height), t3_chart_ideal_height));
-  if (debug) {console.log("Chart #1 height = ", t3_chart_height);}
-  const t3_chart_total_height = t3_chart_total_height_without_chart + t3_chart_height;
-  const t3_puffer = is_mobile ? 0 : (t3_height - t3_min_height - t3_chart_height);
-  if (debug) {console.log("Puffer #1 height = ", t3_puffer);}
+  const t3_height_needed_for_ideal = t3_chart_height_ideal - t3_chart_height + t3_bar_height_ideal - t3_bar_height + t3_circle_size_ideal - t3_circle_size;
+  if (debug) {console.log("Puffer #3 ideal height = ", t3_height_needed_for_ideal);}
+  let t3_puffer;
+  if (t3_height - t3_min_height > t3_height_needed_for_ideal) {
+    t3_bar_height = t3_bar_height_ideal;
+    t3_bar_total_height = t3_bar_title_height + 4 * t3_bar_vspace + t3_bar_height + t3_bar_legend_size;
+    t3_circle_size = t3_circle_size_ideal;
+    t3_icon_total_height = t3_icon_offset + t3_circle_size + 2 * t3_icon_vspace + t3_icon_title_height;
+    t3_chart_height = t3_chart_height_ideal;
+    t3_chart_total_height = t3_chart_unit_height + t3_chart_xaxis_height + t3_chart_height;
+    t3_puffer = Math.max(0, is_mobile ? 0 : (t3_height - t3_min_height - t3_height_needed_for_ideal));
+  } else {
+    t3_puffer = Math.max(0, is_mobile ? 0 : (t3_height - t3_min_height));
+  }
+  if (debug) {console.log("Puffer #3 height = ", t3_puffer);}
 
   const t3_emission_years = tiles[3].emissions.map(function (d) {
     return d.year;
@@ -261,7 +273,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   t3_chart.append("g")
       .attr("id", "t3_yaxis")
       .call(
-          d3.axisLeft(t3_y)
+          d3.axisLeft(t3_y).ticks(5)
       )
       .selectAll("text")
       .attr("text-anchor", "end")
