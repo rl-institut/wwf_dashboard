@@ -8,7 +8,6 @@ document.addEventListener("globalSetupComplete", function () {
 
     const t6_pie_offset = 2;
     const t6_pie_radius = 38;
-    const t6_pie_text_width = 0;
     const t6_pie_text_height = 20;
     const t6_pie_hspace = 10;
     const t6_pie_vspace = 10;
@@ -18,14 +17,15 @@ document.addEventListener("globalSetupComplete", function () {
     const t6_pie_legend_rect = 12;
     const t6_pie_total_height = t6_pie_offset + 2 * t6_pie_radius + t6_pie_vspace + t6_pie_legend_rect;
 
-    const t6_chart_offset = 40;
+    const t6_chart_offset_ideal = 40;
+    let t6_chart_offset = 20;
     const t6_chart_title_height = 30;
-    const t6_chart_height_ideal = 230;
+    const t6_chart_height_ideal = 200;
     let t6_chart_height = 100;
     const t6_chart_yaxis_width = 40;
     const t6_chart_width = width - 2 * t6_chart_yaxis_width;
     const t6_chart_xaxis_height = 30;
-    const t6_chart_total_height_without_chart = t6_chart_offset + t6_chart_title_height + t6_chart_xaxis_height;
+    let t6_chart_total_height = t6_chart_offset + t6_chart_title_height + t6_chart_height + t6_chart_xaxis_height;
 
     const t6_icon_offset = 20;
     const t6_icon_size = 24;
@@ -37,12 +37,20 @@ document.addEventListener("globalSetupComplete", function () {
 
     const t6_bottom_offset = 20;
 
-    const t6_min_height = t6_pie_total_height + t6_chart_total_height_without_chart + t6_icon_total_height + t6_bottom_offset;
+    const t6_min_height = t6_pie_total_height + t6_chart_total_height + t6_icon_total_height + t6_bottom_offset;
     if (debug) {console.log("Chart #6 min height = ", t6_min_height);}
     const t6_height = get_tile_height(6);
-    t6_chart_height = Math.round(Math.min(Math.max(t6_height - t6_min_height, t6_chart_height), t6_chart_height_ideal));
-    const t6_chart_total_height = t6_chart_total_height_without_chart + t6_chart_height;
-    const t6_puffer = is_mobile ? 0 : (t6_height - t6_min_height - t6_chart_height);
+    const t6_height_needed_for_ideal = t6_chart_height_ideal - t6_chart_height;
+    if (debug) {console.log("Tile #6 ideal height = ", t6_height_needed_for_ideal);}
+    let t6_puffer;
+    if (t6_height - t6_min_height > t6_height_needed_for_ideal) {
+      t6_chart_offset = t6_chart_offset_ideal;
+      t6_chart_height = t6_chart_height_ideal;
+      t6_chart_total_height = t6_chart_offset + t6_chart_title_height + t6_chart_height + t6_chart_xaxis_height;
+      t6_puffer = Math.max(0, is_mobile ? 0 : (t6_height - t6_min_height - t6_height_needed_for_ideal));
+    } else {
+      t6_puffer = Math.max(0, is_mobile ? 0 : (t6_height - t6_min_height));
+    }
     if (debug) {console.log("Puffer #6 = ", t6_puffer);}
 
     $("#t6_date").datepicker(
@@ -211,7 +219,7 @@ document.addEventListener("globalSetupComplete", function () {
     t6_chart.append("g")
         .attr("id", "t6_yaxis")
         .call(
-            d3.axisLeft(t6_y)
+            d3.axisLeft(t6_y).ticks(5)
         )
         .selectAll("text")
         .style("text-anchor", "end")
