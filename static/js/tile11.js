@@ -190,7 +190,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t11_bar_area = t11_tile.append("g").attr("transform", `translate(0, ${t11_puffer * 2/3 + t11_chart_total_height + t11_bar_offset})`);
 
   t11_bar_area.append("text")
-      .text("Importabhängigkeit")
+      .text("Importabhängigkeit %")
       .attr("x", width / 2)
       .attr("text-anchor", "middle")
       .attr("letter-spacing", letterSpacing)
