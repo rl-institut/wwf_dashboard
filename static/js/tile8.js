@@ -6,10 +6,11 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t8_header = ("year" in initials) ? initials.year : "";
   const t8_header_height = get_header_height(8);
 
-  const t8_bar_height = 52;
+  const t8_bar_height_ideal = 50;
+  let t8_bar_height = 30;
   const t8_bar_title_height = 20;
   const t8_bar_vspace = 15;
-  const t8_bar_total_height = t8_bar_title_height + 4 * t8_bar_vspace + t8_bar_height;
+  let t8_bar_total_height = t8_bar_title_height + 4 * t8_bar_vspace + t8_bar_height;
 
   const t8_icon_size = 22;
   const t8_icon_hspace = 6;
@@ -19,11 +20,27 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t8_chart_axes_width = 60;
   const t8_chart_xaxis_height = 40;
   const t8_chart_width = width - 2 * t8_chart_axes_width;
-  const t8_chart_height = 260;
+  const t8_chart_height_ideal = 260;
+  let t8_chart_height = 140;
   const t8_chart_offset = 60;
-  const t8_chart_total_height = t8_chart_offset + t8_chart_height + t8_chart_xaxis_height;
+  let t8_chart_total_height = t8_chart_offset + t8_chart_height + t8_chart_xaxis_height;
 
   const t8_min_height = t8_bar_total_height + t8_chart_total_height;
+  if (debug) {console.log("Tile #8 min height = ", t8_min_height);}
+  const t8_height = get_tile_height(8);
+  const t8_height_needed_for_ideal = t8_chart_height_ideal - t8_chart_height + t8_bar_height_ideal - t8_bar_height;
+  if (debug) {console.log("Tile #8 ideal height = ", t8_height_needed_for_ideal);}
+  let t8_puffer;
+  if (t8_height - t8_min_height > t8_height_needed_for_ideal) {
+    t8_bar_height = t8_bar_height_ideal;
+    t8_bar_total_height = t8_bar_title_height + 4 * t8_bar_vspace + t8_bar_height;
+    t8_chart_height = t8_chart_height_ideal;
+    t8_chart_total_height = t8_chart_offset + t8_chart_height + t8_chart_xaxis_height;
+    t8_puffer = Math.max(0, is_mobile ? 0 : (t8_height - t8_min_height - t8_height_needed_for_ideal));
+  } else {
+    t8_puffer = Math.max(0, is_mobile ? 0 : (t8_height - t8_min_height));
+  }
+  if (debug) {console.log("Puffer #8 height = ", t8_puffer);}
 
   const t8_years = tiles[8].map(function (d) {
     return d.year;
@@ -69,9 +86,6 @@ document.addEventListener("globalSetupComplete", function (e) {
         }
       }, 0)
   );
-
-  const t8_height = get_tile_height(8);
-  const t8_puffer = is_mobile ? 0 : (t8_height - t8_bar_total_height - t8_chart_total_height) / 2;
 
   const t8_emissions_1990 = tiles[3].emissions[0].emissions;
 
