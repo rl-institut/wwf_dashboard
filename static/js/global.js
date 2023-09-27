@@ -267,7 +267,7 @@ function draw_header(svg, tile, scenario) {
       .attr("width", width)
       .attr("height", header_height)
       .attr("stroke", "black")
-      .attr("fill", "white");
+      .attr("fill", "#F4F3EA");
 
   $(header.node().appendChild(icons.wwf_logo.documentElement.cloneNode(true)))
       .attr("x", width - header_margin - wwfLogo.width)
