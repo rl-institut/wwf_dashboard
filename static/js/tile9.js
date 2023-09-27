@@ -19,16 +19,17 @@ document.addEventListener("globalSetupComplete", function () {
   const t9_bar_gap = 12;
   const t9_solar_text_hoffset = 9;
   const t9_solar_text_voffset = 15;
-  const t9_bar_total_height_without_chart = t9_bar_offset + t9_bar_title_height;
+  let t9_bar_total_height = t9_bar_offset + t9_bar_height + t9_bar_title_height;
 
   const t9_icon_offset = 40;
-  const t9_circle_size = 40;
+  const t9_circle_size_ideal = 40;
+  let t9_circle_size = 30;
   const t9_circe_color_gray = "#ECECEC";
   const t9_icon_size = 20;
   const t9_icon_hspace = 6;
   const t9_icon_vspace = 10;
   const t9_icon_title_height = 22;
-  const t9_icon_total_height = t9_icon_offset + t9_circle_size + 2 * t9_icon_vspace + t9_icon_title_height;
+  let t9_icon_total_height = t9_icon_offset + t9_circle_size + 2 * t9_icon_vspace + t9_icon_title_height;
 
   const t9_chart_title_height = 30;
   const t9_chart_unit_height = 22;
@@ -38,15 +39,28 @@ document.addEventListener("globalSetupComplete", function () {
   const t9_chart_width = width - 2 * t9_chart_axes_width;
   const t9_chart_height_ideal = 260;
   let t9_chart_height = 100;
-  const t9_chart_total_height_without_chart = t9_chart_title_height + t9_chart_unit_height + t9_chart_xaxis_height;
+  let t9_chart_total_height = t9_chart_title_height + t9_chart_unit_height + t9_chart_height + t9_chart_xaxis_height;
 
-  const t9_min_height = t9_bar_total_height_without_chart + t9_icon_total_height + t9_chart_total_height_without_chart;
+  const t9_min_height = t9_bar_total_height + t9_icon_total_height + t9_chart_total_height;
   const t9_height = get_tile_height(9);
-  const t9_chart_ratio = t9_chart_height_ideal / (t9_chart_height_ideal + t9_bar_height_ideal);
-  t9_bar_height = Math.round(Math.min(Math.max((t9_height - t9_min_height) * (1 - t9_chart_ratio), t9_bar_height), t9_bar_height_ideal));
-  t9_chart_height = Math.round(Math.min(Math.max((t9_height - t9_min_height) * t9_chart_ratio, t9_chart_height), t9_chart_height_ideal));
-  const t9_bar_total_height = t9_bar_total_height_without_chart + t9_bar_height;
-  const t9_puffer = is_mobile ? 0 : (t9_height - t9_min_height - t9_bar_height - t9_chart_height);
+  const t9_height_needed_for_ideal = t9_chart_height_ideal - t9_chart_height + t9_bar_height_ideal - t9_bar_height + t9_circle_size_ideal - t9_circle_size;
+  if (debug) {console.log("Tile #9 ideal height = ", t9_height_needed_for_ideal);}
+  let t9_puffer;
+  if (t9_height - t9_min_height > t9_height_needed_for_ideal) {
+    t9_bar_height = t9_bar_height_ideal;
+    t9_bar_total_height = t9_bar_offset + t9_bar_height + t9_bar_title_height;
+    t9_circle_size = t9_circle_size_ideal;
+    t9_icon_total_height = t9_icon_offset + t9_circle_size + 2 * t9_icon_vspace + t9_icon_title_height;
+    t9_chart_height = t9_chart_height_ideal;
+    t9_chart_total_height = t9_chart_title_height + t9_chart_unit_height + t9_chart_height + t9_chart_xaxis_height;
+    t9_puffer = Math.max(0, is_mobile ? 0 : (t9_height - t9_min_height - t9_height_needed_for_ideal));
+  } else {
+    const t9_chart_ratio = t9_chart_height_ideal / (t9_chart_height_ideal + t9_bar_height_ideal);
+    t9_bar_height = Math.round(Math.max((t9_height - t9_min_height) * (1 - t9_chart_ratio), t9_bar_height));
+    t9_chart_height = Math.round(Math.max((t9_height - t9_min_height) * t9_chart_ratio, t9_chart_height));
+    t9_puffer = Math.max(0, is_mobile ? 0 : (t9_height - t9_min_height));
+  }
+  if (debug) {console.log("Puffer #9 height = ", t9_puffer);}
 
   const t9_installation_years = tiles[9].installations.map(function (d) {
     return d.year;
@@ -290,7 +304,7 @@ document.addEventListener("globalSetupComplete", function () {
   t9_chart.append("g")
       .attr("id", "t9_yaxis")
       .call(
-          d3.axisLeft(t9_y)
+          d3.axisLeft(t9_y).ticks(5)
       )
       .selectAll("text")
       .attr("text-anchor", "end")
