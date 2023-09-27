@@ -56,7 +56,7 @@ document.addEventListener("globalSetupComplete", function () {
     $("#t6_date").datepicker(
         {
             format: "dd.mm.yyyy",
-            startDate: "01.01.2021",
+            startDate: "01.01.2015",
             endDate: '+1d',
             datesDisabled: '+1d',
         }

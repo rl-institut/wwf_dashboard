@@ -20,7 +20,7 @@ def test_start_of_week():
     assert scrape.get_start_of_week(dt.date(2023, 8, 1)) == dt.date(2023, 7, 31)
     assert scrape.get_start_of_week(dt.date(2023, 7, 1)) == dt.date(2023, 6, 26)
     assert scrape.get_start_of_week(dt.date(2023, 1, 1)) == dt.date(2022, 12, 26)
-
+    assert scrape.get_start_of_week(dt.date(2023, 3, 26)) == dt.date(2023, 3, 20)
 
 
 def test_smard_data():

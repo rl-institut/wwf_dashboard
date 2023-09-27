@@ -110,27 +110,42 @@ def get_smard_data_for_day(date: dt.date) -> tuple[dict, float]:
         "pump_storages": 4070,
     }
     week_date = get_start_of_week(date)
-    timestamp = int(dt.datetime(week_date.year, week_date.month, week_date.day,
-                    tzinfo=dt.timezone(dt.timedelta(hours=2))).timestamp())
-    timestamp_formatted = str(int(timestamp)) + "000"
-
     week_day_index = 24 * date.weekday()
 
     data = defaultdict(list)
-    for technology, technology_id in technology_ids.items():
-        url = SMARD_DATA_URL.format(
-            technology_id=technology_id, date=timestamp_formatted
-        )
-        response = requests.get(url)
-        if response.status_code != 200:
-            logging.error(f"Could not scrape SMARD data for {url=}. Status code {response.status_code}, reason: {response.reason}, details: {response.text}")
-            raise ValueError(f"No SMARD data for {technology=}")
-        technology_data = response.json()
-        for i in range(week_day_index, week_day_index + 24):
-            value = technology_data["series"][i][1]
-            if value is None:
+    timezone_found = False
+    for timezone in (1, 2):  # SMARD APIs timezone is changing from 1 to 2 - ARGH!
+        timestamp = int(dt.datetime(week_date.year, week_date.month, week_date.day,
+                        tzinfo=dt.timezone(dt.timedelta(hours=timezone))).timestamp())
+        timestamp_formatted = str(int(timestamp)) + "000"
+
+        for technology, technology_id in technology_ids.items():
+            url = SMARD_DATA_URL.format(
+                technology_id=technology_id, date=timestamp_formatted
+            )
+            response = requests.get(url)
+            if response.status_code != 200:
+                logging.warning(f"Could not scrape SMARD data for {url=}. Status code {response.status_code}, reason: {response.reason}, details: {response.text}")
                 break
-            data[technology].append(value)
+            timezone_found = True
+            technology_data = response.json()
+            for i in range(week_day_index, week_day_index + 24):
+                try:
+                    value = technology_data["series"][i][1]
+                except IndexError:
+                    break
+                if value is None:
+                    break
+                data[technology].append(value)
+
+        if timezone_found:
+            break
+
+    if not data:
+        msg = f"No SMARD data for {week_date=} found"
+        logging.error(msg)
+        raise ValueError(msg)
+
 
     production = {
         "pv": data["pv"],
