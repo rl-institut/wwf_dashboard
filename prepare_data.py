@@ -211,6 +211,7 @@ def tile8():
     )
     data.columns = ["year", "primary", "power", "pv", "wind_onshore", "wind_offshore"]
     data = data.interpolate()
+    data = data.fillna(0.0)
     data["wind"] = data["wind_onshore"] + data["wind_offshore"]
     data[["year", "primary", "power", "pv", "wind"]].to_json(
         os.path.join(DATA_PATH, "tile8.json"), orient="records"
