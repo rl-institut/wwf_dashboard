@@ -8,7 +8,7 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   const t8_bar_height_ideal = 50;
   let t8_bar_height = 30;
-  const t8_bar_title_height = 20;
+  const t8_bar_title_height = 40;
   const t8_bar_vspace = 15;
   let t8_bar_total_height = t8_bar_title_height + 4 * t8_bar_vspace + t8_bar_height;
 
@@ -121,9 +121,16 @@ document.addEventListener("globalSetupComplete", function (e) {
 
   const t8_bar = t8_tile.append("g").attr("transform", `translate(0, ${t8_puffer / 2})`);
   t8_bar.append("text")
-      .text("Ausbauziele der Bundesregierung pro Jahr")
+      .text("Historischer Zubau und")
       .attr("x", width / 2)
       .attr("y", t8_bar_vspace)
+      .attr("text-anchor", "middle")
+      .attr("letter-spacing", letterSpacing)
+      .attr("dominant-baseline", "hanging");
+  t8_bar.append("text")
+      .text("Ausbauziele der Bundesregierung pro Jahr")
+      .attr("x", width / 2)
+      .attr("y", t8_bar_vspace + t8_bar_title_height / 2)
       .attr("text-anchor", "middle")
       .attr("letter-spacing", letterSpacing)
       .attr("dominant-baseline", "hanging");
