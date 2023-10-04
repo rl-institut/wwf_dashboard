@@ -24,7 +24,7 @@ document.addEventListener("globalSetupComplete", function () {
   const t9_icon_offset = 40;
   const t9_circle_size_ideal = 40;
   let t9_circle_size = 30;
-  const t9_circe_color_gray = "#ECECEC";
+  const t9_circe_color_gray = "#D8D6D6";
   const t9_icon_size = 20;
   const t9_icon_hspace = 6;
   const t9_icon_vspace = 10;
@@ -349,7 +349,7 @@ document.addEventListener("globalSetupComplete", function () {
     t9_chart.append("path")
         .datum(tiles[9].installations)
         .attr("fill", "none")
-        .attr("stroke", "#E2E2E2")
+        .attr("stroke", "#D8D6D6")
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {

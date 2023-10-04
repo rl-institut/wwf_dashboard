@@ -20,7 +20,7 @@ document.addEventListener("globalSetupComplete", function (e) {
   const t3_icon_offset = 40;
   const t3_circle_size_ideal = 40;
   let t3_circle_size = 30;
-  const t3_circe_color_gray = "#ECECEC";
+  const t3_circe_color_gray = "#D8D6D6";
   const t3_icon_size = 20;
   const t3_icon_hspace = 6;
   const t3_icon_vspace = 10;
@@ -300,7 +300,7 @@ document.addEventListener("globalSetupComplete", function (e) {
     t3_chart.append("path")
         .datum(tiles[3].sectors)
         .attr("fill", "none")
-        .attr("stroke", "#E2E2E2")
+        .attr("stroke", "#D8D6D6")
         .attr("stroke-width", line_width)
         .attr("d", d3.line()
             .x(function (d) {
