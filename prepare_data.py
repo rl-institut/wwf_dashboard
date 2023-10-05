@@ -5,7 +5,7 @@ import pathlib
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-FILENAME = "WWF_Daten_Dashboard_Überarbeitung_Stand 06 Sept 2023_V2.5.xlsx"
+FILENAME = "WWF_Daten_Dashboard_Überarbeitung_Stand 04 Okt 2023_V3.1.xlsx"
 
 DATA_PATH = "static/data"
 RAW_DATA_PATH = "raw_data"
