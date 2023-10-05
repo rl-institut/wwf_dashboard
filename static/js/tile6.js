@@ -272,7 +272,6 @@ document.addEventListener("globalSetupComplete", function () {
     }
 
     function t6_change_date() {
-        t6_chart.select("#t6_area").remove();
         const date = $("#t6_date").val();
         $.get(
             {
@@ -281,6 +280,7 @@ document.addEventListener("globalSetupComplete", function () {
                 data: {date: date},
                 dataType: "json",
                 success: function (result) {
+                    t6_chart.select("#t6_area").remove();
                     t6_draw_chart(result.data);
                     t6_draw_pie(result.res_share);
                 },
