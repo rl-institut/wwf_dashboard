@@ -12,14 +12,15 @@ document.addEventListener("globalSetupComplete", function () {
   const t9_bar_ticks_width = width / 2.5;
   const t9_bar_width = width - t9_bar_ticks_width;
   const t9_bar_height_ideal = 180;
-  let t9_bar_height = 140;
+  let t9_bar_height = 130;
   const t9_bar_title_height = 50;
   const t9_bar_offset = 10;
   const t9_bar_hspace = 5;
   const t9_bar_gap = 12;
-  const t9_solar_text_hoffset = 9;
-  const t9_solar_text_voffset = 15;
-  let t9_bar_total_height = t9_bar_offset + t9_bar_height + t9_bar_title_height;
+  let t9_bar_additional_info_offset_ideal = 10;
+  let t9_bar_additional_info_offset = 5;
+  const t9_bar_additional_info = 25;
+  let t9_bar_total_height = t9_bar_offset + t9_bar_height + t9_bar_title_height + t9_bar_additional_info + t9_bar_additional_info_offset;
 
   const t9_icon_offset = 40;
   const t9_circle_size_ideal = 40;
@@ -43,11 +44,12 @@ document.addEventListener("globalSetupComplete", function () {
 
   const t9_min_height = t9_bar_total_height + t9_icon_total_height + t9_chart_total_height;
   const t9_height = get_tile_height(9);
-  const t9_height_needed_for_ideal = t9_chart_height_ideal - t9_chart_height + t9_bar_height_ideal - t9_bar_height + t9_circle_size_ideal - t9_circle_size;
+  const t9_height_needed_for_ideal = t9_chart_height_ideal - t9_chart_height + t9_bar_height_ideal + t9_bar_additional_info_offset_ideal - t9_bar_height + t9_circle_size_ideal - t9_circle_size;
   if (debug) {console.log("Tile #9 ideal height = ", t9_height_needed_for_ideal);}
   let t9_puffer;
   if (t9_height - t9_min_height > t9_height_needed_for_ideal) {
     t9_bar_height = t9_bar_height_ideal;
+    t9_bar_additional_info_offset = t9_bar_additional_info_offset_ideal;
     t9_bar_total_height = t9_bar_offset + t9_bar_height + t9_bar_title_height;
     t9_circle_size = t9_circle_size_ideal;
     t9_icon_total_height = t9_icon_offset + t9_circle_size + 2 * t9_icon_vspace + t9_icon_title_height;
@@ -194,25 +196,10 @@ document.addEventListener("globalSetupComplete", function () {
   d3.select("#t9_emissions_y").select('.domain').attr('stroke-width', 0);
   d3.select("#t9_emissions_y").selectAll(".tick").select("line").attr("stroke-width", 0);
 
-  d3.select("#t9_emissions_y").select("text").attr("transform", `translate(0, ${-t9_solar_text_voffset})`);
+  const t9_bar_texts = d3.select("#t9_emissions_y").selectAll("text").nodes();
+  t9_bar_texts[0].innerHTML = t9_bar_texts[0].innerHTML + "\u00B9";
+  t9_bar_texts[1].innerHTML = t9_bar_texts[1].innerHTML + "\u00B2";
 
-  t9_bar.append("text")
-      .text("(als ergänzendes")
-      .attr("x", -t9_solar_text_hoffset)
-      .attr("y", t9_emissions_y("solar") + t9_emissions_y.bandwidth() - t9_solar_text_voffset)
-      .attr("text-anchor", "end")
-      .attr("font-weight", fontWeight.thin)
-      .attr("letter-spacing", letterSpacing)
-      .attr("font-size", fontSize.xsmall);
-
-  t9_bar.append("text")
-      .text("Heizsystem)")
-      .attr("x", -t9_solar_text_hoffset)
-      .attr("y", t9_emissions_y("solar") + t9_emissions_y.bandwidth())
-      .attr("text-anchor", "end")
-      .attr("font-weight", fontWeight.thin)
-      .attr("letter-spacing", letterSpacing)
-      .attr("font-size", fontSize.xsmall);
 
   t9_bar.append("line")
       .attr("x1", 0)
@@ -221,6 +208,26 @@ document.addEventListener("globalSetupComplete", function () {
       .attr("y2", t9_bar_height)
       .attr("stroke", wwfColor.black)
       .attr("stroke-width", chart_axis_stroke_width);
+
+  t9_bar.append("text")
+      .text("\u00B9: als ergänzendes Heizsystem")
+      .attr("x", -2)
+      .attr("y", t9_bar_height + t9_bar_additional_info_offset)
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "hanging")
+      .attr("font-weight", fontWeight.thin)
+      .attr("letter-spacing", letterSpacing)
+      .attr("font-size", fontSize.xsmall);
+
+  t9_bar.append("text")
+      .text("\u00B2: aufgrund des aktuellen Strommixes")
+      .attr("x", 2)
+      .attr("y", t9_bar_height + t9_bar_additional_info_offset + t9_bar_additional_info / 2)
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "hanging")
+      .attr("font-weight", fontWeight.thin)
+      .attr("letter-spacing", letterSpacing)
+      .attr("font-size", fontSize.xsmall);
 
   // DIVIDING-line
   t9_tile.append("line")

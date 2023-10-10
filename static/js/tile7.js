@@ -141,7 +141,7 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("transform", `translate(${t7_chart_hoffset}, ${t7_route_space + t7_route_height + t7_route_offset + t7_route_upper_padding * 2 + t7_puffer * 2/3})`);
 
   t7_chart_area.append("text")
-      .text("CO2-Emissionen pro Person in")
+      .text("CO\u2082-Emissionen pro Person in")
       .attr("x", 0)
       .attr("y", 0)
       .attr("font-weight", fontWeight.normal)
