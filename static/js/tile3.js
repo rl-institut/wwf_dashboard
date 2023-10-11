@@ -295,6 +295,25 @@ document.addEventListener("globalSetupComplete", function (e) {
       .attr("stroke", tickColor);
   t3_y_grid.select('.domain').attr('stroke-width', 0);
 
+  // Climate goals from 2023 on
+  t3_chart.append("line")
+      .attr("x1", t3_x(2023))
+      .attr("x2", t3_x(2023))
+      .attr("y1", 0)
+      .attr("y2", t3_chart_height)
+      .attr("stroke", wwfColor.gray2)
+      .attr("stroke-dasharray", dash_spacing)
+      .attr("stroke-width", chart_axis_stroke_width);
+
+  t3_chart.append("text")
+      .text("Ziele des Klimaschutzgesetzes")
+      .attr("x", t3_x(2023) + 5)
+      .attr("y", 0)
+      .attr("text-anchor", "start")
+      .attr("fill", wwfColor.gray2)
+      .style("font-size", fontSize.xsmall)
+      .attr("letter-spacing", letterSpacing);
+
   // Grayed sector paths
   for (const sector of Object.keys(t3_sectors)) {
     t3_chart.append("path")
