@@ -210,7 +210,7 @@ document.addEventListener("globalSetupComplete", function () {
       .attr("stroke-width", chart_axis_stroke_width);
 
   t9_bar.append("text")
-      .text("\u00B9: als ergänzendes Heizsystem")
+      .text("\u00B9 als ergänzendes Heizsystem")
       .attr("x", -2)
       .attr("y", t9_bar_height + t9_bar_additional_info_offset)
       .attr("text-anchor", "middle")
@@ -220,7 +220,7 @@ document.addEventListener("globalSetupComplete", function () {
       .attr("font-size", fontSize.xsmall);
 
   t9_bar.append("text")
-      .text("\u00B2: aufgrund des aktuellen Strommixes")
+      .text("\u00B2 aufgrund des aktuellen Strommixes")
       .attr("x", 2)
       .attr("y", t9_bar_height + t9_bar_additional_info_offset + t9_bar_additional_info / 2)
       .attr("text-anchor", "middle")
