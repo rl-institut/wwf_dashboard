@@ -285,6 +285,7 @@ document.addEventListener("globalSetupComplete", function () {
                     t6_draw_pie(result.res_share);
                 },
                 error: function () {
+                    t6_chart.select("#t6_area").remove();
                     const area_chart = t6_chart.append("g")
                         .attr("id", "t6_area");
                     area_chart.append("text")
