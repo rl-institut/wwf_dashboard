@@ -24,7 +24,7 @@
   <div class="dashboard__row">
     {% include "tiles/tile9.html" %}
   </div>
-  <span>v{{ version }}</span>
+  {% if debug=="true" %}<span>v{{ version }}</span>{%  endif %}
 {% endblock tiles_html %}
 
 {% block tiles_js %}
