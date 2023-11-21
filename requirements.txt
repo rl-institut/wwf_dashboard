@@ -9,3 +9,4 @@ beautifulsoup4==4.10.0
 nest-asyncio==1.5.4
 requests-html==0.10.0
 flask-cors==3.0.10
+werkzeug==2.3.6
