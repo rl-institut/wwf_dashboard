@@ -49,7 +49,7 @@ async def share_svg(tile, options, request):
     logger.info(f"Requesting share for '{share_url}'")
     r = await session.get(share_url)
     logger.info("Rendering html for share url")
-    sleep = 5 if tile == 6 else None  # SMARD data needs time to render
+    sleep = 5 if tile == 6 else 2  # SMARD data needs time to render
     await r.html.arender(sleep=sleep)
     soup = BeautifulSoup(r.html.html, features="lxml")
     svg = soup.find("svg")

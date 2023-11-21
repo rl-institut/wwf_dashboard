@@ -8,6 +8,7 @@ and this project tries to adhere to [Semantic Versioning](https://semver.org/spe
 ### Fixed
 - y-Axis maximum in tiles 3,5,9
 - x-Axis in tile 8
+- increased async building time for shared images
 
 ### Changed
 - background color and border
