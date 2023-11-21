@@ -2,7 +2,7 @@
 import pathlib
 import environs
 
-VERSION = "2.0.1dev"
+VERSION = "2.0.0"
 
 env = environs.Env()
 
